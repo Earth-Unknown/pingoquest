@@ -410,6 +410,12 @@ svg.poke .m-tip{fill:#fff;animation:none}
 .ctag{display:inline-block;background:var(--primary);color:var(--on-primary);border-radius:99px;padding:3px 10px;font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:380px){.q{font-size:22px}.node{width:68px;height:68px}.pingo{width:54px}}
+.xhint{margin:8px 0 0;padding:8px 12px;border-radius:12px;background:color-mix(in srgb,var(--cyan) 14%,var(--surface));border:2px solid var(--cyan);font-weight:800;font-size:13px}
+.xch{margin:14px auto 0;max-width:420px;text-align:left;padding:12px 14px;border-radius:16px;border:2px solid var(--cyan);background:color-mix(in srgb,var(--cyan) 12%,var(--surface))}
+.xch b{display:block;margin-bottom:4px}
+.xch p{margin:0 0 6px;font-size:14px;line-height:1.4}
+.xch small{font-weight:800;opacity:.8}
+.lfoot .xbtn{margin-bottom:8px;background:var(--cyan);color:#06283a;box-shadow:0 4px 0 color-mix(in srgb,var(--cyan) 65%,#000)}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -792,7 +798,7 @@ function pingo(mood,cls){
 
 /* ---------- estado ---------- */
 var KEY='pingoquest-v3';
-function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{}}}
+function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{}}}
 function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object')return Object.assign(blank(),s)}catch(e){}return blank()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -864,11 +870,72 @@ function knowOf(c){if(!S.know)S.know={};return S.know[c]||(S.know[c]={ok:0,bad:0
 function isSeen(c){return !!(S.know&&S.know[c]&&S.know[c].seen)}
 function markSeen(cs){var ch=false;(cs||[]).forEach(function(c){var k=knowOf(c);if(!k.seen){k.seen=1;k.at=today();ch=true}});if(ch)save()}
 function eligible(c){var d=CUR[c];return !!d&&isSeen(c)&&d.pre.every(isSeen)}
-function allQs(){var o=[];GAMES.forEach(function(g){g.phases.forEach(function(ph){ph.forEach(function(q){if(q.t!=='learn')o.push(q)})})});return o}
 function eligibleQs(opt){opt=opt||{};return allQs().filter(function(q){return q.rs!=='rascunho'&&eligible(q.cid)&&(!opt.maxDif||q.dif<=opt.maxDif)&&(!opt.cid||q.cid===opt.cid)})}
 function masteryOf(c){var k=S.know&&S.know[c];if(!k||!k.seen)return'novo';var n=k.ok+k.bad;if(n<3)return'aprendendo';var a=k.ok/n;if(a>=.85&&k.ok>=6)return'dominado';return a<.65?'fragil':'aprendendo'}
 function backfillKnow(){GAMES.forEach(function(g,gi){g.phases.forEach(function(ph,pi){if(S.done[gi+'-'+pi])markSeen(PHCON[gi+'-'+pi])})})}
 backfillKnow();
+var EXTRA={
+ 0:[
+  {t:"mc",cid:"lan",q:"Na sua casa, o notebook e a TV se comunicam sem usar a internet. Qual afirmação descreve melhor essa situação?",o:["Estão na mesma LAN e conversam sem precisar da internet", "Só funcionam enquanto a internet estiver ligada", "Precisam de um servidor em uma WAN para se enxergar", "Estão ligados por uma PAN, por isso não passam pelo roteador"],a:0,e:"A LAN é a rede local. Os dispositivos dela conversam entre si mesmo sem internet."},
+  {t:"mc",cid:"internet",q:"Duas redes de escritório são ligadas por um roteador. O que elas formam juntas?",o:["Uma interconexão de redes, como a internet (rede de redes)", "Uma única LAN maior, sem nenhum roteador", "Uma PAN, porque os dois escritórios são de uma só empresa", "Um único host compartilhado"],a:0,e:"Redes distintas ligadas por roteadores formam uma interconexão de redes. A internet é isso em escala mundial."},
+  {t:"mc",cid:"meio.transmissao",q:"Um prédio histórico não permite furar paredes para passar cabos, e 10 computadores precisam entrar na rede. Qual escolha faz sentido e qual cuidado ela exige?",o:["Wi-Fi, cuidando da atenuação do sinal pelas paredes grossas", "Fibra óptica, que dispensa qualquer instalação", "Cabo UTP, porque ondas de rádio não atravessam paredes", "Bluetooth (PAN), que alcança dezenas de metros"],a:0,e:"Sem poder passar cabo, o Wi-Fi resolve, mas paredes grossas causam atenuação. Pode ser preciso mais pontos de acesso."}
+ ],
+ 1:[
+  {t:"mc",cid:"rede.alcance",q:"Uma franquia liga as lojas do Rio, de Recife e de Manaus em uma mesma rede. Qual tipo descreve melhor essa rede?",o:["WAN, pois liga locais em cidades distantes", "LAN, pois é uma empresa só", "PAN, pois todos os dispositivos são pessoais", "MAN, pois todas estão no mesmo país"],a:0,e:"O que define o tipo é o alcance: cidades distantes formam uma WAN."},
+  {t:"mc",cid:"cliente.servidor",q:"Seu celular pede uma página a um site. Para montá-la, o site pede um dado a um banco de dados. Nesse segundo pedido, quem é o cliente?",o:["O servidor do site, que agora faz a requisição ao banco de dados", "O banco de dados, que responde", "O celular, que continua sendo o cliente nas duas trocas", "Ninguém: cliente é sempre uma pessoa"],a:0,e:"Cliente e servidor são papéis em cada troca. O servidor do site vira cliente do banco de dados."},
+  {t:"mc",cid:"banda.latencia",q:"O plano A tem 500 Mbps e 80 ms de latência. O plano B tem 100 Mbps e 10 ms. Qual escolher para jogar online e qual para baixar arquivos grandes?",o:["B para jogar (menor latência) e A para baixar (mais banda)", "A para as duas coisas", "B para as duas coisas", "A para jogar e B para baixar"],a:0,e:"Jogo depende de latência baixa. Download de arquivo grande depende de banda alta."}
+ ],
+ 2:[
+  {t:"mc",cid:"equip.roteador",q:"Um computador acessa a impressora da LAN, mas não abre nenhum site. Qual item da configuração dele é o primeiro suspeito?",o:["O gateway padrão", "O endereço MAC do computador", "O cabo da impressora", "O hub da sala"],a:0,e:"A LAN funciona. O que falha é a saída para outras redes, que depende do gateway padrão."},
+  {t:"mc",cid:"equip.switch",q:"Uma sala tem 8 computadores ligados a um hub e a rede vive lenta. Por que trocar o hub por um switch ajuda?",o:["O switch envia o quadro só à porta do destino (pelo MAC), reduzindo colisões", "O switch aumenta a velocidade da internet contratada", "O switch troca o IP privado por um IP público", "O switch cria a rede Wi-Fi da sala"],a:0,e:"O hub repete tudo para todas as portas. O switch entrega só ao destinatário."},
+  {t:"mc",cid:"rede.mapa",q:"Um computador do escritório perdeu a rede, enquanto os outros e a impressora seguem normais. Qual é a ordem mais lógica de investigação?",o:["Cabo e porta do switch, depois placa de rede, depois IP e gateway", "Reiniciar o modem, depois trocar o switch", "Reiniciar todos os outros computadores", "Ligar para a operadora"],a:0,e:"Se só um falhou, o problema é local desse computador. Comece pelo que é só dele."}
+ ],
+ 3:[
+  {t:"mc",cid:"ip.v4",q:"Dois computadores da mesma rede receberam o IP 192.168.0.20. O que você espera ver?",o:["Conflito de endereços: a conexão fica instável em um ou nos dois", "Nada, IPs repetidos são normais na LAN", "A internet fica mais rápida nos dois", "Os dois trocam de MAC automaticamente"],a:0,e:"O IP precisa ser único na rede. Repetido, causa conflito."},
+  {t:"mc",cid:"ip.privado",q:"O celular mostra o IP 192.168.1.50, mas um site de \"qual é meu IP\" mostra 187.10.20.30. Por quê?",o:["O primeiro é o IP privado da LAN e o segundo é o público do roteador, graças ao NAT", "Um dos dois está errado", "O celular tem dois endereços MAC", "O 187.10.20.30 é o IP do celular em IPv6"],a:0,e:"O NAT permite que dispositivos com IP privado saiam pela internet usando o IP público do roteador."},
+  {t:"mc",cid:"ip.mac.dhcp",q:"O servidor DHCP da rede caiu. Um celular já conectado continua navegando por algum tempo, mas um celular novo não consegue acesso. Por quê?",o:["O novo não recebe IP automaticamente, e o antigo ainda usa o IP concedido antes", "O MAC do celular novo foi bloqueado pelo roteador", "O DNS apaga os IPs antigos", "O Wi-Fi só aceita um aparelho por vez"],a:0,e:"O DHCP entrega IP a quem entra. Quem já tinha IP continua com ele até a concessão acabar."}
+ ],
+ 4:[
+  {t:"mc",cid:"dns",q:"Você consegue dar ping em 8.8.8.8, mas ao dar ping em exemplo.com.br recebe \"host não encontrado\". Qual é a conclusão?",o:["A conectividade existe e a falha está na resolução de nomes (DNS)", "O cabo está rompido", "O IP 8.8.8.8 está bloqueado por HTTPS", "O gateway está errado"],a:0,e:"Pelo IP funciona. Só a tradução do nome falha, ou seja, o DNS."},
+  {t:"mc",cid:"portas",q:"Um servidor web está no ar, mas apenas o acesso por https:// falha. Qual porta deve ser conferida primeiro no firewall?",o:["443", "80", "22", "53"],a:0,e:"O HTTPS usa a porta 443. Se o http:// abre, a 80 está liberada e a 443 é a suspeita."},
+  {t:"mc",cid:"tcp.udp",q:"Um app de futebol ao vivo trava toda vez que um pacote se perde, porque reenvia cada pacote perdido. Qual troca ajuda e por quê?",o:["Usar UDP, que aceita pequenas perdas para não atrasar o vídeo", "Usar TCP com mais retransmissões", "Trocar HTTP por HTTPS", "Aumentar o número da porta de destino"],a:0,e:"No ao vivo, atraso incomoda mais que perder um pedaço. O UDP não espera retransmissão."}
+ ],
+ 5:[
+  {t:"mc",cid:"pacotes",q:"Um arquivo é dividido em 100 pacotes e o pacote 37 chega depois do 38. O que acontece?",o:["O destino remonta tudo na ordem certa usando a informação do cabeçalho", "O arquivo chega corrompido sempre", "O roteador reenvia o arquivo inteiro", "O pacote 37 é descartado por chegar fora de ordem"],a:0,e:"Os pacotes podem seguir caminhos diferentes. O destino os reorganiza pela informação de controle."},
+  {t:"mc",cid:"web.fluxo",q:"O navegador mostra \"não foi possível encontrar o servidor\" para um site, mas os outros sites abrem normalmente. Em qual etapa do fluxo a falha provavelmente está?",o:["Na consulta ao DNS desse domínio", "Na saída da LAN pelo gateway", "Na remontagem dos pacotes", "No cabo do computador"],a:0,e:"Se os outros sites abrem, a saída da LAN e a internet funcionam. Falhou a resolução desse domínio."},
+  {t:"mc",cid:"diag.cmd",q:"O ping para um servidor distante falha. Qual comando mostra por quais roteadores o pacote passa e onde ele para?",o:["tracert (Windows) ou traceroute (Linux)", "ipconfig", "nslookup", "ping -t"],a:0,e:"O tracert lista os saltos até o destino e mostra onde o caminho se interrompe."}
+ ],
+ 6:[
+  {t:"mc",cid:"i1.equipamentos",q:"Um pacote chega ao roteador do escritório com destino fora da LAN. O que o roteador faz?",o:["Encaminha pelo caminho indicado na sua tabela de rotas, rumo ao gateway da operadora", "Descarta o pacote", "Envia para todas as portas, como um hub", "Troca o MAC de destino por um aleatório"],a:0,e:"O roteador decide o próximo salto pela tabela de rotas. Quem envia para todas as portas é o hub."},
+  {t:"mc",cid:"i1.mac.cabos",q:"Um link de 2 km entre dois prédios precisa de alta velocidade e sem interferência elétrica. Qual meio escolher?",o:["Fibra óptica", "Cabo UTP, que alcança 2 km", "Wi-Fi em 2,4 GHz", "Cabo de energia"],a:0,e:"O cabo UTP tem limite de 100 m. A fibra vai longe e não sofre interferência elétrica."},
+  {t:"mc",cid:"i1.wifi.vlan",q:"O setor financeiro e os visitantes usam o mesmo switch e você precisa isolá-los sem comprar outro equipamento. O que usar?",o:["VLANs separadas no switch", "Um hub no lugar do switch", "Um repetidor Wi-Fi", "Um IP público para cada setor"],a:0,e:"A VLAN separa logicamente as redes dentro do mesmo switch."}
+ ],
+ 7:[
+  {t:"mc",cid:"i2.ipv4",q:"O endereço 172.20.5.9 é público ou privado?",o:["Privado, da faixa 172.16.0.0 a 172.31.255.255", "Público", "Loopback", "Inválido, porque 172 é maior que 127"],a:0,e:"A faixa privada 172.16.0.0/12 vai de 172.16 a 172.31. O loopback é 127.0.0.1."},
+  {t:"mc",cid:"ip.mascara",q:"Quantos hosts úteis cabem em uma rede /27?",o:["30", "32", "62", "14"],a:0,e:"Uma /27 tem 5 bits de host: 2^5 = 32 endereços, menos rede e broadcast = 30 úteis."},
+  {t:"mc",cid:"i2.ipv6.nat.dhcp",q:"Uma empresa tem 500 aparelhos e apenas 1 IPv4 público. Qual recurso permite que todos acessem a internet?",o:["NAT, que traduz os IPs privados para o público", "DHCP, que cria IPs públicos novos", "DNS, que divide o IP em partes", "VLAN, que gera IPs públicos"],a:0,e:"Com o NAT, vários dispositivos com IP privado compartilham um IP público."}
+ ],
+ 8:[
+  {t:"mc",cid:"i3.portas.web",q:"Uma pessoa publica um site em http://exemplo.com:8080. O que significa o 8080?",o:["A porta usada pelo serviço, diferente da padrão (80)", "O número de usuários simultâneos", "O IP do servidor", "A versão do HTTP"],a:0,e:"Depois dos dois pontos vem a porta. Sem ela, o navegador usa a padrão do protocolo."},
+  {t:"mc",cid:"i3.tcp.udp",q:"Por que as consultas DNS costumam usar UDP?",o:["São curtas. É mais rápido e, se a resposta não vem, o cliente pergunta de novo", "Porque o UDP é criptografado", "Porque o DNS precisa de handshake de 3 vias", "Porque o UDP ordena os pacotes"],a:0,e:"Pergunta e resposta cabem em um pacote. Sem handshake, fica mais rápido."},
+  {t:"mc",cid:"protocolos.apoio",q:"Sem o ARP, o que deixaria de funcionar numa LAN Ethernet?",o:["Descobrir o MAC do destino a partir do IP, para entregar o quadro", "Converter nomes em IP", "Sincronizar o relógio dos dispositivos", "Entregar IP automaticamente"],a:0,e:"O ARP liga o IP ao MAC dentro da rede local. O DNS converte nomes. O NTP acerta o relógio. O DHCP entrega IP."}
+ ],
+ 9:[
+  {t:"mc",cid:"osi.camadas",q:"Um cabo de rede foi desconectado do computador. Em qual camada do OSI está o problema?",o:["Camada 1 (Física)", "Camada 3 (Rede)", "Camada 4 (Transporte)", "Camada 7 (Aplicação)"],a:0,e:"Cabos e sinais elétricos pertencem à camada Física."},
+  {t:"mc",cid:"osi.funcoes",q:"Um roteador analisa o endereço IP de destino para decidir o caminho. Em qual camada ele atua?",o:["Camada 3 (Rede)", "Camada 2 (Enlace)", "Camada 4 (Transporte)", "Camada 5 (Sessão)"],a:0,e:"Endereço IP e roteamento são da camada de Rede."},
+  {t:"mc",cid:"osi.encapsulamento",q:"Um pacote IP é colocado dentro de um quadro Ethernet para ir ao próximo equipamento. Como se chama esse processo e em qual camada ocorre?",o:["Encapsulamento, na camada de Enlace (2)", "Segmentação, na camada de Rede (3)", "Criptografia, na camada de Apresentação (6)", "Roteamento, na camada Física (1)"],a:0,e:"Cada camada adiciona seu cabeçalho aos dados da camada de cima. O quadro é a PDU do Enlace."}
+ ]
+};
+Object.keys(EXTRA).forEach(function(g){EXTRA[g].forEach(function(q){q.dif=3;q.rs='aprovado';q.lk='x'+g;q.x=1})});
+/* Desafio do Pingo (só na trilha): 5 acertos seguidos no mesmo assunto liberam 3 perguntas extras opcionais */
+var SQ={g:-1,n:0};
+function sqHit(ok){
+  if(!L||L.kind!=='phase')return;
+  var g=parseInt(L.key,10);if(SQ.g!==g)SQ={g:g,n:0};
+  if(ok)SQ.n++;else SQ.n=0;
+}
+function xchReady(){return !!L&&L.kind==='phase'&&SQ.g===parseInt(L.key,10)&&SQ.n>=5}
+function pickExtras(g){return (EXTRA[g]||[]).filter(function(q){return eligible(q.cid)}).slice(0,3)}
 window.PK={CUR:CUR,eligible:eligible,eligibleQs:eligibleQs,masteryOf:masteryOf,markSeen:markSeen,knowOf:knowOf,allQs:allQs};
 function ds(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function today(){return ds(new Date())}
@@ -889,7 +956,7 @@ function touchStreak(){
 function $(s){return document.querySelector(s)}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
 function allQs(){var r=[];GAMES.forEach(function(g){g.phases.forEach(function(p){r=r.concat(p.filter(function(q){return q.t!=='learn'}))})});return r}
-var QIDX={};allQs().forEach(function(q){QIDX[q.q]=q});
+var QIDX={};allQs().forEach(function(q){QIDX[q.q]=q});Object.keys(EXTRA).forEach(function(g){EXTRA[g].forEach(function(q){QIDX[q.q]=q})});
 function total(){return GAMES.length*4}
 function doneCount(){return Object.keys(S.done).length}
 
@@ -919,7 +986,7 @@ function claimable(){var d=day(),ms=todays(),n=0;ms.forEach(function(m,i){if(!d.
 function missKeys(){return Object.keys(S.miss).filter(function(k){return QIDX[k]}).sort(function(a,b){return S.miss[b]-S.miss[a]})}
 function addMiss(q){var k=q.src.q;S.miss[k]=(S.miss[k]||0)+1}
 function fixMiss(q){var k=q.src.q;if(S.miss[k]){S.miss[k]--;if(S.miss[k]<=0)delete S.miss[k]}}
-function free(){return L.kind==='practice'||L.kind==='review'}
+function free(){return L.kind==='practice'||L.kind==='review'||L.kind==='extra'}
 var GEM_S='<span class="gi">'+IC.gem+'</span>';
 function weekKey(){var d=new Date(),k=(d.getDay()+6)%7;d.setDate(d.getDate()-k);return ds(d)}
 var WGOAL=5;
@@ -1072,7 +1139,7 @@ function nrm(x){return String(x).toLowerCase().normalize('NFD').replace(/[\u0300
 function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d[i]=[i]}for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
 function emptyArr(n){var a=[];for(var i=0;i<n;i++)a.push(null);return a}
 function startLesson(o){
-  if(o.kind!=='practice'&&o.kind!=='review'&&S.hearts<=0){showNoHearts();return}
+  if(o.kind!=='practice'&&o.kind!=='review'&&o.kind!=='extra'&&S.hearts<=0){showNoHearts();return}
   var qs=o.qs.map(prep);
   var qb=qs.filter(function(x){return x.t!=='learn'}).length;
   L=Object.assign({},o,{qb:qb,touch:null,queue:qs,i:0,base:qs.length,right:0,miss:0,run:0,state:'ask',sel:null,ok:false,mp:null});
@@ -1081,7 +1148,7 @@ function startLesson(o){
 }
 function curQ(){return L.queue[L.i]}
 function initQ(){var q=curQ();if(q.t==='learn'&&q.teach)markSeen(q.teach);L.rev=false;L.touch=null;L.state='ask';L.ok=false;L.sel=q.t==='bl'?[]:(q.t==='fill'?emptyArr(q.n):(q.t==='cl'?emptyArr(q.items.length):(q.t==='ty'?'':null)));L.mp=q.t==='mp'?{sel:null,done:[],flash:null,err:0}:null}
-function gotRight(){var d=day();L.run++;if(L.run>(L.best||0))L.best=L.run;d.correct++;if(L.run>d.bestRun)d.bestRun=L.run}
+function gotRight(){sqHit(true);var d=day();L.run++;if(L.run>(L.best||0))L.best=L.run;d.correct++;if(L.run>d.bestRun)d.bestRun=L.run}
 function mpTap(side,id){
   var q=curQ(),m=L.mp;if(!m||L.state!=='ask'||m.flash)return;
   if(!m.sel||m.sel.side===side){m.sel={side:side,id:id};drawLesson();return}
@@ -1096,7 +1163,7 @@ function mpTap(side,id){
     drawLesson();return;
   }
   m.err++;m.flash={l:l,r:r};m.sel=null;sfx('bad');buzz(30);
-  if(m.err===1){L.run=0;addMiss(q);if(!free())S.hearts=Math.max(0,S.hearts-1)}
+  if(m.err===1){L.run=0;sqHit(false);addMiss(q);if(!free())S.hearts=Math.max(0,S.hearts-1)}
   save();drawLesson();
   var at=L.i;
   setTimeout(function(){
@@ -1121,10 +1188,10 @@ function correctText(q){
   return q.a.join(q.sep||' ');
 }
 function connHTML(){
-  var r=L.run;if(r<3)return '';
+  var r=L.run,xh=xchReady()?'<div class="xhint">Desafio do Pingo liberado! Ele aparece no fim da fase.</div>':'';if(r<3)return xh;
   var lit=r>=8?4:r>=5?3:2,ms=Math.max(4,120-r*14),t=r>=8?'Fibra pura!':r>=5?'Conexão estável!':'Sinal ligado!',b='';
   for(var i=1;i<=4;i++)b+='<i class="'+(i<=lit?'on':'')+'" style="height:'+(5+i*5)+'px"></i>';
-  return '<div class="conn"><span class="sig" aria-hidden="true">'+b+'</span><div><b>'+t+'</b><small>'+r+' acertos seguidos · ping '+ms+' ms</small></div></div>';
+  return '<div class="conn"><span class="sig" aria-hidden="true">'+b+'</span><div><b>'+t+'</b><small>'+r+' acertos seguidos · ping '+ms+' ms</small></div></div>'+xh;
 }
 function drawLesson(){
   var q=curQ(),asked=L.state==='ask',h='<div class="lw">'+head()+'<div class="lbody">';
@@ -1254,7 +1321,7 @@ function check(){
   L.state='fb';L.ok=ok;S.total++;
   if(q.cid){var kk=knowOf(q.cid);kk.seen=kk.seen||1;if(ok)kk.ok++;else kk.bad++;kk.last=today()}
   if(ok){S.ok++;L.right++;gotRight();if(L.kind==='review')fixMiss(q)}
-  else{L.miss++;L.run=0;addMiss(q);if(!free())S.hearts=Math.max(0,S.hearts-1);L.queue.push(prep(q.src))}
+  else{L.miss++;L.run=0;sqHit(false);addMiss(q);if(!free())S.hearts=Math.max(0,S.hearts-1);if(L.kind!=='extra')L.queue.push(prep(q.src))}
   sfx(ok?(L.run>=3?'combo':'ok'):'bad');if(!ok)buzz(40);
   save();drawLesson();
 }
@@ -1271,7 +1338,12 @@ function finishLesson(){
   if(L.kind==='boss'){first=!S.done[L.key];gems=first?25:0;xp=25;}
   if(L.kind==='practice'){xp=5;S.hearts=Math.min(5,S.hearts+1)}
   if(L.kind==='review'){xp=8}
+  var xw=false;
+  if(L.kind==='extra'){var xg=L.g,xr=S.xch[xg]||(S.xch[xg]={w:0,t:0});xr.t++;xw=L.right>=Math.ceil(L.qb*2/3);first=xw&&!xr.w;if(xw)xr.w=1;xp=xw?15:5;gems=first?10:0}
   if(L.miss===0&&first)gems+=5;
+  var xcard='',xoffer=null;
+  if(L.kind==='phase'&&xchReady()){var xg2=parseInt(L.key,10),xe=pickExtras(xg2);if(xe.length>=2){xoffer={g:xg2,qs:xe};var xr2=S.xch[xg2];xcard='<button class="btn xbtn" data-act="xch">Aceitar o desafio</button>'}}
+  if(L.kind==='phase')SQ.n=0;
   var dy=day();dy.xp+=xp;
   if(L.kind==='phase'||L.kind==='boss'){
     dy.phases++;if(L.miss===0)dy.perfect++;
@@ -1280,17 +1352,18 @@ function finishLesson(){
   }
   S.xp+=xp;S.gems+=gems;touchStreak();save();
   var acc=L.qb?Math.round(L.qb/(L.qb+L.miss)*100):100;
-  var title=L.kind==='practice'?'Vida recuperada!':(L.kind==='review'?'Revisão concluída!':(L.kind==='boss'?'Chefe derrotado!':'Fase concluída!'));
-  var sub=L.kind==='practice'?'Você ganhou 1 vida. Bom treino.':(L.kind==='review'?'Revisar os erros ajuda a fixar o conteúdo.':L.miss===0?'Sem nenhum erro. Perfeito!':'Os erros também ensinam. Revise as dicas do jogo se quiser.');
+  var title=L.kind==='extra'?(xw?'Desafio superado!':'Quase lá!'):L.kind==='practice'?'Vida recuperada!':(L.kind==='review'?'Revisão concluída!':(L.kind==='boss'?'Chefe derrotado!':'Fase concluída!'));
+  var sub=L.kind==='extra'?(xw?'Você aplicou o assunto em situações novas. Isso é aprender de verdade.':'Esse desafio é mais difícil de propósito. Nada do seu progresso foi perdido, e os erros foram para a Revisão.'):L.kind==='practice'?'Você ganhou 1 vida. Bom treino.':(L.kind==='review'?'Revisar os erros ajuda a fixar o conteúdo.':L.miss===0?'Sem nenhum erro. Perfeito!':'Os erros também ensinam. Revise as dicas do jogo se quiser.');
   $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p>'+
+   (xoffer?'<div class="xch"><b>Desafio do Pingo</b><p>Você acertou 5 seguidas! Que tal '+xoffer.qs.length+' perguntas mais difíceis sobre <i>'+GAMES[xoffer.g].title+'</i>? É opcional. Se errar, você não perde nada do que já conquistou.</p><small>'+((S.xch[xoffer.g]&&S.xch[xoffer.g].w)?'Treino extra: +15 XP se acertar.':'Primeira vez: até +15 cristais se acertar.')+'</small></div>':'')+
    '<div class="res"><div><small style="background:#d99a00">XP</small><b>+'+xp+'</b></div>'+
    '<div><small style="background:#1e9a52">Precisão</small><b>'+acc+'%</b></div>'+
    '<div><small style="background:#0d8fc0">Melhor ping</small><b>'+Math.max(4,120-(L.best||0)*14)+' ms</b></div></div>'+
    (gems>0?'<div class="gpill">+'+gems+' cristais</div>':'')+
    (UP?'<div class="gpill" style="border-color:#ff8a1f;margin-top:8px"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span>'+UP.n+(UP.n===1?' dia seguido':' dias seguidos')+(UP.lupa?' · Lupa do Pingo desbloqueada!':'')+'</div>':'')+
    ((L.seen&&L.seen.length)?'<div class="learned"><small>O que você aprendeu</small><div class="lchips">'+L.seen.map(function(x){return'<span class="lchip">'+IC.check+x+'</span>'}).join('')+'</div></div>':'')+'</div></div>'+
-   '<div class="lfoot"><button class="btn" data-act="lclose">Continuar</button></div></div>';
-  L.kind='done';sfx('win');confetti();
+   '<div class="lfoot">'+xcard+'<button class="btn" data-act="lclose">'+(xcard?'Agora não':'Continuar')+'</button></div></div>';
+  L.xo=xoffer;L.kind='done';sfx('win');confetti();
 }
 function showNoHearts(){
   var can=S.gems>=60;
@@ -1468,6 +1541,7 @@ document.addEventListener('click',function(e){
   else if(a==='check'){check()}
   else if(a==='next'){next()}
   else if(a==='lclose'){closeLesson()}
+  else if(a==='xch'){var xo=L&&L.xo;if(xo){closeLesson();startLesson({kind:'extra',key:'x'+xo.g,g:xo.g,qs:xo.qs})}}
   else if(a==='practice'){startLesson({kind:'practice',key:'p',qs:shuffle(allQs()).slice(0,3)})}
   else if(a==='refill'){if(S.gems>=60){S.gems-=60;S.hearts=5;save();closeLesson()}}
   else if(a==='reset'){

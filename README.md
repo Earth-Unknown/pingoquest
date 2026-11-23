@@ -16,8 +16,13 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 - `eligibleQs()` só devolve perguntas de conceitos vistos e com pré-requisitos vistos. `masteryOf()` classifica em novo, aprendendo, frágil ou dominado.
 - Testes em `tests/` (rodar com Playwright): `conteudo.test.js` (perguntas únicas, formatos) e `conhecimento.test.js` (nada de conteúdo futuro, pré-requisitos, migração).
 
+## Fase 2 concluída: Desafio do Pingo (só na trilha)
+- 5 acertos seguidos no mesmo assunto (mundo) durante fases da trilha liberam o convite no fim da fase. Erro zera a sequência. Revisão, chefe, prática, casos e eventos não contam.
+- 30 perguntas extras (3 por mundo, dificuldade 3, em formato de situação/diagnóstico) em `EXTRA`, filtradas pelo que o aluno já viu (`eligible`).
+- Opcional: errar não tira vida nem progresso, e os erros vão para a Revisão. Com 2 de 3 acertos, vence. Cristais (+10, +5 se perfeito) só na primeira vitória por assunto; repetir dá só XP.
+- Teste: `tests/desafio5.test.js`.
+
 ## Próximas fases (ver `docs/`)
-2. Desafio da trilha: 5 acertos seguidos no mesmo assunto liberam 3 perguntas extras opcionais (só na trilha).
 3. Eventos temporários, revisão adaptada, coleção de peças, avatar robótico, auditoria.
 
 ## Decisões aprovadas (22/11/2026)
