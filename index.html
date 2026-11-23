@@ -7,35 +7,25 @@
 <style>
 /* Layout: trilha vertical em zigue-zague, estilo app de lições; mascote Pingo (um roteador) */
 :root{
-  --bg:#f5f6fc; --surface:#ffffff; --ink:#1c2342; --muted:#68709a;
-  --line:#e0e4f3; --line-deep:#ccd3ea;
-  --primary:#6c4df6; --primary-deep:#4a30c8; --on-primary:#ffffff;
-  --ok:#2fbf6b; --ok-deep:#1e9a52; --ok-bg:#ddf5e7; --ok-ink:#14693a;
-  --bad:#ff5560; --bad-deep:#d23a46; --bad-bg:#ffe2e4; --bad-ink:#a8222d;
-  --gold:#ffc43d; --gold-deep:#d89a00; --cyan:#19b5e8;
-  --locked:#e5e8f4; --locked-deep:#cbd1e6;
-  --face:#1b2140;
+  /* Paleta oficial do guia visual do Pingo Quest (neon roxo) */
+  --roxo:#7b3ff2; --roxo-fundo:#2a0a66; --lilas:#c88bff; --ciano-neon:#18ddfb; --rosa:#ff4fae; --amarelo:#ffd83d; --laranja:#ff9a1f; --verde:#7dff2b; --branco:#fff;
+  --bg:#2a0a66; --surface:#3a1388; --ink:#ffffff; --muted:#c3a6f5;
+  --line:#5b2bc0; --line-deep:#4a1fa3;
+  --primary:#7b3ff2; --primary-deep:#5a22c4; --on-primary:#ffffff;
+  --ok:#7dff2b; --ok-deep:#4fb80e; --ok-bg:#24511c; --ok-ink:#c4ff9a;
+  --bad:#ff5a7a; --bad-deep:#cf3050; --bad-bg:#561344; --bad-ink:#ffc0d0;
+  --gold:#ffd83d; --gold-deep:#d9a400; --cyan:#18ddfb;
+  --locked:#41208f; --locked-deep:#2e1470;
+  --face:#12052e;
+  --glow:0 0 18px rgba(24,221,251,.45);
   --font:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0f1426; --surface:#181f38; --ink:#eef0fc; --muted:#9aa3c8;
-  --line:#2a3358; --line-deep:#37426b;
-  --primary:#8b72ff; --primary-deep:#5c42d6; --on-primary:#12082e;
-  --ok:#3ccf7b; --ok-deep:#23a25a; --ok-bg:#12392a; --ok-ink:#8ff0b8;
-  --bad:#ff6b75; --bad-deep:#d6414c; --bad-bg:#3d1a25; --bad-ink:#ffb3b9;
-  --locked:#222a4a; --locked-deep:#171d36; --face:#0a0e1f; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0f1426; --surface:#181f38; --ink:#eef0fc; --muted:#9aa3c8;
-  --line:#2a3358; --line-deep:#37426b;
-  --primary:#8b72ff; --primary-deep:#5c42d6; --on-primary:#12082e;
-  --ok:#3ccf7b; --ok-deep:#23a25a; --ok-bg:#12392a; --ok-ink:#8ff0b8;
-  --bad:#ff6b75; --bad-deep:#d6414c; --bad-bg:#3d1a25; --bad-ink:#ffb3b9;
-  --locked:#222a4a; --locked-deep:#171d36; --face:#0a0e1f; color-scheme:dark}
 
 *{box-sizing:border-box}
 html,body{min-height:100%}
-body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.4;
+body{background:var(--bg);background-image:radial-gradient(120% 60% at 50% 0%,#4a1aa8 0%,rgba(74,26,168,0) 60%),linear-gradient(180deg,#2a0a66,#1d0650);background-attachment:fixed;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.4;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:0 110px;-webkit-tap-highlight-color:transparent}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
@@ -56,15 +46,15 @@ svg{display:block}
 
 /* botões 3D */
 .btn{display:block;width:100%;border:0;border-radius:16px;padding:15px 18px;font-weight:900;font-size:16px;
-  letter-spacing:.06em;text-transform:uppercase;background:var(--ok);color:#fff;box-shadow:0 5px 0 var(--ok-deep);
+  letter-spacing:.06em;text-transform:uppercase;background:var(--gold);color:var(--roxo-fundo);box-shadow:0 5px 0 var(--gold-deep);
   transition:transform .08s,box-shadow .08s}
-.btn:active:not(:disabled){transform:translateY(5px);box-shadow:0 0 0 var(--ok-deep)}
+.btn:active:not(:disabled){transform:translateY(5px);box-shadow:0 0 0 var(--gold-deep)}
 .btn:disabled{background:var(--locked);color:var(--muted);box-shadow:0 5px 0 var(--locked-deep);cursor:not-allowed}
 .btn.blue{background:var(--cyan);box-shadow:0 5px 0 #0e87b3;color:#04202c}
 .btn.blue:active:not(:disabled){box-shadow:0 0 0 #0e87b3}
 .btn.ghost{background:var(--surface);color:var(--cyan);border:2px solid var(--line-deep);box-shadow:0 4px 0 var(--line-deep);padding:13px 18px}
 .btn.ghost:active{box-shadow:0 0 0 var(--line-deep);transform:translateY(4px)}
-.btn.bad{background:var(--bad);box-shadow:0 5px 0 var(--bad-deep)}
+.btn.bad{background:var(--bad);color:#fff;box-shadow:0 5px 0 var(--bad-deep)}
 .btn.bad:active{box-shadow:0 0 0 var(--bad-deep)}
 .btn.prim{background:var(--primary);color:var(--on-primary);box-shadow:0 5px 0 var(--primary-deep)}
 .btn.prim:active{box-shadow:0 0 0 var(--primary-deep)}
@@ -235,7 +225,7 @@ svg{display:block}
 .card h3{margin:0 0 12px;font-size:20px;font-weight:900}
 .bar.gold{position:relative;height:24px}
 .bar.gold i{background:var(--gold)}
-.bar.gold span{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:13px;color:#4a3300}
+.bar.gold span{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:13px;color:#fff;text-shadow:0 1px 2px rgba(42,10,102,.9)}
 .bar.sm{height:10px;margin:6px 0 3px}
 .mrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:2px solid var(--line)}
 .card h3+.mrow{border-top:0;padding-top:0}
