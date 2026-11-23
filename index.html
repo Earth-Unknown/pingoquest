@@ -1061,7 +1061,7 @@ function pingo(mood,cls,av){
     eyes='<ellipse class="m-oval" cx="46" cy="53" rx="5" ry="8"/><circle cx="44" cy="49.500" r="2" fill="#fff"/><ellipse class="m-oval r" cx="74" cy="53" rx="5" ry="8"/><circle cx="72" cy="49.500" r="2" fill="#fff"/>';
     mouth='<g class="m-smile"><path d="M54 63q6 6 12 0" fill="none" stroke="#ff4fae" stroke-width="3.400" stroke-linecap="round"/></g><ellipse class="m-wow" cx="60" cy="66" rx="5.500" ry="6.500" fill="#ff4fae"/><ellipse class="m-wow" cx="60" cy="68.500" rx="3" ry="2.500" fill="#ff9fd0"/>';
   }
-  var cfg=av?avCfg():null,st='',back='',ant,hat='',vis='';
+  var cfg=av===false?null:avCfg(),st='',back='',ant,hat='',vis='';
   ant='<path class="m-ant" d="M58 24C57 10 68 7 79 11" fill="none"/><circle class="m-tip" cx="82" cy="12" r="7"/><circle cx="80" cy="10" r="2" fill="#fff" opacity=".8"/>';
   if(cfg){
     var c=AV_COR[cfg.cor]||AV_COR.azul,e=AV_OLHOS[cfg.olhos]||AV_OLHOS.ciano;
@@ -1077,7 +1077,7 @@ function pingo(mood,cls,av){
     else if(cfg.visor==='hud')vis='<rect x="35" y="43" width="50" height="17" rx="8.500" fill="rgba(25,181,232,.10)" stroke="var(--cyan)" stroke-width="1.800"/><path d="M41 47h7" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".7"/>';
   }
   var phone=function(x){var l=x<60;return '<rect class="m-low" x="'+(l?9:99)+'" y="44" width="12" height="24" rx="6"/><rect x="'+(l?12:102)+'" y="49" width="6" height="14" rx="3" fill="var(--cyan)"/>'};
-  return '<svg viewBox="0 0 120 120" class="'+(cls||'')+'"'+st+' data-m="'+mood+'" role="img" aria-label="'+(av?'Seu robô':'Pingo, o roteador mascote')+'">'+back+
+  return '<svg viewBox="0 0 120 120" class="'+(cls||'')+'"'+st+' data-m="'+mood+'" role="img" aria-label="Pingo, '+(av?'seu robô':'o roteador mascote')+'">'+back+
    (cfg&&cfg.cabeca==='capacete'?'':ant)+
    /* mochila, corpo e botas */
    '<rect class="m-low" x="40" y="82" width="40" height="26" rx="12"/><rect class="m-body" x="40" y="80" width="40" height="25" rx="12"/>'+
@@ -1126,11 +1126,11 @@ function pingoShow(sv){
 /* ===== Fase 5: avatar robótico + inventário =====
    Um robô base com acessórios trocáveis. Itens são só estéticos (não dão vantagem em respostas).
    Itens desbloqueados ficam permanentes em S.inv.items; equipar/desequipar não gasta chips. */
-var AV_COR={azul:['#1d7fe0','#145fb0'],verde:['#2fbf6b','#1f8f4f'],roxo:['#8a5cf0','#6a3fcf'],laranja:['#ff8a1f','#d46a0a'],grafite:['#5a6577','#3d4655']};
+var AV_COR={padrao:['#7b3ff2','#5a22c4'],azul:['#1d7fe0','#145fb0'],verde:['#2fbf6b','#1f8f4f'],roxo:['#8a5cf0','#6a3fcf'],laranja:['#ff8a1f','#d46a0a'],grafite:['#5a6577','#3d4655']};
 var AV_OLHOS={ciano:'#19e0ff',verde:'#5be37d',magenta:'#ff5fd0',dourado:'#ffd23f'};
 var AV_SLOTS=[
  {id:'cor',nome:'Cor do corpo',obrig:1,itens:[
-  {id:'azul',nome:'Azul rede',free:1},{id:'verde',nome:'Verde LAN',req:'Conclua 3 fases',ok:function(){return doneCount()>=3}},
+  {id:'padrao',nome:'Roxo Pingo',free:1},{id:'azul',nome:'Azul rede',free:1},{id:'verde',nome:'Verde LAN',req:'Conclua 3 fases',ok:function(){return doneCount()>=3}},
   {id:'roxo',nome:'Roxo VPN',req:'Conclua 1 prova final',ok:function(){return S.bosses>=1}},{id:'laranja',nome:'Laranja cabo',req:'Conclua 10 fases',ok:function(){return doneCount()>=10}},
   {id:'grafite',nome:'Grafite datacenter',req:'Conclua 20 fases',ok:function(){return doneCount()>=20}}]},
  {id:'olhos',nome:'Olhos',obrig:1,itens:[
@@ -1147,7 +1147,7 @@ var AV_SLOTS=[
  {id:'costas',nome:'Mochila',itens:[
   {id:'rack',nome:'Mini rack',req:'Conclua 6 fases',ok:function(){return doneCount()>=6}},{id:'cabos',nome:'Rolo de cabos',req:'Conclua 12 fases',ok:function(){return doneCount()>=12}}]}
 ];
-var AV_DEF={cor:'azul',olhos:'ciano',antena:'padrao',cabeca:'',visor:'',costas:''};
+var AV_DEF={cor:'padrao',olhos:'ciano',antena:'padrao',cabeca:'',visor:'',costas:''};
 function avKey(slot,id){return slot+':'+id}
 function avHas(slot,it){
   if(it.free)return true;
@@ -1163,6 +1163,7 @@ function avSync(){
   if(ch)save();
 }
 function avCfg(){
+  if(!S.avv){S.avv=1;if(S.av&&S.av.cor==='azul')S.av.cor='padrao';save()}
   var c=Object.assign({},AV_DEF,S.av||{});
   AV_SLOTS.forEach(function(sl){
     var it=sl.itens.filter(function(i){return i.id===c[sl.id]})[0];

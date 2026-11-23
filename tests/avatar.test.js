@@ -7,9 +7,9 @@ const {chromium}=require('playwright');const fs=require('fs');const assert=requi
  await pg.setContent(h);await pg.waitForTimeout(300);
  // estado inicial: só itens grátis
  let r=await pg.evaluate(()=>{AVT.sync();return {cfg:AVT.cfg(),inv:S.inv.items.slice()}});
- assert.strictEqual(r.cfg.cor,'azul');assert.deepStrictEqual(r.inv,[]);
+ assert.strictEqual(r.cfg.cor,'padrao');assert.deepStrictEqual(r.inv,[]);
  // item bloqueado não equipa
- r=await pg.evaluate(()=>{AVT.equip('cor','roxo');return AVT.cfg().cor});assert.strictEqual(r,'azul');
+ r=await pg.evaluate(()=>{AVT.equip('cor','roxo');return AVT.cfg().cor});assert.strictEqual(r,'padrao');
  // item grátis equipa e desequipa (slot opcional)
  r=await pg.evaluate(()=>{AVT.equip('cabeca','bone');var a=AVT.cfg().cabeca;AVT.equip('cabeca','bone');return [a,AVT.cfg().cabeca]});
  assert.deepStrictEqual(r,['bone','']);
