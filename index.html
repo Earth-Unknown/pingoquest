@@ -1530,7 +1530,19 @@ function sqHit(ok){
   if(ok)SQ.n++;else SQ.n=0;
 }
 function xchReady(){return !!L&&L.kind==='phase'&&SQ.g===parseInt(L.key,10)&&SQ.n>=5}
-function pickExtras(g){return (EXTRA[g]||[]).filter(function(q){return eligible(q.cid)}).slice(0,3)}
+function pickExtras(g){
+  var base=(EXTRA[g]||[]),ph=(GAMES[g]&&GAMES[g].phases)||[],seen=S.xseen||(S.xseen=[]);
+  var more=[];ph.forEach(function(p){p.forEach(function(q){if((q.t==='mc'||q.t==='vf')&&q.o!==undefined||q.t==='vf')more.push(q)})});
+  var pool=base.concat(more).filter(function(q){return q.t!=='learn'&&eligible(q.cid)});
+  var fresh=pool.filter(function(q){return seen.indexOf(q.q)<0});
+  if(fresh.length<3){seen.length=0;fresh=pool}
+  var out=[],cids={};
+  shuffle(fresh).forEach(function(q){if(out.length<3&&!cids[q.cid]){out.push(q);cids[q.cid]=1}});
+  shuffle(fresh).forEach(function(q){if(out.length<3&&out.indexOf(q)<0)out.push(q)});
+  out.forEach(function(q){if(seen.indexOf(q.q)<0)seen.push(q.q)});
+  if(seen.length>60)seen.splice(0,seen.length-60);
+  return out.map(function(q){var c=Object.assign({},q);c.dif=3;c.rs=c.rs||'aprovado';c.x=1;c.lk='x'+g;return c});
+}
 
 /* ===== Fase 3: base de eventos temporários =====
    Tudo é configurado por dados em EVENTS. Sem nenhum evento ligado, nada aparece na trilha.
