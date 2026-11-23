@@ -1,0 +1,284 @@
+CONTEXTO DO PROJETO — NOVAS FUNCIONALIDADES DO PINGO QUEST
+
+Quero implementar novas funcionalidades no Pingo Quest, uma plataforma de aprendizagem gamificada inspirada em algumas mecânicas do Duolingo, mas voltada inicialmente para Redes de Computadores.
+
+A ideia é tornar a aprendizagem mais interessante, incentivar o usuário a retornar ao aplicativo, reforçar os conteúdos estudados e permitir que ele conquiste recompensas e personalize seu próprio avatar.
+
+Apresentei quatro funcionalidades principais que precisam funcionar de maneira integrada, mas com regras próprias.
+
+1. EVENTOS TEMPORÁRIOS
+
+Quero criar eventos especiais dentro do aplicativo, semelhantes aos eventos temporários do Duolingo.
+
+Esses eventos aparecerão em destaque na tela principal, próximos à trilha de aprendizagem, com identidade visual própria, nome, imagem ilustrativa e contagem regressiva.
+
+Por exemplo:
+
+Evento: Operação Rede Conectada
+
+Durante esse evento, o usuário deverá concluir algumas etapas para colecionar peças de um equipamento de Redes de Computadores, ganhar cristais e desbloquear acessórios exclusivos para seu avatar.
+
+Como os eventos funcionarão
+
+Os eventos terão uma data fixa de início e encerramento, igual para todos os usuários.
+
+Entretanto, o número de dias disponíveis será maior que a quantidade de etapas obrigatórias.
+
+Exemplo:
+
+- Evento com duração de 10 dias.
+- Três etapas obrigatórias.
+- Uma etapa pode ser concluída por dia.
+- O usuário precisa participar em três dias diferentes.
+- Os dias não precisam ser consecutivos.
+
+Assim, o usuário poderá concluir as etapas nos dias 1, 2 e 3 ou nos dias 2, 5 e 9.
+
+Isso incentiva o retorno ao aplicativo sem prejudicar excessivamente quem deixa de acessar em determinado dia.
+
+Ao concluir todas as etapas, o usuário recebe o prêmio principal. Quando o evento termina, ele deixa de aparecer entre os eventos ativos.
+
+Os itens e cristais já conquistados permanecem na conta.
+
+Perguntas dos eventos
+
+Cada etapa do evento terá, inicialmente, seis perguntas.
+
+Essas perguntas devem utilizar somente assuntos que o usuário já estudou na trilha normal.
+
+Por exemplo, se ele estudou fundamentos de redes e conceitos introdutórios de endereço IP, o evento poderá utilizar esses conteúdos.
+
+Se ainda não estudou modelo OSI, portas ou protocolos mais avançados, o evento não deverá apresentar perguntas desses assuntos.
+
+O sistema deverá consultar o progresso individual do usuário para selecionar as perguntas adequadas.
+
+Importante: os eventos não terão o sistema de três perguntas difíceis extras após cinco acertos consecutivos. Essa mecânica pertence exclusivamente à trilha normal.
+
+2. REPETIÇÃO INTELIGENTE DE PERGUNTAS
+
+Apresentei a ideia de utilizar diferentes formatos de perguntas para reforçar o mesmo conhecimento.
+
+Minha referência foi a maneira como o Duolingo trabalha o vocabulário de idiomas.
+
+Quando o usuário aprende uma palavra, o aplicativo pode solicitar que ele reconheça, escreva, associe ou identifique a mesma informação de diferentes maneiras.
+
+Quero aplicar essa lógica ao ensino de Redes de Computadores.
+
+Por exemplo, ao estudar IPv4, o usuário poderá encontrar perguntas como:
+
+- O que é um endereço IP?
+- Para que serve um endereço IP?
+- Quantos bits possui um endereço IPv4?
+- Qual das opções representa um IPv4 válido?
+- Identifique os octetos de determinado endereço.
+- Associe o conceito de endereço IP à sua função.
+- Complete uma frase sobre endereçamento de rede.
+
+A intenção não é simplesmente repetir a mesma pergunta com as alternativas embaralhadas.
+
+Quero que o aluno encontre o mesmo conceito em diferentes situações, formatos e níveis de aplicação, para consolidar a aprendizagem.
+
+O aplicativo também precisa acompanhar quais conceitos o usuário já estudou, quais domina e quais precisa revisar.
+
+Os eventos utilizarão esse mecanismo de revisão, mas respeitando o nível e os conhecimentos efetivamente apresentados ao usuário.
+
+3. CINCO ACERTOS CONSECUTIVOS NA TRILHA NORMAL
+
+Outra funcionalidade apresentada foi um sistema de desafios avançados dentro das lições normais.
+
+Quando o usuário estiver estudando na trilha principal e acertar cinco perguntas consecutivas do mesmo assunto, será desbloqueado um desafio especial.
+
+Esse desafio apresentará três perguntas adicionais mais difíceis, relacionadas ao assunto que ele está estudando.
+
+Exemplo:
+
+O usuário está na trilha de Endereços IP.
+
+Ele responde corretamente cinco perguntas consecutivas sobre aquele conteúdo.
+
+O aplicativo identifica a sequência e apresenta uma oportunidade de realizar um desafio avançado.
+
+As três perguntas adicionais exigirão maior raciocínio ou aplicação do conhecimento.
+
+O desafio será opcional e poderá oferecer recompensas extras.
+
+Caso o usuário erre, não deverá perder o progresso que já conquistou na trilha.
+
+A dificuldade precisa respeitar os conhecimentos já apresentados. Não podemos cobrar conteúdos de unidades futuras apenas porque o usuário acertou cinco questões.
+
+Essa mecânica deverá funcionar exclusivamente nas trilhas normais de aprendizagem. Não deverá aparecer nos eventos temporários.
+
+4. CRISTAIS E RECOMPENSAS
+
+Quero manter os cristais como uma moeda virtual do aplicativo.
+
+Atualmente, o jogo já possui um sistema de cristais e vidas.
+
+Minha intenção é ampliar as possibilidades de obter cristais e utilizá-los.
+
+O usuário poderá ganhar cristais:
+
+- Ao concluir lições e avançar nas trilhas.
+- Ao cumprir missões diárias.
+- Ao completar etapas de eventos temporários.
+- Ao conquistar recompensas especiais.
+- Ao concluir desafios definidos pelo aplicativo.
+
+Os cristais poderão ser utilizados para recuperar vidas e, futuramente, adquirir determinados itens de personalização.
+
+O sistema de recompensas precisa ser equilibrado. Não quero que o usuário consiga acumular cristais ilimitadamente apenas repetindo a mesma atividade.
+
+Por outro lado, a falta de cristais não deve impedir que ele revise conteúdos ou continue praticando conhecimentos já estudados.
+
+A ideia é criar uma economia de recompensas que incentive a participação, sem prejudicar a experiência educacional.
+
+5. QUEBRA-CABEÇAS DE EQUIPAMENTOS DE REDES
+
+Apresentei também uma mecânica inspirada em um evento do Duolingo em que o usuário completa um quebra-cabeça para desbloquear uma fantasia.
+
+No Pingo Quest, decidi que não quero simplesmente copiar esse sistema de fantasias.
+
+Escolhi a opção de colecionar peças para montar equipamentos de Redes de Computadores.
+
+Exemplos:
+
+- Roteador.
+- Switch.
+- Servidor.
+- Equipamentos de fibra óptica.
+- Dispositivos de segurança de rede.
+
+Durante os eventos, o usuário conquista peças de um quebra-cabeça ilustrado.
+
+Ao reunir todas as peças, completa a imagem do equipamento e desbloqueia uma recompensa especial.
+
+Por exemplo:
+
+Durante o evento Operação Rede Conectada, o usuário coleta nove peças de um roteador.
+
+Ao completar o roteador, recebe cristais e desbloqueia uma antena Wi-Fi especial para seu avatar robótico.
+
+A coleção de equipamentos deverá ser visualmente atrativa, com progresso de montagem e animações de recompensa.
+
+6. AVATAR ROBÓTICO PERSONALIZÁVEL
+
+Também quero criar uma funcionalidade de personalização de avatar dentro do perfil do usuário.
+
+A proposta é permitir que cada pessoa tenha seu próprio robozinho.
+
+Inicialmente, podemos trabalhar com um robô-base personalizável, em vez de criar dezenas de modelos diferentes.
+
+O usuário poderá modificar elementos como:
+
+- Cores do corpo.
+- Olhos e expressões.
+- Antenas.
+- Capacetes.
+- Viseiras.
+- Acessórios tecnológicos.
+- Mochilas e outros elementos visuais.
+
+Alguns itens poderão estar disponíveis desde o início.
+
+Outros serão desbloqueados conforme o usuário estuda, cumpre missões, participa de eventos ou completa coleções de equipamentos.
+
+Por exemplo:
+
+- Montar o roteador desbloqueia uma antena Wi-Fi especial.
+- Montar o switch desbloqueia um visor de conexões.
+- Montar o servidor desbloqueia uma mochila tecnológica.
+- Completar um evento especial desbloqueia um acessório exclusivo.
+
+Os acessórios conquistados deverão permanecer no inventário do usuário.
+
+Ele poderá acessar o perfil, visualizar os itens disponíveis e personalizar seu robô.
+
+Essa funcionalidade cria uma conexão entre a aprendizagem e a identidade visual do jogador.
+
+7. INTEGRAÇÃO DOS SISTEMAS
+
+Embora essas funcionalidades estejam conectadas, cada uma deverá ter suas próprias regras.
+
+Trilha normal
+
+É onde o aluno aprende novos assuntos, responde perguntas, avança pelas unidades e desbloqueia conteúdos.
+
+É também onde funciona a mecânica de cinco acertos consecutivos, seguida do desafio opcional de três perguntas avançadas.
+
+Eventos temporários
+
+São atividades com datas fixas, etapas próprias e recompensas específicas.
+
+As perguntas utilizam os conteúdos já estudados pelo aluno, mas não liberam assuntos novos nem acionam os desafios avançados da trilha.
+
+Sistema de conhecimento
+
+Registra o progresso do aluno por assunto, permitindo selecionar perguntas e revisões adequadas ao seu nível.
+
+Sistema de recompensas
+
+Controla cristais, peças de quebra-cabeça, conquistas e itens desbloqueados.
+
+Avatar e inventário
+
+Armazena os acessórios conquistados e permite personalizar o personagem.
+
+Esses sistemas deverão compartilhar as informações necessárias, sem misturar suas regras.
+
+8. OBJETIVO FINAL
+
+Quero que o Pingo Quest continue sendo uma plataforma de aprendizagem com lições, perguntas e progressão semelhante à experiência gamificada do Duolingo.
+
+Entretanto, desejo acrescentar mecanismos que incentivem o aprendizado e façam o usuário retornar por interesse real na experiência.
+
+O usuário deverá perceber que:
+
+- Está aprendendo conteúdos novos.
+- Está consolidando conhecimentos anteriores.
+- Sua dificuldade acompanha sua evolução.
+- Pode conquistar recompensas ao estudar.
+- Existem eventos especiais disponíveis por períodos limitados.
+- Seu avatar evolui visualmente conforme suas conquistas.
+- Os conhecimentos estudados são reaproveitados em diferentes atividades.
+
+O objetivo não é transformar o aplicativo em uma coleção de jogos desconectados, mas criar uma experiência de aprendizagem contínua, divertida, progressiva e personalizada.
+
+9. ORIENTAÇÃO PARA A IMPLEMENTAÇÃO
+
+Antes de desenvolver essas funcionalidades, quero que seja analisada a estrutura atual do jogo, preservando tudo que já funciona.
+
+A implementação deverá ocorrer por etapas, preferencialmente nesta ordem:
+
+Fase 1 — Estrutura de conhecimento e perguntas
+
+Organizar os assuntos, questões, níveis de dificuldade e progresso individual do usuário.
+
+Fase 2 — Desafios avançados da trilha
+
+Implementar a detecção de cinco acertos consecutivos e o desbloqueio das três perguntas avançadas opcionais.
+
+Fase 3 — Sistema de eventos
+
+Criar eventos com datas fixas, duração configurável, etapas independentes e limite de uma etapa válida por dia.
+
+Fase 4 — Revisão adaptada aos eventos
+
+Utilizar o histórico de aprendizagem para selecionar seis perguntas adequadas ao conhecimento de cada usuário.
+
+Fase 5 — Recompensas e quebra-cabeças
+
+Criar o sistema de peças colecionáveis, projetos de equipamentos, cristais e prêmios.
+
+Fase 6 — Avatar robótico
+
+Implementar o robô personalizável, inventário de acessórios e vinculação das conquistas ao perfil.
+
+Fase 7 — Auditoria e integração
+
+Validar a comunicação entre todos os sistemas, evitar recompensas duplicadas, impedir manipulação de datas e garantir a preservação do progresso do aluno.
+
+Essas fases são uma ordem recomendada de implementação e podem ser ajustadas após a análise técnica do código.
+
+Não implementar tudo de uma vez e não alterar funcionalidades existentes fora do escopo necessário.
+
+Primeiro, quero que a arquitetura e as regras sejam compreendidas integralmente. Depois, a implementação poderá ser dividida em entregas pequenas, testáveis e progressivas.
