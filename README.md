@@ -43,3 +43,10 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 ## Publicação
 - Fonte do jogo: `src/jogo.html` (fragmento no formato do Artifact do claude.ai, publicado como está).
 - `index.html` da raiz é GERADO por `sh build-site.sh` (página completa com doctype e regra `[hidden]`). Sirva o GitHub Pages pela branch `main` (raiz) ou por Actions: os dois funcionam. Depois de mexer em `src/jogo.html`, rode o script e faça commit dos dois arquivos (`tests/site.test.js` confere).
+
+## Fase 5 — Avatar robótico + inventário
+
+- Perfil ganhou "Meu robô": um robô base com acessórios trocáveis (cor, olhos, antena, cabeça, visor, mochila).
+- Itens são **apenas visuais** (sem vantagem nas respostas). Alguns são grátis; outros desbloqueiam por estudo (fases, XP, chefes, acertos, sequência) ou evento (Antena Wi-Fi especial).
+- Itens desbloqueados ficam permanentes em `S.inv.items` (sem duplicar); equipar/desequipar não gasta cristais. Equipado fica em `S.av`.
+- Teste: `node tests/avatar.test.js`.

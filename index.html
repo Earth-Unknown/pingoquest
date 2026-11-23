@@ -181,6 +181,12 @@ svg{display:block}
 .sheet code{font-family:var(--mono);font-size:.92em;background:var(--locked);padding:1px 6px;border-radius:6px}
 
 /* mascote */
+.avbox{display:flex;justify-content:center;padding:6px 0}.avbig{width:170px}
+.avrow{margin:10px 0}.avrow>b{display:block;font-size:14px;margin-bottom:6px;color:var(--muted)}
+.avchips{display:flex;flex-wrap:wrap;gap:8px}
+.avchip{font:inherit;font-weight:800;font-size:14px;padding:9px 12px;border-radius:12px;border:2px solid var(--line-deep);background:var(--surface);color:var(--text,inherit);cursor:pointer;display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px}
+.avchip.on{border-color:var(--cyan);box-shadow:0 0 0 2px var(--cyan) inset}
+.avchip.lock{opacity:.55;cursor:default}.avchip small{font-weight:700;font-size:11px;color:var(--muted)}
 .m-body{fill:var(--primary)}.m-low{fill:var(--primary-deep)}.m-face{fill:var(--face)}
 .m-eye{fill:none;stroke:var(--cyan);stroke-width:4;stroke-linecap:round}.m-pupil{fill:var(--cyan)}
 .m-mouth{fill:none;stroke:#fff;stroke-width:3.5;stroke-linecap:round}.m-tip{fill:var(--gold)}.m-ant{stroke:var(--primary-deep);stroke-width:4;stroke-linecap:round}
@@ -856,24 +862,111 @@ var IC={
  skull:'<svg viewBox="0 0 24 24" fill="#a56bff"><path d="M12 2C7 2 3.500 5.500 3.500 10c0 2.600 1.200 4.200 2.500 5.200V19a1.500 1.500 0 0 0 1.500 1.500h1V18h1.500v2.500h3V18H15v2.500h1a1.500 1.500 0 0 0 1.500-1.500v-3.800c1.300-1 2.500-2.600 2.500-5.200C20.500 5.500 17 2 12 2z"/><circle cx="8.700" cy="10.500" r="2" fill="#fff"/><circle cx="15.300" cy="10.500" r="2" fill="#fff"/></svg>'
 };
 IC.search='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="10.500" cy="10.500" r="6.500"/><path d="M15.500 15.500L21 21"/></svg>';
-function pingo(mood,cls){
+function pingo(mood,cls,av){
   var eyes,mouth,brow='';
   if(mood==='sad'){eyes='<circle class="m-pupil" cx="48" cy="62" r="4.500"/><circle class="m-pupil" cx="72" cy="62" r="4.500"/>';
     brow='<path class="m-eye" d="M41 51l13 4M79 51l-13 4"/>';mouth='<path class="m-mouth" d="M52 91q8-7 16 0"/>';}
   else if(mood==='cheer'){eyes='<path class="m-eye" d="M42 64q6-9 12 0M66 64q6-9 12 0"/>';mouth='<path class="m-mouth" d="M50 85q10 11 20 0z" style="fill:#fff"/>';}
   else{eyes='<path class="m-eye" d="M42 64q6-9 12 0M66 64q6-9 12 0"/>';mouth='<path class="m-mouth" d="M52 86q8 7 16 0"/>';}
-  return '<svg viewBox="0 0 120 120" class="'+(cls||'')+'" role="img" aria-label="Pingo, o roteador mascote">'+
-   '<line class="m-ant" x1="60" y1="16" x2="60" y2="32"/><circle class="m-tip" cx="60" cy="13" r="7"/>'+
+  var cfg=av?avCfg():null,st='',back='',ant,hat='',vis='';
+  ant='<line class="m-ant" x1="60" y1="16" x2="60" y2="32"/><circle class="m-tip" cx="60" cy="13" r="7"/>';
+  if(cfg){
+    var c=AV_COR[cfg.cor]||AV_COR.azul,e=AV_OLHOS[cfg.olhos]||AV_OLHOS.ciano;
+    st=' style="--primary:'+c[0]+';--primary-deep:'+c[1]+';--cyan:'+e+'"';
+    if(cfg.antena==='dupla')ant='<line class="m-ant" x1="46" y1="20" x2="52" y2="32"/><circle class="m-tip" cx="44" cy="17" r="6"/><line class="m-ant" x1="74" y1="20" x2="68" y2="32"/><circle class="m-tip" cx="76" cy="17" r="6"/>';
+    else if(cfg.antena==='antena-wifi')ant='<line class="m-ant" x1="60" y1="22" x2="60" y2="32"/><circle class="m-tip" cx="60" cy="22" r="3.500"/><path class="m-wifi" style="stroke:var(--gold);stroke-width:3.500" d="M51 17q9-8 18 0M45 11q15-13 30 0"/>';
+    else if(cfg.antena==='parabolica')ant='<line class="m-ant" x1="60" y1="20" x2="60" y2="32"/><path d="M42 10q18 18 36 0z" fill="#e8eef7" stroke="var(--primary-deep)" stroke-width="3" stroke-linejoin="round"/><circle class="m-tip" cx="60" cy="9" r="3.500"/>';
+    if(cfg.costas==='rack')back='<rect x="13" y="42" width="94" height="58" rx="12" fill="#4a5a78"/><circle cx="17" cy="52" r="2.500" fill="#5be37d"/><circle cx="103" cy="52" r="2.500" fill="#ffb700"/><circle cx="17" cy="62" r="2.500" fill="#5be37d"/>';
+    else if(cfg.costas==='cabos')back='<rect x="14" y="44" width="92" height="56" rx="12" fill="#ff8a1f"/><circle cx="14" cy="76" r="9" fill="none" stroke="#3b82f6" stroke-width="4"/><circle cx="106" cy="76" r="9" fill="none" stroke="#5be37d" stroke-width="4"/>';
+    if(cfg.cabeca==='bone')hat='<path d="M26 40q0-16 34-16q34 0 34 16z" fill="#ffb700"/><rect x="20" y="37" width="40" height="7" rx="3.500" fill="#e09b00"/>';
+    else if(cfg.cabeca==='capacete')hat='<path d="M24 42q0-26 36-26q36 0 36 26z" fill="#ffcf33"/><rect x="22" y="39" width="76" height="6" rx="3" fill="#e0a800"/><rect x="55" y="16" width="10" height="24" fill="#e0a800"/>';
+    if(cfg.visor==='oculos')vis='<circle cx="48" cy="63" r="10" fill="rgba(255,255,255,.15)" stroke="#fff" stroke-width="3"/><circle cx="72" cy="63" r="10" fill="rgba(255,255,255,.15)" stroke="#fff" stroke-width="3"/><path d="M58 63h4" stroke="#fff" stroke-width="3"/>';
+    else if(cfg.visor==='hud')vis='<rect x="33" y="52" width="54" height="24" rx="12" fill="rgba(25,181,232,.28)" stroke="var(--cyan)" stroke-width="2.500"/><path d="M40 58h10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>';
+  }
+  return '<svg viewBox="0 0 120 120" class="'+(cls||'')+'"'+st+' role="img" aria-label="'+(av?'Seu robô':'Pingo, o roteador mascote')+'">'+back+
+   (cfg&&cfg.cabeca==='capacete'?'':ant)+
    '<rect class="m-low" x="14" y="62" width="11" height="24" rx="5.500"/><rect class="m-low" x="95" y="62" width="11" height="24" rx="5.500"/>'+
    '<rect class="m-low" x="22" y="36" width="76" height="68" rx="28"/><rect class="m-body" x="22" y="30" width="76" height="68" rx="28"/>'+
-   '<rect class="m-face" x="32" y="46" width="56" height="34" rx="17"/>'+eyes+brow+mouth+
+   '<rect class="m-face" x="32" y="46" width="56" height="34" rx="17"/>'+eyes+brow+mouth+vis+
    '<path class="m-wifi" d="M50 40q10-6 20 0"/>'+
-   '<rect class="m-low" x="30" y="100" width="22" height="11" rx="5.500"/><rect class="m-low" x="68" y="100" width="22" height="11" rx="5.500"/></svg>';
+   '<rect class="m-low" x="30" y="100" width="22" height="11" rx="5.500"/><rect class="m-low" x="68" y="100" width="22" height="11" rx="5.500"/>'+hat+
+   (cfg&&cfg.cabeca==='capacete'?ant:'')+'</svg>';
 }
+
+/* ===== Fase 5: avatar robótico + inventário =====
+   Um robô base com acessórios trocáveis. Itens são só estéticos (não dão vantagem em respostas).
+   Itens desbloqueados ficam permanentes em S.inv.items; equipar/desequipar não gasta cristais. */
+var AV_COR={azul:['#1d7fe0','#145fb0'],verde:['#2fbf6b','#1f8f4f'],roxo:['#8a5cf0','#6a3fcf'],laranja:['#ff8a1f','#d46a0a'],grafite:['#5a6577','#3d4655']};
+var AV_OLHOS={ciano:'#19e0ff',verde:'#5be37d',magenta:'#ff5fd0',dourado:'#ffd23f'};
+var AV_SLOTS=[
+ {id:'cor',nome:'Cor do corpo',obrig:1,itens:[
+  {id:'azul',nome:'Azul rede',free:1},{id:'verde',nome:'Verde LAN',req:'Conclua 3 fases',ok:function(){return doneCount()>=3}},
+  {id:'roxo',nome:'Roxo VPN',req:'Derrote 1 chefe',ok:function(){return S.bosses>=1}},{id:'laranja',nome:'Laranja cabo',req:'Alcance 3 dias seguidos',ok:function(){return Math.max(S.streak||0,streakNow())>=3}},
+  {id:'grafite',nome:'Grafite datacenter',req:'Junte 500 XP',ok:function(){return S.xp>=500}}]},
+ {id:'olhos',nome:'Olhos',obrig:1,itens:[
+  {id:'ciano',nome:'Ciano',free:1},{id:'verde',nome:'Verde link',req:'Junte 150 XP',ok:function(){return S.xp>=150}},
+  {id:'magenta',nome:'Magenta',req:'Conclua 6 fases',ok:function(){return doneCount()>=6}},{id:'dourado',nome:'Dourado',req:'Derrote 3 chefes',ok:function(){return S.bosses>=3}}]},
+ {id:'antena',nome:'Antena',obrig:1,itens:[
+  {id:'padrao',nome:'Antena padrão',free:1},{id:'dupla',nome:'Antena dupla',req:'Conclua 2 fases',ok:function(){return doneCount()>=2}},
+  {id:'antena-wifi',nome:'Antena Wi-Fi especial',req:'Prêmio do evento Rede Conectada',ev:1},
+  {id:'parabolica',nome:'Parabólica',req:'Junte 1000 XP',ok:function(){return S.xp>=1000}}]},
+ {id:'cabeca',nome:'Cabeça',itens:[
+  {id:'bone',nome:'Boné de técnico',free:1},{id:'capacete',nome:'Capacete de campo',req:'Conclua 4 fases',ok:function(){return doneCount()>=4}}]},
+ {id:'visor',nome:'Visor',itens:[
+  {id:'oculos',nome:'Óculos tech',req:'Conclua 1 fase',ok:function(){return doneCount()>=1}},{id:'hud',nome:'Visor HUD',req:'Alcance 5 dias seguidos',ok:function(){return Math.max(S.streak||0,streakNow())>=5}}]},
+ {id:'costas',nome:'Mochila',itens:[
+  {id:'rack',nome:'Mini rack',req:'Conclua 5 fases',ok:function(){return doneCount()>=5}},{id:'cabos',nome:'Rolo de cabos',req:'Acerte 100 perguntas',ok:function(){return S.ok>=100}}]}
+];
+var AV_DEF={cor:'azul',olhos:'ciano',antena:'padrao',cabeca:'',visor:'',costas:''};
+function avKey(slot,id){return slot+':'+id}
+function avHas(slot,it){
+  if(it.free)return true;
+  if(it.ev)return (S.inv.items||[]).indexOf(it.id)>=0;
+  return (S.inv.items||[]).indexOf(avKey(slot,it.id))>=0;
+}
+/* concede itens cujas condições já foram cumpridas (idempotente, nunca duplica) */
+function avSync(){
+  var ch=false;S.inv=S.inv||{items:[],coll:{}};S.inv.items=S.inv.items||[];
+  AV_SLOTS.forEach(function(sl){sl.itens.forEach(function(it){
+    if(it.ok&&it.ok()&&S.inv.items.indexOf(avKey(sl.id,it.id))<0){S.inv.items.push(avKey(sl.id,it.id));ch=true}
+  })});
+  if(ch)save();
+}
+function avCfg(){
+  var c=Object.assign({},AV_DEF,S.av||{});
+  AV_SLOTS.forEach(function(sl){
+    var it=sl.itens.filter(function(i){return i.id===c[sl.id]})[0];
+    if(!it||!avHas(sl.id,it))c[sl.id]=AV_DEF[sl.id];
+  });
+  return c;
+}
+function avEquip(slot,id){
+  var sl=AV_SLOTS.filter(function(x){return x.id===slot})[0];if(!sl)return;
+  var it=sl.itens.filter(function(i){return i.id===id})[0];if(!it||!avHas(slot,it))return;
+  S.av=Object.assign({},AV_DEF,S.av||{});
+  if(S.av[slot]===id&&!sl.obrig)S.av[slot]='';else S.av[slot]=id;
+  save();
+}
+function avatarHTML(){
+  avSync();var cfg=avCfg();
+  var h='<div class="sect">Meu robô</div><div class="avbox">'+pingo('happy','avbig',true)+'</div><p class="note" style="margin:0 0 6px;text-align:center">Itens são só visuais: não mudam as perguntas nem dão vantagem.</p>';
+  AV_SLOTS.forEach(function(sl){
+    h+='<div class="avrow"><b>'+sl.nome+'</b><div class="avchips">';
+    sl.itens.forEach(function(it){
+      var has=avHas(sl.id,it),on=cfg[sl.id]===it.id;
+      if(has)h+='<button class="avchip'+(on?' on':'')+'" data-act="avequip" data-slot="'+sl.id+'" data-id="'+it.id+'" aria-pressed="'+on+'">'+it.nome+'</button>';
+      else h+='<span class="avchip lock" aria-disabled="true">🔒 '+it.nome+'<small>'+it.req+'</small></span>';
+    });
+    h+='</div></div>';
+  });
+  var n=0,t=0;AV_SLOTS.forEach(function(sl){sl.itens.forEach(function(it){t++;if(avHas(sl.id,it))n++})});
+  return h+'<p class="note" style="margin:8px 0 0">Inventário: '+n+' de '+t+' itens.</p>';
+}
+window.AVT={slots:AV_SLOTS,has:avHas,cfg:avCfg,equip:avEquip,sync:avSync};
 
 /* ---------- estado ---------- */
 var KEY='pingoquest-v3';
-function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},maxDay:'',devStart:''}}
+function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},maxDay:'',devStart:''}}
 function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object')return Object.assign(blank(),s)}catch(e){}return blank()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -1346,7 +1439,7 @@ function pathHTML(){
 }
 function profileHTML(){
   var acc=S.total?Math.round(S.ok/S.total*100):0;
-  var h='<div class="ph">'+pingo('happy','pingo-big')+'<div><h1>Seu progresso</h1><p>Redes de Computadores</p></div></div><div class="grid">'+
+  var h='<div class="ph">'+pingo('happy','pingo-big',true)+'<div><h1>Seu progresso</h1><p>Redes de Computadores</p></div></div><div class="grid">'+
    '<div class="tile">'+IC.bolt+'<div><b>'+S.xp+'</b><span>XP total</span></div></div>'+
    '<div class="tile"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span><div><b>'+streakNow()+'</b><span>dias seguidos</span></div></div>'+
    '<div class="tile">'+IC.map+'<div><b>'+doneCount()+' / '+total()+'</b><span>fases concluídas</span></div></div>'+
@@ -1358,6 +1451,7 @@ function profileHTML(){
     var n=0;for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++;
     h+='<div class="prog"><div class="row"><span>'+g.title+'</span><span>'+n+'/4</span></div><div class="bar"><i style="width:'+(n/4*100)+'%"></i></div></div>';
   });
+  h+=avatarHTML();
   h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button><div class="sect" style="margin-top:14px">Ferramentas de teste</div><button class="btn ghost" data-act="devday" style="margin-bottom:10px">Avançar 1 dia para testar o evento (hoje: '+fmtD(evToday())+')</button><button class="btn ghost" data-act="devreset" style="margin-bottom:10px">Reiniciar o evento (teste)</button><button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
      '<p class="note" style="margin-top:12px">O progresso fica salvo neste navegador.</p>';
   return h;
@@ -1804,6 +1898,7 @@ document.addEventListener('click',function(e){
   else if(a==='lclose'){closeLesson()}
   else if(a==='devday'){try{localStorage.setItem('pingoquest-devoff',String(devOff()+1))}catch(e){};evToday();render()}
   else if(a==='devreset'){S.ev={};S.ledger={};S.inv={items:[],coll:{}};S.maxDay='';try{localStorage.setItem('pingoquest-devoff','0')}catch(e){};save();render()}
+  else if(a==='avequip'){avEquip(t.dataset.slot,t.dataset.id);render()}
   else if(a==='evopen'){evOpen(t.dataset.id)}
   else if(a==='evclose'){evClose()}
   else if(a==='evstep'){evStart(t.dataset.id,t.dataset.s)}
@@ -1935,7 +2030,7 @@ var SFX={
  win:function(){[523,659,784,1047].forEach(function(f,i){bell(f,i*.11,.4,.08)});bell(1319,.5,.7,.06);bell(1568,.62,.8,.04)}
 };
 /* navegar = quase mudo e só uma vibração leve; escolher = clique macio; avançar/confirmar/recompensa = som mais rico */
-var ACTSND={pick:'sel',vf:'sel',fadd:'sel',fdel:'sel',badd:'sel',bdel:'sel',clset:'sel',mp:'sel',cpick:'sel',cguess:'sel',obpick:'sel',setplan:'sel',
+var ACTSND={avequip:'sel',pick:'sel',vf:'sel',fadd:'sel',fdel:'sel',badd:'sel',bdel:'sel',clset:'sel',mp:'sel',cpick:'sel',cguess:'sel',obpick:'sel',setplan:'sel',
  next:'adv',lnext:'adv',obnext:'adv',obplan:'adv',obgo:'adv',lclose:'adv',cdone:'adv',cagain:'adv',
  go:'go',evstep:'go',evopen:'go',evback:'adv',evclose:'nav',daily:'go',review:'go',practice:'go',obstart:'go',xch:'go'};
 function sfx(n){if(!SND.on)return;try{SFX[n]()}catch(e){}}
