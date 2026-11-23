@@ -55,3 +55,7 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 - A 4ª fase de cada etapa agora se chama **Prova final** (antes "Chefe"); contador `S.bosses` mantido internamente.
 - Aba **Conquistas** (conquistas, habilidades, progresso por etapa); o Perfil ficou com estatísticas, robô e ajustes. Galeria de **Conquistas**: só reconhecimento, sem prêmio. Salvas em `S.conq`, uma vez cada.
 - Itens do robô vêm só de fases concluídas, provas finais e evento (nada de XP/acertos).
+
+### Modo dono
+As ferramentas de teste (avançar dia, reiniciar evento) só aparecem para quem ativar o "Modo dono" neste aparelho: tocar 7 vezes no título "Meu perfil" e digitar o código. O código não está no repositório, só o hash dele. É uma trava de interface (o navegador é de quem joga); a proteção de verdade das datas de evento exige servidor.
+Teste: `CODIGO=<arquivo com o código> node tests/dono.test.js`.

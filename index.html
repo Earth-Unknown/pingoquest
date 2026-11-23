@@ -1140,12 +1140,15 @@ var EVENTS=[{
   ],
   prize:{id:'antena-wifi',name:'Antena Wi-Fi especial',gems:0}
 }];
+/* Modo dono: só quem digitar o código neste aparelho vê as ferramentas de teste (guardado só no navegador de quem entrou) */
+var ADM_HASH='263fc03b796c5d74b9e69622e57a4c1f1f5308d1ccc1f171c8d7a6ce80f8c5e4';
+function isAdm(){try{return localStorage.getItem('pingoquest-adm')==='1'}catch(e){return false}}
 var DEVEV=false;
-try{if(location.hash==='#evento-teste')localStorage.setItem('pingoquest-devev','1');if(location.hash==='#sem-evento-teste')localStorage.removeItem('pingoquest-devev');DEVEV=localStorage.getItem('pingoquest-devev')==='1'}catch(e){}
+try{if(isAdm()&&location.hash==='#evento-teste')localStorage.setItem('pingoquest-devev','1');if(isAdm()&&location.hash==='#sem-evento-teste')localStorage.removeItem('pingoquest-devev');DEVEV=isAdm()&&localStorage.getItem('pingoquest-devev')==='1'}catch(e){}
 function addDays(d,n){var a=d.split('-'),t=new Date(Date.UTC(+a[0],+a[1]-1,+a[2]+n));return t.toISOString().slice(0,10)}
 function fmtD(d){return d.slice(8,10)+'/'+d.slice(5,7)}
 /* hoje, sem voltar no tempo: mudar o relógio para trás não reabre dias */
-function devOff(){try{return +localStorage.getItem('pingoquest-devoff')||0}catch(e){return 0}}
+function devOff(){try{return isAdm()?(+localStorage.getItem('pingoquest-devoff')||0):0}catch(e){return 0}}
 function evToday(){var d=window.__today||addDays(today(),devOff());if(S.maxDay&&d<S.maxDay)d=S.maxDay;if(d>(S.maxDay||'')){S.maxDay=d;save()}return d}
 function evOn(ev){return ev.enabled||DEVEV}
 function evWin(ev){
@@ -1505,9 +1508,23 @@ function pathHTML(){
   });
   return h;
 }
+var admTaps=0,admAsk=false,admErr='';
+function admHTML(){
+  if(isAdm())return '<div class="sect" style="margin-top:14px">Modo dono</div><button class="btn ghost" data-act="devday" style="margin-bottom:10px">Avançar 1 dia para testar o evento (hoje: '+fmtD(evToday())+')</button><button class="btn ghost" data-act="devreset" style="margin-bottom:10px">Reiniciar o evento (teste)</button><button class="btn ghost" data-act="admoff" style="margin-bottom:10px">Sair do modo dono</button>';
+  if(admAsk)return '<div class="sect" style="margin-top:14px">Modo dono</div><input id="admcode" type="password" autocomplete="off" placeholder="Código" style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--line-deep);font:inherit;margin-bottom:8px"><button class="btn ghost" data-act="admok" style="margin-bottom:10px">Entrar</button>'+(admErr?'<p class="note">'+admErr+'</p>':'');
+  return '';
+}
+function admCheck(v){
+  if(!(window.crypto&&crypto.subtle)){admErr='Não deu para verificar aqui.';render();return}
+  crypto.subtle.digest('SHA-256',new TextEncoder().encode(v)).then(function(b){
+    var hx=Array.prototype.map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2)}).join('');
+    if(hx===ADM_HASH){try{localStorage.setItem('pingoquest-adm','1')}catch(e){}admAsk=false;admErr=''}else admErr='Código incorreto.';
+    render();
+  });
+}
 function profileHTML(){
   var acc=S.total?Math.round(S.ok/S.total*100):0;
-  var h='<div class="ph">'+pingo('happy','pingo-big',true)+'<div><h1>Meu perfil</h1><p>Redes de Computadores</p></div></div><div class="grid">'+
+  var h='<div class="ph">'+pingo('happy','pingo-big',true)+'<div><h1 data-act="admtap">Meu perfil</h1><p>Redes de Computadores</p></div></div><div class="grid">'+
    '<div class="tile">'+IC.bolt+'<div><b>'+S.xp+'</b><span>XP total</span></div></div>'+
    '<div class="tile"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span><div><b>'+streakNow()+'</b><span>dias seguidos</span></div></div>'+
    '<div class="tile">'+IC.map+'<div><b>'+doneCount()+' / '+total()+'</b><span>fases concluídas</span></div></div>'+
@@ -1516,7 +1533,7 @@ function profileHTML(){
    '<div class="tile"><span style="color:var(--cyan);display:contents">'+IC.gem+'</span><div><b>'+S.gems+'</b><span>cristais</span></div></div></div>'+
    '';
   h+=avatarHTML();
-  h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button><div class="sect" style="margin-top:14px">Ferramentas de teste</div><button class="btn ghost" data-act="devday" style="margin-bottom:10px">Avançar 1 dia para testar o evento (hoje: '+fmtD(evToday())+')</button><button class="btn ghost" data-act="devreset" style="margin-bottom:10px">Reiniciar o evento (teste)</button><button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
+  h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button>'+admHTML()+'<button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
      '<p class="note" style="margin-top:12px">O progresso fica salvo neste navegador.</p>';
   return h;
 }
@@ -1969,6 +1986,9 @@ document.addEventListener('click',function(e){
   else if(a==='check'){check()}
   else if(a==='next'){next()}
   else if(a==='lclose'){closeLesson()}
+  else if(a==='admtap'){if(!isAdm()){admTaps++;if(admTaps>=7){admTaps=0;admAsk=true;render()}}}
+  else if(a==='admok'){var ic=document.getElementById('admcode');admCheck(ic?ic.value.trim():'')}
+  else if(a==='admoff'){try{localStorage.removeItem('pingoquest-adm');localStorage.setItem('pingoquest-devoff','0')}catch(e){}render()}
   else if(a==='devday'){try{localStorage.setItem('pingoquest-devoff',String(devOff()+1))}catch(e){};evToday();render()}
   else if(a==='devreset'){S.ev={};S.ledger={};S.inv={items:[],coll:{}};S.maxDay='';try{localStorage.setItem('pingoquest-devoff','0')}catch(e){};save();render()}
   else if(a==='avequip'){avEquip(t.dataset.slot,t.dataset.id);render()}
