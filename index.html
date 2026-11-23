@@ -282,11 +282,11 @@ svg{display:block}
 .frlink{border:2px dashed var(--line,#e4def5);border-radius:14px;padding:10px 12px;font-size:13px;word-break:break-all;margin-bottom:8px;user-select:all}
 .frmsg{background:var(--ok-bg);color:var(--ok-ink);font-weight:800;border-radius:12px;padding:8px 12px;margin-bottom:8px}
 .frinv{background:color-mix(in srgb,#ffd83d 30%,transparent);border-radius:14px;padding:10px 12px;margin-bottom:10px}.frinv .btn{margin-top:8px}
-.brx{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));background:radial-gradient(circle at 50% 38%,#2a1670 0%,#170a42 58%,#10052f 100%);color:#fff;text-align:center;overflow:hidden}
+.brx{touch-action:none;user-select:none;-webkit-user-select:none;position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));background:radial-gradient(circle at 50% 38%,#2a1670 0%,#170a42 58%,#10052f 100%);color:#fff;text-align:center;overflow:hidden}
 .brglow{position:absolute;left:50%;top:38%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,60,.55) 0%,rgba(255,120,200,.22) 38%,transparent 66%);opacity:calc(var(--p)*.95);transform:scale(calc(.55 + var(--p)*.6));transition:opacity .12s,transform .12s;pointer-events:none}
 .brstar{position:relative;width:min(58vw,240px);aspect-ratio:1;display:grid;place-items:center;margin-top:-10vh}
 .brsvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.brsvg .brl{opacity:var(--p);transition:opacity .12s}
+.brsvg .brl{opacity:1}
 .brx:not(.on) .brsvg{transform:scale(calc(.92 + var(--p)*.1));transition:transform .12s}
 .brn{position:relative;font-size:min(16vw,64px);font-weight:900;color:#3b2400;opacity:calc(var(--p)*var(--p));text-shadow:0 2px 0 rgba(255,255,255,.4)}
 .brh{position:relative;margin:18px 0 0;font-size:clamp(24px,7vw,32px);font-weight:900;line-height:1.15;text-wrap:balance;max-width:20ch}
@@ -294,6 +294,7 @@ svg{display:block}
 .brpingo{position:relative;min-height:0}.brpingo .pingo-big{width:110px}
 .brfoot{position:absolute;left:0;right:0;bottom:0;padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px))}
 .brfoot .btn{width:100%}
+.brskip{width:auto!important;margin:0 auto;display:block;padding-inline:26px;color:#fff;background:transparent;border-color:rgba(255,255,255,.3);box-shadow:none;animation:lfin .4s 6s both}
 .brx.on .brstar{animation:brpop .7s cubic-bezier(.2,1.7,.4,1)}
 @keyframes brpop{0%{transform:scale(.8)}50%{transform:scale(1.18) rotate(6deg)}100%{transform:scale(1)}}
 .brspark{position:fixed;z-index:120;pointer-events:none;font-weight:900;text-shadow:0 0 8px currentColor}
@@ -2150,17 +2151,64 @@ function endDone(){
   if(L&&L.case){C=null;L.case=false}
   if(L&&L.kind==='done'&&UP&&UP.n&&!UP.shown){UP.shown=1;brilhoScreen(UP.n,UP.lupa)}else closeLesson();
 }
-var BR_STAR='<svg viewBox="0 0 120 120" class="brsvg" aria-hidden="true"><defs><linearGradient id="brg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6b0"/><stop offset="1" stop-color="#ffb020"/></linearGradient></defs><path class="bru" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="#2c2266" stroke="#2c2266" stroke-width="8" stroke-linejoin="round"/><path class="brl" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="url(#brg)" stroke="url(#brg)" stroke-width="8" stroke-linejoin="round"/></svg>';
+var BR_STAR='<svg viewBox="0 0 120 120" class="brsvg" aria-hidden="true"><defs><linearGradient id="brg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6b0"/><stop offset="1" stop-color="#ffb020"/></linearGradient><radialGradient id="brs"><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="brm" maskUnits="userSpaceOnUse" x="-20" y="-20" width="160" height="160"><rect x="-20" y="-20" width="160" height="160" fill="#000"/><g id="brmg"></g></mask></defs><path class="bru" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="#2c2266" stroke="#2c2266" stroke-width="8" stroke-linejoin="round"/><path class="brl" mask="url(#brm)" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="url(#brg)" stroke="url(#brg)" stroke-width="8" stroke-linejoin="round"/></svg>';
 function brilhoScreen(n,lupa){
   L={kind:'brilho',n:n,lupa:lupa};
   $('#lesson').hidden=false;document.body.classList.add('lock');
   $('#lesson').innerHTML='<div class="brx" style="--p:0"><div class="brglow"></div><div class="brstar">'+BR_STAR+'<b class="brn">'+n+'</b></div>'+
-   '<h1 class="brh">Arraste para acender o seu brilho!</h1><p class="brp"></p><div class="brpingo"></div>'+
-   '<div class="brfoot">'+slideHTML('brilho','Arraste para acender')+'</div></div>';
+   '<h1 class="brh">Passe o dedo para acender o seu brilho!</h1><p class="brp">Vá pintando a estrela</p><div class="brpingo"></div>'+
+   '<div class="brfoot"><button class="btn ghost brskip" data-act="brilho">Acender</button></div></div>';
+  brilhoPaint($('#lesson .brx'));
+}
+/* pintar a estrela com o dedo: cada toque revela um pedaço da estrela acesa; ao cobrir quase tudo, ela acende */
+function brilhoPaint(bx){
+  var svg=bx.querySelector('.brsvg'),mg=svg.querySelector('#brmg'),bru=svg.querySelector('.bru'),NS='http://www.w3.org/2000/svg';
+  var cells=[],N=12,x0=4,cs=112/N,R=17,count=0,ptr=false,last=null,lastT=0,lastS=0,fin=false;
+  for(var gy=0;gy<N;gy++)for(var gx=0;gx<N;gx++){
+    var x=x0+(gx+.5)*cs,y=x0+(gy+.5)*cs,inside=true;
+    try{var q=svg.createSVGPoint();q.x=x;q.y=y;inside=bru.isPointInFill(q)||bru.isPointInStroke(q)}catch(e){}
+    if(inside)cells.push({x:x,y:y,on:false});
+  }
+  if(cells.length<12)cells=cells.length?cells:[{x:60,y:60,on:false}];
+  var total=cells.length;
+  function pos(e){var m=svg.getScreenCTM();if(!m)return null;var q=svg.createSVGPoint();q.x=e.clientX;q.y=e.clientY;return q.matrixTransform(m.inverse())}
+  function dab(x,y){
+    var c=document.createElementNS(NS,'circle');c.setAttribute('cx',x.toFixed(1));c.setAttribute('cy',y.toFixed(1));c.setAttribute('r',R+4);c.setAttribute('fill','url(#brs)');mg.appendChild(c);
+    var nw=0;cells.forEach(function(k){if(!k.on&&Math.hypot(k.x-x,k.y-y)<R){k.on=true;count++;nw++}});
+    return nw;
+  }
+  function stroke(a,b){
+    var d=Math.hypot(b.x-a.x,b.y-a.y),st=Math.max(1,Math.ceil(d/6)),nw=0;
+    for(var i=1;i<=st;i++)nw+=dab(a.x+(b.x-a.x)*i/st,a.y+(b.y-a.y)*i/st);
+    return nw;
+  }
+  function spark(e){
+    if(NOANIM)return;var el=document.createElement('div');el.className='brspark';el.textContent='✦';
+    el.style.left=e.clientX+'px';el.style.top=e.clientY+'px';el.style.color=['#ffd83d','#ff4fae','#18ddfb','#fff'][Math.floor(Math.random()*4)];el.style.fontSize=(12+Math.random()*10)+'px';document.body.appendChild(el);
+    var dx=(Math.random()-.5)*50,dy=-20-Math.random()*40;
+    el.animate([{transform:'translate(-50%,-50%) scale(.4)',opacity:1},{transform:'translate(calc(-50% + '+dx+'px),calc(-50% + '+dy+'px)) scale(1)',opacity:0}],{duration:600,easing:'ease-out'}).onfinish=function(){el.remove()};
+  }
+  function check(){
+    var pr=count/total;bx.style.setProperty('--p',Math.min(1,pr/.8).toFixed(3));
+    if(pr>=.8&&!fin){fin=true;detach();var f=document.createElementNS(NS,'rect');f.setAttribute('x',-20);f.setAttribute('y',-20);f.setAttribute('width',160);f.setAttribute('height',160);f.setAttribute('fill','#fff');mg.appendChild(f);brilhoOn()}
+  }
+  function down(e){if(fin)return;if(e.target.closest&&e.target.closest('.brfoot'))return;ptr=true;last=pos(e);if(last){dab(last.x,last.y);check()}e.preventDefault&&e.preventDefault()}
+  function move(e){
+    if(!ptr||fin)return;var p=pos(e);if(!p)return;
+    var nw=last?stroke(last,p):dab(p.x,p.y);last=p;
+    var now=Date.now();
+    if(now-lastT>110){lastT=now;spark(e)}
+    if(nw>0&&now-lastS>130){lastS=now;var pr=count/total;sfx('plim'+(pr<.34?0:(pr<.67?1:2)));buzz([5])}
+    check();e.preventDefault&&e.preventDefault();
+  }
+  function up(){ptr=false;last=null}
+  function detach(){bx.removeEventListener('pointerdown',down);bx.removeEventListener('pointermove',move);bx.removeEventListener('pointerup',up);bx.removeEventListener('pointercancel',up);ptr=false}
+  bx.addEventListener('pointerdown',down);bx.addEventListener('pointermove',move);bx.addEventListener('pointerup',up);bx.addEventListener('pointercancel',up);
 }
 function brilhoOn(){
   var bx=document.querySelector('#lesson .brx');if(!bx||bx.classList.contains('on'))return;
   bx.classList.add('on');bx.style.setProperty('--p','1');
+  var mg0=bx.querySelector('#brmg');if(mg0&&!mg0.querySelector('rect')){var f0=document.createElementNS('http://www.w3.org/2000/svg','rect');f0.setAttribute('x',-20);f0.setAttribute('y',-20);f0.setAttribute('width',160);f0.setAttribute('height',160);f0.setAttribute('fill','#fff');mg0.appendChild(f0)}
   var n=L&&L.n||1,lu=L&&L.lupa;
   bx.querySelector('.brh').textContent=n===1?'Seu primeiro dia de brilho!':n+' dias de brilho!';
   bx.querySelector('.brp').textContent=lu?'Você desbloqueou a Lupa do Pingo!':'Volte amanhã para manter o brilho aceso.';
