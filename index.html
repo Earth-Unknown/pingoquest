@@ -260,6 +260,14 @@ svg{display:block}
 .pok{position:absolute;right:-4px;bottom:-2px;width:22px;height:22px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center}.pok svg{width:14px;height:14px}
 .pst b{font-size:12.5px;line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:29px}
 .pst small{font-weight:800;color:var(--muted);font-size:12px}
+
+.stars.anim{font-size:34px;gap:6px;margin:4px 0}.stars.anim span{display:inline-block;animation:starpop .55s cubic-bezier(.2,1.8,.4,1) both}
+@keyframes starpop{0%{opacity:0;transform:scale(.1) rotate(-40deg)}100%{opacity:1;transform:none}}
+.cfound{margin:10px 0 0;padding:10px 14px;border-radius:16px;background:var(--ok-bg);color:var(--ok-ink);text-align:center;animation:cfin .5s 1.7s both;width:100%;max-width:340px}
+.cfound small{display:block;font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;opacity:.8}.cfound b{font-size:17px}
+@keyframes cfin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.cexp{width:auto;margin:10px auto 0;min-height:44px;padding-inline:22px;animation:cfin .5s 3.5s both}
+.lfoot.late{animation:lfin .4s 3.5s both}@keyframes lfin{from{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}
 .frcard{background:var(--surface);border:2px solid var(--line,#e4def5);border-radius:20px;padding:10px 12px}
 .frrow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:14px}
 .frrow.me{background:color-mix(in srgb,var(--roxo,#7b3ff2) 12%,transparent)}
@@ -2139,6 +2147,7 @@ function next(){
 function closeLesson(){L=null;$('#lesson').hidden=true;document.body.classList.remove('lock');if(EVP){document.body.classList.add('lock');evRender()}render()}
 /* depois de coletar a energia, se o dia de hoje acendeu o brilho, mostra a tela de arrastar */
 function endDone(){
+  if(L&&L.case){C=null;L.case=false}
   if(L&&L.kind==='done'&&UP&&UP.n&&!UP.shown){UP.shown=1;brilhoScreen(UP.n,UP.lupa)}else closeLesson();
 }
 var BR_STAR='<svg viewBox="0 0 120 120" class="brsvg" aria-hidden="true"><defs><linearGradient id="brg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6b0"/><stop offset="1" stop-color="#ffb020"/></linearGradient></defs><path class="bru" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="#2c2266" stroke="#2c2266" stroke-width="8" stroke-linejoin="round"/><path class="brl" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="url(#brg)" stroke="url(#brg)" stroke-width="8" stroke-linejoin="round"/></svg>';
@@ -2352,14 +2361,31 @@ function caseFinish(){
   rec.n++;if(stars>rec.best)rec.best=stars;
   dy.xp+=xp;S.xp+=xp;wkAdd(xp);S.gems+=gems;touchStreak();save();
   c.res={stars:stars,xp:xp,gems:gems};c.stage='done';
-  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>Caso resolvido!</h1>'+starRow(stars)+
-   '<p><b>Causa:</b> '+c.fault.cause+'.</p><p>'+c.fault.fix+'</p><p class="note">'+c.fault.why+'</p>'+
-   '<div class="proof"><small>As pistas que provam isso</small>'+c.fault.need.map(function(id){return'<div><b>'+devOf(id).name+':</b> '+c.fault.clues[id]+'</div>'}).join('')+'</div>'+
-   '<div class="res"><div><small style="background:#d99a00">Energia</small><b>+'+xp+'</b></div>'+
-   '<div><small style="background:#0d8fc0">Chips</small><b>+'+gems+'</b></div>'+
-   '<div><small style="background:#1e9a52">Pistas</small><b>'+c.insp.length+'</b></div></div></div></div>'+
-   '<div class="lfoot"><div class="stack" style="margin:0">'+(c.kind==='node'?'<button class="btn ghost" data-act="cagain">Jogar outro cenário</button>':'')+'<button class="btn" data-act="cdone">Continuar</button></div></div></div>';
+  /* tela final em etapas: Pingo, estrelas uma a uma, causa em uma linha, cartões subindo; a explicação completa fica opcional */
+  var st='';for(var i=0;i<3;i++)st+='<span class="'+(i<stars?'on':'')+'" style="animation-delay:'+(0.45+i*0.4)+'s">★</span>';
+  var tiles=[{c:'#ffb800',l:'Energia',v:IC.bolt+'<b data-to="'+xp+'">0</b>'},{c:'#18b9e8',l:'Chips',v:IC.gem+'<b data-to="'+gems+'" data-pre="+">+0</b>'},{c:'#3fbf5f',l:'Pistas',v:IC.search+'<b data-to="'+c.insp.length+'">0</b>'}];
+  var T0=2.1,tl=tiles.map(function(t,i){return'<div class="rt" style="--rc:'+t.c+';animation-delay:'+(T0+i*0.62)+'s"><small>'+t.l+'</small><span>'+t.v+'</span></div>'}).join('');
+  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>Caso resolvido!</h1>'+
+   '<span class="stars anim" role="img" aria-label="'+stars+' de 3 estrelas">'+st+'</span>'+
+   '<div class="cfound"><small>Causa encontrada</small><b>'+c.fault.cause+'</b></div>'+
+   '<div class="res2">'+tl+'</div>'+
+   '<button class="btn ghost cexp" data-act="cexplain">Ver explicação</button></div></div>'+
+   '<div class="lfoot late"><div class="stack" style="margin:0">'+(c.kind==='node'?'<button class="btn ghost" data-act="cagain">Jogar outro cenário</button>':'')+'<button class="btn" data-act="'+(xp>0?'collect':'cdone')+'">'+(xp>0?'Coletar energia':'Continuar')+'</button></div></div></div>';
+  for(var k=0;k<stars;k++)(function(k){setTimeout(function(){if(C&&C.stage==='done')sfx('plim'+Math.min(k,2))},(0.45+k*0.4)*1000+200)})(k);
+  tiles.forEach(function(t,i){
+    setTimeout(function(){if(C&&C.stage==='done')sfx('plim'+Math.min(i,2))},(T0+i*0.62)*1000+260);
+    setTimeout(function(){var el=$('#lesson .res2');el=el&&el.children[i];if(el)countUp(el.querySelector('b'))},(T0+i*0.62)*1000+380);
+  });
+  L={kind:'done',cx:xp,cg:gems,case:true};
   sfx('win');confetti();
+}
+function caseExplain(){
+  var c=C;if(!c||!c.fault)return;
+  $('#modal').innerHTML='<div class="sheet tall" role="dialog" aria-label="Explicação do caso"><h2 style="margin:0 0 8px">Entenda o caso</h2>'+
+   '<p style="margin:0 0 8px"><b>Causa:</b> '+c.fault.cause+'.</p><p style="margin:0 0 8px">'+c.fault.fix+'</p><p class="note" style="margin:0 0 12px">'+c.fault.why+'</p>'+
+   '<div class="proof"><small>As pistas que provam isso</small>'+c.fault.need.map(function(id){return'<div><b>'+devOf(id).name+':</b> '+c.fault.clues[id]+'</div>'}).join('')+'</div>'+
+   '<button class="btn prim" data-act="mclose" style="margin-top:16px">Fechar</button></div>';
+  $('#modal').hidden=false;sfx('ping');
 }
 function closeCase(){C=null;$('#lesson').hidden=true;document.body.classList.remove('lock');render()}
 
@@ -2400,6 +2426,7 @@ document.addEventListener('click',function(e){
   else if(a==='cback'){if(C){C.stage='inv';C.msg='Vamos investigar mais um pouco.';drawCase()}}
   else if(a==='cpick'){pickCause(t.dataset.id)}
   else if(a==='cclose'||a==='cdone'){closeCase()}
+  else if(a==='cexplain'){caseExplain()}
   else if(a==='cagain'){startCase({id:C.id,kind:'node',key:C.key,replay:true,avoid:C.fault.id})}
   else if(a==='daily'){if(!day().call)startCase({id:dailyCase(),kind:'daily',seed:today()})}
   else if(a==='wclaim'){var w=wk();if(w.n>=WGOAL&&!w.claimed){w.claimed=true;S.gems+=60;S.badges.push(w.k);save();render()}}
