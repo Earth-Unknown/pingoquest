@@ -53,5 +53,5 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 
 ### Conquistas e "Prova final"
 - A 4ª fase de cada etapa agora se chama **Prova final** (antes "Chefe"); contador `S.bosses` mantido internamente.
-- Galeria de **Conquistas** no Perfil: só reconhecimento, sem prêmio. Salvas em `S.conq`, uma vez cada.
+- Aba **Conquistas** (conquistas, habilidades, progresso por etapa); o Perfil ficou com estatísticas, robô e ajustes. Galeria de **Conquistas**: só reconhecimento, sem prêmio. Salvas em `S.conq`, uma vez cada.
 - Itens do robô vêm só de fases concluídas, provas finais e evento (nada de XP/acertos).

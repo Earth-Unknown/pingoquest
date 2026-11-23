@@ -99,9 +99,9 @@ svg{display:block}
 /* navegação */
 #nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:2px solid var(--line);
   padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-#nav .wrap{display:flex;gap:10px;justify-content:center}
+#nav .wrap{display:flex;gap:4px;justify-content:center}
 .nbtn{flex:1;max-width:180px;display:flex;flex-direction:column;align-items:center;gap:2px;background:transparent;border:2px solid transparent;
-  border-radius:14px;padding:7px 6px;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  border-radius:14px;padding:7px 2px;font-weight:800;font-size:10px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
 .nbtn svg{width:28px;height:28px}
 .nbtn[aria-current="page"]{border-color:var(--cyan);background:color-mix(in srgb,var(--cyan) 14%,transparent);color:var(--cyan)}
 
@@ -1457,6 +1457,7 @@ var NAV={
  path:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L2.500 11.500H5V20h5v-5.500h4V20h5v-8.500h2.500z"/></svg>',
  missions:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.500"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.500"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>',
  review:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.800" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.500-5.800M20 4v5h-5"/></svg>',
+ conq:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v6a5 5 0 0 1-10 0zM7 6H3.500q0 4.500 3.800 5M17 6h3.500q0 4.500-3.800 5M12 15v4M8 20h8"/></svg>',
  profile:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.500"/><path d="M3.500 21c0-4.700 3.800-7.500 8.500-7.500s8.500 2.800 8.500 7.500z"/></svg>'
 };
 
@@ -1506,29 +1507,34 @@ function pathHTML(){
 }
 function profileHTML(){
   var acc=S.total?Math.round(S.ok/S.total*100):0;
-  var h='<div class="ph">'+pingo('happy','pingo-big',true)+'<div><h1>Seu progresso</h1><p>Redes de Computadores</p></div></div><div class="grid">'+
+  var h='<div class="ph">'+pingo('happy','pingo-big',true)+'<div><h1>Meu perfil</h1><p>Redes de Computadores</p></div></div><div class="grid">'+
    '<div class="tile">'+IC.bolt+'<div><b>'+S.xp+'</b><span>XP total</span></div></div>'+
    '<div class="tile"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span><div><b>'+streakNow()+'</b><span>dias seguidos</span></div></div>'+
    '<div class="tile">'+IC.map+'<div><b>'+doneCount()+' / '+total()+'</b><span>fases concluídas</span></div></div>'+
    '<div class="tile">'+IC.skull+'<div><b>'+S.bosses+' / '+GAMES.filter(function(g){return !g.caso}).length+'</b><span>provas finais</span></div></div>'+
    '<div class="tile">'+IC.target+'<div><b>'+acc+'%</b><span>de acertos</span></div></div>'+
    '<div class="tile"><span style="color:var(--cyan);display:contents">'+IC.gem+'</span><div><b>'+S.gems+'</b><span>cristais</span></div></div></div>'+
-   skillsHTML()+'<div class="sect">Por etapa</div>';
-  GAMES.forEach(function(g,gi){
-    var n=0;for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++;
-    h+='<div class="prog"><div class="row"><span>'+g.title+'</span><span>'+n+'/4</span></div><div class="bar"><i style="width:'+(n/4*100)+'%"></i></div></div>';
-  });
-  h+=conquistasHTML();h+=avatarHTML();
+   '';
+  h+=avatarHTML();
   h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button><div class="sect" style="margin-top:14px">Ferramentas de teste</div><button class="btn ghost" data-act="devday" style="margin-bottom:10px">Avançar 1 dia para testar o evento (hoje: '+fmtD(evToday())+')</button><button class="btn ghost" data-act="devreset" style="margin-bottom:10px">Reiniciar o evento (teste)</button><button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
      '<p class="note" style="margin-top:12px">O progresso fica salvo neste navegador.</p>';
   return h;
 }
+function conqTabHTML(){
+  var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
+  var h='<div class="ph">'+pingo('cheer','pingo-big')+'<div><h1>Conquistas</h1><p>Seu caminho em Redes</p></div></div>'+conquistasHTML()+skillsHTML()+'<div class="sect">Progresso por etapa</div>';
+  GAMES.forEach(function(g,gi){
+    var m=0;for(var k=0;k<4;k++)if(S.done[gi+'-'+k])m++;
+    h+='<div class="prog"><div class="row"><span>'+g.title+'</span><span>'+m+'/4</span></div><div class="bar"><i style="width:'+(m/4*100)+'%"></i></div></div>';
+  });
+  return h;
+}
 function render(){
   $('#topin').innerHTML=topHTML();
-  var map={path:pathHTML,missions:missionsHTML,review:reviewHTML,profile:profileHTML};
+  var map={path:pathHTML,missions:missionsHTML,review:reviewHTML,conq:conqTabHTML,profile:profileHTML};
   $('#main').innerHTML=(map[tab]||pathHTML)();
   evFab();
-  var tabs=[['path','Trilha',0],['missions','Missões',attention()],['review','Revisar',missKeys().length],['profile','Perfil',0]];
+  var tabs=[['path','Trilha',0],['missions','Missões',attention()],['review','Revisar',missKeys().length],['conq','Conquistas',0],['profile','Perfil',0]];
   $('#navin').innerHTML=tabs.map(function(t){
     return '<button class="nbtn" data-act="tab" data-t="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'>'+NAV[t[0]]+t[1]+(t[2]?'<span class="dot">'+t[2]+'</span>':'')+'</button>';
   }).join('');
