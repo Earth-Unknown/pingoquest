@@ -665,6 +665,24 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 #evfab .evdot svg{width:12px;height:12px}
 @keyframes evfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @keyframes evring{0%{opacity:.7;transform:scale(.9)}100%{opacity:0;transform:scale(1.35)}}
+
+/* ---- visual clean: menos cor forte, cor só em acentos ---- */
+.uhead{background:color-mix(in srgb,var(--uh) 8%,var(--surface));color:var(--ink);box-shadow:none;border:1.5px solid var(--line);border-left:5px solid var(--uh)}
+.uhead .tag{color:var(--uh);opacity:1}
+.tipbtn{border:1.5px solid var(--line);background:var(--surface);color:var(--uh)}
+.node.done{background:color-mix(in srgb,var(--gold) 38%,var(--surface));color:var(--gold-deep);box-shadow:0 4px 0 color-mix(in srgb,var(--gold) 45%,var(--surface))}
+.node.cur{box-shadow:0 5px 0 var(--ud,var(--primary-deep))}
+.tile{background:var(--surface);border:1.5px solid var(--line)}
+.card,.card.call{background:var(--surface);border:1.5px solid var(--line);border-top:1.5px solid var(--line)}
+.note2.new,.xhint{border-color:var(--line)}
+.ctag{background:color-mix(in srgb,var(--rosa) 16%,var(--surface));color:#a0246f}
+.duelic{background:color-mix(in srgb,var(--amarelo) 22%,var(--surface))}
+.slide{background:color-mix(in srgb,var(--primary) 10%,var(--surface));border:1.5px solid var(--line);color:var(--primary-deep);box-shadow:none}
+.sl-knob{background:var(--primary);color:#fff;box-shadow:none}
+.slide.done{background:var(--ok);border-color:var(--ok)}
+.dth.rol{background:color-mix(in srgb,var(--amarelo) 16%,var(--surface))}
+.frinv{background:color-mix(in srgb,var(--amarelo) 16%,var(--surface))}
+:root[data-theme="dark"] .slide{color:#fff}:root[data-theme="dark"] .ctag{color:#ffc2e6}:root[data-theme="dark"] .tipbtn,:root[data-theme="dark"] .uhead .tag{color:#fff}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
