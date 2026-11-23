@@ -70,6 +70,13 @@ svg{display:block}
 
 /* trilha */
 .unit{margin-top:18px}
+.nextsec{margin:34px -16px 0;padding:26px 20px 30px;text-align:center;background:var(--locked);border-top:2px solid var(--line-deep);color:var(--muted)}
+.nschip{display:inline-block;background:var(--surface);color:var(--muted);font-weight:900;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:12px;border:2px solid var(--line-deep)}
+.nextsec h2{margin:14px 0 6px;font-size:28px;font-weight:900;color:var(--ink);opacity:.55;display:flex;align-items:center;justify-content:center;gap:8px}
+.nextsec h2 svg{width:26px;height:26px}
+.nextsec .nspingo{opacity:.5;filter:grayscale(.6);display:flex;justify-content:center}.nextsec .nspingo svg{width:88px;height:88px}
+.nextsec p{margin:6px auto 16px;font-weight:700;max-width:30ch;text-wrap:balance}
+.nextsec .btn:disabled{opacity:.7}
 .uhead{display:flex;justify-content:space-between;align-items:center;gap:12px;border-radius:18px;padding:14px 16px;color:#fff;
   background:var(--uh);box-shadow:0 5px 0 var(--ud)}
 .uhead .tag{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.9}
@@ -901,8 +908,9 @@ var ADD5=[
   MC("Qual é um bom hábito de segurança?","Manter o celular atualizado",["Clicar em links desconhecidos","Usar uma senha só","Aceitar qualquer convite"],"Atualizações corrigem falhas.")]
 ];
 ADD5.forEach(function(row,g){row.forEach(function(q,p){BEGINNER[g].phases[p].push(q)})});
-var GAMES=BEGINNER.concat([OLD[1],OLD[3],OLD[4],OLD[2]]);
-[["Intermediário · Etapa 1 de 4",1],["Intermediário · Etapa 2 de 4",1],["Intermediário · Etapa 3 de 4",1],["Avançado · Modelo OSI",3]].forEach(function(x,i){GAMES[BEGINNER.length+i].tag=x[0];GAMES[BEGINNER.length+i].c=x[1]});
+/* Por enquanto a trilha termina na Seção 1 (iniciante). O conteúdo antigo do intermediário fica guardado em LATER para ser refeito. */
+var LATER=[OLD[1],OLD[3],OLD[4],OLD[2]];
+var GAMES=BEGINNER;
 
 var DV={
  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.500" width="10" height="19" rx="2.500"/><path d="M11 18.500h2"/></svg>',
@@ -1154,7 +1162,6 @@ var OLDCUR={
  'osi.encapsulamento':{n:'Encapsulamento',pre:['osi.funcoes','pacotes'],l:'9-2'}
 
 };
-Object.keys(OLDCUR).forEach(function(id){var d=OLDCUR[id],pt=d.l.split('-');d.l=(+pt[0]-6+BEGINNER.length)+'-'+pt[1];CUR[id]=d});
 Object.keys(CUR).forEach(function(id){CUR[id].pre=CUR[id].pre.filter(function(x){return !!CUR[x]})});
 /* dificuldade (1 a 3) das 5 perguntas de cada fase, na ordem em que aparecem */
 var DIFS={};
@@ -1276,7 +1283,7 @@ var NEWX={
   {t:"mc",cid:"seg.https",q:"Você vai pagar uma compra e o site está sem cadeado. O que fazer?",o:["Não digitar dados do cartão","Digitar rápido","Mandar a senha por mensagem","Ignorar o aviso"],a:0,e:"Sem proteção, evite dados sensíveis."}]
 };
 /* os extras da trilha iniciante foram refeitos (NEWX); os do intermediário/avançado mudam de índice */
-(function(){var old=EXTRA,out={};Object.keys(old).forEach(function(k){if(+k<6)return;out[+k-6+BEGINNER.length]=old[k]});
+(function(){var old=EXTRA,out={};
   Object.keys(NEWX).forEach(function(k){out[k]=NEWX[k]});EXTRA=out})();
 Object.keys(EXTRA).forEach(function(g){EXTRA[g].forEach(function(q){q.dif=3;q.rs='aprovado';q.lk='x'+g;q.x=1})});
 /* Desafio do Pingo (só na trilha): 5 acertos seguidos no mesmo assunto liberam 3 perguntas extras opcionais */
@@ -1674,6 +1681,9 @@ function pathHTML(){
     }
     h+='</div></section>';
   });
+  h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>Seção 2</h2>'+
+    '<div class="nspingo">'+pingo('happy','pingo-s')+'</div><p>Intermediário: o próximo nível chega em breve. Termine a Seção 1 para ficar pronto.</p>'+
+    '<button class="btn ghost" disabled>Em breve</button></section>';
   return h;
 }
 function themeNow(){try{return localStorage.getItem('pingoquest-theme')==='dark'?'dark':'light'}catch(e){return'light'}}
