@@ -250,6 +250,15 @@ svg{display:block}
 @media (prefers-reduced-motion:reduce){.rolhub{animation:none}}
 .rolres b{color:var(--ink);font-size:20px;font-weight:900;text-align:left}
 .rolres .dthi{width:44px;height:44px}.rolres .dthi svg{width:28px;height:28px}
+
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pst{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:10px 6px;border:2px solid var(--line);background:var(--surface);border-radius:18px}
+.pst.zero{opacity:.8}.pst.full{border-color:var(--ti);background:color-mix(in srgb,var(--ti) 10%,var(--surface))}
+.pring{position:relative;width:60px;height:60px}.pring svg{width:100%;height:100%;display:block}
+.pico{position:absolute;inset:0;display:grid;place-items:center;color:var(--ti)}.pico svg{width:26px;height:26px}
+.pok{position:absolute;right:-4px;bottom:-2px;width:22px;height:22px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center}.pok svg{width:14px;height:14px}
+.pst b{font-size:12.5px;line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:29px}
+.pst small{font-weight:800;color:var(--muted);font-size:12px}
 .frcard{background:var(--surface);border:2px solid var(--line,#e4def5);border-radius:20px;padding:10px 12px}
 .frrow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:14px}
 .frrow.me{background:color-mix(in srgb,var(--roxo,#7b3ff2) 12%,transparent)}
@@ -1894,10 +1903,13 @@ function profileHTML(){
 function conqTabHTML(){
   var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
   var h='<div class="ph">'+pingo('cheer','pingo-big')+'<div><h1>Conquistas</h1><p>Seu caminho em Redes</p></div></div>'+conquistasHTML()+skillsHTML()+'<div class="sect">Progresso por etapa</div>';
+  h+='<div class="pgrid">';
   GAMES.forEach(function(g,gi){
     var m=0;for(var k=0;k<4;k++)if(S.done[gi+'-'+k])m++;
-    h+='<div class="prog"><div class="row"><span>'+g.title+'</span><span>'+m+'/4</span></div><div class="bar"><i style="width:'+(m/4*100)+'%"></i></div></div>';
+    var col=DU_COL[gi%DU_COL.length],C=2*Math.PI*26,off=C*(1-m/4);
+    h+='<div class="pst'+(m===4?' full':'')+(m===0?' zero':'')+'" style="--ti:'+col+'"><div class="pring"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" fill="none" stroke="color-mix(in srgb,var(--ti) 18%,transparent)" stroke-width="6"/><circle cx="32" cy="32" r="26" fill="none" stroke="var(--ti)" stroke-width="6" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'" transform="rotate(-90 32 32)"/></svg><span class="pico">'+duIcon(gi)+'</span>'+(m===4?'<i class="pok">'+IC.check+'</i>':'')+'</div><b>'+g.title+'</b><small>'+m+'/4</small></div>';
   });
+  h+='</div>';
   return h;
 }
 function render(){
