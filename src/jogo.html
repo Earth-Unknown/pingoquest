@@ -244,6 +244,10 @@ svg{display:block}
 .rolptr{position:absolute;left:50%;top:-8px;width:0;height:0;transform:translateX(-50%);border-left:13px solid transparent;border-right:13px solid transparent;border-top:26px solid #ff4fae;z-index:2;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));transform-origin:50% 0}
 .rolptr.hit{animation:rolptr .12s}@keyframes rolptr{0%{transform:translateX(-50%) rotate(0)}50%{transform:translateX(-50%) rotate(-14deg)}100%{transform:translateX(-50%) rotate(0)}}
 .rolres{min-height:46px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:18px;margin:8px 0 10px}.rolres.pop{animation:rtpop .6s}
+.rolwrap{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rolhub{transform-origin:150px 150px;animation:rolpulse 1.3s ease-in-out infinite}.rolwrap.spun .rolhub{animation:none}
+@keyframes rolpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@media (prefers-reduced-motion:reduce){.rolhub{animation:none}}
 .rolres b{color:var(--ink);font-size:20px;font-weight:900;text-align:left}
 .rolres .dthi{width:44px;height:44px}.rolres .dthi svg{width:28px;height:28px}
 .frcard{background:var(--surface);border:2px solid var(--line,#e4def5);border-radius:20px;padding:10px 12px}
@@ -2890,19 +2894,19 @@ function wheelSvg(){
     var mid=(i+0.5)*seg;
     h+='<g transform="rotate('+mid+' '+C+' '+C+')" style="color:#fff">'+duIcon(i).replace('<svg','<svg x="'+(C-15)+'" y="'+(C-R+14)+'" width="30" height="30"')+'</g>';
   }
-  h+='</g><circle cx="150" cy="150" r="22" fill="#fff" stroke="#ffd83d" stroke-width="6"/><circle cx="150" cy="150" r="7" fill="#7b3ff2"/></svg>';
+  h+='</g><g class="rolhub"><circle cx="150" cy="150" r="22" fill="#fff" stroke="#ffd83d" stroke-width="6"/><circle cx="150" cy="150" r="7" fill="#7b3ff2"/></g></svg>';
   return h;
 }
 var ROLBUSY=false;
 function duelWheel(){
   var root=$('#lesson .duel');if(!root)return;
-  var ov=document.createElement('div');ov.className='rolbk';ov.innerHTML='<div class="rolbox" role="dialog" aria-label="Roleta do Pingo"><button class="dux rolx" data-act="rolclose" aria-label="Fechar">×</button><h2>Roleta do Pingo</h2><p class="note" id="rolmsg">Toque em girar e o Pingo sorteia o tema!</p>'+
-   '<div class="rolwrap"><div class="rolptr"></div>'+wheelSvg()+'</div><div class="rolres" id="rolres">&nbsp;</div><button class="btn prim" data-act="rolgo" id="rolgo">Girar</button></div>';
+  var ov=document.createElement('div');ov.className='rolbk';ov.innerHTML='<div class="rolbox" role="dialog" aria-label="Roleta do Pingo"><button class="dux rolx" data-act="rolclose" aria-label="Fechar">×</button><h2>Roleta do Pingo</h2>'+
+   '<div class="rolwrap" data-act="rolgo" role="button" aria-label="Girar a roleta" tabindex="0"><div class="rolptr"></div>'+wheelSvg()+'</div><div class="rolres" id="rolres">&nbsp;</div></div>';
   root.appendChild(ov);
 }
 function duelRoll(){
-  if(ROLBUSY)return;var g=$('#rolg'),btn=$('#rolgo'),res=$('#rolres');if(!g)return;
-  ROLBUSY=true;btn.disabled=true;$('#rolmsg').textContent='Girando…';
+  if(ROLBUSY)return;var g=$('#rolg'),res=$('#rolres');if(!g)return;
+  ROLBUSY=true;var wr=$('.rolwrap');if(wr)wr.classList.add('spun');
   var n=GAMES.length,seg=360/n,fin=Math.floor(Math.random()*n),jit=(Math.random()-0.5)*seg*0.6;
   var total=360*5+(360-(fin*seg+seg/2+jit)),dur=NOANIM?1:5200,t0=null,last=-1,ptr=$('.rolptr');
   function ease(x){return 1-Math.pow(1-x,4)}
@@ -2913,7 +2917,7 @@ function duelRoll(){
     var idx=Math.floor((((360-(th%360))%360))/seg);
     if(idx!==last){last=idx;sfx('tick');buzz([6]);if(ptr&&!NOANIM){ptr.classList.remove('hit');void ptr.offsetWidth;ptr.classList.add('hit')}}
     if(x<1)requestAnimationFrame(frame);
-    else{ROLBUSY=false;res.innerHTML='<span class="dthi" style="--ti:'+DU_COL[fin%DU_COL.length]+'">'+duIcon(fin)+'</span><b>'+GAMES[fin].title+'</b>';res.classList.add('pop');sfx('win');buzz([20,40,30]);confetti();$('#rolmsg').textContent='O Pingo escolheu este tema! Valendo…';
+    else{ROLBUSY=false;res.innerHTML='<span class="dthi" style="--ti:'+DU_COL[fin%DU_COL.length]+'">'+duIcon(fin)+'</span><b>'+GAMES[fin].title+'</b>';res.classList.add('pop');sfx('win');buzz([20,40,30]);confetti();
       setTimeout(function(){if(!$('#rolg'))return;var seed=(Math.random()*4294967295)>>>0;duelBegin(fin,seed,DUS.lv,DUS.mode,null)},NOANIM?300:1800)}
   }
   requestAnimationFrame(frame);
