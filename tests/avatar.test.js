@@ -16,7 +16,7 @@ const {chromium}=require('playwright');const fs=require('fs');const assert=requi
  // sem gastar cristais
  assert.strictEqual(await pg.evaluate(()=>S.gems),50);
  // desbloqueio por progresso, sem duplicar
- r=await pg.evaluate(()=>{S.xp=600;S.bosses=1;AVT.sync();AVT.sync();var c=S.inv.items.filter(x=>x==='cor:grafite').length;AVT.equip('cor','grafite');return [c,AVT.cfg().cor]});
+ r=await pg.evaluate(()=>{S.done={};for(var i=0;i<20;i++)S.done['x'+i]=1;S.bosses=1;AVT.sync();AVT.sync();var c=S.inv.items.filter(x=>x==='cor:grafite').length;AVT.equip('cor','grafite');return [c,AVT.cfg().cor]});
  assert.deepStrictEqual(r,[1,'grafite']);
  // Antena Wi-Fi do evento
  r=await pg.evaluate(()=>{AVT.equip('antena','antena-wifi');var a=AVT.cfg().antena;S.inv.items.push('antena-wifi');AVT.equip('antena','antena-wifi');return [a,AVT.cfg().antena]});
@@ -30,5 +30,9 @@ const {chromium}=require('playwright');const fs=require('fs');const assert=requi
  // persistência
  assert.strictEqual(await pg.evaluate(()=>{return S.av.antena}),'antena-wifi');
  assert.deepStrictEqual(errs,[]);
+ // conquistas
+ r=await pg.evaluate(()=>{S.conq={};S.done={};S.bosses=0;CQ.sync();var a=Object.keys(S.conq).length;S.done={'0-0':1};CQ.sync();CQ.sync();return [a,Object.keys(S.conq)]});
+ assert.strictEqual(r[0],0);assert.deepStrictEqual(r[1],['primeiro-ping']);
+ assert.strictEqual(await pg.evaluate(()=>S.gems),50);
  console.log('avatar OK');await b.close();
 })().catch(e=>{console.error(e);process.exit(1)});

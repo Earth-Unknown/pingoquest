@@ -50,3 +50,8 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 - Itens são **apenas visuais** (sem vantagem nas respostas). Alguns são grátis; outros desbloqueiam por estudo (fases, XP, chefes, acertos, sequência) ou evento (Antena Wi-Fi especial).
 - Itens desbloqueados ficam permanentes em `S.inv.items` (sem duplicar); equipar/desequipar não gasta cristais. Equipado fica em `S.av`.
 - Teste: `node tests/avatar.test.js`.
+
+### Conquistas e "Prova final"
+- A 4ª fase de cada etapa agora se chama **Prova final** (antes "Chefe"); contador `S.bosses` mantido internamente.
+- Galeria de **Conquistas** no Perfil: só reconhecimento, sem prêmio. Salvas em `S.conq`, uma vez cada.
+- Itens do robô vêm só de fases concluídas, provas finais e evento (nada de XP/acertos).

@@ -125,6 +125,12 @@ svg{display:block}
 .skico{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
 .skico svg{width:42px;height:42px}
 .sktile b{font-size:14px;font-weight:900;line-height:1.2}.sktile small{font-size:12px;font-weight:800;color:var(--muted)}
+.cqgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.cqtile{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px}
+.cqico{width:52px;height:52px;border-radius:15px;background:#b9c0cc;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.cqtile:not(.on){opacity:.6;filter:grayscale(1)}
+.cqico svg{width:34px;height:34px}
+.cqtile b{font-size:12.5px;font-weight:900;line-height:1.15}.cqtile small{font-size:11px;font-weight:700;color:var(--muted);line-height:1.2}
 .prog{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
 .prog .row{display:flex;justify-content:space-between;gap:10px;font-weight:800;margin-bottom:8px}
 .bar{height:14px;border-radius:99px;background:var(--locked);overflow:hidden}
@@ -910,21 +916,21 @@ var AV_OLHOS={ciano:'#19e0ff',verde:'#5be37d',magenta:'#ff5fd0',dourado:'#ffd23f
 var AV_SLOTS=[
  {id:'cor',nome:'Cor do corpo',obrig:1,itens:[
   {id:'azul',nome:'Azul rede',free:1},{id:'verde',nome:'Verde LAN',req:'Conclua 3 fases',ok:function(){return doneCount()>=3}},
-  {id:'roxo',nome:'Roxo VPN',req:'Derrote 1 chefe',ok:function(){return S.bosses>=1}},{id:'laranja',nome:'Laranja cabo',req:'Alcance 3 dias seguidos',ok:function(){return Math.max(S.streak||0,streakNow())>=3}},
-  {id:'grafite',nome:'Grafite datacenter',req:'Junte 500 XP',ok:function(){return S.xp>=500}}]},
+  {id:'roxo',nome:'Roxo VPN',req:'Conclua 1 prova final',ok:function(){return S.bosses>=1}},{id:'laranja',nome:'Laranja cabo',req:'Conclua 10 fases',ok:function(){return doneCount()>=10}},
+  {id:'grafite',nome:'Grafite datacenter',req:'Conclua 20 fases',ok:function(){return doneCount()>=20}}]},
  {id:'olhos',nome:'Olhos',obrig:1,itens:[
-  {id:'ciano',nome:'Ciano',free:1},{id:'verde',nome:'Verde link',req:'Junte 150 XP',ok:function(){return S.xp>=150}},
-  {id:'magenta',nome:'Magenta',req:'Conclua 6 fases',ok:function(){return doneCount()>=6}},{id:'dourado',nome:'Dourado',req:'Derrote 3 chefes',ok:function(){return S.bosses>=3}}]},
+  {id:'ciano',nome:'Ciano',free:1},{id:'verde',nome:'Verde link',req:'Conclua 5 fases',ok:function(){return doneCount()>=5}},
+  {id:'magenta',nome:'Magenta',req:'Conclua 8 fases',ok:function(){return doneCount()>=8}},{id:'dourado',nome:'Dourado',req:'Conclua 3 provas finais',ok:function(){return S.bosses>=3}}]},
  {id:'antena',nome:'Antena',obrig:1,itens:[
   {id:'padrao',nome:'Antena padrão',free:1},{id:'dupla',nome:'Antena dupla',req:'Conclua 2 fases',ok:function(){return doneCount()>=2}},
   {id:'antena-wifi',nome:'Antena Wi-Fi especial',req:'Prêmio do evento Rede Conectada',ev:1},
-  {id:'parabolica',nome:'Parabólica',req:'Junte 1000 XP',ok:function(){return S.xp>=1000}}]},
+  {id:'parabolica',nome:'Parabólica',req:'Conclua todas as provas finais',ok:function(){return S.bosses>=PF_TOTAL()}}]},
  {id:'cabeca',nome:'Cabeça',itens:[
   {id:'bone',nome:'Boné de técnico',free:1},{id:'capacete',nome:'Capacete de campo',req:'Conclua 4 fases',ok:function(){return doneCount()>=4}}]},
  {id:'visor',nome:'Visor',itens:[
-  {id:'oculos',nome:'Óculos tech',req:'Conclua 1 fase',ok:function(){return doneCount()>=1}},{id:'hud',nome:'Visor HUD',req:'Alcance 5 dias seguidos',ok:function(){return Math.max(S.streak||0,streakNow())>=5}}]},
+  {id:'oculos',nome:'Óculos tech',req:'Conclua 1 fase',ok:function(){return doneCount()>=1}},{id:'hud',nome:'Visor HUD',req:'Conclua 4 provas finais',ok:function(){return S.bosses>=4}}]},
  {id:'costas',nome:'Mochila',itens:[
-  {id:'rack',nome:'Mini rack',req:'Conclua 5 fases',ok:function(){return doneCount()>=5}},{id:'cabos',nome:'Rolo de cabos',req:'Acerte 100 perguntas',ok:function(){return S.ok>=100}}]}
+  {id:'rack',nome:'Mini rack',req:'Conclua 6 fases',ok:function(){return doneCount()>=6}},{id:'cabos',nome:'Rolo de cabos',req:'Conclua 12 fases',ok:function(){return doneCount()>=12}}]}
 ];
 var AV_DEF={cor:'azul',olhos:'ciano',antena:'padrao',cabeca:'',visor:'',costas:''};
 function avKey(slot,id){return slot+':'+id}
@@ -975,7 +981,7 @@ window.AVT={slots:AV_SLOTS,has:avHas,cfg:avCfg,equip:avEquip,sync:avSync};
 
 /* ---------- estado ---------- */
 var KEY='pingoquest-v3';
-function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},maxDay:'',devStart:''}}
+function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},conq:{},perfectN:0,maxDay:'',devStart:''}}
 function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object')return Object.assign(blank(),s)}catch(e){}return blank()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -1368,6 +1374,47 @@ var SKILL_ART={
  lenta:['#ff8a1f','#d4530a','<path d="M16 70a34 34 0 0 1 68 0"/><path d="M50 70L36 46" stroke-width="6"/><circle cx="50" cy="70" r="5" fill="#fff" stroke="none"/><path d="M22 60l4 2M30 44l3 3M50 36v5M70 44l-3 3M78 60l-4 2" stroke-width="3"/>'],
  print:['#e0457b','#a82a5a','<rect x="22" y="38" width="56" height="30" rx="6"/><path d="M32 38V20h36v18"/><rect x="32" y="56" width="36" height="24" rx="2" fill="rgba(255,255,255,.25)"/><circle cx="68" cy="47" r="2.500" fill="#fff" stroke="none"/>']
 };
+
+/* ===== Conquistas: só reconhecimento, sem prêmio. Ficam salvas em S.conq (uma vez cada). ===== */
+function PF_TOTAL(){return GAMES.filter(function(g){return !g.caso}).length}
+function casosFeitos(){return CASE_IDS.filter(function(i){return S.casos[i]&&S.casos[i].n}).length}
+var CQ_ART={
+ ping:'<circle cx="50" cy="50" r="7" fill="#fff"/><circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="36"/>',
+ rota:'<path d="M18 76q18-44 32-14t32-38"/><circle cx="18" cy="76" r="6" fill="#fff"/><circle cx="82" cy="24" r="6" fill="#fff"/>',
+ estrela:'<path d="M50 14l11 24 26 3-19 18 5 26-23-13-23 13 5-26-19-18 26-3z"/>',
+ trofeu:'<path d="M30 18h40v22a20 20 0 0 1-40 0zM30 26H16q0 18 16 22M70 26h14q0 18-16 22M50 60v16M34 82h32"/>',
+ pacote:'<path d="M18 34l32-16 32 16v34L50 84 18 68z"/><path d="M18 34l32 16 32-16M50 50v34"/>',
+ agenda:'<rect x="18" y="24" width="64" height="58" rx="8"/><path d="M18 42h64M34 16v14M66 16v14M36 64l9 9 18-18"/>',
+ escudo:'<path d="M50 14l30 10v24c0 20-14 32-30 38-16-6-30-18-30-38V24z"/><path d="M36 50l10 10 18-20"/>',
+ chave:'<path d="M70 18a16 16 0 0 0-14 22L20 76l6 6 36-36a16 16 0 0 0 22-14l-10 10-10-4-4-10z"/>',
+ lupa:'<circle cx="44" cy="44" r="26"/><path d="M64 64l20 20M33 44l8 8 14-16"/>',
+ antena:'<path d="M20 44q30-26 60 0M32 58q18-16 36 0"/><circle cx="50" cy="72" r="6" fill="#fff"/><path d="M50 78v10"/>',
+ bandeira:'<path d="M26 86V16M26 20h50l-12 16 12 16H26"/>'
+};
+var CONQ=[
+ {id:'primeiro-ping',nome:'Primeiro ping',meta:'Conclua 1 fase',art:'ping',cor:['#19b5e8','#1d7fe0'],ok:function(){return doneCount()>=1}},
+ {id:'rota-aberta',nome:'Rota aberta',meta:'Conclua 10 fases',art:'rota',cor:['#2fbf6b','#1f8f4f'],ok:function(){return doneCount()>=10}},
+ {id:'primeira-prova',nome:'Primeira prova',meta:'Conclua 1 prova final',art:'estrela',cor:['#ffb700','#e08a00'],ok:function(){return S.bosses>=1}},
+ {id:'todas-provas',nome:'Todas as provas',meta:'Conclua todas as provas finais',art:'trofeu',cor:['#ffb700','#d4530a'],ok:function(){return S.bosses>=PF_TOTAL()}},
+ {id:'sem-perder-pacote',nome:'Sem perder pacote',meta:'Termine uma fase sem errar',art:'pacote',cor:['#ff8a1f','#d4530a'],ok:function(){return (S.perfectN||0)>=1}},
+ {id:'rede-estavel',nome:'Rede estável',meta:'3 dias seguidos',art:'agenda',cor:['#8a5cf0','#5b3fd0'],ok:function(){return (S.best||0)>=3||streakNow()>=3}},
+ {id:'rede-blindada',nome:'Rede blindada',meta:'7 dias seguidos',art:'escudo',cor:['#1d7fe0','#145fb0'],ok:function(){return (S.best||0)>=7||streakNow()>=7}},
+ {id:'tecnico-campo',nome:'Técnico de campo',meta:'Resolva 5 casos do dia',art:'chave',cor:['#e0457b','#a82a5a'],ok:function(){return casosFeitos()>=5}},
+ {id:'mestre-diagnostico',nome:'Mestre do diagnóstico',meta:'3 estrelas nas 5 habilidades',art:'lupa',cor:['#2fbf6b','#146b3a'],ok:function(){return CASE_IDS.every(function(i){return S.casos[i]&&S.casos[i].best>=3})}},
+ {id:'operacao-concluida',nome:'Operação concluída',meta:'Termine um evento',art:'antena',cor:['#19b5e8','#8a5cf0'],ok:function(){return !!S.ledger['ev:rede-conectada:prize']}},
+ {id:'trilha-completa',nome:'Trilha completa',meta:'Conclua todas as fases',art:'bandeira',cor:['#ffb700','#2fbf6b'],ok:function(){return doneCount()>=total()}}
+];
+function cqSync(){S.conq=S.conq||{};var ch=false;CONQ.forEach(function(c){if(!S.conq[c.id]&&c.ok()){S.conq[c.id]=1;ch=true}});if(ch)save()}
+function conquistasHTML(){
+  cqSync();var n=0;CONQ.forEach(function(c){if(S.conq[c.id])n++});
+  var h='<div class="sect">Conquistas <small style="font-weight:800;color:var(--muted);font-size:14px">'+n+' de '+CONQ.length+'</small></div><div class="cqgrid">';
+  CONQ.forEach(function(c){var on=!!S.conq[c.id];
+    h+='<div class="cqtile'+(on?' on':'')+'" role="img" aria-label="'+c.nome+(on?', conquistada':', bloqueada: '+c.meta)+'">'+
+      '<span class="cqico"'+(on?' style="background:linear-gradient(135deg,'+c.cor[0]+','+c.cor[1]+')"':'')+'><svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">'+CQ_ART[c.art]+'</svg></span>'+
+      '<b>'+c.nome+'</b><small>'+c.meta+'</small></div>'});
+  return h+'</div>';
+}
+window.CQ={list:CONQ,sync:cqSync};
 function skillsHTML(){
   var h='<div class="sect">Habilidades</div><div class="skgrid">';
   CASE_IDS.forEach(function(id){var r=S.casos[id],d=CASES[id],a=SKILL_ART[id],got=!!(r&&r.n);
@@ -1425,12 +1472,12 @@ var LEVELS=[
  {n:'Conhecer',d:'Nível 1: conceitos básicos para começar.'},
  {n:'Praticar',d:'Nível 2: use o que aprendeu em situações simples.'},
  {n:'Desafiar',d:'Nível 3: mais detalhes e um pouco de desafio.'},
- {n:'Prova final',d:'Chefe: 6 perguntas misturadas do jogo todo. Capriche!'}];
+ {n:'Prova final',d:'Prova final: 6 perguntas misturadas da etapa toda. Capriche!'}];
 function popHTML(g,k,un,done,x){
   var G=GAMES[g],cs=(k===3&&G.caso)?CASES[G.caso]:null,title,desc,xp,gm;
   if(cs){title='Caso · '+cs.title;desc='Um problema de verdade: investigue as pistas, levante uma hipótese e resolva.';xp=15;gm=10}
   else if(G.names&&k<3){title='Lição '+(k+1)+' · '+G.names[k];desc='Uma explicação curta e perguntas simples. Sem pressa.';xp=10;gm=10}
-  else{var lv=LEVELS[k];title=(k<3?'Fase '+(k+1)+' · ':'Chefe · ')+lv.n;desc=lv.d;xp=k===3?25:10;gm=xp}
+  else{var lv=LEVELS[k];title=(k<3?'Fase '+(k+1)+' · ':'Prova final · ')+lv.n;desc=lv.d;xp=k===3?25:10;gm=xp}
   if(!un)return '<div class="pop lockedp" style="--ax:'+x+'px"><h3>'+title+'</h3><p>Conclua a etapa anterior para desbloquear.</p></div>';
   return '<div class="pop" style="--ax:'+x+'px"><h3>'+title+'</h3><p>'+desc+'</p>'+(done?'':'<small>Primeira vez: +'+gm+' cristais</small>')+
     '<button class="popbtn" data-act="go" data-g="'+g+'" data-k="'+k+'">'+(done?'Jogar de novo':'Começar')+' +'+xp+' XP</button></div>';
@@ -1445,7 +1492,7 @@ function pathHTML(){
       if(cur)curFound=true;
       var cls=done?'done':(cur?'cur':(un?'cur':'lock'));
       var icon=done?IC.check:(un?(k===3?(g.caso?IC.search:IC.boss):IC.play):IC.lock);
-      var x=OFF[k],label=k===3?(g.caso?'Caso':'Chefe'):(g.names?'Lição ':'Fase ')+(k+1);
+      var x=OFF[k],label=k===3?(g.caso?'Caso':'Prova final'):(g.names?'Lição ':'Fase ')+(k+1);
       h+='<div class="nw" style="--x:'+x+'px">';
       if(cur){h+='<div class="bubble">Começar</div>'+pingo('happy','pingo '+(x>=0?'l':'r'));}
       h+='<button class="node '+cls+'" data-act="node" data-g="'+gi+'" data-k="'+k+'" aria-label="'+g.title+', '+label+(un?'':' (bloqueada)')+'"'+(un?'':' aria-disabled="true"')+'>'+icon+'</button>'+
@@ -1462,7 +1509,7 @@ function profileHTML(){
    '<div class="tile">'+IC.bolt+'<div><b>'+S.xp+'</b><span>XP total</span></div></div>'+
    '<div class="tile"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span><div><b>'+streakNow()+'</b><span>dias seguidos</span></div></div>'+
    '<div class="tile">'+IC.map+'<div><b>'+doneCount()+' / '+total()+'</b><span>fases concluídas</span></div></div>'+
-   '<div class="tile">'+IC.skull+'<div><b>'+S.bosses+' / '+GAMES.filter(function(g){return !g.caso}).length+'</b><span>chefes derrotados</span></div></div>'+
+   '<div class="tile">'+IC.skull+'<div><b>'+S.bosses+' / '+GAMES.filter(function(g){return !g.caso}).length+'</b><span>provas finais</span></div></div>'+
    '<div class="tile">'+IC.target+'<div><b>'+acc+'%</b><span>de acertos</span></div></div>'+
    '<div class="tile"><span style="color:var(--cyan);display:contents">'+IC.gem+'</span><div><b>'+S.gems+'</b><span>cristais</span></div></div></div>'+
    skillsHTML()+'<div class="sect">Por etapa</div>';
@@ -1470,7 +1517,7 @@ function profileHTML(){
     var n=0;for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++;
     h+='<div class="prog"><div class="row"><span>'+g.title+'</span><span>'+n+'/4</span></div><div class="bar"><i style="width:'+(n/4*100)+'%"></i></div></div>';
   });
-  h+=avatarHTML();
+  h+=conquistasHTML();h+=avatarHTML();
   h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button><div class="sect" style="margin-top:14px">Ferramentas de teste</div><button class="btn ghost" data-act="devday" style="margin-bottom:10px">Avançar 1 dia para testar o evento (hoje: '+fmtD(evToday())+')</button><button class="btn ghost" data-act="devreset" style="margin-bottom:10px">Reiniciar o evento (teste)</button><button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
      '<p class="note" style="margin-top:12px">O progresso fica salvo neste navegador.</p>';
   return h;
@@ -1714,13 +1761,13 @@ function finishLesson(){
   if(L.kind==='phase')SQ.n=0;
   var dy=day();dy.xp+=xp;
   if(L.kind==='phase'||L.kind==='boss'){
-    dy.phases++;if(L.miss===0)dy.perfect++;
+    dy.phases++;if(L.miss===0){dy.perfect++;S.perfectN=(S.perfectN||0)+1}
     if(!S.done[L.key]&&L.kind==='boss')S.bosses++;
     S.done[L.key]=true;
   }
   S.xp+=xp;S.gems+=gems;touchStreak();save();
   var acc=L.qb?Math.round(L.qb/(L.qb+L.miss)*100):100;
-  var title=L.kind==='extra'?(xw?'Desafio superado!':'Quase lá!'):L.kind==='practice'?'Vida recuperada!':(L.kind==='review'?'Revisão concluída!':(L.kind==='boss'?'Chefe derrotado!':'Fase concluída!'));
+  var title=L.kind==='extra'?(xw?'Desafio superado!':'Quase lá!'):L.kind==='practice'?'Vida recuperada!':(L.kind==='review'?'Revisão concluída!':(L.kind==='boss'?'Prova final concluída!':'Fase concluída!'));
   var sub=L.kind==='extra'?(xw?'Você aplicou o assunto em situações novas. Isso é aprender de verdade.':'Esse desafio é mais difícil de propósito. Nada do seu progresso foi perdido, e os erros foram para a Revisão.'):L.kind==='practice'?'Você ganhou 1 vida. Bom treino.':(L.kind==='review'?'Revisar os erros ajuda a fixar o conteúdo.':L.miss===0?'Sem nenhum erro. Perfeito!':'Os erros também ensinam. Revise as dicas do jogo se quiser.');
   $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p>'+
    (xoffer?'<div class="xch"><b>Desafio do Pingo</b><p>Você acertou 5 seguidas! Que tal '+xoffer.qs.length+' perguntas mais difíceis sobre <i>'+GAMES[xoffer.g].title+'</i>? É opcional. Se errar, você não perde nada do que já conquistou.</p><small>'+((S.xch[xoffer.g]&&S.xch[xoffer.g].w)?'Treino extra: +15 XP se acertar.':'Primeira vez: até +15 cristais se acertar.')+'</small></div>':'')+
