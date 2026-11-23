@@ -24,7 +24,7 @@
 
 *{box-sizing:border-box}
 html,body{min-height:100%}
-body{background:var(--bg);background-image:radial-gradient(120% 60% at 50% 0%,#4a1aa8 0%,rgba(74,26,168,0) 60%),linear-gradient(180deg,#2a0a66,#1d0650);background-attachment:fixed;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.4;
+body{background:var(--bg);background-image:radial-gradient(70% 35% at 100% 0%,rgba(255,79,174,.28),transparent 70%),radial-gradient(70% 35% at 0% 55%,rgba(24,221,251,.16),transparent 70%),radial-gradient(70% 35% at 100% 100%,rgba(255,216,61,.12),transparent 70%),radial-gradient(120% 60% at 50% 0%,#4a1aa8 0%,rgba(74,26,168,0) 60%),linear-gradient(180deg,#2a0a66,#1d0650);background-attachment:fixed;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.4;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:0 110px;-webkit-tap-highlight-color:transparent}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
@@ -66,14 +66,15 @@ svg{display:block}
 .uhead h2{margin:2px 0 0;font-size:21px;line-height:1.15;font-weight:900;text-wrap:balance}
 .tipbtn{flex:none;border:2px solid rgba(255,255,255,.55);background:rgba(255,255,255,.16);color:#fff;border-radius:12px;
   padding:7px 13px;font-weight:900;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
-.u0{--uh:#6c4df6;--ud:#4a30c8}.u1{--uh:#0d8fc0;--ud:#096a8f}.u2{--uh:#cc6a0a;--ud:#995004}.u3{--uh:#c4377f;--ud:#932660}
+.u0{--uh:#7b3ff2;--ud:#5420bd}.u1{--uh:#0fa8d4;--ud:#0a7a9c}.u2{--uh:#f27d0c;--ud:#b85a00}.u3{--uh:#f0409f;--ud:#b32477}.u4{--uh:#22a83a;--ud:#167a28}
+.uhead{background:linear-gradient(135deg,var(--uh),color-mix(in srgb,var(--uh) 70%,#fff 30%))}
 .nodes{display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 0 8px}
 .nw{position:relative;transform:translateX(var(--x));display:flex;flex-direction:column;align-items:center;gap:6px}
 .node{width:76px;height:76px;border-radius:50%;border:0;display:grid;place-items:center;transition:transform .08s,box-shadow .08s}
 .node svg{width:34px;height:34px}
 .node.done{background:var(--gold);box-shadow:0 6px 0 var(--gold-deep);color:#fff}
-.node.cur{background:var(--primary);box-shadow:0 6px 0 var(--primary-deep);color:var(--on-primary)}
-.node.lock{background:var(--locked);box-shadow:0 6px 0 var(--locked-deep);color:var(--muted);cursor:not-allowed}
+.node.cur{background:var(--uh,var(--primary));box-shadow:0 6px 0 var(--ud,var(--primary-deep)),0 0 22px color-mix(in srgb,var(--uh,#7b3ff2) 70%,transparent);color:#fff}
+.node.lock{background:color-mix(in srgb,var(--uh,#7b3ff2) 35%,#3a1d7a);box-shadow:0 6px 0 var(--locked-deep);color:var(--muted);cursor:not-allowed}
 .node:active:not(.lock){transform:translateY(6px);box-shadow:0 0 0 transparent}
 .nlabel{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
 .bubble{position:absolute;top:-46px;left:50%;transform:translateX(-50%);background:var(--surface);border:2px solid var(--line-deep);
@@ -92,7 +93,9 @@ svg{display:block}
 .nbtn{flex:1;max-width:180px;display:flex;flex-direction:column;align-items:center;gap:2px;background:transparent;border:2px solid transparent;
   border-radius:14px;padding:7px 2px;font-weight:800;font-size:10px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
 .nbtn svg{width:28px;height:28px}
-.nbtn[aria-current="page"]{border-color:var(--cyan);background:color-mix(in srgb,var(--cyan) 14%,transparent);color:var(--cyan)}
+.nbtn svg{color:var(--ic,#18ddfb);filter:drop-shadow(0 0 6px color-mix(in srgb,var(--ic,#18ddfb) 60%,transparent))}
+.nbtn[data-t=path]{--ic:#18ddfb}.nbtn[data-t=missions]{--ic:#ff4fae}.nbtn[data-t=review]{--ic:#7dff2b}.nbtn[data-t=conq]{--ic:#ffd83d}.nbtn[data-t=profile]{--ic:#c88bff}
+.nbtn[aria-current="page"]{border-color:var(--ic);background:color-mix(in srgb,var(--ic) 18%,transparent);color:#fff;box-shadow:0 0 14px color-mix(in srgb,var(--ic) 45%,transparent)}
 
 /* perfil */
 .ph{display:flex;align-items:center;gap:16px;padding:22px 0 8px}
@@ -100,8 +103,9 @@ svg{display:block}
 .ph h1{margin:0;font-size:28px;font-weight:900}
 .ph p{margin:4px 0 0;color:var(--muted);font-weight:700}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
-.tile{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center}
+.tile{--tc:var(--cyan);background:linear-gradient(135deg,color-mix(in srgb,var(--tc) 30%,var(--surface)),var(--surface) 75%);border:2px solid color-mix(in srgb,var(--tc) 70%,transparent);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center}
 .tile svg{width:30px;height:30px;flex:none}
+.grid .tile:nth-child(1){--tc:#ffd83d}.grid .tile:nth-child(2){--tc:#ff9a1f}.grid .tile:nth-child(3){--tc:#18ddfb}.grid .tile:nth-child(4){--tc:#ff4fae}.grid .tile:nth-child(5){--tc:#7dff2b}.grid .tile:nth-child(6){--tc:#c88bff}
 .tile b{display:block;font-size:24px;line-height:1.1;font-weight:900}
 .tile span{font-size:13px;color:var(--muted);font-weight:700}
 .sect{font-size:20px;font-weight:900;margin:22px 0 10px}
@@ -111,20 +115,20 @@ svg{display:block}
 .skst{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#fff;font-weight:900;font-size:15px;letter-spacing:2px;text-shadow:0 2px 0 rgba(0,0,0,.25)}
 .skgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:12px}
 .sktile{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
-.sktile.off{opacity:.55;filter:grayscale(.9)}
+.sktile.off .skico{opacity:.55;filter:saturate(.7)}.sktile.off{border-style:dashed}
 .skico{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
 .skico svg{width:42px;height:42px}
 .sktile b{font-size:14px;font-weight:900;line-height:1.2}.sktile small{font-size:12px;font-weight:800;color:var(--muted)}
 .cqgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
 .cqtile{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px}
 .cqico{width:52px;height:52px;border-radius:15px;background:#b9c0cc;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
-.cqtile:not(.on){opacity:.6;filter:grayscale(1)}
+.cqtile:not(.on) .cqico{opacity:.55;filter:saturate(.7)}.cqtile:not(.on){border-style:dashed}.cqtile.on{box-shadow:0 0 16px rgba(255,216,61,.35);border-color:var(--amarelo)}
 .cqico svg{width:34px;height:34px}
 .cqtile b{font-size:12.5px;font-weight:900;line-height:1.15}.cqtile small{font-size:11px;font-weight:700;color:var(--muted);line-height:1.2}
-.prog{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.prog{background:var(--surface);border:2px solid var(--line-deep);border-radius:16px;padding:14px;margin-bottom:10px}
 .prog .row{display:flex;justify-content:space-between;gap:10px;font-weight:800;margin-bottom:8px}
 .bar{height:14px;border-radius:99px;background:var(--locked);overflow:hidden}
-.bar i{display:block;height:100%;border-radius:99px;background:var(--ok);min-width:0;transition:width .4s}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--verde),var(--ciano-neon));min-width:0;transition:width .4s}
 .note{color:var(--muted);font-weight:700;font-size:14px}
 
 /* lição */
@@ -220,7 +224,8 @@ svg{display:block}
 .prow b{font-weight:900;overflow-wrap:anywhere}.prow span{color:var(--muted);font-weight:700;overflow-wrap:anywhere}
 
 /* missões e revisão */
-.card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.card{--tc:var(--lilas);background:linear-gradient(160deg,color-mix(in srgb,var(--tc) 18%,var(--surface)),var(--surface) 60%);border:2px solid color-mix(in srgb,var(--tc) 55%,transparent);border-top:5px solid var(--tc);border-radius:18px;padding:16px;margin-bottom:14px}
+.main-cards .card:nth-of-type(4n+2),#main .card:nth-of-type(4n+2){--tc:#ff4fae}#main .card:nth-of-type(4n+3){--tc:#18ddfb}#main .card:nth-of-type(4n+4){--tc:#7dff2b}#main .card:nth-of-type(4n+1){--tc:#ffd83d}
 .card h3{margin:0 0 12px;font-size:20px;font-weight:900}
 .bar.gold{position:relative;height:24px}
 .bar.gold i{background:var(--gold)}
@@ -1403,7 +1408,7 @@ function conquistasHTML(){
   var h='<div class="sect">Conquistas <small style="font-weight:800;color:var(--muted);font-size:14px">'+n+' de '+CONQ.length+'</small></div><div class="cqgrid">';
   CONQ.forEach(function(c){var on=!!S.conq[c.id];
     h+='<div class="cqtile'+(on?' on':'')+'" role="img" aria-label="'+c.nome+(on?', conquistada':', bloqueada: '+c.meta)+'">'+
-      '<span class="cqico"'+(on?' style="background:linear-gradient(135deg,'+c.cor[0]+','+c.cor[1]+')"':'')+'><svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">'+CQ_ART[c.art]+'</svg></span>'+
+      '<span class="cqico" style="background:linear-gradient(135deg,'+c.cor[0]+','+c.cor[1]+')"><svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">'+CQ_ART[c.art]+'</svg></span>'+
       '<b>'+c.nome+'</b><small>'+c.meta+'</small></div>'});
   return h+'</div>';
 }
@@ -1479,7 +1484,7 @@ function popHTML(g,k,un,done,x){
 function pathHTML(){
   var h='',curFound=false;
   GAMES.forEach(function(g,gi){
-    h+='<section class="unit u'+g.c+'"><div class="uhead"><div><div class="tag">'+g.tag+'</div><h2>'+g.title+'</h2></div>'+
+    h+='<section class="unit u'+(gi%5)+'"><div class="uhead"><div><div class="tag">'+g.tag+'</div><h2>'+g.title+'</h2></div>'+
        '<button class="tipbtn" data-act="tips" data-g="'+gi+'">Dicas</button></div><div class="nodes">';
     for(var k=0;k<4;k++){
       var key=gi+'-'+k,done=!!S.done[key],un=isUnlocked(gi,k),cur=un&&!done&&!curFound;
