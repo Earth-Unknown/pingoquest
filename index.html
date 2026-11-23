@@ -416,6 +416,65 @@ svg.poke .m-tip{fill:#fff;animation:none}
 .xch p{margin:0 0 6px;font-size:14px;line-height:1.4}
 .xch small{font-weight:800;opacity:.8}
 .lfoot .xbtn{margin-bottom:8px;background:var(--cyan);color:#06283a;box-shadow:0 4px 0 color-mix(in srgb,var(--cyan) 65%,#000)}
+
+/* ---------- Eventos ---------- */
+.evcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin:0 0 14px;padding:12px 14px;border-radius:18px;border:2px solid var(--cyan);background:linear-gradient(135deg,color-mix(in srgb,var(--cyan) 18%,var(--surface)),color-mix(in srgb,var(--primary) 10%,var(--surface)));color:var(--ink);font:inherit;cursor:pointer}
+.evcard .evart{flex:none;width:54px;height:54px;border-radius:14px;overflow:hidden;background:#d7f3fc}
+.evcard .evart svg{width:100%;height:100%;display:block}
+.evcard .evtx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.evcard small{font-weight:900;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-deep)}
+.evcard b{font-size:16px;line-height:1.2}
+.evcard i{font-style:normal;font-size:13px;color:var(--muted);font-weight:700}
+.evcard .evbar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:4px}
+.evcard .evbar>u{display:block;height:100%;background:var(--cyan);border-radius:99px;text-decoration:none}
+.evcard .evgo{font-size:26px;font-weight:900;color:var(--primary)}
+#evpage{position:fixed;inset:0;z-index:40;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px))}
+.evw{max-width:560px;margin:0 auto;padding:10px 0 32px}
+.evtop{display:flex;align-items:center;gap:10px;padding:8px 0}
+.evback{border:0;background:var(--surface);border:2px solid var(--line);border-radius:12px;width:40px;height:40px;font-size:20px;font-weight:900;color:var(--ink);cursor:pointer}
+.evchip{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:color-mix(in srgb,var(--cyan) 20%,var(--surface));color:var(--primary-deep)}
+.evhero h1{margin:8px 0 4px;font-size:26px;line-height:1.15;text-wrap:balance}
+.evhero p{margin:0 0 10px;color:var(--muted);font-weight:600;line-height:1.45}
+.evtimer{display:inline-flex;align-items:center;gap:6px;font-weight:900;font-size:13px;padding:6px 12px;border-radius:99px;border:2px solid var(--cyan);background:var(--surface)}
+.evbox{margin-top:16px;padding:14px;border-radius:18px;border:2px solid var(--line);background:var(--surface)}
+.evpzrow{display:flex;gap:14px;align-items:center}
+.evpz{flex:none;width:132px;height:132px;border-radius:14px;overflow:hidden;display:block}
+.evpz .tile{transition:opacity .5s}
+.evpz .nw{animation:evpop .9s ease-out both}
+@keyframes evpop{0%{opacity:0;transform:scale(.6)}60%{opacity:1;transform:scale(1.08)}100%{transform:scale(1)}}
+.evpz .nw{transform-box:fill-box;transform-origin:center}
+.evpzt{flex:1;min-width:0}
+.evpzt b{display:block;font-size:17px}
+.evpzt small{display:block;color:var(--muted);font-weight:700;margin:2px 0 8px}
+.evprog{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.evprog>u{display:block;height:100%;background:var(--cyan);text-decoration:none;border-radius:99px;transition:width .6s}
+.evprize{margin-top:12px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--gold) 22%,var(--surface));font-weight:800;font-size:14px}
+.evprize.got{background:var(--ok-bg);color:var(--ok-ink)}
+.evsteps{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.evstep{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:16px;border:2px solid var(--line);background:var(--surface)}
+.evstep.done{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 8%,var(--surface))}
+.evstep.now{border-color:var(--cyan)}
+.evstep .num{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--locked);color:var(--muted)}
+.evstep.done .num{background:var(--ok);color:#fff}
+.evstep.now .num{background:var(--cyan);color:#06283a}
+.evstep .num svg{width:18px;height:18px}
+.evstep .sx{flex:1;min-width:0}
+.evstep b{display:block}
+.evstep p{margin:2px 0 6px;font-size:13.5px;color:var(--muted);font-weight:600;line-height:1.4}
+.evrw{display:flex;gap:6px;flex-wrap:wrap}
+.evrw span{font-size:12px;font-weight:900;padding:3px 9px;border-radius:99px;background:var(--bg);border:1.5px solid var(--line-deep)}
+.evstat{margin-top:8px;font-size:13px;font-weight:800;color:var(--muted)}
+.evcal{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.evcal span{width:34px;height:40px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:900;background:var(--bg);border:2px solid var(--line);color:var(--muted)}
+.evcal span.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok-ink)}
+.evcal span.today{border-color:var(--cyan);color:var(--ink)}
+.evcal span svg{width:12px;height:12px}
+.evbox h3{margin:0 0 4px;font-size:15px}
+.evrules{margin:6px 0 0;padding-left:18px;font-size:13.5px;line-height:1.55;color:var(--muted);font-weight:600}
+.evmsg{margin-top:10px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--gold) 22%,var(--surface));font-weight:800;font-size:13.5px;line-height:1.4}
+.evw .btn{margin-top:10px}
+.evw .btn[disabled]{opacity:.55}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -424,6 +483,7 @@ svg.poke .m-tip{fill:#fff;animation:none}
 <div id="lesson" hidden></div>
 <div id="modal" hidden></div>
 <div id="welcome" hidden></div>
+<div id="evpage" hidden></div>
 <div id="chestfx" hidden></div>
 
 <script>
@@ -798,7 +858,7 @@ function pingo(mood,cls){
 
 /* ---------- estado ---------- */
 var KEY='pingoquest-v3';
-function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{}}}
+function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},maxDay:'',devStart:''}}
 function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object')return Object.assign(blank(),s)}catch(e){}return blank()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -936,7 +996,165 @@ function sqHit(ok){
 }
 function xchReady(){return !!L&&L.kind==='phase'&&SQ.g===parseInt(L.key,10)&&SQ.n>=5}
 function pickExtras(g){return (EXTRA[g]||[]).filter(function(q){return eligible(q.cid)}).slice(0,3)}
-window.PK={CUR:CUR,eligible:eligible,eligibleQs:eligibleQs,masteryOf:masteryOf,markSeen:markSeen,knowOf:knowOf,allQs:allQs};
+
+/* ===== Fase 3: base de eventos temporários =====
+   Tudo é configurado por dados em EVENTS. Sem nenhum evento ligado, nada aparece na trilha.
+   Para ligar um evento: enabled:true e datas start/end (AAAA-MM-DD). Datas pelo relógio do aparelho (fase de teste).
+   Regras: 1 etapa nova por dia, dias não precisam ser seguidos, 6 perguntas por etapa só de conceitos já vistos,
+   sem desafio extra de 5 acertos, recompensas registradas em S.ledger (nunca pagam duas vezes). */
+var EVENTS=[{
+  id:'rede-conectada',enabled:false,
+  name:'Operação Rede Conectada',tag:'Evento especial',
+  blurb:'Reúna as peças e monte um roteador. Cada etapa revisa o que você já estudou e entrega peças e cristais.',
+  start:'2026-11-22',end:'2026-12-01',
+  equipment:'roteador',equipName:'Roteador',
+  qPerStep:6,passMin:4,
+  steps:[
+    {id:'s1',title:'Identifique a conexão',desc:'Reconheça os elementos da rede que você já conhece.',pieces:2,gems:10},
+    {id:'s2',title:'Encontre a falha',desc:'Use o que aprendeu para achar o que está errado.',pieces:3,gems:15},
+    {id:'s3',title:'Restaure a rede',desc:'Junte tudo e coloque a rede para funcionar.',pieces:4,gems:25}
+  ],
+  prize:{id:'antena-wifi',name:'Antena Wi-Fi especial',gems:0}
+}];
+var DEVEV=false;
+try{if(location.hash==='#evento-teste')localStorage.setItem('pingoquest-devev','1');if(location.hash==='#sem-evento-teste')localStorage.removeItem('pingoquest-devev');DEVEV=localStorage.getItem('pingoquest-devev')==='1'}catch(e){}
+function addDays(d,n){var a=d.split('-'),t=new Date(Date.UTC(+a[0],+a[1]-1,+a[2]+n));return t.toISOString().slice(0,10)}
+function fmtD(d){return d.slice(8,10)+'/'+d.slice(5,7)}
+/* hoje, sem voltar no tempo: mudar o relógio para trás não reabre dias */
+function evToday(){var d=window.__today||today();if(S.maxDay&&d<S.maxDay)d=S.maxDay;if(d>(S.maxDay||'')){S.maxDay=d;save()}return d}
+function evOn(ev){return ev.enabled||DEVEV}
+function evWin(ev){
+  if(ev.enabled)return{start:ev.start,end:ev.end};
+  if(!S.devStart){S.devStart=evToday();save()}
+  return{start:S.devStart,end:addDays(S.devStart,9)};
+}
+function evById(id){return EVENTS.filter(function(e){return e.id===id})[0]}
+function evInfo(ev){
+  var t=evToday(),w=evWin(ev),P=S.ev[ev.id]||{steps:{}},total=ev.steps.length,done=Object.keys(P.steps).length;
+  var doneToday=Object.keys(P.steps).some(function(k){return P.steps[k].day===t});
+  var phase=t<w.start?'soon':(t>w.end?'ended':'open');
+  var left=dayNum(w.end)-dayNum(t)+1,toStart=dayNum(w.start)-dayNum(t);
+  var remaining=total-done,avail=left-(doneToday?1:0),viable=avail>=remaining;
+  var completed=done===total;
+  var next=ev.steps.filter(function(st){return !P.steps[st.id]})[0]||null;
+  var late=phase==='open'&&!completed&&done===0&&!viable;
+  var canStart=phase==='open'&&!completed&&!doneToday&&!!next&&!late;
+  return{t:t,w:w,P:P,total:total,done:done,doneToday:doneToday,phase:phase,left:left,toStart:toStart,viable:viable,completed:completed,next:next,late:late,canStart:canStart,pieces:P.pieces||0}
+}
+function evVisible(ev){if(!evOn(ev))return false;var i=evInfo(ev);return i.phase==='open'||(i.phase==='soon'&&i.toStart<=7)}
+function evList(){return EVENTS.filter(evVisible)}
+function evPool(ev){return eligibleQs().filter(function(q){return q.t!=='learn'&&!q.x})}
+/* seleciona as 6 perguntas: só conceitos vistos, mais atenção ao que está frágil, variando conceito e formato */
+function evPick(ev){
+  var P=S.ev[ev.id]||{},used=P.used||[],n=ev.qPerStep,pool=evPool(ev);
+  var fresh=pool.filter(function(q){return used.indexOf(q.q)<0});
+  if(fresh.length>=n)pool=fresh;
+  if(pool.length<n)return{need:n,have:pool.length};
+  var W={fragil:3,aprendendo:2,novo:2,dominado:1};
+  var sc=pool.map(function(q){return{q:q,s:(W[masteryOf(q.cid)]||1)+Math.random()*2}}).sort(function(a,b){return b.s-a.s}).map(function(x){return x.q});
+  var out=[],cnt={},ty={};
+  [[1,1],[2,2],[2,9],[9,9]].forEach(function(lim){
+    sc.forEach(function(q){
+      if(out.length>=n||out.indexOf(q)>=0)return;
+      if((cnt[q.cid]||0)<lim[0]&&(ty[q.t]||0)<lim[1]){out.push(q);cnt[q.cid]=(cnt[q.cid]||0)+1;ty[q.t]=(ty[q.t]||0)+1}
+    });
+  });
+  return shuffle(out);
+}
+var ART={roteador:'<rect width="90" height="90" fill="#d7f3fc"/><path d="M24 44 18 12M66 44l6-32" stroke="#2b3a6b" stroke-width="3.5" stroke-linecap="round"/><circle cx="18" cy="11" r="4" fill="#ffc43d"/><circle cx="72" cy="11" r="4" fill="#ffc43d"/><path d="M34 30a16 16 0 0 1 22 0M38 35a10 10 0 0 1 14 0" fill="none" stroke="#19b5e8" stroke-width="3" stroke-linecap="round"/><circle cx="45" cy="39" r="2.4" fill="#19b5e8"/><rect x="8" y="44" width="74" height="30" rx="9" fill="#2b3a6b"/><circle cx="22" cy="59" r="3.2" fill="#2fbf6b"/><circle cx="32" cy="59" r="3.2" fill="#ffc43d"/><circle cx="42" cy="59" r="3.2" fill="#19b5e8"/><rect x="54" y="53" width="8" height="12" rx="2" fill="#e8ecff"/><rect x="65" y="53" width="8" height="12" rx="2" fill="#e8ecff"/><rect x="16" y="74" width="12" height="5" rx="2" fill="#1b2140"/><rect x="62" y="74" width="12" height="5" rx="2" fill="#1b2140"/>'};
+function evArt(ev){return ART[ev.equipment]||ART.roteador}
+function evThumb(ev){return '<svg viewBox="0 0 90 90" aria-hidden="true">'+evArt(ev)+'</svg>'}
+function evPuzzle(ev,pieces,fresh){
+  var tiles='';
+  for(var i=0;i<9;i++){
+    var x=(i%3)*30,y=Math.floor(i/3)*30;
+    if(i>=pieces)tiles+='<g class="tile"><rect x="'+x+'" y="'+y+'" width="30" height="30" fill="#1a8ac4" stroke="#fff" stroke-width="1.2"/><text x="'+(x+15)+'" y="'+(y+21)+'" text-anchor="middle" font-size="16" font-weight="900" fill="#fff" font-family="inherit">?</text></g>';
+    else if(fresh&&i>=pieces-fresh)tiles+='<rect class="nw" x="'+x+'" y="'+y+'" width="30" height="30" fill="none" stroke="#ffc43d" stroke-width="2"/>';
+    else tiles+='<rect x="'+x+'" y="'+y+'" width="30" height="30" fill="none" stroke="#fff" stroke-width=".6" opacity=".7"/>';
+  }
+  return '<svg class="evpz" viewBox="0 0 90 90" role="img" aria-label="'+pieces+' de 9 peças reveladas">'+evArt(ev)+tiles+'</svg>';
+}
+function evBanners(){
+  return evList().map(function(ev){
+    var i=evInfo(ev),line;
+    if(i.phase==='soon')line=i.toStart===1?'Começa amanhã':'Começa em '+i.toStart+' dias';
+    else if(i.completed)line='Concluído · acessório conquistado';
+    else if(i.late)line='Não dá mais para concluir. Espere o próximo.';
+    else line=(i.left<=1?'Termina hoje':'Termina em '+i.left+' dias')+' · '+i.pieces+'/9 peças';
+    return '<button class="evcard" data-act="evopen" data-id="'+ev.id+'"><span class="evart">'+evThumb(ev)+'</span><span class="evtx"><small>'+ev.tag+'</small><b>'+ev.name+'</b><i>'+line+'</i><span class="evbar"><u style="width:'+Math.round(i.pieces/9*100)+'%"></u></span></span><span class="evgo" aria-hidden="true">›</span></button>';
+  }).join('');
+}
+var EVP=null;
+function evOpen(id){if(!evById(id))return;EVP=id;$('#evpage').hidden=false;document.body.classList.add('lock');evRender();$('#evpage').scrollTop=0}
+function evClose(){EVP=null;$('#evpage').hidden=true;document.body.classList.remove('lock');render()}
+function evRender(){
+  var ev=evById(EVP);if(!ev)return;
+  var i=evInfo(ev),P=i.P,fresh=P.fresh||0,h='<div class="evw">';
+  h+='<div class="evtop"><button class="evback" data-act="evclose" aria-label="Voltar">‹</button><span class="evchip">'+ev.tag+'</span></div>';
+  h+='<div class="evhero"><h1>'+ev.name+'</h1><p>'+ev.blurb+'</p><span class="evtimer">'+(i.phase==='soon'?'Abre em '+fmtD(i.w.start):(i.left<=1?'Termina hoje':'Termina em '+i.left+' dias · '+fmtD(i.w.end)))+'</span></div>';
+  h+='<div class="evbox"><div class="evpzrow">'+evPuzzle(ev,i.pieces,fresh)+'<div class="evpzt"><b>Projeto: '+ev.equipName+'</b><small>'+i.pieces+' de 9 peças coletadas</small><div class="evprog"><u style="width:'+Math.round(i.pieces/9*100)+'%"></u></div></div></div>'+
+     '<div class="evprize'+(i.completed?' got':'')+'">'+(i.completed?IC.check+' '+ev.equipName+' montado! '+ev.prize.name+' guardada no seu inventário.':'Ao completar: <b>'+ev.prize.name+'</b>, um acessório para o seu robô.')+'</div></div>';
+  h+='<div class="evsteps">';
+  ev.steps.forEach(function(st,k){
+    var d=P.steps[st.id],cls=d?'done':(i.next&&i.next.id===st.id&&i.canStart?'now':''),stat='';
+    if(d)stat='Concluída em '+fmtD(d.day)+' · '+d.c+' de '+ev.qPerStep+' acertos';
+    else if(i.phase==='soon')stat='Abre em '+fmtD(i.w.start);
+    else if(i.next&&i.next.id===st.id){stat=i.doneToday?'Volte em outro dia para esta etapa.':(i.late?'Não há mais dias suficientes.':'')}
+    else stat='Depois';
+    h+='<div class="evstep '+cls+'"><div class="num">'+(d?IC.check:(k+1))+'</div><div class="sx"><b>'+st.title+'</b><p>'+st.desc+'</p><div class="evrw"><span>+'+st.pieces+' peças</span><span>+'+st.gems+' cristais</span></div>'+(stat?'<div class="evstat">'+stat+'</div>':'')+'</div></div>';
+  });
+  h+='</div>';
+  if(i.canStart){
+    var have=evPool(ev).length;
+    if(have<ev.qPerStep)h+='<div class="evmsg">Para liberar esta etapa, estude mais fases da trilha. O evento só usa assuntos que você já viu. Você tem '+have+' de '+ev.qPerStep+' perguntas disponíveis.</div><button class="btn" disabled>Começar etapa</button>';
+    else h+='<button class="btn" data-act="evstep" data-id="'+ev.id+'" data-s="'+i.next.id+'">Começar etapa '+(i.done+1)+'</button>';
+  }else if(i.late)h+='<div class="evmsg">Não dá mais tempo de concluir as '+i.total+' etapas, uma por dia. Espere o próximo evento para participar.</div>';
+  else if(i.doneToday&&!i.completed)h+='<div class="evmsg">Etapa de hoje concluída! A próxima fica disponível em outro dia.</div>';
+  h+='<div class="evbox"><h3>Calendário</h3><div class="evcal">';
+  var doneDays={};Object.keys(P.steps).forEach(function(k){doneDays[P.steps[k].day]=1});
+  for(var d=i.w.start,n=0;d<=i.w.end&&n<40;d=addDays(d,1),n++){
+    h+='<span class="'+(doneDays[d]?'ok':'')+(d===i.t?' today':'')+'" title="'+fmtD(d)+'">'+(doneDays[d]?IC.check:'')+d.slice(8,10)+'</span>';
+  }
+  h+='</div></div>';
+  h+='<div class="evbox"><h3>Como funciona</h3><ul class="evrules"><li>Uma etapa nova por dia. Os dias não precisam ser seguidos.</li><li>Cada etapa tem '+ev.qPerStep+' perguntas, só de assuntos que você já estudou. Acerte pelo menos '+ev.passMin+' para concluir. Se errar mais, você revê as explicações e tenta de novo no mesmo dia.</li><li>Peças e cristais de cada etapa são entregues uma vez só.</li><li>Se o evento acabar antes de você concluir, cristais e itens já ganhos ficam com você, mas a coleção não pode ser retomada.</li><li>O evento não libera conteúdo novo e não conta para o desafio de 5 acertos da trilha.</li><li>Datas pelo relógio do aparelho (versão de teste).</li></ul></div>';
+  h+='</div>';
+  $('#evpage').innerHTML=h;
+  if(P.fresh){P.fresh=0;save()}
+}
+function evStart(id,sid){
+  var ev=evById(id);if(!ev)return;var i=evInfo(ev);
+  if(!i.canStart||!i.next||i.next.id!==sid)return;
+  var qs=evPick(ev);
+  if(!Array.isArray(qs)){evRender();return}
+  var P=S.ev[ev.id]||(S.ev[ev.id]={steps:{},used:[],pieces:0});
+  P.used=(P.used||[]).concat(qs.map(function(q){return q.q})).slice(-80);save();
+  startLesson({kind:'event',key:'ev:'+id+':'+sid,ev:id,step:sid,qs:qs});
+}
+function finishEvent(){
+  var ev=evById(L.ev),st=ev.steps.filter(function(x){return x.id===L.step})[0];
+  var P=S.ev[ev.id]||(S.ev[ev.id]={steps:{},used:[],pieces:0}),info=evInfo(ev);
+  var correct=L.qb-L.miss,pass=correct>=ev.passMin,got=null,full=false;
+  if(pass&&info.canStart&&!P.steps[st.id]){
+    P.steps[st.id]={day:info.t,c:correct};
+    var k='ev:'+ev.id+':'+st.id;
+    if(!S.ledger[k]){S.ledger[k]=1;P.pieces=(P.pieces||0)+st.pieces;P.fresh=st.pieces;S.gems+=st.gems;got={pieces:st.pieces,gems:st.gems}}
+    if(Object.keys(P.steps).length===ev.steps.length){
+      P.status='completed';var kp='ev:'+ev.id+':prize';
+      if(!S.ledger[kp]){S.ledger[kp]=1;S.inv.items.push(ev.prize.id);S.inv.coll[ev.equipment]=1;S.gems+=ev.prize.gems||0;full=true}
+    }
+  }
+  var xp=(pass&&got)?15:5,dy=day();dy.xp+=xp;S.xp+=xp;touchStreak();save();
+  var title=full?ev.equipName+' montado!':(pass?'Etapa concluída!':'Quase lá!');
+  var sub=pass?(got?'Você acertou '+correct+' de '+L.qb+'. Peças e cristais entregues.':'Você acertou '+correct+' de '+L.qb+'.'):'Você acertou '+correct+' de '+L.qb+' e precisa de '+ev.passMin+'. Releia as explicações e tente de novo hoje, com outras perguntas.';
+  var again=!pass&&evInfo(ev).canStart;
+  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo(pass?'cheer':'happy','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p>'+
+    (got?'<div class="gpill">+'+got.pieces+' peças</div> <div class="gpill">+'+got.gems+' cristais</div>':'')+
+    (full?'<div class="evprize got" style="margin-top:12px">'+IC.check+' '+ev.prize.name+' desbloqueada! Está no seu inventário.</div>':'')+
+    '<div class="res"><div><small style="background:#d99a00">XP</small><b>+'+xp+'</b></div><div><small style="background:#1e9a52">Acertos</small><b>'+correct+'/'+L.qb+'</b></div></div></div></div>'+
+    '<div class="lfoot">'+(again?'<button class="btn xbtn" data-act="evstep" data-id="'+ev.id+'" data-s="'+st.id+'">Tentar de novo</button>':'')+'<button class="btn" data-act="evback">Ver o evento</button></div></div>';
+  L.kind='done';sfx(pass?'win':'ok');if(pass)confetti();if(full)setTimeout(function(){sfx('open')},500);
+}
+window.PK={EVENTS:EVENTS,evInfo:evInfo,evPick:evPick,evPool:evPool,evList:evList,evToday:evToday,evStart:evStart,evOpen:evOpen,CUR:CUR,eligible:eligible,eligibleQs:eligibleQs,masteryOf:masteryOf,markSeen:markSeen,knowOf:knowOf,allQs:allQs};
 function ds(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function today(){return ds(new Date())}
 function yest(){var d=new Date();d.setDate(d.getDate()-1);return ds(d)}
@@ -986,7 +1204,7 @@ function claimable(){var d=day(),ms=todays(),n=0;ms.forEach(function(m,i){if(!d.
 function missKeys(){return Object.keys(S.miss).filter(function(k){return QIDX[k]}).sort(function(a,b){return S.miss[b]-S.miss[a]})}
 function addMiss(q){var k=q.src.q;S.miss[k]=(S.miss[k]||0)+1}
 function fixMiss(q){var k=q.src.q;if(S.miss[k]){S.miss[k]--;if(S.miss[k]<=0)delete S.miss[k]}}
-function free(){return L.kind==='practice'||L.kind==='review'||L.kind==='extra'}
+function free(){return L.kind==='practice'||L.kind==='review'||L.kind==='extra'||L.kind==='event'}
 var GEM_S='<span class="gi">'+IC.gem+'</span>';
 function weekKey(){var d=new Date(),k=(d.getDay()+6)%7;d.setDate(d.getDate()-k);return ds(d)}
 var WGOAL=5;
@@ -1071,7 +1289,7 @@ function popHTML(g,k,un,done,x){
     '<button class="popbtn" data-act="go" data-g="'+g+'" data-k="'+k+'">'+(done?'Jogar de novo':'Começar')+' +'+xp+' XP</button></div>';
 }
 function pathHTML(){
-  var h='',curFound=false;
+  var h=evBanners(),curFound=false;
   GAMES.forEach(function(g,gi){
     h+='<section class="unit u'+g.c+'"><div class="uhead"><div><div class="tag">'+g.tag+'</div><h2>'+g.title+'</h2></div>'+
        '<button class="tipbtn" data-act="tips" data-g="'+gi+'">Dicas</button></div><div class="nodes">';
@@ -1139,7 +1357,7 @@ function nrm(x){return String(x).toLowerCase().normalize('NFD').replace(/[\u0300
 function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d[i]=[i]}for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
 function emptyArr(n){var a=[];for(var i=0;i<n;i++)a.push(null);return a}
 function startLesson(o){
-  if(o.kind!=='practice'&&o.kind!=='review'&&o.kind!=='extra'&&S.hearts<=0){showNoHearts();return}
+  if(o.kind!=='practice'&&o.kind!=='review'&&o.kind!=='extra'&&o.kind!=='event'&&S.hearts<=0){showNoHearts();return}
   var qs=o.qs.map(prep);
   var qb=qs.filter(function(x){return x.t!=='learn'}).length;
   L=Object.assign({},o,{qb:qb,touch:null,queue:qs,i:0,base:qs.length,right:0,miss:0,run:0,state:'ask',sel:null,ok:false,mp:null});
@@ -1321,7 +1539,7 @@ function check(){
   L.state='fb';L.ok=ok;S.total++;
   if(q.cid){var kk=knowOf(q.cid);kk.seen=kk.seen||1;if(ok)kk.ok++;else kk.bad++;kk.last=today()}
   if(ok){S.ok++;L.right++;gotRight();if(L.kind==='review')fixMiss(q)}
-  else{L.miss++;L.run=0;sqHit(false);addMiss(q);if(!free())S.hearts=Math.max(0,S.hearts-1);if(L.kind!=='extra')L.queue.push(prep(q.src))}
+  else{L.miss++;L.run=0;sqHit(false);addMiss(q);if(!free())S.hearts=Math.max(0,S.hearts-1);if(L.kind!=='extra'&&L.kind!=='event')L.queue.push(prep(q.src))}
   sfx(ok?(L.run>=3?'combo':'ok'):'bad');buzz(ok?[12]:[30]);
   save();drawLesson();
 }
@@ -1331,15 +1549,16 @@ function next(){
   if(L.i>=L.queue.length){finishLesson();return}
   initQ();drawLesson();
 }
-function closeLesson(){L=null;$('#lesson').hidden=true;document.body.classList.remove('lock');render()}
+function closeLesson(){L=null;$('#lesson').hidden=true;document.body.classList.remove('lock');if(EVP){document.body.classList.add('lock');evRender()}render()}
 function finishLesson(){
+  if(L.kind==='event'){finishEvent();return}
   var first=false,xp=10,gems=0;
   if(L.kind==='phase'){first=!S.done[L.key];gems=first?10:0;xp=10}
   if(L.kind==='boss'){first=!S.done[L.key];gems=first?25:0;xp=25;}
   if(L.kind==='practice'){xp=5;S.hearts=Math.min(5,S.hearts+1)}
   if(L.kind==='review'){xp=8}
   var xw=false;
-  if(L.kind==='extra'){var xg=L.g,xr=S.xch[xg]||(S.xch[xg]={w:0,t:0});xr.t++;xw=L.right>=Math.ceil(L.qb*2/3);first=xw&&!xr.w;if(xw)xr.w=1;xp=xw?15:5;gems=first?10:0}
+  if(L.kind==='extra'){var xg=L.g,xr=S.xch[xg]||(S.xch[xg]={w:0,t:0});xr.t++;xw=(L.qb-L.miss)>=Math.ceil(L.qb*2/3);first=xw&&!xr.w;if(xw)xr.w=1;xp=xw?15:5;gems=first?10:0}
   if(L.miss===0&&first)gems+=5;
   var xcard='',xoffer=null;
   if(L.kind==='phase'&&xchReady()){var xg2=parseInt(L.key,10),xe=pickExtras(xg2);if(xe.length>=2){xoffer={g:xg2,qs:xe};var xr2=S.xch[xg2];xcard='<button class="btn xbtn" data-act="xch">Aceitar o desafio</button>'}}
@@ -1547,6 +1766,10 @@ document.addEventListener('click',function(e){
   else if(a==='check'){check()}
   else if(a==='next'){next()}
   else if(a==='lclose'){closeLesson()}
+  else if(a==='evopen'){evOpen(t.dataset.id)}
+  else if(a==='evclose'){evClose()}
+  else if(a==='evstep'){evStart(t.dataset.id,t.dataset.s)}
+  else if(a==='evback'){var eid=L&&L.ev;closeLesson();if(eid&&!EVP)evOpen(eid)}
   else if(a==='xch'){var xo=L&&L.xo;if(xo){closeLesson();startLesson({kind:'extra',key:'x'+xo.g,g:xo.g,qs:xo.qs})}}
   else if(a==='practice'){startLesson({kind:'practice',key:'p',qs:shuffle(allQs()).slice(0,3)})}
   else if(a==='refill'){if(S.gems>=60){S.gems-=60;S.hearts=5;save();closeLesson()}}
@@ -1676,7 +1899,7 @@ var SFX={
 /* navegar = quase mudo e só uma vibração leve; escolher = clique macio; avançar/confirmar/recompensa = som mais rico */
 var ACTSND={pick:'sel',vf:'sel',fadd:'sel',fdel:'sel',badd:'sel',bdel:'sel',clset:'sel',mp:'sel',cpick:'sel',cguess:'sel',obpick:'sel',setplan:'sel',
  next:'adv',lnext:'adv',obnext:'adv',obplan:'adv',obgo:'adv',lclose:'adv',cdone:'adv',cagain:'adv',
- go:'go',daily:'go',review:'go',practice:'go',obstart:'go',xch:'go'};
+ go:'go',evstep:'go',evopen:'go',evback:'adv',evclose:'nav',daily:'go',review:'go',practice:'go',obstart:'go',xch:'go'};
 function sfx(n){if(!SND.on)return;try{SFX[n]()}catch(e){}}
 function buzz(ms){try{if(SND.on&&navigator.vibrate)navigator.vibrate(ms)}catch(e){}}
 function setSound(on){SND.on=on;try{localStorage.setItem('pingoquest-snd',on?'1':'0')}catch(e){}}
