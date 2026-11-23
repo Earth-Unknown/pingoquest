@@ -330,6 +330,11 @@ svg[aria-label^="Pingo"]{cursor:pointer;-webkit-tap-highlight-color:transparent;
 svg.poke{animation:poke .6s cubic-bezier(.3,1.6,.5,1)!important;transform-origin:50% 90%}
 svg.poke .m-ant{animation:antw .6s ease-out;transform-box:fill-box;transform-origin:50% 100%}
 svg.poke .m-tip{fill:#fff;animation:none}
+svg.poke .m-smile{animation:smoff .8s ease-in-out}
+.m-wow{transform-box:fill-box;transform-origin:center;transform:scale(0)}
+svg.poke .m-wow{animation:wow .8s ease-in-out}
+@keyframes wow{0%,100%{transform:scale(0)}18%,72%{transform:scale(1)}}
+@keyframes smoff{0%,100%{opacity:1}12%,80%{opacity:0}}
 svg.poke .m-oval.r{animation:wink .7s ease-in-out}
 @keyframes wink{0%,100%{transform:scaleY(1)}25%,70%{transform:scaleY(.1)}}
 @keyframes poke{0%{transform:scale(1,1)}20%{transform:scale(1.14,.82)}45%{transform:translateY(-16px) scale(.94,1.1) rotate(-6deg)}70%{transform:translateY(0) scale(1.06,.94) rotate(4deg)}100%{transform:none}}
@@ -1019,10 +1024,10 @@ function pingo(mood,cls,av){
     mouth='<path d="M53 62q7-1.500 14 0q0 9-7 9q-7 0-7-9z" fill="#ff4fae"/><path d="M56.500 67.500q3.500-3 7 0q-3.500 3-7 0z" fill="#ff9fd0"/>';
   }else if(mood==='wink'){
     eyes='<ellipse class="m-oval" cx="46" cy="53" rx="5" ry="8"/><circle cx="44" cy="49.500" r="2" fill="#fff"/><path class="m-eye" d="M66 55q7-11 14 0"/>';
-    mouth='<path d="M54 63q6 6 12 0" fill="none" stroke="#ff4fae" stroke-width="3.400" stroke-linecap="round"/>';
+    mouth='<g class="m-smile"><path d="M54 63q6 6 12 0" fill="none" stroke="#ff4fae" stroke-width="3.400" stroke-linecap="round"/></g><ellipse class="m-wow" cx="60" cy="66" rx="5.500" ry="6.500" fill="#ff4fae"/><ellipse class="m-wow" cx="60" cy="68.500" rx="3" ry="2.500" fill="#ff9fd0"/>';
   }else{
     eyes='<ellipse class="m-oval" cx="46" cy="53" rx="5" ry="8"/><circle cx="44" cy="49.500" r="2" fill="#fff"/><ellipse class="m-oval r" cx="74" cy="53" rx="5" ry="8"/><circle cx="72" cy="49.500" r="2" fill="#fff"/>';
-    mouth='<path d="M54 63q6 6 12 0" fill="none" stroke="#ff4fae" stroke-width="3.400" stroke-linecap="round"/>';
+    mouth='<g class="m-smile"><path d="M54 63q6 6 12 0" fill="none" stroke="#ff4fae" stroke-width="3.400" stroke-linecap="round"/></g><ellipse class="m-wow" cx="60" cy="66" rx="5.500" ry="6.500" fill="#ff4fae"/><ellipse class="m-wow" cx="60" cy="68.500" rx="3" ry="2.500" fill="#ff9fd0"/>';
   }
   var cfg=av?avCfg():null,st='',back='',ant,hat='',vis='';
   ant='<path class="m-ant" d="M58 24C57 10 68 7 79 11" fill="none"/><circle class="m-tip" cx="82" cy="12" r="7"/><circle cx="80" cy="10" r="2" fill="#fff" opacity=".8"/>';
@@ -1036,8 +1041,8 @@ function pingo(mood,cls,av){
     else if(cfg.costas==='cabos')back='<rect x="13" y="40" width="94" height="60" rx="14" fill="#ff8a1f"/><circle cx="13" cy="76" r="9" fill="none" stroke="#3b82f6" stroke-width="4"/><circle cx="107" cy="76" r="9" fill="none" stroke="#5be37d" stroke-width="4"/>';
     if(cfg.cabeca==='bone')hat='<path d="M24 38q0-22 36-22q36 0 36 22z" fill="#ffb700"/><rect x="18" y="35" width="42" height="7" rx="3.500" fill="#e09b00"/>';
     else if(cfg.cabeca==='capacete')hat='<path d="M20 40q0-30 40-30q40 0 40 30z" fill="#ffcf33"/><rect x="18" y="37" width="84" height="6" rx="3" fill="#e0a800"/><rect x="55" y="10" width="10" height="28" fill="#e0a800"/>';
-    if(cfg.visor==='oculos')vis='<circle cx="46" cy="53" r="11" fill="rgba(255,255,255,.15)" stroke="#fff" stroke-width="3"/><circle cx="74" cy="53" r="11" fill="rgba(255,255,255,.15)" stroke="#fff" stroke-width="3"/><path d="M57 53h6" stroke="#fff" stroke-width="3"/>';
-    else if(cfg.visor==='hud')vis='<rect x="33" y="40" width="54" height="26" rx="13" fill="rgba(25,181,232,.28)" stroke="var(--cyan)" stroke-width="2.500"/><path d="M40 46h10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>';
+    if(cfg.visor==='oculos')vis='<circle cx="46" cy="53" r="10" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><circle cx="74" cy="53" r="10" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><path d="M56 51q4-3 8 0" fill="none" stroke="#fff" stroke-width="2"/><path d="M38 47q3-3 7-3" fill="none" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".6"/>';
+    else if(cfg.visor==='hud')vis='<rect x="35" y="43" width="50" height="17" rx="8.500" fill="rgba(25,181,232,.10)" stroke="var(--cyan)" stroke-width="1.800"/><path d="M41 47h7" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".7"/>';
   }
   var phone=function(x){return '<circle class="m-low" cx="'+x+'" cy="55" r="12"/><circle cx="'+x+'" cy="55" r="9" fill="var(--cyan)"/><circle cx="'+x+'" cy="55" r="7" fill="#2a1a8a"/><text x="'+x+'" y="58.600" text-anchor="middle" font-size="9.500" font-weight="900" fill="#fff" font-family="Nunito,system-ui,sans-serif">P</text>'};
   return '<svg viewBox="0 0 120 120" class="'+(cls||'')+'"'+st+' role="img" aria-label="'+(av?'Seu robô':'Pingo, o roteador mascote')+'">'+back+
