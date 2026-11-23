@@ -267,6 +267,18 @@ svg{display:block}
 @keyframes cfin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .cexp{width:auto;margin:10px auto 0;min-height:44px;padding-inline:22px;animation:cfin .5s 3.5s both}
 .lfoot.late{animation:lfin .4s 3.5s both}@keyframes lfin{from{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}
+
+.pzx{position:fixed;inset:0;z-index:5;background:var(--bg);display:flex;flex-direction:column;align-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px));text-align:center;overflow:auto}
+.pzh h1{margin:10px 0 4px;text-wrap:balance}.pzh p{margin:0;color:var(--muted);font-weight:700;min-height:1.4em}
+.pzboard{display:grid;grid-template-columns:repeat(3,1fr);width:min(76vw,320px);aspect-ratio:1;margin:22px 0 10px;border-radius:18px;overflow:hidden;border:3px solid var(--line);background:var(--line);gap:2px;box-shadow:0 10px 26px rgba(80,40,160,.14)}
+.pzboard.done{animation:pzwin .8s;border-color:var(--gold)}@keyframes pzwin{0%,100%{transform:scale(1)}40%{transform:scale(1.06)}}
+.pzcell{position:relative;overflow:hidden;background:var(--surface)}.pzcell svg{display:block;width:100%;height:100%}
+.pzq{position:absolute;inset:0;display:grid;place-items:center;background:#1a8ac4;color:#fff;font-weight:900;font-size:28px}
+.pzcell.in{animation:pzin .5s}@keyframes pzin{0%{transform:scale(.7)}60%{transform:scale(1.12)}100%{transform:none}}
+.pzprog{font-weight:700;color:var(--muted)}.pzprog b{color:var(--ink);font-size:20px}
+.pzfoot{margin-top:auto;width:100%;padding-top:18px}.pzfoot .btn{width:100%}
+.pzpiece{position:fixed;z-index:130;pointer-events:none;border-radius:14px;overflow:hidden;border:4px solid #fff;box-shadow:0 0 0 3px #ffc43d,0 16px 40px rgba(0,0,0,.45),0 0 40px rgba(255,196,61,.7);background:#fff}
+.pzpiece svg{display:block;width:100%;height:100%}
 .frcard{background:var(--surface);border:2px solid var(--line,#e4def5);border-radius:20px;padding:10px 12px}
 .frrow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:14px}
 .frrow.me{background:color-mix(in srgb,var(--roxo,#7b3ff2) 12%,transparent)}
@@ -683,6 +695,10 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .dth.rol{background:color-mix(in srgb,var(--amarelo) 16%,var(--surface))}
 .frinv{background:color-mix(in srgb,var(--amarelo) 16%,var(--surface))}
 :root[data-theme="dark"] .slide{color:#fff}:root[data-theme="dark"] .ctag{color:#ffc2e6}:root[data-theme="dark"] .tipbtn,:root[data-theme="dark"] .uhead .tag{color:#fff}
+.btn.prim{background:color-mix(in srgb,var(--primary) 80%,#fff);box-shadow:0 4px 0 color-mix(in srgb,var(--primary) 55%,#fff)}
+.btn.prim:active{box-shadow:0 0 0 transparent}
+.cqico{filter:saturate(.6) brightness(1.06)}
+.cqtile.on,.cqtile.got{border-color:color-mix(in srgb,var(--gold) 55%,var(--line))}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -1153,6 +1169,7 @@ var IC={
  map:'<svg viewBox="0 0 24 24" fill="#19b5e8"><path d="M3 6l6-2.500 6 2.500 6-2.500v14.500L15 20.500 9 18l-6 2.500z"/></svg>',
  skull:'<svg viewBox="0 0 24 24" fill="#a56bff"><path d="M12 2C7 2 3.500 5.500 3.500 10c0 2.600 1.200 4.200 2.500 5.200V19a1.500 1.500 0 0 0 1.500 1.500h1V18h1.500v2.500h3V18H15v2.500h1a1.500 1.500 0 0 0 1.500-1.500v-3.800c1.300-1 2.500-2.600 2.500-5.200C20.500 5.500 17 2 12 2z"/><circle cx="8.700" cy="10.500" r="2" fill="#fff"/><circle cx="15.300" cy="10.500" r="2" fill="#fff"/></svg>'
 };
+IC.puzzle='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 3a2 2 0 0 1 4 0v1h3a1 1 0 0 1 1 1v3h-1a2 2 0 0 0 0 4h1v3a1 1 0 0 1-1 1h-3v-1a2 2 0 0 0-4 0v1H7a1 1 0 0 1-1-1v-3H5a2 2 0 0 1 0-4h1V5a1 1 0 0 1 1-1h3z"/></svg>';
 IC.search='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="10.500" cy="10.500" r="6.500"/><path d="M15.500 15.500L21 21"/></svg>';
 function pingo(mood,cls,av){
   /* Pingo v3 (referência "Robô Kawaii Roxo"): capacete lilás grande, viseira escura, orelhas roxas com luz ciano,
@@ -1553,7 +1570,102 @@ function evInfo(ev){
 }
 function evVisible(ev){if(!evOn(ev))return false;var i=evInfo(ev);return i.phase==='open'||(i.phase==='soon'&&i.toStart<=7)}
 function evList(){return EVENTS.filter(evVisible)}
-function evPool(ev){return eligibleQs().filter(function(q){return q.t!=='learn'&&!q.x})}
+/* ===== Jogo rápido do evento: perguntas curtas, de outro jeito, só dos conceitos já vistos ===== */
+function EQ(cid,q,r,w,e){return{t:'mc',cid:cid,q:q,o:[r].concat(w),a:0,e:e,dif:1,rs:'aprovado',ev:1}}
+function EV(cid,q,a,e){return{t:'vf',cid:cid,q:q,a:a,e:e,dif:1,rs:'aprovado',ev:1}}
+var EVQ=[
+ EQ('rede.def','O que é uma rede de computadores?','Aparelhos ligados para trocar informações',['Um tipo de programa','Um cabo muito longo'],'Rede é um grupo de aparelhos conectados.'),
+ EQ('rede.def','Como uma rede funciona?','Os aparelhos enviam e recebem dados',['Cada aparelho trabalha isolado','Só funciona com pen drive'],'Na rede, os aparelhos trocam dados entre si.'),
+ EV('rede.def','Celular e TV no mesmo Wi-Fi formam uma rede.',true,'Aparelhos ligados entre si já são uma rede.'),
+ EQ('rede.uso','Para que serve uma rede?','Compartilhar internet, arquivos e impressora',['Deixar o aparelho mais pesado','Apagar arquivos'],'A rede serve para compartilhar.'),
+ EQ('rede.uso','Qual é um uso comum da rede?','Vários aparelhos usando a mesma impressora',['Carregar a bateria','Ligar a TV na tomada'],'A impressora compartilhada é um uso típico.'),
+ EV('rede.uso','Uma rede só serve para acessar a internet.',false,'Ela também compartilha arquivos e impressoras.'),
+ EQ('rede.host','O que é um host?','Qualquer aparelho conectado à rede',['Só o computador mais forte','O cabo da rede'],'Host é todo aparelho na rede.'),
+ EQ('rede.host','Qual destes é um host?','Um celular conectado ao Wi-Fi',['Um cabo guardado na gaveta','A tomada da parede'],'Para ser host, o aparelho precisa estar na rede.'),
+ EV('rede.host','Uma TV conectada ao Wi-Fi é um host.',true,'Qualquer aparelho conectado é host.'),
+ EQ('lan','O que é uma LAN?','Uma rede local, como a de casa',['A rede do mundo todo','Um tipo de cabo'],'LAN é a rede local.'),
+ EQ('lan','Que área uma LAN costuma cobrir?','Casa, sala ou escritório',['Vários países','Só um aparelho'],'A LAN cobre um espaço pequeno.'),
+ EV('lan','Dois aparelhos na mesma LAN podem conversar sem internet.',true,'A LAN funciona mesmo sem internet.'),
+ EQ('equip.roteador','O que o roteador faz?','Divide a internet entre os aparelhos',['Guarda os arquivos','Imprime documentos'],'O roteador distribui a conexão.'),
+ EQ('equip.roteador','Onde o roteador fica numa rede de casa?','No centro, ligando os aparelhos',['Dentro do celular','Só no provedor'],'Ele liga a casa à internet.'),
+ EV('equip.roteador','O roteador cria o Wi-Fi da casa.',true,'Em geral, é ele que emite o Wi-Fi.'),
+ EQ('equip.modem','O que é o modem?','Aparelho que recebe o sinal do provedor',['Um tipo de celular','Um teclado'],'O modem faz a ponte com o provedor.'),
+ EQ('equip.modem','Como o modem ajuda?','Traduz o sinal do provedor para sua rede',['Aumenta o volume','Carrega a bateria'],'Ele converte o sinal para sua rede entender.'),
+ EV('equip.modem','Muitas vezes, modem e roteador vêm no mesmo aparelho.',true,'Isso é comum nas casas.'),
+ EQ('meio.transmissao','O que é o cabo de rede?','Fio que liga aparelhos e leva dados',['Cabo de energia','Cabo de antena de TV'],'Ele transporta dados.'),
+ EQ('meio.transmissao','Qual a vantagem do cabo?','Conexão estável e rápida',['Funciona sem ligar em nada','Dispensa qualquer equipamento'],'O cabo costuma ser mais estável que o Wi-Fi.'),
+ EV('meio.transmissao','Um cabo de rede pode ligar o computador ao roteador.',true,'É um jeito comum de conectar.'),
+ EQ('meio.wifi','O que é Wi-Fi?','Uma rede sem fio',['Um tipo de cabo','Um aplicativo'],'Wi-Fi conecta sem cabo.'),
+ EQ('meio.wifi','Como o Wi-Fi leva os dados?','Por ondas de rádio',['Pela tomada','Por um cabo escondido'],'O sinal viaja pelo ar.'),
+ EV('meio.wifi','Quanto mais longe do roteador, mais fraco o sinal tende a ficar.',true,'A distância enfraquece o Wi-Fi.'),
+ EQ('meio.fibra','O que é fibra óptica?','Cabo que leva dados como luz',['Fio de cobre grosso','Um tipo de Wi-Fi'],'A fibra usa pulsos de luz.'),
+ EQ('meio.fibra','Por que a fibra é rápida?','Usa pulsos de luz',['Usa mais energia','Usa mais cabos'],'A luz leva dados muito rápido.'),
+ EV('meio.fibra','A fibra óptica pode levar a internet até a casa.',true,'Muitos provedores entregam por fibra.'),
+ EQ('internet','O que é a internet?','Uma rede de redes',['Um computador gigante','Um aplicativo de celular'],'Ela liga muitas redes entre si.'),
+ EQ('internet','Como a internet existe?','Muitas redes ligadas entre si',['Um servidor único','Um app que se instala'],'São redes conectadas pelo mundo.'),
+ EV('internet','Internet e Wi-Fi são a mesma coisa.',false,'Wi-Fi é só um jeito de se conectar sem fio.'),
+ EQ('isp','O que é um provedor de internet?','Empresa que entrega a internet até você',['Um site de busca','Um tipo de roteador'],'O provedor dá o acesso.'),
+ EQ('isp','Como a internet chega até sua casa?','Pelo provedor, por cabo ou fibra',['Pela tomada de energia','Por um pen drive'],'O provedor leva o sinal até você.'),
+ EV('isp','O provedor conecta sua casa à internet.',true,'É o papel dele.'),
+ EQ('cliente.servidor','O que é um servidor?','Computador que entrega dados a quem pede',['O aparelho que pede dados','O cabo da rede'],'O servidor atende pedidos.'),
+ EQ('cliente.servidor','Como funciona cliente e servidor?','O cliente pede e o servidor responde',['O servidor pede e o cliente responde','Ninguém responde'],'Quem pede é o cliente.'),
+ EV('cliente.servidor','Ao abrir um site, seu celular age como cliente.',true,'Ele pede a página ao servidor.'),
+ EQ('ip.v4','O que é o endereço IP?','O endereço de um aparelho na rede',['A senha do Wi-Fi','O nome do site'],'O IP identifica o aparelho.'),
+ EQ('ip.v4','Para que serve o IP?','Para os dados chegarem ao aparelho certo',['Para deixar a tela mais clara','Para gastar menos bateria'],'Sem endereço, o dado se perde.'),
+ EV('ip.v4','Dois aparelhos da mesma rede devem ter o mesmo IP.',false,'Cada aparelho precisa de um IP diferente.'),
+ EQ('ip.privado','O que é um IP privado?','IP usado dentro da sua rede local',['IP usado pelo mundo todo','A senha da rede'],'O IP privado vale só na rede local.'),
+ EQ('ip.privado','Por qual IP o mundo enxerga sua rede?','Pelo IP público',['Pelo IP privado de cada aparelho','Pelo nome do Wi-Fi'],'O IP público é o da rede para fora.'),
+ EV('ip.privado','O IP 192.168.1.10 é um exemplo de IP privado.',true,'Essa faixa é de IPs privados.'),
+ EQ('ip.mac.dhcp','O que o DHCP faz?','Entrega um IP automaticamente',['Esconde o Wi-Fi','Guarda fotos'],'Ele distribui os IPs.'),
+ EQ('ip.mac.dhcp','O que é o endereço MAC?','Identificador único da placa de rede',['Uma senha de Wi-Fi','O nome do roteador'],'O MAC vem de fábrica.'),
+ EV('ip.mac.dhcp','Com DHCP, não precisa digitar o IP à mão.',true,'A configuração é automática.'),
+ EQ('dns','O que o DNS faz?','Transforma nome de site em número (IP)',['Aumenta a velocidade','Protege contra vírus'],'Ele traduz nomes em endereços.'),
+ EQ('dns','Como o DNS ajuda você?','Você digita o nome e ele acha o IP',['Ele troca sua senha','Ele desliga o Wi-Fi'],'Você não precisa decorar números.'),
+ EV('dns','Sem DNS, ainda dá para acessar um site pelo IP.',true,'O IP continua funcionando.'),
+ EQ('dns.agenda','O DNS é parecido com...','Uma lista de contatos',['Uma calculadora','Uma lanterna'],'Nome vira número, como na agenda.'),
+ EQ('dns.agenda','Na lista de contatos do DNS, o IP seria...','O número de telefone',['O nome do contato','A foto do contato'],'O nome do site é o contato; o IP é o telefone.'),
+ EV('dns.agenda','No DNS, o nome do site é como o nome do contato.',true,'E o IP é o telefone dele.'),
+ EQ('dns.falha','Um site não abre, mas os outros sim. O que fazer?','Testar de novo e verificar o endereço',['Trocar o roteador','Comprar internet nova'],'A falha pode ser só daquele site.'),
+ EQ('dns.falha','Como saber se a internet caiu?','Tentar abrir outros sites',['Mudar a cor da tela','Desligar a luz'],'Se nenhum abre, a conexão pode ter caído.'),
+ EV('dns.falha','Se nenhum site abre, o problema pode ser a conexão.',true,'Vale checar o roteador e o modem.'),
+ EQ('dados.bits','O que é um bit?','A menor unidade de dado (0 ou 1)',['Um tipo de cabo','Uma senha'],'Todo dado digital vira bits.'),
+ EQ('dados.bits','Quantos bits tem 1 byte?','8',['2','100'],'1 byte = 8 bits.'),
+ EV('dados.bits','Todo dado digital é guardado como 0 e 1.',true,'É a linguagem dos computadores.'),
+ EQ('pacotes','O que é um pacote?','Pedaço pequeno de dados enviado pela rede',['Uma caixa física','Um cabo'],'Os dados viajam em pacotes.'),
+ EQ('pacotes','Por que dividir em pacotes?','Para enviar e reenviar partes com facilidade',['Para gastar mais internet','Para esconder o IP'],'Se um pacote se perde, só ele é reenviado.'),
+ EV('pacotes','Um arquivo grande é enviado em vários pacotes.',true,'O destino junta tudo no final.'),
+ EQ('banda.latencia','O que é a banda?','Quanto de dado passa por segundo',['O tempo de espera','O tamanho da tela'],'Banda é a capacidade da conexão.'),
+ EQ('banda.latencia','O que é a latência?','O atraso entre pedir e receber',['A cor do Wi-Fi','O tamanho do arquivo'],'Latência baixa é resposta rápida.'),
+ EV('banda.latencia','Em jogo online, uma latência baixa é melhor.',true,'Menos atraso, mais fluidez.'),
+ EQ('equip.switch','O que é um switch?','Aparelho que liga vários aparelhos na rede local',['Um tipo de celular','O provedor'],'O switch distribui a rede por cabo.'),
+ EQ('equip.switch','Como o switch trabalha?','Envia os dados só ao aparelho certo',['Apaga os dados','Cria a senha do Wi-Fi'],'Ele encaminha para o destino.'),
+ EV('equip.switch','O switch ajuda a ligar vários computadores por cabo.',true,'Ele tem várias portas.'),
+ EQ('equip.ap','O que é um ponto de acesso?','Aparelho que leva o Wi-Fi a mais lugares',['Um cabo longo','Um teclado'],'Ele amplia a rede sem fio.'),
+ EQ('equip.ap','Para que serve o repetidor?','Estender o alcance do Wi-Fi',['Diminuir a velocidade','Imprimir'],'Ele repete o sinal.'),
+ EV('equip.ap','Um repetidor pode ajudar numa casa grande com sinal fraco.',true,'Ele alcança cantos distantes.'),
+ EQ('rede.mapa','Qual a ordem comum, da internet ao celular?','Provedor, modem, roteador, celular',['Celular, roteador, modem, provedor','Roteador, provedor, celular, modem'],'O sinal passa por cada aparelho na ordem.'),
+ EQ('rede.mapa','O que um mapa da rede mostra?','Como os aparelhos estão ligados',['O clima da cidade','O saldo do celular'],'Ele ajuda a achar problemas.'),
+ EV('rede.mapa','Saber como os aparelhos se ligam ajuda a achar o defeito.',true,'Você investiga na ordem certa.'),
+ EQ('rede.alcance','O que é uma PAN?','Rede pessoal, bem pertinho de você',['A rede do país inteiro','Uma rede de cidade'],'PAN é a rede pessoal.'),
+ EQ('rede.alcance','Qual é um exemplo de PAN?','Celular com fone Bluetooth',['A internet do bairro','A rede de uma universidade'],'Aparelhos bem próximos formam uma PAN.'),
+ EV('rede.alcance','A LAN costuma ser maior que a PAN.',true,'A PAN é ainda mais pessoal.'),
+ EQ('rede.man.wan','O que é uma MAN?','Rede que cobre uma cidade',['Rede de uma sala','Rede de um fone'],'MAN é a rede metropolitana.'),
+ EQ('rede.man.wan','O que é uma WAN?','Rede de longa distância',['Rede só da casa','Rede do fone'],'WAN liga lugares distantes.'),
+ EV('rede.man.wan','A internet é um exemplo de WAN.',true,'Ela cobre o mundo todo.'),
+ EQ('rede.topologia','Na rede em estrela, quem fica no centro?','Um aparelho central, como switch ou roteador',['O computador mais velho','Nada'],'Todos se ligam ao centro.'),
+ EQ('rede.topologia','Qual a vantagem da estrela?','Se um cabo falha, os outros seguem funcionando',['Usa um só cabo para tudo','Dispensa equipamentos'],'Cada aparelho tem seu próprio cabo.'),
+ EV('rede.topologia','Na estrela, cada aparelho liga ao centro.',true,'É o desenho em forma de estrela.'),
+ EQ('seg.senha','Qual senha de Wi-Fi é mais forte?','Uma frase longa com números',['12345678','O seu nome'],'Longa e imprevisível é melhor.'),
+ EQ('seg.senha','Por que proteger o Wi-Fi com senha?','Para impedir que estranhos entrem',['Para o Wi-Fi ficar mais bonito','Para economizar energia'],'Senha protege sua rede.'),
+ EV('seg.senha','A data de aniversário é uma boa senha.',false,'É fácil de adivinhar.'),
+ EQ('seg.https','O que o cadeado do site indica?','A conexão é protegida (HTTPS)',['O site é gratuito','O site é novo'],'HTTPS protege a conversa.'),
+ EQ('seg.https','O que o HTTPS faz?','Protege os dados entre você e o site',['Apaga os anúncios','Deixa tudo mais rápido sempre'],'Os dados viajam protegidos.'),
+ EV('seg.https','Antes de digitar dados importantes, vale conferir o cadeado.',true,'É um sinal de conexão protegida.'),
+ EQ('seg.habitos','Qual é um hábito seguro?','Manter o celular atualizado',['Clicar em links desconhecidos','Usar a mesma senha em tudo'],'Atualizações corrigem falhas.'),
+ EQ('seg.habitos','O que fazer com um link estranho?','Não clicar',['Clicar rápido','Mandar para todo mundo'],'Link desconhecido pode ser golpe.'),
+ EV('seg.habitos','Atualizar o aparelho corrige falhas de segurança.',true,'Por isso vale atualizar sempre.')
+];
+function evPool(ev){return EVQ.filter(function(q){return eligible(q.cid)})}
 /* seleciona as 6 perguntas: só conceitos vistos, mais atenção ao que está frágil, variando conceito e formato */
 function evPick(ev){
   var P=S.ev[ev.id]||{},used=P.used||[],n=ev.qPerStep,pool=evPool(ev);
@@ -1620,7 +1732,7 @@ function evRender(){
   h+='<div class="evbox"><div class="evpzrow">'+evPuzzle(ev,i.pieces,fresh)+'<div class="evpzt"><b>Projeto: '+ev.equipName+'</b><small>'+i.pieces+' de 9 peças coletadas</small><div class="evprog"><u style="width:'+Math.round(i.pieces/9*100)+'%"></u></div></div></div>'+
      '<div class="evprize'+(i.completed?' got':'')+'">'+(i.completed?IC.check+' '+ev.equipName+' montado! '+ev.prize.name+' guardada no seu inventário.':'Ao completar: <b>'+ev.prize.name+'</b>, um acessório para o seu robô.')+'</div></div>';
   if(i.canStart&&evPool(ev).length<ev.qPerStep){
-    var fal=ev.qPerStep-evPool(ev).length,fs=Math.max(1,Math.ceil(fal/5));
+    var fal=ev.qPerStep-evPool(ev).length,fs=Math.max(1,Math.ceil(fal/3));
     h+='<div class="evmsg" style="margin-top:14px"><b>Falta pouco para começar!</b><br>Conclua mais '+fs+(fs===1?' fase':' fases')+' na trilha. O evento só pergunta assuntos que você já estudou ('+evPool(ev).length+' de '+ev.qPerStep+' perguntas liberadas).</div><button class="btn" data-act="evclose">Ir para a trilha</button>';
   }
   h+='<div class="evsteps">';
@@ -1674,14 +1786,71 @@ function finishEvent(){
   }
   var xp=(pass&&got)?15:5,dy=day();dy.xp+=xp;S.xp+=xp;wkAdd(xp);touchStreak();save();
   var title=full?ev.equipName+' montado!':(pass?'Etapa concluída!':'Quase lá!');
-  var sub=pass?(got?'Você acertou '+correct+' de '+L.qb+'. Peças e chips entregues.':'Você acertou '+correct+' de '+L.qb+'.'):'Você acertou '+correct+' de '+L.qb+' e precisa de '+ev.passMin+'. Releia as explicações e tente de novo hoje, com outras perguntas.';
+  var sub=pass?'Você acertou '+correct+' de '+L.qb+'!':'Você acertou '+correct+' de '+L.qb+'. Precisa de '+ev.passMin+'.';
   var again=!pass&&evInfo(ev).canStart;
-  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo(pass?'cheer':'happy','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p>'+
-    (got?'<div class="gpill">+'+got.pieces+' peças</div> <div class="gpill">+'+got.gems+' chips</div>':'')+
-    (full?'<div class="evprize got" style="margin-top:12px">'+IC.check+' '+ev.prize.name+' desbloqueada! Está no seu inventário.</div>':'')+
-    '<div class="res"><div><small style="background:#d99a00">Energia</small><b>+'+xp+'</b></div><div><small style="background:#1e9a52">Acertos</small><b>'+correct+'/'+L.qb+'</b></div></div></div></div>'+
-    '<div class="lfoot">'+(again?'<button class="btn xbtn" data-act="evstep" data-id="'+ev.id+'" data-s="'+st.id+'">Tentar de novo</button>':'')+'<button class="btn" data-act="evback">Ver o evento</button></div></div>';
-  L.kind='done';sfx(pass?'win':'ok');if(pass)confetti();if(full)setTimeout(function(){sfx('open')},500);
+  var tiles=[{c:'#ffb800',l:'Energia',v:IC.bolt+'<b data-to="'+xp+'">0</b>'}];
+  if(got&&got.gems>0)tiles.push({c:'#18b9e8',l:'Chips',v:IC.gem+'<b data-to="'+got.gems+'" data-pre="+">+0</b>'});
+  if(got)tiles.push({c:'#3fbf5f',l:'Peças',v:IC.puzzle+'<b data-to="'+got.pieces+'" data-pre="+">+0</b>'});
+  else tiles.push({c:'#18b9e8',l:'Acertos',v:IC.target+'<b data-to="'+correct+'">0</b>'});
+  var tl=tiles.map(function(t,i){return'<div class="rt" style="--rc:'+t.c+';animation-delay:'+(0.55+i*0.62)+'s"><small>'+t.l+'</small><span>'+t.v+'</span></div>'}).join('');
+  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo(pass?'cheer':'happy','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p><div class="res2">'+tl+'</div></div></div>'+
+    '<div class="lfoot">'+(again?'<button class="btn xbtn" data-act="evstep" data-id="'+ev.id+'" data-s="'+st.id+'">Tentar de novo</button>':'')+'<button class="btn" data-act="collect">Coletar energia</button></div></div>';
+  tiles.forEach(function(t,i){
+    setTimeout(function(){if(L&&L.kind==='done')sfx('plim'+Math.min(i,2))},(0.55+i*0.62)*1000+260);
+    setTimeout(function(){var el=$('#lesson .res2');el=el&&el.children[i];if(el)countUp(el.querySelector('b'))},(0.55+i*0.62)*1000+380);
+  });
+  L.kind='done';L.cx=xp;L.cg=got?got.gems:0;L.evId=ev.id;
+  if(got)L.pz={evId:ev.id,before:Math.max(0,(P.pieces||0)-got.pieces),n:got.pieces,full:full};
+  sfx(pass?'win':'ok');if(pass)confetti();
+}
+/* quebra-cabeça: a peça aparece girando e é encaixada no lugar */
+function pzCell(ev,i,covered){
+  var x=(i%3)*30,y=Math.floor(i/3)*30;
+  return '<div class="pzcell" data-i="'+i+'"><svg viewBox="'+x+' '+y+' 30 30" preserveAspectRatio="none" aria-hidden="true">'+evArt(ev)+'</svg>'+(covered?'<div class="pzq">?</div>':'')+'</div>';
+}
+function evPuzzleReveal(z){
+  var ev=evById(z.evId);if(!ev){closeLesson();return}
+  L={kind:'pz',evId:z.evId,on:true};
+  var cells='';for(var i=0;i<9;i++)cells+=pzCell(ev,i,i>=z.before);
+  $('#lesson').innerHTML='<div class="pzx"><div class="pzh"><h1>'+(z.n===1?'Você ganhou 1 peça!':'Você ganhou '+z.n+' peças!')+'</h1><p id="pzp">Veja ela entrando no quebra-cabeça</p></div>'+
+   '<div class="pzboard" id="pzb">'+cells+'</div><div class="pzprog"><b id="pzn">'+z.before+'</b> de 9 peças</div>'+
+   '<div class="pzfoot"><button class="btn" data-act="pzdone">'+(z.full?'Continuar':'Ver o evento')+'</button></div></div>';
+  var step=function(k){
+    if(!L||L.kind!=='pz')return;
+    if(k>=z.n){
+      var pp=$('#pzp');
+      if(z.full){var bd=$('#pzb');if(bd)bd.classList.add('done');if(pp)pp.textContent=ev.equipName+' montado! '+ev.prize.name+' guardada no inventário.';sfx('open');confetti()}
+      else if(pp)pp.textContent='Faltam '+(9-(z.before+z.n))+' peças.';
+      return;
+    }
+    var idx=z.before+k,cell=document.querySelector('#pzb .pzcell[data-i="'+idx+'"]');if(!cell){return}
+    var place=function(){
+      var q=cell.querySelector('.pzq');if(q)q.remove();cell.classList.add('in');
+      var nn=$('#pzn');if(nn)nn.textContent=idx+1;
+      sfx('plim'+Math.min(k,2));buzz([14]);setTimeout(function(){step(k+1)},NOANIM?60:500);
+    };
+    if(NOANIM){place();return}
+    var br=$('#pzb').getBoundingClientRect(),cr=cell.getBoundingClientRect(),sz=Math.round(Math.min(150,br.width*0.5));
+    var pc=document.createElement('div');pc.className='pzpiece';pc.style.width=sz+'px';pc.style.height=sz+'px';
+    var x=(idx%3)*30,y=Math.floor(idx/3)*30;
+    pc.innerHTML='<svg viewBox="'+x+' '+y+' 30 30" preserveAspectRatio="none" aria-hidden="true">'+evArt(ev)+'</svg>';
+    var cx=window.innerWidth/2-sz/2,cy=window.innerHeight*0.42-sz/2;
+    pc.style.left=cx+'px';pc.style.top=cy+'px';document.body.appendChild(pc);sfx('open');
+    var spin=pc.animate([
+      {transform:'perspective(600px) rotateY(0deg) scale(.1)',opacity:0},
+      {transform:'perspective(600px) rotateY(360deg) scale(1.15)',opacity:1,offset:.45},
+      {transform:'perspective(600px) rotateY(720deg) scale(1)',opacity:1}
+    ],{duration:1300,easing:'cubic-bezier(.3,.7,.3,1)',fill:'forwards'});
+    spin.onfinish=function(){
+      var tx=cr.left+cr.width/2-(cx+sz/2),ty=cr.top+cr.height/2-(cy+sz/2),sc=cr.width/sz;
+      var fly=pc.animate([
+        {transform:'perspective(600px) rotateY(720deg) translate(0,0) scale(1)'},
+        {transform:'perspective(600px) rotateY(720deg) translate('+tx+'px,'+ty+'px) scale('+sc+')'}
+      ],{duration:650,easing:'cubic-bezier(.5,0,.2,1)',fill:'forwards'});
+      fly.onfinish=function(){pc.remove();place()};
+    };
+  };
+  setTimeout(function(){step(0)},NOANIM?100:650);
 }
 window.PK={EVENTS:EVENTS,evInfo:evInfo,evPick:evPick,evPool:evPool,evList:evList,evToday:evToday,evStart:evStart,evOpen:evOpen,CUR:CUR,eligible:eligible,eligibleQs:eligibleQs,masteryOf:masteryOf,markSeen:markSeen,knowOf:knowOf,allQs:allQs};
 function ds(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -1690,7 +1859,7 @@ function yest(){var d=new Date();d.setDate(d.getDate()-1);return ds(d)}
 function dayNum(t){var a=t.split('-');return Math.round(Date.UTC(+a[0],+a[1]-1,+a[2])/86400000)}
 function maxGap(){var p=S.plan||7;return p>=7?0:(p>=5?1:2)}
 function streakNow(){return(S.last&&dayNum(today())-dayNum(S.last)<=1+maxGap())?S.streak:0}
-var UP=null;
+var UP=null,AFTER_BR=null;
 function touchStreak(){
   UP=null;var t=today();if(S.last===t)return;
   var gap=S.last?dayNum(t)-dayNum(S.last):99;
@@ -1704,6 +1873,7 @@ function $(s){return document.querySelector(s)}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
 function allQs(){var r=[];GAMES.forEach(function(g){g.phases.forEach(function(p){r=r.concat(p.filter(function(q){return q.t!=='learn'}))})});return r}
 var QIDX={};allQs().forEach(function(q){QIDX[q.q]=q});Object.keys(EXTRA).forEach(function(g){EXTRA[g].forEach(function(q){QIDX[q.q]=q})});
+EVQ.forEach(function(q){QIDX[q.q]=q});
 function total(){return GAMES.length*4}
 function doneCount(){return Object.keys(S.done).length}
 
@@ -2155,6 +2325,7 @@ function check(){
   else{L.miss++;L.run=0;sqHit(false);addMiss(q);if(!free())S.hearts=Math.max(0,S.hearts-1);if(L.kind!=='extra'&&L.kind!=='event')L.queue.push(prep(q.src))}
   sfx(ok?(L.run>=3?'combo':'ok'):'bad');buzz(ok?[12]:[30]);
   save();drawLesson();
+  if(ok&&L.kind==='event'&&!NOANIM){var Lr=L,ix=L.i;setTimeout(function(){if(L===Lr&&L.i===ix&&L.state==='fb'&&L.ok)next()},1100)}
 }
 function next(){
   if(!free()&&S.hearts<=0){closeLesson();showNoHearts();return}
@@ -2166,6 +2337,8 @@ function closeLesson(){L=null;$('#lesson').hidden=true;document.body.classList.r
 /* depois de coletar a energia, se o dia de hoje acendeu o brilho, mostra a tela de arrastar */
 function endDone(){
   if(L&&L.case){C=null;L.case=false}
+  if(L&&L.pz){var z=L.pz;L.pz=null;evPuzzleReveal(z);return}
+  if(L&&L.evId){var ei=L.evId;closeLesson();if(!EVP)evOpen(ei);return}
   if(L&&L.kind==='done'&&UP&&UP.n&&!UP.shown){UP.shown=1;brilhoScreen(UP.n,UP.lupa)}else closeLesson();
 }
 var BR_STAR='<svg viewBox="0 0 120 120" class="brsvg" aria-hidden="true"><defs><linearGradient id="brg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6b0"/><stop offset="1" stop-color="#ffb020"/></linearGradient><radialGradient id="brs"><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="brm" maskUnits="userSpaceOnUse" x="-20" y="-20" width="160" height="160"><rect x="-20" y="-20" width="160" height="160" fill="#000"/><g id="brmg"></g></mask></defs><path class="bru" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="#2c2266" stroke="#2c2266" stroke-width="8" stroke-linejoin="round"/><path class="brl" mask="url(#brm)" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="url(#brg)" stroke="url(#brg)" stroke-width="8" stroke-linejoin="round"/></svg>';
@@ -2303,7 +2476,7 @@ function collectFx(){
   if(COLLECTING)return;
   if(NOANIM||!xp){closeLesson();return}
   COLLECTING=true;
-  var btn=root.querySelector('.lfoot .btn');if(btn)btn.disabled=true;
+  [].forEach.call(root.querySelectorAll('.lfoot .btn'),function(bb){bb.disabled=true});
   var tiles=root.querySelectorAll('.res2 .rt'),eT=tiles[0],gT=null;
   [].forEach.call(tiles,function(el){if(/chips/i.test(el.querySelector('small').textContent))gT=el});
   var bar=document.createElement('div');bar.className='cpills';
@@ -2559,7 +2732,8 @@ document.addEventListener('click',function(e){
   else if(a==='bdel'){var id=+t.dataset.id;L.sel=L.sel.filter(function(x){return x!==id});drawLesson()}
   else if(a==='check'){check()}
   else if(a==='next'){next()}
-  else if(a==='lclose'){if(L&&L.kind==='done')endDone();else closeLesson()}
+  else if(a==='lclose'){if(L&&L.kind==='done')endDone();else{closeLesson();if(AFTER_BR){var ab=AFTER_BR;AFTER_BR=null;if(!EVP)evOpen(ab)}}}
+  else if(a==='pzdone'){var pe=L&&L.evId;if(UP&&UP.n&&!UP.shown){UP.shown=1;AFTER_BR=pe;brilhoScreen(UP.n,UP.lupa)}else{closeLesson();if(pe&&!EVP)evOpen(pe)}}
   else if(a==='brilho'){brilhoOn()}
   else if(a==='collect'){collectFx()}
   else if(a==='admtap'){if(!isAdm()){admTaps++;if(admTaps>=7){admTaps=0;admAsk=true;render()}}}
