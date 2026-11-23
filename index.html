@@ -792,10 +792,84 @@ function pingo(mood,cls){
 
 /* ---------- estado ---------- */
 var KEY='pingoquest-v3';
-function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false}}
+function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{}}}
 function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object')return Object.assign(blank(),s)}catch(e){}return blank()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+/* ===== Fase 1: estrutura de conhecimento =====
+   CUR: conceitos {n:nome, pre:[pré-requisitos], l:"jogo-fase" onde o conceito é apresentado}
+   Cada pergunta recebe: cid (conceito), dif (1-3), rs (status de revisão), lk (fase de origem).
+   S.know[cid] = {seen, ok, bad, last}: o que o aluno viu e como foi. */
+var CUR={
+ 'rede.def':{n:'O que é uma rede',pre:[],l:'0-0'},
+ 'rede.host':{n:'Host (nó)',pre:['rede.def'],l:'0-0'},
+ 'lan':{n:'LAN (rede local)',pre:['rede.def'],l:'0-1'},
+ 'internet':{n:'Internet (rede de redes)',pre:['lan'],l:'0-1'},
+ 'meio.transmissao':{n:'Meios de transmissão (cabo, fibra, Wi-Fi)',pre:['rede.def'],l:'0-2'},
+ 'rede.alcance':{n:'PAN, LAN, MAN e WAN',pre:['lan'],l:'1-0'},
+ 'cliente.servidor':{n:'Cliente e servidor',pre:['rede.def'],l:'1-1'},
+ 'banda.latencia':{n:'Largura de banda e latência',pre:['rede.def'],l:'1-2'},
+ 'equip.roteador':{n:'Modem, roteador e gateway',pre:['lan','internet'],l:'2-0'},
+ 'equip.switch':{n:'Switch, hub e MAC',pre:['equip.roteador'],l:'2-1'},
+ 'rede.mapa':{n:'O mapa da rede',pre:['equip.switch'],l:'2-2'},
+ 'ip.v4':{n:'Endereço IP (IPv4 e IPv6)',pre:['rede.def'],l:'3-0'},
+ 'ip.privado':{n:'IP público, privado e NAT',pre:['ip.v4','equip.roteador'],l:'3-1'},
+ 'ip.mac.dhcp':{n:'MAC, DHCP e máscara',pre:['ip.v4','equip.switch'],l:'3-2'},
+ 'dns':{n:'DNS e nomes de domínio',pre:['ip.v4'],l:'4-0'},
+ 'portas':{n:'Portas e protocolos',pre:['cliente.servidor','ip.v4'],l:'4-1'},
+ 'tcp.udp':{n:'TCP e UDP',pre:['portas'],l:'4-2'},
+ 'pacotes':{n:'Pacotes',pre:['rede.def'],l:'5-0'},
+ 'web.fluxo':{n:'Abrindo um site passo a passo',pre:['dns','equip.roteador','pacotes','portas'],l:'5-1'},
+ 'diag.cmd':{n:'ping, ipconfig, tracert e nslookup',pre:['ip.v4','dns','banda.latencia'],l:'5-2'},
+ 'i1.equipamentos':{n:'Hub, switch e roteador (revisão)',pre:['equip.switch'],l:'6-0'},
+ 'i1.mac.cabos':{n:'MAC e cabos (revisão)',pre:['ip.mac.dhcp','meio.transmissao'],l:'6-1'},
+ 'i1.wifi.vlan':{n:'Wi-Fi, VLAN e padrões',pre:['meio.transmissao','equip.switch','lan'],l:'6-2'},
+ 'i2.ipv4':{n:'O endereço IPv4 (revisão)',pre:['ip.v4','ip.privado'],l:'7-0'},
+ 'ip.mascara':{n:'Máscara e hosts',pre:['ip.mac.dhcp'],l:'7-1'},
+ 'i2.ipv6.nat.dhcp':{n:'IPv6, NAT e DHCP (revisão)',pre:['ip.privado','ip.mac.dhcp'],l:'7-2'},
+ 'i3.portas.web':{n:'Portas e web (revisão)',pre:['portas'],l:'8-0'},
+ 'i3.tcp.udp':{n:'TCP e UDP (revisão)',pre:['tcp.udp'],l:'8-1'},
+ 'protocolos.apoio':{n:'Protocolos de apoio (ICMP, ARP, NTP)',pre:['tcp.udp','diag.cmd','ip.mac.dhcp'],l:'8-2'},
+ 'osi.camadas':{n:'As 7 camadas do OSI',pre:['tcp.udp','equip.switch'],l:'9-0'},
+ 'osi.funcoes':{n:'O que cada camada trata',pre:['osi.camadas'],l:'9-1'},
+ 'osi.encapsulamento':{n:'Encapsulamento',pre:['osi.funcoes','pacotes'],l:'9-2'}
+};
+/* dificuldade (1 a 3) das 5 perguntas de cada fase, na ordem em que aparecem */
+var DIFS={
+ '0-0':[1,2,1,2,1],'0-1':[1,1,2,2,2],'0-2':[1,1,2,2,1],
+ '1-0':[1,2,1,2,1],'1-1':[1,2,2,1,1],'1-2':[1,1,2,3,1],
+ '2-0':[1,1,2,1,1],'2-1':[2,1,1,2,1],'2-2':[2,3,3,2,2],
+ '3-0':[1,1,2,2,1],'3-1':[2,1,1,2,2],'3-2':[1,2,1,3,2],
+ '4-0':[1,1,1,2,3],'4-1':[1,1,2,1,2],'4-2':[2,2,1,2,3],
+ '5-0':[1,2,1,2,1],'5-1':[2,1,2,2,2],'5-2':[1,1,1,3,2]
+};
+/* perguntas de uma fase que cobrem outro conceito da mesma fase (índice entre as perguntas, sem contar cartões) */
+var OVR={'0-0':{2:'rede.host',4:'rede.host'},'0-1':{2:'internet',3:'internet',4:'internet'}};
+var PHCON={};
+(function(){
+  Object.keys(CUR).forEach(function(id){var l=CUR[id].l;(PHCON[l]=PHCON[l]||[]).push(id)});
+  GAMES.forEach(function(g,gi){g.phases.forEach(function(ph,pi){
+    var key=gi+'-'+pi,con=PHCON[key]||[],n=0;
+    ph.forEach(function(q){
+      if(q.t==='learn'){q.teach=con;return}
+      q.cid=(OVR[key]&&OVR[key][n])||con[0];
+      q.dif=(DIFS[key]||[])[n]||(gi>=9?3:2);
+      q.rs=gi<BEGINNER.length?'aprovado':'legado';
+      q.lk=key;n++;
+    });
+  })});
+})();
+function knowOf(c){if(!S.know)S.know={};return S.know[c]||(S.know[c]={ok:0,bad:0,seen:0,last:''})}
+function isSeen(c){return !!(S.know&&S.know[c]&&S.know[c].seen)}
+function markSeen(cs){var ch=false;(cs||[]).forEach(function(c){var k=knowOf(c);if(!k.seen){k.seen=1;k.at=today();ch=true}});if(ch)save()}
+function eligible(c){var d=CUR[c];return !!d&&isSeen(c)&&d.pre.every(isSeen)}
+function allQs(){var o=[];GAMES.forEach(function(g){g.phases.forEach(function(ph){ph.forEach(function(q){if(q.t!=='learn')o.push(q)})})});return o}
+function eligibleQs(opt){opt=opt||{};return allQs().filter(function(q){return q.rs!=='rascunho'&&eligible(q.cid)&&(!opt.maxDif||q.dif<=opt.maxDif)&&(!opt.cid||q.cid===opt.cid)})}
+function masteryOf(c){var k=S.know&&S.know[c];if(!k||!k.seen)return'novo';var n=k.ok+k.bad;if(n<3)return'aprendendo';var a=k.ok/n;if(a>=.85&&k.ok>=6)return'dominado';return a<.65?'fragil':'aprendendo'}
+function backfillKnow(){GAMES.forEach(function(g,gi){g.phases.forEach(function(ph,pi){if(S.done[gi+'-'+pi])markSeen(PHCON[gi+'-'+pi])})})}
+backfillKnow();
+window.PK={CUR:CUR,eligible:eligible,eligibleQs:eligibleQs,masteryOf:masteryOf,markSeen:markSeen,knowOf:knowOf,allQs:allQs};
 function ds(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function today(){return ds(new Date())}
 function yest(){var d=new Date();d.setDate(d.getDate()-1);return ds(d)}
@@ -1006,7 +1080,7 @@ function startLesson(o){
   $('#lesson').hidden=false;document.body.classList.add('lock');drawLesson();
 }
 function curQ(){return L.queue[L.i]}
-function initQ(){var q=curQ();L.rev=false;L.touch=null;L.state='ask';L.ok=false;L.sel=q.t==='bl'?[]:(q.t==='fill'?emptyArr(q.n):(q.t==='cl'?emptyArr(q.items.length):(q.t==='ty'?'':null)));L.mp=q.t==='mp'?{sel:null,done:[],flash:null,err:0}:null}
+function initQ(){var q=curQ();if(q.t==='learn'&&q.teach)markSeen(q.teach);L.rev=false;L.touch=null;L.state='ask';L.ok=false;L.sel=q.t==='bl'?[]:(q.t==='fill'?emptyArr(q.n):(q.t==='cl'?emptyArr(q.items.length):(q.t==='ty'?'':null)));L.mp=q.t==='mp'?{sel:null,done:[],flash:null,err:0}:null}
 function gotRight(){var d=day();L.run++;if(L.run>(L.best||0))L.best=L.run;d.correct++;if(L.run>d.bestRun)d.bestRun=L.run}
 function mpTap(side,id){
   var q=curQ(),m=L.mp;if(!m||L.state!=='ask'||m.flash)return;
@@ -1178,6 +1252,7 @@ function check(){
   if(q.t==='cl')ok=q.ci.every(function(it){return L.sel[it.id]===it.c});
   if(q.t==='ty'){var v=nrm(L.sel);ok=q.a.some(function(a){var n=nrm(a);return v===n||(n.length>=6&&lev(v,n)<=1)})}
   L.state='fb';L.ok=ok;S.total++;
+  if(q.cid){var kk=knowOf(q.cid);kk.seen=kk.seen||1;if(ok)kk.ok++;else kk.bad++;kk.last=today()}
   if(ok){S.ok++;L.right++;gotRight();if(L.kind==='review')fixMiss(q)}
   else{L.miss++;L.run=0;addMiss(q);if(!free())S.hearts=Math.max(0,S.hearts-1);L.queue.push(prep(q.src))}
   sfx(ok?(L.run>=3?'combo':'ok'):'bad');if(!ok)buzz(40);
@@ -1354,7 +1429,7 @@ document.addEventListener('click',function(e){
   else if(a==='obgo'){obAsk(0)}
   else if(a==='obpick'){obPick(+t.dataset.i)}
   else if(a==='obnext'){OB.i++;OB.i<NIV.length?obAsk(OB.i):obResult()}
-  else if(a==='obskip'){for(var g3=0;g3<BEGINNER.length;g3++)for(var k3=0;k3<4;k3++)S.done[g3+'-'+k3]=true;S.level='avancado';save();obPlan()}
+  else if(a==='obskip'){for(var g3=0;g3<BEGINNER.length;g3++)for(var k3=0;k3<4;k3++)S.done[g3+'-'+k3]=true;backfillKnow();S.level='avancado';save();obPlan()}
   else if(a==='obstart'){S.level=OB.score>=2?'alguma':'zero';save();obPlan()}
   else if(a==='obplan'){OB.plan=+t.dataset.n;obPlan()}
   else if(a==='obfinish'){if(OB&&OB.plan){S.plan=OB.plan;S.onb=true;S.gems+=20;save();closeWelcome();render();window.scrollTo(0,0);sfx('win');confetti()}}
