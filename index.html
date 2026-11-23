@@ -204,6 +204,21 @@ svg{display:block}
 .rt span svg{width:22px;height:22px;flex:none;color:var(--rc)}.rt span b{font-size:22px;font-weight:900;color:var(--rc)}
 @keyframes rtpop{0%{opacity:0;transform:translateY(170px) scale(.35)}55%{opacity:1;transform:translateY(-12px) scale(1.08)}78%{transform:translateY(3px) scale(.97)}100%{opacity:1;transform:none}}
 .rt b.bump{animation:numbump .4s cubic-bezier(.3,1.8,.5,1)}
+
+.frcard{background:var(--surface);border:2px solid var(--line,#e4def5);border-radius:20px;padding:10px 12px}
+.frrow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:14px}
+.frrow.me{background:color-mix(in srgb,var(--roxo,#7b3ff2) 12%,transparent)}
+.frpos{width:26px;text-align:center;font-weight:900;color:var(--muted,#7a7399);display:grid;place-items:center}
+.fav{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:17px;flex:none}
+.fav.me{box-shadow:0 0 0 3px #ffd83d}
+.frn{flex:1;min-width:0}.frn b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.frn small,.frxp small{color:var(--muted,#7a7399);font-weight:700;font-size:12px}
+.frxp{font-weight:900;white-space:nowrap}
+.frl{display:block;font-weight:800;font-size:14px;margin:12px 0 6px}
+.frline{display:flex;gap:8px}.frline .btn{flex:none;width:auto;padding-inline:16px;margin:0}
+.frline input{flex:1;min-width:0;border:2px solid var(--line,#e4def5);border-radius:14px;padding:0 12px;min-height:48px;font:inherit;font-weight:700;background:transparent;color:inherit}
+.frlink{border:2px dashed var(--line,#e4def5);border-radius:14px;padding:10px 12px;font-size:13px;word-break:break-all;margin-bottom:8px;user-select:all}
+.frmsg{background:var(--ok-bg);color:var(--ok-ink);font-weight:800;border-radius:12px;padding:8px 12px;margin-bottom:8px}
+.frinv{background:color-mix(in srgb,#ffd83d 30%,transparent);border-radius:14px;padding:10px 12px;margin-bottom:10px}.frinv .btn{margin-top:8px}
 .brx{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));background:radial-gradient(circle at 50% 38%,#2a1670 0%,#170a42 58%,#10052f 100%);color:#fff;text-align:center;overflow:hidden}
 .brglow{position:absolute;left:50%;top:38%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,60,.55) 0%,rgba(255,120,200,.22) 38%,transparent 66%);opacity:calc(var(--p)*.95);transform:scale(calc(.55 + var(--p)*.6));transition:opacity .12s,transform .12s;pointer-events:none}
 .brstar{position:relative;width:min(58vw,240px);aspect-ratio:1;display:grid;place-items:center;margin-top:-10vh}
@@ -1216,7 +1231,7 @@ window.AVT={slots:AV_SLOTS,has:avHas,cfg:avCfg,equip:avEquip,sync:avSync};
 
 /* ---------- estado ---------- */
 var KEY='pingoquest-v3';
-function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},conq:{},perfectN:0,maxDay:'',devStart:''}}
+function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},conq:{},perfectN:0,maxDay:'',devStart:'',nick:'',code:'',fr:[],wk:null}}
 function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object')return Object.assign(blank(),s)}catch(e){}return blank()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -1576,7 +1591,7 @@ function finishEvent(){
       if(!S.ledger[kp]){S.ledger[kp]=1;S.inv.items.push(ev.prize.id);S.inv.coll[ev.equipment]=1;S.gems+=ev.prize.gems||0;full=true}
     }
   }
-  var xp=(pass&&got)?15:5,dy=day();dy.xp+=xp;S.xp+=xp;touchStreak();save();
+  var xp=(pass&&got)?15:5,dy=day();dy.xp+=xp;S.xp+=xp;wkAdd(xp);touchStreak();save();
   var title=full?ev.equipName+' montado!':(pass?'Etapa concluída!':'Quase lá!');
   var sub=pass?(got?'Você acertou '+correct+' de '+L.qb+'. Peças e chips entregues.':'Você acertou '+correct+' de '+L.qb+'.'):'Você acertou '+correct+' de '+L.qb+' e precisa de '+ev.passMin+'. Releia as explicações e tente de novo hoje, com outras perguntas.';
   var again=!pass&&evInfo(ev).canStart;
@@ -1825,6 +1840,7 @@ function profileHTML(){
    '<div class="tile">'+IC.target+'<div><b>'+acc+'%</b><span>de acertos</span></div></div>'+
    '<div class="tile"><span style="color:var(--cyan);display:contents">'+IC.gem+'</span><div><b>'+S.gems+'</b><span>chips</span></div></div></div>'+
    '';
+  h+=amigosCard();
   h+=avatarHTML();
   h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="theme" style="margin-bottom:10px">Tema: '+(themeNow()==='dark'?'escuro (roxo)':'claro')+'</button><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button>'+admHTML()+'<button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
      '<p class="note" style="margin-top:12px">O progresso fica salvo neste navegador.</p>';
@@ -2111,7 +2127,7 @@ function finishLesson(){
     if(!S.done[L.key]&&L.kind==='boss')S.bosses++;
     S.done[L.key]=true;
   }
-  S.xp+=xp;S.gems+=gems;touchStreak();save();
+  S.xp+=xp;wkAdd(xp);S.gems+=gems;touchStreak();save();
   var acc=L.qb?Math.round(L.qb/(L.qb+L.miss)*100):100;
   var perfect=L.miss===0&&(L.kind==='phase'||L.kind==='boss');
   var title=L.kind==='extra'?(xw?'Desafio superado!':'Quase lá!'):L.kind==='practice'?'Vida recuperada!':(L.kind==='review'?'Revisão concluída!':(perfect?'Lição perfeita!':(L.kind==='boss'?'Prova final concluída!':'Fase concluída!')));
@@ -2276,7 +2292,7 @@ function caseFinish(){
   if(c.kind==='daily'||firstNode){dy.phases++;if(c.wrong===0)dy.perfect++}
   dy.cases=(dy.cases||0)+1;if(c.wrong===0)dy.clean=(dy.clean||0)+1;
   rec.n++;if(stars>rec.best)rec.best=stars;
-  dy.xp+=xp;S.xp+=xp;S.gems+=gems;touchStreak();save();
+  dy.xp+=xp;S.xp+=xp;wkAdd(xp);S.gems+=gems;touchStreak();save();
   c.res={stars:stars,xp:xp,gems:gems};c.stage='done';
   $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>Caso resolvido!</h1>'+starRow(stars)+
    '<p><b>Causa:</b> '+c.fault.cause+'.</p><p>'+c.fault.fix+'</p><p class="note">'+c.fault.why+'</p>'+
@@ -2358,6 +2374,13 @@ document.addEventListener('click',function(e){
   else if(a==='chestopen'){openChest()}
   else if(a==='cztap'){czTap()}
   else if(a==='czclose'){closeChest()}
+  else if(a==='amigos'){showAmigos()}
+  else if(a==='amsave'){var v=($('#amnick').value||'').trim();S.nick=v.slice(0,14);save();showAmigos();render();amToast(v?'Apelido salvo!':'Apelido removido.')}
+  else if(a==='amadd'){var nm=t.dataset.c?('Amigo '+t.dataset.c):(($('#amadd')&&$('#amadd').value)||'').trim();if(nm){nm=nm.slice(0,14);if(!S.fr)S.fr=[];if(!S.fr.some(function(f){return f.n.toLowerCase()===nm.toLowerCase()})){S.fr.push({n:nm,r:10+hash32(nm)%20,b:1+hash32(nm+'b')%9});save()}showAmigos();render();amToast('Agora você segue '+nm+'.')}}
+  else if(a==='amdemo'){S.fr=FR_BASE.map(function(f){return{n:f.n,r:f.r,b:f.b}});save();showAmigos();render()}
+  else if(a==='amclear'){S.fr=[];save();showAmigos();render()}
+  else if(a==='amcopy'){var lk=t.dataset.l,ok=function(){amToast('Link copiado!')},bad=function(){var el=$('#modal .frlink');if(el){var r=document.createRange();r.selectNodeContents(el);var se=getSelection();se.removeAllRanges();se.addRange(r)}amToast('Selecionei o link: copie com o dedo.')};try{navigator.clipboard.writeText(lk).then(ok,bad)}catch(e){bad()}}
+  else if(a==='amshare'){var lk2=t.dataset.l;if(navigator.share){navigator.share({title:'Pingo Quest',text:'Estude Redes comigo no Pingo Quest!',url:lk2}).catch(function(){})}else{var cb=$('[data-act=amcopy]');if(cb)cb.click()}}
   else if(a==='streak'){showStreak();render()}
   else if(a==='setplan'){S.plan=+t.dataset.n;save();showStreak();render()}
   else if(a==='snd'){setSound(!SND.on);if(SND.on)sfx('ok');render()}
@@ -2722,7 +2745,48 @@ function showStreak(){
   $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
 }
 
+/* ---------- amigos (prévia: amigos de mentira até termos contas online) ---------- */
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function wkAdd(xp){var k=weekDays()[0];if(!S.wk||S.wk.k!==k)S.wk={k:k,xp:0};S.wk.xp+=xp}
+function wkNow(){var k=weekDays()[0];return(S.wk&&S.wk.k===k)?S.wk.xp:0}
+function myCode(){if(!S.code){var a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',c='';for(var i=0;i<6;i++)c+=a[Math.floor(Math.random()*a.length)];S.code=c;save()}return S.code}
+function hash32(t){var h=2166136261;for(var i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0)}
+var FR_BASE=[{n:'Pedro',r:30,b:60},{n:'Giovanna',r:25,b:2},{n:'Vitor',r:19,b:5},{n:'Heloísa',r:16,b:6},{n:'Clara',r:9,b:1}];
+function frXp(f){var dow=((new Date().getDay()+6)%7)+1,w=weekDays()[0],r=(hash32(f.n+w)%41)/100;return Math.round(f.r*dow*(0.8+r))}
+function rankList(){
+  var list=(S.fr&&S.fr.length?S.fr:[]).map(function(f){return{n:f.n,xp:frXp(f),b:f.b,me:false}});
+  list.push({n:S.nick||'Você',xp:wkNow(),b:streakNow(),me:true});
+  list.sort(function(a,b){return b.xp-a.xp});return list;
+}
+var IC_CROWN='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" fill="#ffc933" stroke="#e59a00" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+function avFriend(n,me){var c=['#7b3ff2','#18b4d8','#ff4fae','#ff9a1f','#3fbf5f','#6a5cff'][hash32(n)%6];return '<span class="fav'+(me?' me':'')+'" style="background:'+c+'">'+esc(n.charAt(0).toUpperCase())+'</span>'}
+function frRows(max){
+  var l=rankList(),h='';
+  l.slice(0,max||99).forEach(function(r,i){
+    h+='<div class="frrow'+(r.me?' me':'')+'"><span class="frpos">'+(i===0?IC_CROWN:(i+1))+'</span>'+avFriend(r.n,r.me)+'<div class="frn"><b>'+esc(r.n)+(r.me?' (você)':'')+'</b><small>'+r.b+(r.b===1?' dia':' dias')+' de brilho</small></div><span class="frxp">'+r.xp+'<small> energia</small></span></div>';
+  });return h;
+}
+function amigosCard(){
+  var n=(S.fr||[]).length;
+  return '<div class="sect">Amigos</div><div class="frcard">'+(n?frRows(3):'<p class="note" style="margin:0 0 10px">Convide amigos para ver quem lidera a semana em energia.</p>')+
+   '<button class="btn prim" data-act="amigos" style="margin-top:10px">'+(n?'Ver ranking e convidar':'Convidar amigos')+'</button></div>';
+}
+function showAmigos(codeIn){
+  var code=myCode(),link=location.href.split('#')[0]+'#convite='+code,n=(S.fr||[]).length;
+  var h='<div class="sheet tall" role="dialog" aria-label="Amigos"><h2 style="margin:0 0 4px">Amigos</h2><p class="note" style="margin:0 0 12px">Prévia: por enquanto os amigos são de mentira. Quando criarmos as contas online, eles viram pessoas de verdade.</p>'+
+   (codeIn?'<div class="frinv">Você abriu o convite <b>'+esc(codeIn)+'</b>. <button class="btn prim" data-act="amadd" data-c="'+esc(codeIn)+'">Seguir esse amigo</button></div>':'')+
+   '<label class="frl" for="amnick">Seu apelido</label><div class="frline"><input id="amnick" maxlength="14" placeholder="Ex.: Lorraine" value="'+esc(S.nick||'')+'" autocomplete="off"><button class="btn ghost" data-act="amsave">Salvar</button></div>'+
+   '<label class="frl">Seu link de convite</label><div class="frlink">'+esc(link)+'</div><div class="frline"><button class="btn prim" data-act="amshare" data-l="'+esc(link)+'">Convidar</button><button class="btn ghost" data-act="amcopy" data-l="'+esc(link)+'">Copiar link</button></div>'+
+   '<label class="frl" for="amadd">Seguir pelo apelido</label><div class="frline"><input id="amadd" maxlength="14" placeholder="Apelido do amigo" autocomplete="off"><button class="btn ghost" data-act="amadd">Seguir</button></div>'+
+   '<div class="sect" style="margin-top:18px">Topo da semana</div><div class="frcard">'+frRows()+'</div><p class="note" style="margin:8px 0 0">Reinicia toda segunda-feira. Conta a energia ganha na semana.</p>'+
+   (n?'<button class="btn ghost" data-act="amclear" style="margin-top:10px">Remover amigos de mentira</button>':'<button class="btn ghost" data-act="amdemo" style="margin-top:10px">Ver com amigos de mentira</button>')+
+   '<button class="btn prim" data-act="mclose" style="margin-top:14px">Fechar</button></div>';
+  $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
+}
+function amToast(t){var e=$('#modal .frmsg');if(!e){var d=document.createElement('div');d.className='frmsg';var sh=$('#modal .sheet');if(sh)sh.insertBefore(d,sh.children[1]);e=d}if(e)e.textContent=t}
+
 showWelcome();
+try{var mh=location.hash.match(/convite=([A-Z0-9]{4,8})/);if(mh&&S.onb)showAmigos(mh[1])}catch(e){}
 </script>
 
 </body></html>
