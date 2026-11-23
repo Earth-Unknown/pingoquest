@@ -206,6 +206,31 @@ svg{display:block}
 .rt b.bump{animation:numbump .4s cubic-bezier(.3,1.8,.5,1)}
 
 .nickbtn{margin-top:6px;border:2px solid var(--line);background:var(--surface);color:var(--primary-deep);font:inherit;font-weight:800;font-size:13px;border-radius:999px;padding:6px 14px;min-height:36px;cursor:pointer}
+
+.duelc .duelh{display:flex;gap:12px;align-items:center}.duelc small{color:var(--muted);font-weight:700}
+.duelic{width:44px;height:44px;border-radius:14px;background:color-mix(in srgb,var(--amarelo) 40%,var(--surface));display:grid;place-items:center;flex:none}.duelic svg{width:26px;height:26px}
+.duel{position:fixed;inset:0;z-index:6;background:var(--bg);color:var(--ink);display:flex;flex-direction:column}
+.dutop{display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 8px;font-size:18px}.dutop span{width:44px}
+.dux{width:44px;height:44px;border:0;background:transparent;font-size:32px;line-height:1;color:var(--muted);cursor:pointer}
+.dubody{flex:1;overflow:auto;padding:6px 16px calc(24px + env(safe-area-inset-bottom,0px));max-width:560px;width:100%;margin:0 auto}
+.dsec{font-weight:900;font-size:17px;margin:16px 0 8px}
+.dchips{display:flex;gap:8px}.dchip{flex:1;border:2px solid var(--line);background:var(--surface);color:inherit;border-radius:16px;padding:10px;font:inherit;text-align:left;cursor:pointer;min-height:56px}
+.dchip b{display:block}.dchip small{color:var(--muted);font-weight:700;font-size:12px}
+.dchip.on,.dth.on{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 12%,var(--surface))}.dchip.lock{opacity:.5}
+.dthemes{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dth{border:2px solid var(--line);background:var(--surface);color:inherit;border-radius:16px;padding:10px;font:inherit;text-align:left;cursor:pointer;min-height:56px}
+.dth b{display:block;font-size:14px}.dth small{color:var(--muted);font-weight:700;font-size:12px}.dth.rol{grid-column:1/-1;background:linear-gradient(135deg,color-mix(in srgb,var(--amarelo) 35%,var(--surface)),var(--surface))}
+.dspin{text-align:center;padding-top:30px}.dspw{font-size:26px;font-weight:900;margin:14px 0;min-height:70px;display:grid;place-items:center}.dspw.hit{color:var(--primary);animation:rtpop .4s}
+.duhud{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px}.dumid{font-weight:800;color:var(--muted);font-size:14px}
+.dus{text-align:center;min-width:72px;border:2px solid var(--line);border-radius:16px;padding:6px 10px;background:var(--surface)}.dus.me{border-color:var(--primary)}.dus small{display:block;font-weight:800;color:var(--muted);font-size:12px}.dus b{font-size:26px}
+.dubar{height:8px;border-radius:99px;background:var(--line);margin:12px 0;overflow:hidden}.dubar i{display:block;height:100%;background:var(--primary);border-radius:99px;transition:width .3s}
+.duq{font-size:21px;line-height:1.3;margin:10px 0 14px;text-wrap:balance}
+.duopts{display:grid;gap:10px}.duopt{border:2px solid var(--line);border-bottom-width:4px;background:var(--surface);color:inherit;border-radius:16px;padding:14px;font:inherit;font-weight:700;text-align:left;min-height:52px;cursor:pointer}
+.duopt.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok-ink)}.duopt.bad{border-color:var(--bad);background:var(--bad-bg);color:var(--bad-ink)}.duopt.dim{opacity:.55}
+.dufb{margin:12px 0;padding:10px 12px;border-radius:14px;font-weight:600}.dufb.ok{background:var(--ok-bg);color:var(--ok-ink)}.dufb.bad{background:var(--bad-bg);color:var(--bad-ink)}
+.dures{text-align:center;padding:10px 0 14px}.dures h1{margin:6px 0 8px}
+.duvs{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px 0 12px;font-weight:900}
+.dudots{display:flex;align-items:center;justify-content:center;gap:6px;margin:6px 0}.dudots span{font-size:12px;font-weight:800;color:var(--muted);width:64px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd{width:16px;height:16px;border-radius:50%;display:inline-block}.dd.ok{background:var(--ok)}.dd.bad{background:var(--bad)}
 .frcard{background:var(--surface);border:2px solid var(--line,#e4def5);border-radius:20px;padding:10px 12px}
 .frrow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:14px}
 .frrow.me{background:color-mix(in srgb,var(--roxo,#7b3ff2) 12%,transparent)}
@@ -1735,7 +1760,7 @@ function skillsHTML(){
 function missionsHTML(){
   var d=day(),ms=todays(),all=true,nd=0;
   var xp=Math.min(d.xp,GOAL);
-  var h='<div class="sect" style="margin-top:20px">Missões</div><p class="note" style="margin:0 0 14px">Chamados e operações para resolver com o Pingo. As metas rápidas dão chips extras.</p>'+chamadoHTML()+weekHTML()+
+  var h=duelCard()+'<div class="sect" style="margin-top:20px">Missões</div><p class="note" style="margin:0 0 14px">Chamados e operações para resolver com o Pingo. As metas rápidas dão chips extras.</p>'+chamadoHTML()+weekHTML()+
    '<div class="card"><h3>Meta diária</h3><div class="bar gold" role="progressbar" aria-valuenow="'+xp+'" aria-valuemax="'+GOAL+'"><i style="width:'+(xp/GOAL*100)+'%"></i><span>'+xp+' / '+GOAL+' energia</span></div></div>'+
    '<div class="card"><h3>Metas rápidas</h3>';
   ms.forEach(function(m,i){
@@ -2382,6 +2407,19 @@ document.addEventListener('click',function(e){
   else if(a==='amclear'){S.fr=[];save();showAmigos();render()}
   else if(a==='amcopy'){var lk=t.dataset.l,ok=function(){amToast('Link copiado!')},bad=function(){var el=$('#modal .frlink');if(el){var r=document.createRange();r.selectNodeContents(el);var se=getSelection();se.removeAllRanges();se.addRange(r)}amToast('Selecionei o link: copie com o dedo.')};try{navigator.clipboard.writeText(lk).then(ok,bad)}catch(e){bad()}}
   else if(a==='amshare'){var lk2=t.dataset.l;if(navigator.share){navigator.share({title:'Pingo Quest',text:'Estude Redes comigo no Pingo Quest!',url:lk2}).catch(function(){})}else{var cb=$('[data-act=amcopy]');if(cb)cb.click()}}
+  else if(a==='duelo'){DUS.mode='bot';duelSetup()}
+  else if(a==='dmode'){DUS.mode=t.dataset.m;duelSetup()}
+  else if(a==='dtheme'){DUS.g=t.dataset.g==='roleta'?'roleta':+t.dataset.g;duelSetup()}
+  else if(a==='dlv'){DUS.lv=t.dataset.l;duelSetup()}
+  else if(a==='dgo'){duelStart()}
+  else if(a==='dpick'){duelPick(+t.dataset.i)}
+  else if(a==='dnext'){duelNext()}
+  else if(a==='daccept'){duelAccept()}
+  else if(a==='drematch'){var o=D.opp;if(D.mode==='bot'){DUS.mode='bot';DUS.g=D.g;DUS.lv=D.lv;duelStart()}else{DUS.mode='amigo';DUS.g=D.g;DUS.lv=D.lv;duelStart()}}
+  else if(a==='dnew'){duelSetup()}
+  else if(a==='dclose'){D=null;closeLesson();if(!S.onb&&$('#welcome').hidden)showWelcome()}
+  else if(a==='dshare'){var dl=t.dataset.l;if(navigator.share){navigator.share({title:'Pingo Quest',text:'Te desafio num duelo de Redes no Pingo Quest!',url:dl}).catch(function(){})}else{try{navigator.clipboard.writeText(dl).then(function(){duelToast('Link copiado! Cole no WhatsApp.')},function(){duelToast('Selecione e copie o link acima.')})}catch(e){duelToast('Selecione e copie o link acima.')}}}
+  else if(a==='dcopy'){var dl2=t.dataset.l;try{navigator.clipboard.writeText(dl2).then(function(){duelToast('Link copiado!')},function(){duelToast('Selecione e copie o link acima.')})}catch(e){duelToast('Selecione e copie o link acima.')}}
   else if(a==='streak'){showStreak();render()}
   else if(a==='setplan'){S.plan=+t.dataset.n;save();showStreak();render()}
   else if(a==='snd'){setSound(!SND.on);if(SND.on)sfx('ok');render()}
@@ -2786,7 +2824,113 @@ function showAmigos(codeIn){
 }
 function amToast(t){var e=$('#modal .frmsg');if(!e){var d=document.createElement('div');d.className='frmsg';var sh=$('#modal .sheet');if(sh)sh.insertBefore(d,sh.children[1]);e=d}if(e)e.textContent=t}
 
-showWelcome();
+/* ---------- duelo: contra a máquina ou contra um amigo (por link, sem servidor) ---------- */
+var DU_LV=[['ini','Iniciante',true],['int','Intermediário',false],['ava','Avançado',false]];
+var DU_N=7,D=null,DUS={mode:'bot',g:'roleta',lv:'ini'};
+function rng(seed){var a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function sshuf(arr,r){arr=arr.slice();for(var i=arr.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),t=arr[i];arr[i]=arr[j];arr[j]=t}return arr}
+function duelPool(g){var seen={},out=[];GAMES[g].phases.forEach(function(ph){ph.forEach(function(q){if((q.t==='mc'||q.t==='vf')&&!seen[q.q]){seen[q.q]=1;out.push(q)}})});return out}
+function duelQs(g,seed,n){
+  var r=rng(seed),pool=duelPool(g),idx=sshuf(pool.map(function(_,i){return i}),r).slice(0,Math.min(n,pool.length));
+  return idx.map(function(i){var q=pool[i];
+    if(q.t==='vf')return{t:'vf',q:q.q,opts:[{t:'Verdadeiro',c:q.a===true},{t:'Falso',c:q.a===false}],e:q.e};
+    return{t:'mc',q:q.q,opts:sshuf(q.o.map(function(t,k){return{t:t,c:k===q.a}}),r),e:q.e}});
+}
+function b64e(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function b64d(t){try{t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';return JSON.parse(decodeURIComponent(escape(atob(t))))}catch(e){return null}}
+function duelLink(){return location.href.split('#')[0]+'#duelo='+b64e({g:D.g,s:D.s,n:D.qs.length,l:D.lv,f:S.nick||'Um amigo',r:D.me})}
+function duelCard(){
+  var st=S.duel||{w:0,l:0,d:0};
+  return '<div class="card duelc"><div class="duelh"><span class="duelic">'+IC.bolt+'</span><div><h3 style="margin:0">Duelo</h3><small>Desafie a máquina ou um amigo: quem acertar mais, ganha.</small></div></div>'+
+   '<button class="btn prim" data-act="duelo" style="margin-top:10px">Jogar duelo</button>'+
+   ((st.w+st.l+st.d)?'<p class="note" style="margin:8px 0 0">Seu placar: '+st.w+(st.w===1?' vitória':' vitórias')+' · '+st.d+(st.d===1?' empate':' empates')+' · '+st.l+(st.l===1?' derrota':' derrotas')+'</p>':'')+'</div>';
+}
+function duelShell(inner,title){
+  L={kind:'duel'};$('#lesson').hidden=false;document.body.classList.add('lock');
+  $('#lesson').innerHTML='<div class="duel"><div class="dutop"><button class="dux" data-act="dclose" aria-label="Fechar">×</button><b>'+(title||'Duelo')+'</b><span></span></div><div class="dubody">'+inner+'</div></div>';
+}
+function duelSetup(){
+  var m=DUS.mode,h='<div class="dsec">Contra quem?</div><div class="dchips">'+
+   '<button class="dchip'+(m==='bot'?' on':'')+'" data-act="dmode" data-m="bot"><b>Máquina</b><small>Joga agora</small></button>'+
+   '<button class="dchip'+(m==='amigo'?' on':'')+'" data-act="dmode" data-m="amigo"><b>Amigo</b><small>Você joga e manda o link</small></button></div>'+
+   '<div class="dsec">Sobre o quê?</div><div class="dthemes"><button class="dth rol'+(DUS.g==='roleta'?' on':'')+'" data-act="dtheme" data-g="roleta"><b>Roleta do Pingo</b><small>O Pingo sorteia</small></button>'+
+   GAMES.map(function(g,i){return '<button class="dth'+(DUS.g===i?' on':'')+'" data-act="dtheme" data-g="'+i+'"><b>'+g.title+'</b><small>'+g.tag.replace('Seção 1 · ','')+'</small></button>'}).join('')+'</div>'+
+   '<div class="dsec">Nível</div><div class="dchips">'+DU_LV.map(function(l){return '<button class="dchip'+(DUS.lv===l[0]?' on':'')+(l[2]?'':' lock')+'" data-act="dlv" data-l="'+l[0]+'"'+(l[2]?'':' disabled')+'><b>'+l[1]+'</b><small>'+(l[2]?'Disponível':'Em breve')+'</small></button>'}).join('')+'</div>'+
+   '<button class="btn prim" data-act="dgo" style="margin-top:18px">'+(DUS.g==='roleta'?'Girar a roleta':'Começar duelo')+'</button>';
+  duelShell(h,'Novo duelo');
+}
+function duelSpin(done){
+  var names=GAMES.map(function(g){return g.title}),n=0,fin=Math.floor(Math.random()*GAMES.length);
+  duelShell('<div class="dspin"><div class="dspm">'+pingo('cheer','pingo-big')+'</div><div class="dspw" id="dspw">…</div><p class="note">O Pingo está escolhendo o tema…</p></div>','Roleta');
+  var steps=NOANIM?1:16,t=0;
+  (function tick(){var el=$('#dspw');if(!el)return;
+    if(t>=steps){el.textContent=names[fin];el.classList.add('hit');sfx('win');setTimeout(function(){done(fin)},NOANIM?0:900);return}
+    el.textContent=names[(fin+t+1)%names.length];sfx('tick');t++;setTimeout(tick,60+t*14)})();
+}
+function duelBegin(g,seed,lv,mode,opp){
+  var qs=duelQs(g,seed,DU_N);
+  D={g:g,s:seed,lv:lv,mode:mode,qs:qs,i:0,me:[],sel:null,opp:opp};
+  if(mode==='bot'){var r=rng(seed^0x9e3779b9),p=0.62;D.opp={name:'Byte',r:qs.map(function(){return r()<p?1:0}),bot:true}}
+  duelDraw();
+}
+function duelStart(){
+  var seed=(Math.random()*4294967295)>>>0;
+  if(DUS.g==='roleta')duelSpin(function(g){duelBegin(g,seed,DUS.lv,DUS.mode,null)});
+  else duelBegin(DUS.g,seed,DUS.lv,DUS.mode,null);
+}
+function duelScore(a,upto){var n=0;for(var i=0;i<(upto==null?a.length:upto);i++)n+=a[i]?1:0;return n}
+function duelDraw(){
+  var q=D.qs[D.i],n=D.qs.length,ans=D.sel!==null,show=D.opp&&D.opp.bot;
+  var mine=duelScore(D.me),his=show?duelScore(D.opp.r,D.me.length):null;
+  var h='<div class="duhud"><div class="dus me"><small>Você</small><b>'+mine+'</b></div><div class="dumid">Pergunta '+(D.i+1)+' de '+n+'</div><div class="dus"><small>'+(show?'Byte':(D.opp?esc(D.opp.name):'Amigo'))+'</small><b>'+(show?his:'?')+'</b></div></div>'+
+   '<div class="dubar"><i style="width:'+(D.i/n*100)+'%"></i></div><h2 class="duq">'+esc(q.q)+'</h2><div class="duopts">';
+  q.opts.forEach(function(o,i){
+    var cls='duopt';if(ans){if(o.c)cls+=' ok';else if(D.sel===i)cls+=' bad';else cls+=' dim'}
+    h+='<button class="'+cls+'" data-act="dpick" data-i="'+i+'"'+(ans?' disabled':'')+'>'+esc(o.t)+'</button>';
+  });
+  h+='</div>';
+  if(ans){var ok=q.opts[D.sel].c;h+='<div class="dufb '+(ok?'ok':'bad')+'"><b>'+(ok?'Acertou!':'Errou.')+'</b> '+esc(q.e||'')+'</div>'+
+    (show?'<p class="note" style="text-align:center">Byte '+(D.opp.r[D.i]?'acertou':'errou')+' essa.</p>':'')+
+    '<button class="btn prim" data-act="dnext">'+(D.i+1>=n?'Ver resultado':'Próxima')+'</button>'}
+  duelShell(h,D.mode==='bot'?'Duelo contra Byte':'Duelo');
+}
+function duelPick(i){
+  if(D.sel!==null)return;var ok=D.qs[D.i].opts[i].c;D.sel=i;D.me.push(ok?1:0);
+  sfx(ok?'ok':'bad');buzz(ok?[12]:[30]);duelDraw();
+}
+function duelNext(){D.i++;D.sel=null;if(D.i>=D.qs.length)duelEnd();else duelDraw()}
+function dots(a){return a.map(function(x){return '<i class="dd '+(x?'ok':'bad')+'"></i>'}).join('')}
+function duelEnd(){
+  var me=duelScore(D.me),n=D.qs.length,opp=D.opp,h='',link=duelLink();
+  if(opp&&opp.r){
+    var he=duelScore(opp.r),res=me>he?'w':(me<he?'l':'d');
+    S.duel=S.duel||{w:0,l:0,d:0};S.duel[res]++;save();
+    h+='<div class="dures">'+pingo(res==='w'?'cheer':(res==='l'?'sad':'happy'),'pingo-big')+'<h1>'+(res==='w'?'Você venceu!':(res==='l'?esc(opp.name)+' venceu':'Empate!'))+'</h1>'+
+     '<div class="duvs"><div class="dus me"><small>Você</small><b>'+me+'</b></div><span>×</span><div class="dus"><small>'+esc(opp.name)+'</small><b>'+he+'</b></div></div>'+
+     '<div class="dudots"><span>Você</span>'+dots(D.me)+'</div><div class="dudots"><span>'+esc(opp.name)+'</span>'+dots(opp.r)+'</div></div>';
+    if(res==='w'){sfx('win');confetti()}
+    h+='<button class="btn prim" data-act="drematch">Revanche</button>';
+    if(opp.bot)h+='<button class="btn ghost" data-act="dshare" data-l="'+esc(link)+'" style="margin-top:10px">Desafiar um amigo com estas perguntas</button>';
+    else h+='<button class="btn ghost" data-act="dnew" style="margin-top:10px">Novo duelo</button>';
+  }else{
+    h+='<div class="dures">'+pingo('cheer','pingo-big')+'<h1>Você acertou '+me+' de '+n+'</h1><p class="note">Agora mande o link para seu amigo jogar as mesmas perguntas. Quando ele terminar, o app mostra quem venceu.</p><div class="dudots"><span>Você</span>'+dots(D.me)+'</div></div>'+
+     '<div class="frlink">'+esc(link)+'</div><button class="btn prim" data-act="dshare" data-l="'+esc(link)+'">Mandar desafio</button><button class="btn ghost" data-act="dcopy" data-l="'+esc(link)+'" style="margin-top:10px">Copiar link</button>';
+  }
+  h+='<button class="btn ghost" data-act="dclose" style="margin-top:10px">Sair</button><div class="frmsg" hidden></div>';
+  duelShell(h,'Resultado');
+}
+function duelIntro(d){
+  var g=GAMES[d.g];
+  if(!g||!d.s||!d.r){closeLesson();return}
+  D={pend:d};
+  duelShell('<div class="dures">'+pingo('cheer','pingo-big')+'<h1>'+esc(d.f||'Um amigo')+' te desafiou!</h1><p class="note">Tema: <b>'+g.title+'</b> · '+d.n+' perguntas · nível '+(d.l==='ini'?'iniciante':esc(d.l))+'. Quem acertar mais, ganha.</p></div>'+
+   '<button class="btn prim" data-act="daccept">Aceitar desafio</button><button class="btn ghost" data-act="dclose" style="margin-top:10px">Agora não</button>','Desafio');
+}
+function duelAccept(){var d=D.pend;duelBegin(d.g,d.s,d.l,'amigo',{name:d.f||'Amigo',r:d.r})}
+function duelToast(t){var e=$('#lesson .frmsg');if(e){e.hidden=false;e.textContent=t}}
+
+var DUEL_PEND=null;try{var dm=location.hash.match(/duelo=([A-Za-z0-9_-]+)/);if(dm)DUEL_PEND=b64d(dm[1])}catch(e){}
+if(DUEL_PEND&&DUEL_PEND.g!=null)duelIntro(DUEL_PEND);else showWelcome();
 try{var mh=location.hash.match(/convite=([A-Z0-9]{4,8})/);if(mh&&S.onb)showAmigos(mh[1])}catch(e){}
 </script>
 
