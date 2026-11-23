@@ -475,6 +475,19 @@ svg.poke .m-tip{fill:#fff;animation:none}
 .evmsg{margin-top:10px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--gold) 22%,var(--surface));font-weight:800;font-size:13.5px;line-height:1.4}
 .evw .btn{margin-top:10px}
 .evw .btn[disabled]{opacity:.55}
+
+#evfab{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:30;border:0;background:none;padding:0;cursor:pointer;color:var(--ink);font:inherit;
+  display:flex;flex-direction:column;align-items:center;animation:evfloat 2.6s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(30,40,90,.28))}
+#evfab .eva{position:relative;width:66px;height:66px;border-radius:50%;background:linear-gradient(145deg,#d7f3fc,#ffffff);border:3px solid var(--cyan);display:grid;place-items:center;overflow:visible}
+#evfab .eva svg.ev-art{width:54px;height:54px;border-radius:50%}
+#evfab .eva::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--cyan);opacity:0;animation:evring 2.6s ease-out infinite}
+#evfab.calm .eva::after{display:none}
+#evfab .evlab{margin-top:-9px;z-index:1;background:var(--primary);color:#fff;font-size:10.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:2px solid var(--surface)}
+#evfab .evdot{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;border-radius:99px;background:var(--bad);color:#fff;font-size:12px;font-weight:900;display:grid;place-items:center;border:2px solid var(--surface);padding:0 4px}
+#evfab .evdot.ok{background:var(--ok)}
+#evfab .evdot svg{width:12px;height:12px}
+@keyframes evfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes evring{0%{opacity:.7;transform:scale(.9)}100%{opacity:0;transform:scale(1.35)}}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -483,6 +496,7 @@ svg.poke .m-tip{fill:#fff;animation:none}
 <div id="lesson" hidden></div>
 <div id="modal" hidden></div>
 <div id="welcome" hidden></div>
+<button id="evfab" hidden aria-label="Abrir evento"></button>
 <div id="evpage" hidden></div>
 <div id="chestfx" hidden></div>
 
@@ -1003,7 +1017,7 @@ function pickExtras(g){return (EXTRA[g]||[]).filter(function(q){return eligible(
    Regras: 1 etapa nova por dia, dias não precisam ser seguidos, 6 perguntas por etapa só de conceitos já vistos,
    sem desafio extra de 5 acertos, recompensas registradas em S.ledger (nunca pagam duas vezes). */
 var EVENTS=[{
-  id:'rede-conectada',enabled:false,
+  id:'rede-conectada',enabled:true,
   name:'Operação Rede Conectada',tag:'Evento especial',
   blurb:'Reúna as peças e monte um roteador. Cada etapa revisa o que você já estudou e entrega peças e cristais.',
   start:'2026-11-22',end:'2026-12-01',
@@ -1021,7 +1035,8 @@ try{if(location.hash==='#evento-teste')localStorage.setItem('pingoquest-devev','
 function addDays(d,n){var a=d.split('-'),t=new Date(Date.UTC(+a[0],+a[1]-1,+a[2]+n));return t.toISOString().slice(0,10)}
 function fmtD(d){return d.slice(8,10)+'/'+d.slice(5,7)}
 /* hoje, sem voltar no tempo: mudar o relógio para trás não reabre dias */
-function evToday(){var d=window.__today||today();if(S.maxDay&&d<S.maxDay)d=S.maxDay;if(d>(S.maxDay||'')){S.maxDay=d;save()}return d}
+function devOff(){try{return +localStorage.getItem('pingoquest-devoff')||0}catch(e){return 0}}
+function evToday(){var d=window.__today||addDays(today(),devOff());if(S.maxDay&&d<S.maxDay)d=S.maxDay;if(d>(S.maxDay||'')){S.maxDay=d;save()}return d}
 function evOn(ev){return ev.enabled||DEVEV}
 function evWin(ev){
   if(ev.enabled)return{start:ev.start,end:ev.end};
@@ -1087,6 +1102,21 @@ function evBanners(){
 var EVP=null;
 function evOpen(id){if(!evById(id))return;EVP=id;$('#evpage').hidden=false;document.body.classList.add('lock');evRender();$('#evpage').scrollTop=0}
 function evClose(){EVP=null;$('#evpage').hidden=true;document.body.classList.remove('lock');render()}
+
+function evFab(){
+  var el=$('#evfab');if(!el)return;
+  var ev=(tab==='path')?evList()[0]:null;
+  if(!ev){el.hidden=true;return}
+  var i=evInfo(ev),dot='',calm=false;
+  if(i.canStart)dot='<span class="evdot">!</span>';
+  else if(i.completed){dot='<span class="evdot ok">'+IC.check+'</span>';calm=true}
+  else if(i.doneToday){dot='<span class="evdot ok">'+IC.check+'</span>';calm=true}
+  else if(i.late)calm=true;
+  var lab=i.phase==='soon'?'Em breve':(i.completed?'Concluído':(i.left<=1?'Último dia':i.left+' dias'));
+  el.className=calm?'calm':'';el.dataset.act='evopen';el.dataset.id=ev.id;el.hidden=false;
+  el.innerHTML='<span class="eva"><svg class="ev-art" viewBox="0 0 90 90" aria-hidden="true">'+evArt(ev)+'</svg>'+dot+'</span><span class="evlab">'+lab+'</span>';
+  el.setAttribute('aria-label','Evento '+ev.name+(i.canStart?', etapa disponível':''));
+}
 function evRender(){
   var ev=evById(EVP);if(!ev)return;
   var i=evInfo(ev),P=i.P,fresh=P.fresh||0,h='<div class="evw">';
@@ -1289,7 +1319,7 @@ function popHTML(g,k,un,done,x){
     '<button class="popbtn" data-act="go" data-g="'+g+'" data-k="'+k+'">'+(done?'Jogar de novo':'Começar')+' +'+xp+' XP</button></div>';
 }
 function pathHTML(){
-  var h=evBanners(),curFound=false;
+  var h='',curFound=false;
   GAMES.forEach(function(g,gi){
     h+='<section class="unit u'+g.c+'"><div class="uhead"><div><div class="tag">'+g.tag+'</div><h2>'+g.title+'</h2></div>'+
        '<button class="tipbtn" data-act="tips" data-g="'+gi+'">Dicas</button></div><div class="nodes">';
@@ -1323,7 +1353,7 @@ function profileHTML(){
     var n=0;for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++;
     h+='<div class="prog"><div class="row"><span>'+g.title+'</span><span>'+n+'/4</span></div><div class="bar"><i style="width:'+(n/4*100)+'%"></i></div></div>';
   });
-  h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button><button class="btn ghost" data-act="devev" style="margin-bottom:10px">Evento de teste: '+(DEVEV?'ligado (toque para desligar)':'desligado (toque para ligar)')+'</button><button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
+  h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button><div class="sect" style="margin-top:14px">Ferramentas de teste</div><button class="btn ghost" data-act="devday" style="margin-bottom:10px">Avançar 1 dia para testar o evento (hoje: '+fmtD(evToday())+')</button><button class="btn ghost" data-act="devreset" style="margin-bottom:10px">Reiniciar o evento (teste)</button><button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
      '<p class="note" style="margin-top:12px">O progresso fica salvo neste navegador.</p>';
   return h;
 }
@@ -1331,6 +1361,7 @@ function render(){
   $('#topin').innerHTML=topHTML();
   var map={path:pathHTML,missions:missionsHTML,review:reviewHTML,profile:profileHTML};
   $('#main').innerHTML=(map[tab]||pathHTML)();
+  evFab();
   var tabs=[['path','Trilha',0],['missions','Missões',attention()],['review','Revisar',missKeys().length],['profile','Perfil',0]];
   $('#navin').innerHTML=tabs.map(function(t){
     return '<button class="nbtn" data-act="tab" data-t="'+t[0]+'"'+(tab===t[0]?' aria-current="page"':'')+'>'+NAV[t[0]]+t[1]+(t[2]?'<span class="dot">'+t[2]+'</span>':'')+'</button>';
@@ -1766,7 +1797,8 @@ document.addEventListener('click',function(e){
   else if(a==='check'){check()}
   else if(a==='next'){next()}
   else if(a==='lclose'){closeLesson()}
-  else if(a==='devev'){DEVEV=!DEVEV;try{localStorage.setItem('pingoquest-devev',DEVEV?'1':'0')}catch(e){};render();if(DEVEV)tab='path',render(),window.scrollTo(0,0)}
+  else if(a==='devday'){try{localStorage.setItem('pingoquest-devoff',String(devOff()+1))}catch(e){};evToday();render()}
+  else if(a==='devreset'){S.ev={};S.ledger={};S.inv={items:[],coll:{}};S.maxDay='';try{localStorage.setItem('pingoquest-devoff','0')}catch(e){};save();render()}
   else if(a==='evopen'){evOpen(t.dataset.id)}
   else if(a==='evclose'){evClose()}
   else if(a==='evstep'){evStart(t.dataset.id,t.dataset.s)}

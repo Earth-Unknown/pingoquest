@@ -6,14 +6,12 @@ fs.writeFileSync('/tmp/pq-test5.html','<style>[hidden]{display:none!important}</
 await p.goto('file:///tmp/pq-test5.html');
 const T=(n,v)=>console.log(n,JSON.stringify(v));
 // 1) sem evento ligado: nada aparece
-await p.evaluate(()=>{localStorage.clear();S.onb=true;S.plan=5;save();closeWelcome();render()});
-T('1 sem evento: cartoes',await p.evaluate(()=>({cards:document.querySelectorAll('.evcard').length,lista:PK.evList().length})));
+await p.evaluate(()=>{localStorage.clear();S.onb=true;S.plan=5;save();closeWelcome();EVENTS[0].enabled=false;DEVEV=false;render()});
+T('1 sem evento: botao',await p.evaluate(()=>({fab:!document.querySelector('#evfab').hidden,lista:PK.evList().length})));
 // 2) ligar evento de teste: cartao aparece, pagina abre
-await p.evaluate(()=>{localStorage.setItem('pingoquest-devev','1')});
-await p.goto('file:///tmp/pq-test5.html#evento-teste');await p.reload();
-await p.evaluate(()=>{S.onb=true;S.plan=5;S.know={};save();closeWelcome();render()});
-T('2 evento ligado',await p.evaluate(()=>({cards:document.querySelectorAll('.evcard').length})));
-await p.click('.evcard');await p.waitForTimeout(200);
+await p.evaluate(()=>{S.know={};DEVEV=true;render()});
+T('2 evento ligado',await p.evaluate(()=>({fab:!document.querySelector('#evfab').hidden,label:document.querySelector('#evfab .evlab').textContent})));
+await p.click('#evfab',{force:true});await p.waitForTimeout(200);
 T('2b pagina',await p.evaluate(()=>({aberta:!$('#evpage').hidden,titulo:document.querySelector('#evpage h1').textContent,etapas:document.querySelectorAll('.evstep').length,tiles:document.querySelectorAll('.evpz .tile').length,btn:!!document.querySelector('[data-act=evstep]'),msg:(document.querySelector('.evmsg')||{}).textContent})));
 // 3) pouco conteudo visto: etapa bloqueada com explicacao
 T('3 poucas perguntas',await p.evaluate(()=>PK.evPick(PK.EVENTS[0])));
@@ -76,6 +74,12 @@ T('13 isolamento',await p.evaluate(()=>{SQ={g:-1,n:0};L={kind:'event',key:'x'};s
 // 14) chegou tarde: sem etapas viaveis
 await p.evaluate(()=>{S.ev={};S.devStart='2026-11-01';window.__today='2026-11-10';S.maxDay='2026-11-10';save()});
 T('14 tarde demais',await p.evaluate(()=>{var i=PK.evInfo(PK.EVENTS[0]);return{left:i.left,late:i.late,canStart:i.canStart}}));
+// 14b) evento real (enabled) dentro da janela: botao visivel; fora da janela: some
+await p.evaluate(()=>{DEVEV=false;EVENTS[0].enabled=true;window.__today='2026-11-25';S.maxDay='2026-11-25';render()});
+T('14b evento real aberto',await p.evaluate(()=>({fab:!document.querySelector('#evfab').hidden,dot:(document.querySelector('#evfab .evdot')||{}).textContent})));
+await p.evaluate(()=>{window.__today='2026-12-05';S.maxDay='2026-12-05';render()});
+T('14c apos o fim',await p.evaluate(()=>({fab:!document.querySelector('#evfab').hidden})));
+await p.evaluate(()=>{EVENTS[0].enabled=false;DEVEV=true;S.devStart='2026-11-01';window.__today='2026-11-20';S.maxDay='2026-11-20'});
 // 15) encerrado: sai da lista
 await p.evaluate(()=>{window.__today='2026-11-20';S.maxDay='2026-11-20'});
 T('15 encerrado',await p.evaluate(()=>({lista:PK.evList().length})));

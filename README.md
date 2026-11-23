@@ -24,7 +24,7 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 
 ## Fase 3 concluída: base de eventos
 - Eventos são dados em `EVENTS` (nome, datas, etapas, peças, cristais, prêmio, nota mínima). Sem evento ligado, nada aparece.
-- Para ligar um: `enabled:true` e `start`/`end` (AAAA-MM-DD). Para ver o evento de teste: Perfil > Ajustes > "Evento de teste" (ou abrir com `#evento-teste` no final do link).
+- Para ligar um: `enabled:true` e `start`/`end` (AAAA-MM-DD). O evento Operação Rede Conectada está ligado (22/11 a 01/12/2026), com botão flutuante na Trilha. Para testar vários dias: Perfil > Ferramentas de teste > "Avançar 1 dia" e "Reiniciar o evento" (remover antes de lançar).
 - Cartão do evento na tela da trilha abre uma página própria: peça-quebra-cabeça 3x3 (roteador), etapas, calendário, regras e estados (em breve, aberta, concluída hoje, tarde demais, concluído).
 - Regras: 1 etapa nova por dia (dias não consecutivos), 6 perguntas só de conceitos já vistos, nota mínima 4/6 (`passMin`, ajustável), refazer no mesmo dia com outras perguntas, sem vida perdida, sem desafio dos 5 acertos, quem chega tarde demais não entra.
 - Recompensas pelo `S.ledger` (não pagam duas vezes). Prêmio vai para `S.inv`. Relógio para trás não reabre dias (`S.maxDay`). Data ainda é a do aparelho; servidor é um passo futuro.
