@@ -331,6 +331,8 @@ svg[aria-label^="Pingo"]{cursor:pointer;-webkit-tap-highlight-color:transparent;
 svg.poke{animation:poke .6s cubic-bezier(.3,1.6,.5,1)!important;transform-origin:50% 90%}
 svg.poke .m-ant{animation:antw .6s ease-out;transform-box:fill-box;transform-origin:50% 100%}
 svg.poke .m-tip{fill:#fff;animation:none}
+svg.poke .m-oval.r{animation:wink .7s ease-in-out}
+@keyframes wink{0%,100%{transform:scaleY(1)}25%,70%{transform:scaleY(.1)}}
 @keyframes poke{0%{transform:scale(1,1)}20%{transform:scale(1.14,.82)}45%{transform:translateY(-16px) scale(.94,1.1) rotate(-6deg)}70%{transform:translateY(0) scale(1.06,.94) rotate(4deg)}100%{transform:none}}
 @keyframes antw{0%,100%{transform:rotate(0)}25%{transform:rotate(-24deg)}60%{transform:rotate(18deg)}}
 .pbub{position:fixed;z-index:120;max-width:min(260px,calc(100vw - 24px));background:var(--surface);color:var(--fg);border:2px solid var(--primary);border-radius:16px;padding:9px 13px;font-weight:800;font-size:15px;line-height:1.25;text-align:center;box-shadow:0 6px 0 rgba(0,0,0,.12);animation:pbin .25s cubic-bezier(.2,1.4,.4,1);pointer-events:none}
@@ -1015,10 +1017,13 @@ function pingo(mood,cls,av){
     cheeks='';
   }else if(mood==='cheer'){
     eyes='<path class="m-eye" d="M39 55q7-11 14 0M67 55q7-11 14 0"/>';
-    mouth='<path d="M49 61q11 18 22 0z" fill="#ff4fae"/><path d="M52 61.500h16" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M55 69q5 4 10 0" fill="none" stroke="#ff8fc8" stroke-width="2.500" stroke-linecap="round"/>';
-  }else{
+    mouth='<path d="M49 61q11-2 22 0q0 15-11 15q-11 0-11-15z" fill="#ff4fae"/><path d="M54 70q6-5 12 0q-6 5-12 0z" fill="#ff9fd0"/>';
+  }else if(mood==='wink'){
     eyes='<ellipse class="m-oval" cx="46" cy="53" rx="5" ry="8"/><circle cx="44" cy="49.500" r="2" fill="#fff"/><path class="m-eye" d="M66 55q7-11 14 0"/>';
-    mouth='<path d="M50 62q10 15 20 0z" fill="#ff4fae"/><path d="M53 62.500h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/>';
+    mouth='<path d="M50 63q10 10 20 0" fill="none" stroke="#ff4fae" stroke-width="3.800" stroke-linecap="round"/>';
+  }else{
+    eyes='<ellipse class="m-oval" cx="46" cy="53" rx="5" ry="8"/><circle cx="44" cy="49.500" r="2" fill="#fff"/><ellipse class="m-oval r" cx="74" cy="53" rx="5" ry="8"/><circle cx="72" cy="49.500" r="2" fill="#fff"/>';
+    mouth='<path d="M50 63q10 10 20 0" fill="none" stroke="#ff4fae" stroke-width="3.800" stroke-linecap="round"/>';
   }
   var cfg=av?avCfg():null,st='',back='',ant,hat='',vis='';
   ant='<path class="m-ant" d="M58 24C57 10 68 7 79 11" fill="none"/><circle class="m-tip" cx="82" cy="12" r="7"/><circle cx="80" cy="10" r="2" fill="#fff" opacity=".8"/>';
@@ -1705,7 +1710,7 @@ function pathHTML(){
     h+='</div></section>';
   });
   h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>Seção 2</h2>'+
-    '<div class="nspingo">'+pingo('happy','pingo-s')+'</div><p>Intermediário: o próximo nível chega em breve. Termine a Seção 1 para ficar pronto.</p>'+
+    '<div class="nspingo">'+pingo('wink','pingo-s')+'</div><p>Intermediário: o próximo nível chega em breve. Termine a Seção 1 para ficar pronto.</p>'+
     '<button class="btn ghost" disabled>Em breve</button></section>';
   return h;
 }
