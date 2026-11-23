@@ -2,7 +2,7 @@
 const {chromium}=require('playwright');const fs=require('fs');
 (async()=>{const b=await chromium.launch({args:['--autoplay-policy=no-user-gesture-required']});const p=await b.newPage({viewport:{width:390,height:800}});
 const errs=[];p.on('pageerror',e=>errs.push(e.message));
-fs.writeFileSync('/tmp/pq-test4.html','<style>[hidden]{display:none!important}</style>'+fs.readFileSync(__dirname+'/../index.html','utf8'));
+fs.writeFileSync('/tmp/pq-test4.html','<style>[hidden]{display:none!important}</style>'+fs.readFileSync(__dirname+'/../src/jogo.html','utf8'));
 await p.addInitScript(()=>{window.__v=[];navigator.vibrate=function(x){window.__v.push(x);return true}});
 await p.goto('file:///tmp/pq-test4.html');
 await p.evaluate(()=>{localStorage.clear();S.onb=true;S.plan=5;save();closeWelcome();render()});

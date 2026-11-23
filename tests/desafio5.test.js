@@ -2,7 +2,7 @@
 const {chromium}=require('playwright');const fs=require('fs');
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:800}});
 const errs=[];p.on('pageerror',e=>errs.push(e.message));
-fs.writeFileSync('/tmp/pq-test3.html','<style>[hidden]{display:none!important}</style>'+fs.readFileSync(__dirname+'/../index.html','utf8'));
+fs.writeFileSync('/tmp/pq-test3.html','<style>[hidden]{display:none!important}</style>'+fs.readFileSync(__dirname+'/../src/jogo.html','utf8'));
 await p.goto('file:///tmp/pq-test3.html');await p.waitForTimeout(300);
 await p.evaluate(()=>{localStorage.clear();S.know={};S.xch={};S.onb=true;S.plan=5;S.hearts=3;save();closeWelcome();render();
   ['rede.def','rede.host','lan','internet','meio.transmissao'].forEach(c=>PK.markSeen([c]));

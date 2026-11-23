@@ -41,5 +41,5 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 - Eventos nunca ativam o desafio de 5 acertos nem liberam conteúdo novo.
 
 ## Publicação
-- Artifact (claude.ai): publica o `index.html` como está.
-- GitHub Pages: `build-site.sh` embrulha o `index.html` (doctype, head, regra `[hidden]`) e o workflow `.github/workflows/pages.yml` publica em https://loohfranca.github.io/pingoquest/ a cada push na `main`.
+- Fonte do jogo: `src/jogo.html` (fragmento no formato do Artifact do claude.ai, publicado como está).
+- `index.html` da raiz é GERADO por `sh build-site.sh` (página completa com doctype e regra `[hidden]`). Sirva o GitHub Pages pela branch `main` (raiz) ou por Actions: os dois funcionam. Depois de mexer em `src/jogo.html`, rode o script e faça commit dos dois arquivos (`tests/site.test.js` confere).

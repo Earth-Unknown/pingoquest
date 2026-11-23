@@ -20,10 +20,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Preparar arquivos do site
-        run: sh build-site.sh
+        run: |
+          sh build-site.sh
+          mkdir _site
+          cp index.html _site/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true  # se o Pages estiver configurado por branch, esta etapa é dispensável
