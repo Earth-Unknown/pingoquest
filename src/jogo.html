@@ -768,6 +768,12 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .srow.done .sri{background:#8ccfa9}.srow.lock{opacity:.6;cursor:default}.srow.lock .sri{background:#cfc6ec}.srow.fin .sri{background:#ff9a1f}.srow.fin.done .sri{background:#8ccfa9}.srow.fin.lock .sri{background:#e8d8c4}
 .srt{flex:1;min-width:0}.srt small{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.srt b{display:block;font-size:15px;line-height:1.2}
 .srow em{font-style:normal;font-weight:800;font-size:12px;color:var(--primary);white-space:nowrap}
+
+.nw{position:relative}
+.nw .nlabel{width:max-content;text-transform:none;letter-spacing:0;position:absolute;top:50%;transform:translateY(-62%);max-width:118px;text-align:left;pointer-events:none;margin:0}
+.nw .nlabel.L{left:calc(50% + 50px)}.nw .nlabel.R{right:calc(50% + 50px);text-align:right;left:auto}
+.nlabel b{display:block;font-size:14px;color:var(--ink);line-height:1.15}.nlabel small{display:block;font-size:12px;font-weight:700;color:var(--muted);line-height:1.2;margin-top:1px}
+.node.lock+.nlabel b{color:var(--muted)}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -2226,17 +2232,24 @@ function stopState(gi){
   return{n:n,done:n===4,un:isUnlocked(gi,0)};
 }
 function pathHTML(){
-  var h=worldBanner()+'<div class="wtrail">',curFound=false;
+  var h=worldBanner(),curFound=false;
   GAMES.forEach(function(g,gi){
-    var st=stopState(gi),cur=st.un&&!st.done&&!curFound;if(cur)curFound=true;
-    var cls=st.done?'done':(cur?'cur':(st.un?'cur':'lock')),x=SOFF[gi%SOFF.length],left=x>0,last=gi===GAMES.length-1;
-    h+='<div class="stop '+cls+(last?' fin':'')+'" style="--x:'+x+'px;--p:'+(st.n*25)+'">';
-    if(cur)h+='<div class="sbub" style="--x:'+x+'px">Começar</div>';
-    h+='<button class="sring" data-act="stop" data-g="'+gi+'" aria-label="'+esc(WORLD.places[gi]||g.title)+(st.un?'':' (bloqueada)')+'"><span class="sdisc">'+(st.un?placeIcon(gi):IC.lock)+'</span></button>';
-    if(cur)h+=pingo('happy','spingo '+(x>0?'r':'l'));
-    h+='<div class="slbl '+(left?'R':'L')+'"><b>'+esc(WORLD.places[gi]||g.title)+'</b><small>'+esc(g.title)+'</small><i>'+(st.done?'Concluída':st.n+'/4 etapas')+'</i></div></div>';
+    h+='<section class="unit u'+(gi%5)+'"><div class="uhead"><span class="lm">'+placeIcon(gi)+'</span><div><div class="tag">Parada '+(gi+1)+'</div><h2>'+(WORLD.places[gi]||g.title)+'</h2><div class="lsub">'+g.title+'</div></div>'+
+       '<button class="tipbtn" data-act="tips" data-g="'+gi+'">Dicas</button></div><div class="nodes">';
+    for(var k=0;k<4;k++){
+      var key=gi+'-'+k,done=!!S.done[key],un=isUnlocked(gi,k),cur=un&&!done&&!curFound;
+      if(cur)curFound=true;
+      var cls=(done?'done':(cur?'cur':(un?'cur':'lock')))+(k===3?' bossn':'');
+      var icon=done?IC.check:(un?(k===3?(g.caso?IC.search:IC.boss):IC.play):IC.lock);
+      var nm=k===3?(g.caso&&CASES[g.caso]?CASES[g.caso].title:''):(g.names?g.names[k]:''),x=OFF[k],label=k===3?(g.caso?'Caso':'Prova final'):(g.names?'Lição ':'Fase ')+(k+1);
+      h+='<div class="nw" style="--x:'+x+'px">';
+      if(cur){h+='<div class="bubble">Começar</div>'+pingo('happy','pingo '+(x>0?'r':'l'));}
+      h+='<button class="node '+cls+'" data-act="node" data-g="'+gi+'" data-k="'+k+'" aria-label="'+g.title+', '+label+(un?'':' (bloqueada)')+'"'+(un?'':' aria-disabled="true"')+'>'+icon+'</button>'+
+         '<div class="nlabel '+(x>0?'R':'L')+'"><b>'+label+'</b>'+(nm?'<small>'+esc(nm)+'</small>':'')+'</div></div>';
+      if(openNode===key)h+=popHTML(gi,k,un,done,x);
+    }
+    h+='</div></section>';
   });
-  h+='</div>';
   h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>Mundo 2</h2>'+
     '<div class="nspingo">'+pingo('wink','pingo-s')+'</div><p>Cidade IP: o próximo mundo chega em breve. Termine a Vila Roteador para ficar pronto.</p>'+
     '<button class="btn ghost" disabled>Em breve</button></section>';
@@ -2317,16 +2330,16 @@ function render(){
 /* Caminho de cabos ligando as etapas de cada parada (curvas suaves, calculadas pela posição real dos círculos) */
 function drawCables(){
   var NS='http://www.w3.org/2000/svg';
-  document.querySelectorAll('.wtrail').forEach(function(box){
+  document.querySelectorAll('.nodes').forEach(function(box){
     var old=box.querySelector('svg.cab');if(old)old.remove();
     var r=box.getBoundingClientRect(),pts=[];
-    box.querySelectorAll('.sring').forEach(function(n){var b=n.getBoundingClientRect();pts.push([b.left-r.left+b.width/2,b.top-r.top+b.height/2])});
+    box.querySelectorAll('.node').forEach(function(n){var b=n.getBoundingClientRect();pts.push([b.left-r.left+b.width/2,b.top-r.top+b.height/2])});
     if(pts.length<2)return;
     var d='M'+pts[0][0]+' '+pts[0][1];
     for(var i=1;i<pts.length;i++){var a=pts[i-1],b=pts[i],m=(a[1]+b[1])/2;d+=' C'+a[0]+' '+m+' '+b[0]+' '+m+' '+b[0]+' '+b[1]}
     var sv=document.createElementNS(NS,'svg');sv.setAttribute('class','cab');sv.setAttribute('width',r.width);sv.setAttribute('height',r.height);sv.setAttribute('aria-hidden','true');
-    var deco='<g opacity=".9"><g transform="translate('+(r.width-44)+','+(pts[1][1]+30)+') rotate(10)"><rect width="24" height="24" rx="6" fill="#ffd83d" stroke="#d9a400" stroke-width="2"/><rect x="9" width="6" height="24" fill="#fff" opacity=".6"/></g>'+
-       '<path d="M14 '+(pts[3][1]+14)+'q12-14 24 0M6 '+(pts[3][1]+24)+'q20-24 40 0" transform="translate(4,0)" fill="none" stroke="#c9bcf5" stroke-width="4" stroke-linecap="round"/></g>';
+    var deco='<g opacity=".9"><g transform="translate('+(r.width-44)+','+(pts[1][1]-10)+') rotate(10)"><rect width="24" height="24" rx="6" fill="#ffd83d" stroke="#d9a400" stroke-width="2"/><rect x="9" width="6" height="24" fill="#fff" opacity=".6"/></g>'+
+       '<path d="M14 '+(pts[2][1]+14)+'q12-14 24 0M6 '+(pts[2][1]+24)+'q20-24 40 0" transform="translate(4,0)" fill="none" stroke="#c9bcf5" stroke-width="4" stroke-linecap="round"/></g>';
     sv.innerHTML='<path d="'+d+'" fill="none" stroke="#c9bcf5" stroke-width="7" stroke-linecap="round" stroke-dasharray="1 15"/>'+deco;
     box.insertBefore(sv,box.firstChild);
   });
