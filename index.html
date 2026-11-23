@@ -1323,7 +1323,7 @@ function profileHTML(){
     var n=0;for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++;
     h+='<div class="prog"><div class="row"><span>'+g.title+'</span><span>'+n+'/4</span></div><div class="bar"><i style="width:'+(n/4*100)+'%"></i></div></div>';
   });
-  h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button><button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
+  h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button><button class="btn ghost" data-act="devev" style="margin-bottom:10px">Evento de teste: '+(DEVEV?'ligado (toque para desligar)':'desligado (toque para ligar)')+'</button><button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
      '<p class="note" style="margin-top:12px">O progresso fica salvo neste navegador.</p>';
   return h;
 }
@@ -1766,6 +1766,7 @@ document.addEventListener('click',function(e){
   else if(a==='check'){check()}
   else if(a==='next'){next()}
   else if(a==='lclose'){closeLesson()}
+  else if(a==='devev'){DEVEV=!DEVEV;try{localStorage.setItem('pingoquest-devev',DEVEV?'1':'0')}catch(e){};render();if(DEVEV)tab='path',render(),window.scrollTo(0,0)}
   else if(a==='evopen'){evOpen(t.dataset.id)}
   else if(a==='evclose'){evClose()}
   else if(a==='evstep'){evStart(t.dataset.id,t.dataset.s)}
