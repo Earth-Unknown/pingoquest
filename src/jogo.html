@@ -350,6 +350,12 @@ svg{display:block}
 .avrow{margin:10px 0}.avrow>b{display:block;font-size:14px;margin-bottom:6px;color:var(--muted)}
 .avchips{display:flex;flex-wrap:wrap;gap:8px}
 .avchip{font:inherit;font-weight:800;font-size:14px;padding:9px 12px;border-radius:12px;border:2px solid var(--line-deep);background:var(--surface);color:var(--text,inherit);cursor:pointer;display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px}
+.avgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.avt{position:relative;aspect-ratio:1;padding:5px;border-radius:14px;align-items:center;justify-content:center;flex-direction:row}
+.avt svg{width:100%;height:100%;display:block}
+.avt.lock svg{filter:saturate(.3);opacity:.55}.avt.lock{opacity:1}
+.avlk{position:absolute;right:5px;bottom:5px;width:18px;height:18px;border-radius:9px;background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--muted);font-style:normal}.avlk svg{width:11px;height:11px;filter:none;opacity:1}
+.avcap{margin-top:12px;font-size:13px;color:var(--muted);min-height:34px;text-align:center}.avcap b{color:var(--ink,inherit)}
 .avchip.on{border-color:var(--cyan);box-shadow:0 0 0 2px var(--cyan) inset}
 .avchip.lock{opacity:.55;cursor:default}.avchip small{font-weight:700;font-size:11px;color:var(--muted)}
 .m-body{fill:var(--primary)}.m-low{fill:var(--primary-deep)}.m-face{fill:var(--face)}
@@ -1182,6 +1188,54 @@ var IC={
 };
 IC.puzzle='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 3a2 2 0 0 1 4 0v1h3a1 1 0 0 1 1 1v3h-1a2 2 0 0 0 0 4h1v3a1 1 0 0 1-1 1h-3v-1a2 2 0 0 0-4 0v1H7a1 1 0 0 1-1-1v-3H5a2 2 0 0 1 0-4h1V5a1 1 0 0 1 1-1h3z"/></svg>';
 IC.search='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="10.500" cy="10.500" r="6.500"/><path d="M15.500 15.500L21 21"/></svg>';
+/* Desenhos dos adereços (coordenadas do robô, 120x120). Servem para o robô e para os ícones da lista. */
+var AVD={
+ antena:{
+  padrao:{vb:'40 0 52 26',s:'<path class="m-ant" d="M60 21C59 10 66 7.500 76.500 9.500" fill="none"/><circle class="m-tip" cx="82.500" cy="10.500" r="7"/><ellipse cx="80" cy="7.500" rx="2.400" ry="1.600" fill="#fff" opacity=".85"/>'},
+  dupla:{vb:'34 0 52 26',s:'<line class="m-ant" x1="46" y1="22" x2="42" y2="11"/><circle class="m-tip" cx="41" cy="8" r="6"/><line class="m-ant" x1="74" y1="22" x2="78" y2="11"/><circle class="m-tip" cx="79" cy="8" r="6"/>'},
+  'antena-wifi':{vb:'40 0 40 26',s:'<line class="m-ant" x1="60" y1="21" x2="60" y2="15"/><circle class="m-tip" cx="60" cy="14" r="3.500"/><path class="m-wifi" style="stroke:var(--gold);stroke-width:3.500" d="M52 9q8-7 16 0M46 3q14-12 28 0"/>'},
+  parabolica:{vb:'38 0 44 26',s:'<line class="m-ant" x1="60" y1="21" x2="60" y2="12"/><path d="M42 6q18 18 36 0z" fill="#e8eef7" stroke="var(--primary-deep)" stroke-width="3" stroke-linejoin="round"/><circle class="m-tip" cx="60" cy="5" r="3.500"/>'}
+ },
+ cabeca:{
+  bone:{vb:'14 8 92 34',s:'<path d="M23 36q0-23 37-23q37 0 37 23z" fill="#ffb700"/><rect x="17" y="33" width="43" height="7" rx="3.500" fill="#e09b00"/>'},
+  capacete:{vb:'16 6 88 40',s:'<path d="M20 40q0-30 40-30q40 0 40 30z" fill="#ffcf33"/><rect x="18" y="37" width="84" height="6" rx="3" fill="#e0a800"/><rect x="55" y="10" width="10" height="28" fill="#e0a800"/>'},
+  coroa:{vb:'30 0 60 30',s:'<path d="M36 25l3-16 10 8 11-14 11 14 10-8 3 16z" fill="#ffd83d" stroke="#d9a400" stroke-width="2.500" stroke-linejoin="round"/><circle cx="60" cy="19" r="2.800" fill="#ff4fae"/><circle cx="42" cy="17" r="2" fill="#18ddfb"/><circle cx="78" cy="17" r="2" fill="#18ddfb"/>'},
+  orelhas:{vb:'22 4 76 40',s:'<path d="M27 42L29 9L53 25z" fill="var(--primary-deep)" stroke="var(--primary-deep)" stroke-width="3" stroke-linejoin="round"/><path d="M33 33L34 18L45 26z" fill="#ff9fd0"/><path d="M93 42L91 9L67 25z" fill="var(--primary-deep)" stroke="var(--primary-deep)" stroke-width="3" stroke-linejoin="round"/><path d="M87 33L86 18L75 26z" fill="#ff9fd0"/>'},
+  laco:{vb:'10 8 46 36',s:'<path d="M33 27L18 15Q13 27 18 39z" fill="#ff4fae"/><path d="M33 27L48 15Q53 27 48 39z" fill="#ff4fae"/><circle cx="33" cy="27" r="5" fill="#e0368f"/><circle cx="33" cy="27" r="1.800" fill="#fff" opacity=".7"/>'},
+  fone:{vb:'8 2 104 68',s:'<path d="M25 52Q22 8 60 8Q98 8 95 52" fill="none" stroke="#2a1668" stroke-width="5" stroke-linecap="round"/><rect x="11" y="40" width="13" height="26" rx="6.500" fill="#18ddfb" stroke="#2a1668" stroke-width="3"/><rect x="96" y="40" width="13" height="26" rx="6.500" fill="#18ddfb" stroke="#2a1668" stroke-width="3"/>'},
+  cartola:{vb:'26 0 68 40',s:'<rect x="28" y="27" width="64" height="7" rx="3.500" fill="#2a1668"/><path d="M40 29V6h40v23z" fill="#2a1668"/><ellipse cx="60" cy="6" rx="20" ry="3" fill="#3d2290"/><rect x="40" y="20" width="40" height="6" fill="#ff4fae"/>'}
+ },
+ visor:{
+  oculos:{vb:'34 36 52 26',s:'<circle cx="46.500" cy="48.500" r="8.800" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><circle cx="73.500" cy="48.500" r="8.800" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><path d="M55.300 47q4.700-3 9.400 0" fill="none" stroke="#fff" stroke-width="2"/>'},
+  hud:{vb:'34 36 52 26',s:'<rect x="36" y="40" width="48" height="15" rx="7.500" fill="rgba(25,181,232,.10)" stroke="var(--cyan)" stroke-width="1.800"/><path d="M41 44h6" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".7"/>'},
+  estrelas:{vb:'32 34 56 30',s:'<polygon points="@S1@" fill="rgba(255,79,174,.35)" stroke="#ff4fae" stroke-width="2.500" stroke-linejoin="round"/><polygon points="@S2@" fill="rgba(255,79,174,.35)" stroke="#ff4fae" stroke-width="2.500" stroke-linejoin="round"/><path d="M56 47q4-3 8 0" fill="none" stroke="#ff4fae" stroke-width="2"/>'},
+  coracao:{vb:'32 34 56 30',s:'<path d="M46.500 57C38 52 36 47 38.500 43.500C41 40.500 45 41 46.500 44.500C48 41 52 40.500 54.500 43.500C57 47 55 52 46.500 57z" fill="rgba(255,60,90,.35)" stroke="#ff3c5a" stroke-width="2.500" stroke-linejoin="round"/><path d="M73.500 57C65 52 63 47 65.500 43.500C68 40.500 72 41 73.500 44.500C75 41 79 40.500 81.500 43.500C84 47 82 52 73.500 57z" fill="rgba(255,60,90,.35)" stroke="#ff3c5a" stroke-width="2.500" stroke-linejoin="round"/><path d="M56 47q4-3 8 0" fill="none" stroke="#ff3c5a" stroke-width="2"/>'},
+  mascara:{vb:'28 34 64 32',s:'<path fill-rule="evenodd" d="M31 41Q60 33 89 41L91 56Q77 63 68 56Q60 52 52 56Q43 63 29 56ZM40.500 48.500a6 7 0 1 0 12 0a6 7 0 1 0 -12 0ZM67.500 48.500a6 7 0 1 0 12 0a6 7 0 1 0 -12 0Z" fill="#e63946" stroke="#8f1d28" stroke-width="1.500" stroke-linejoin="round"/>'}
+ },
+ roupa:{
+  jaleco:{vb:'38 76 44 32',s:'<rect x="41.600" y="80.500" width="36.400" height="22.500" rx="11" fill="#f4f7fb"/><path d="M60 82v20" stroke="#c6d0e0" stroke-width="1.500"/><rect x="64" y="90" width="9" height="8" rx="2" fill="none" stroke="#c6d0e0" stroke-width="1.500"/><rect x="66" y="86" width="1.600" height="6" rx=".8" fill="#18ddfb"/>'},
+  raio:{vb:'38 76 44 32',s:'<rect x="41.600" y="80.500" width="36.400" height="22.500" rx="11" fill="#ffd83d"/><path d="M62 84L51 95.500h6.500L55 102l11-11.500h-6.500z" fill="#2a1668"/><circle cx="50" cy="83" r="1.600" fill="#d9a400"/><circle cx="70" cy="83" r="1.600" fill="#d9a400"/>'},
+  popstar:{vb:'38 76 44 32',s:'<rect x="41.600" y="80.500" width="36.400" height="22.500" rx="11" fill="#ff4fae"/><path d="M60 82v20" stroke="#fff" stroke-width="1.800" stroke-dasharray="2 2"/><polygon points="@S3@" fill="#ffd83d"/><circle cx="68" cy="88" r="1.500" fill="#fff"/><circle cx="70.500" cy="96" r="1" fill="#fff"/>'},
+  heroi:{vb:'38 76 44 32',s:'<rect x="41.600" y="80.500" width="36.400" height="22.500" rx="11" fill="#2f6fe0"/><rect x="41.600" y="96" width="36.400" height="5" fill="#e63946"/><polygon points="@S4@" fill="#ffd83d"/>'}
+ },
+ costas:{
+  rack:{vb:'8 38 104 66',s:'<rect x="12" y="40" width="96" height="62" rx="14" fill="#4a5a78"/><circle cx="17" cy="50" r="2.500" fill="#5be37d"/><circle cx="103" cy="50" r="2.500" fill="#ffb700"/><circle cx="17" cy="60" r="2.500" fill="#5be37d"/>'},
+  cabos:{vb:'4 38 112 66',s:'<rect x="13" y="42" width="94" height="60" rx="14" fill="#ff8a1f"/><circle cx="13" cy="78" r="9" fill="none" stroke="#3b82f6" stroke-width="4"/><circle cx="107" cy="78" r="9" fill="none" stroke="#5be37d" stroke-width="4"/>'},
+  capa:{vb:'16 74 88 50',s:'<path d="M40 80L20 114Q60 128 100 114L80 80z" fill="#e63946"/><path d="M40 80L30 100Q60 110 90 100L80 80z" fill="#ff6b78" opacity=".5"/>'},
+  asas:{vb:'2 54 116 44',s:'<path d="M42 68Q10 48 5 86Q24 82 42 90z" fill="#18ddfb"/><path d="M78 68Q110 48 115 86Q96 82 78 90z" fill="#18ddfb"/><path d="M36 76Q20 66 14 80M36 84Q22 78 18 86" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/><path d="M84 76Q100 66 106 80M84 84Q98 78 102 86" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/>'}
+ }
+};
+(function(){var m={'@S1@':star(46.5,48.5,11),'@S2@':star(73.5,48.5,11),'@S3@':star(52,91,6),'@S4@':star(60,89,6)};
+ function star(cx,cy,r){var p=[];for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;p.push((cx+rr*Math.cos(a)).toFixed(1)+','+(cy+rr*Math.sin(a)).toFixed(1))}return p.join(' ')}
+ Object.keys(AVD).forEach(function(sl){Object.keys(AVD[sl]).forEach(function(id){var o=AVD[sl][id];Object.keys(m).forEach(function(k){o.s=o.s.split(k).join(m[k])})})});
+})();
+function avSvg(slot,id,vb,inner,extra){return '<svg viewBox="'+vb+'" style="--primary:#7b3ff2;--primary-deep:#5a22c4;--cyan:#19e0ff;--gold:#ffd83d" aria-hidden="true">'+(extra||'')+inner+'</svg>'}
+function avIcon(slot,it){
+  if(slot==='cor'){var c=AV_COR[it.id]||AV_COR.padrao;return '<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="9" width="26" height="24" rx="9" fill="'+c[1]+'"/><rect x="7" y="6" width="26" height="24" rx="9" fill="'+c[0]+'"/><rect x="11" y="11" width="18" height="12" rx="6" fill="#2a1668"/><circle cx="16" cy="17" r="2" fill="#19e0ff"/><circle cx="24" cy="17" r="2" fill="#19e0ff"/><path d="M12 9q3-2 7-2" stroke="#fff" stroke-width="1.800" stroke-linecap="round" fill="none" opacity=".5"/></svg>'}
+  if(slot==='olhos'){var e=AV_OLHOS[it.id]||'#19e0ff';return '<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="9" width="30" height="22" rx="10" fill="#2a1668"/><ellipse cx="14" cy="20" rx="4" ry="5.500" fill="'+e+'"/><ellipse cx="26" cy="20" rx="4" ry="5.500" fill="'+e+'"/><circle cx="12.600" cy="17.800" r="1.400" fill="#fff"/><circle cx="24.600" cy="17.800" r="1.400" fill="#fff"/></svg>'}
+  var d=AVD[slot]&&AVD[slot][it.id];if(!d)return '';
+  return avSvg(slot,it.id,d.vb,d.s,'')
+}
 function pingo(mood,cls,av){
   /* Pingo v3 (referência "Robô Kawaii Roxo"): capacete lilás grande, viseira escura, orelhas roxas com luz ciano,
      bochechas brilhantes, boca aberta rosa, peito com 3 luzinhas, antena curva com bolinha amarela. Sem mochila fixa. */
@@ -1204,29 +1258,24 @@ function pingo(mood,cls,av){
     eyes=oval(46.500,48,3.800,5.400)+'<g class="r">'+oval(73.500,48,3.800,5.400)+'</g>';
     mouth=D;
   }
-  var cfg=av===false?null:avCfg(),st='',back='',ant,hat='',vis='';
-  ant='<path class="m-ant" d="M60 21C59 10 66 7.500 76.500 9.500" fill="none"/><circle class="m-tip" cx="82.500" cy="10.500" r="7"/><ellipse cx="80" cy="7.500" rx="2.400" ry="1.600" fill="#fff" opacity=".85"/>';
+  var cfg=av===false?null:avCfg(),st='',back='',ant,hat='',vis='',suit='',topAnt=false;
+  ant=AVD.antena.padrao.s;
   if(cfg){
     var c=AV_COR[cfg.cor]||AV_COR.padrao,e=AV_OLHOS[cfg.olhos]||AV_OLHOS.ciano;
     st=' style="--primary:'+c[0]+';--primary-deep:'+c[1]+';--cyan:'+e+'"';
-    if(cfg.antena==='dupla')ant='<line class="m-ant" x1="46" y1="22" x2="42" y2="11"/><circle class="m-tip" cx="41" cy="8" r="6"/><line class="m-ant" x1="74" y1="22" x2="78" y2="11"/><circle class="m-tip" cx="79" cy="8" r="6"/>';
-    else if(cfg.antena==='antena-wifi')ant='<line class="m-ant" x1="60" y1="21" x2="60" y2="15"/><circle class="m-tip" cx="60" cy="14" r="3.500"/><path class="m-wifi" style="stroke:var(--gold);stroke-width:3.500" d="M52 9q8-7 16 0M46 3q14-12 28 0"/>';
-    else if(cfg.antena==='parabolica')ant='<line class="m-ant" x1="60" y1="21" x2="60" y2="12"/><path d="M42 6q18 18 36 0z" fill="#e8eef7" stroke="var(--primary-deep)" stroke-width="3" stroke-linejoin="round"/><circle class="m-tip" cx="60" cy="5" r="3.500"/>';
-    if(cfg.costas==='rack')back='<rect x="12" y="40" width="96" height="62" rx="14" fill="#4a5a78"/><circle cx="17" cy="50" r="2.500" fill="#5be37d"/><circle cx="103" cy="50" r="2.500" fill="#ffb700"/><circle cx="17" cy="60" r="2.500" fill="#5be37d"/>';
-    else if(cfg.costas==='cabos')back='<rect x="13" y="42" width="94" height="60" rx="14" fill="#ff8a1f"/><circle cx="13" cy="78" r="9" fill="none" stroke="#3b82f6" stroke-width="4"/><circle cx="107" cy="78" r="9" fill="none" stroke="#5be37d" stroke-width="4"/>';
-    if(cfg.cabeca==='bone')hat='<path d="M23 36q0-23 37-23q37 0 37 23z" fill="#ffb700"/><rect x="17" y="33" width="43" height="7" rx="3.500" fill="#e09b00"/>';
-    else if(cfg.cabeca==='capacete')hat='<path d="M20 40q0-30 40-30q40 0 40 30z" fill="#ffcf33"/><rect x="18" y="37" width="84" height="6" rx="3" fill="#e0a800"/><rect x="55" y="10" width="10" height="28" fill="#e0a800"/>';
-    if(cfg.visor==='oculos')vis='<circle cx="46.500" cy="48.500" r="8.800" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><circle cx="73.500" cy="48.500" r="8.800" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><path d="M55.300 47q4.700-3 9.400 0" fill="none" stroke="#fff" stroke-width="2"/>';
-    else if(cfg.visor==='hud')vis='<rect x="36" y="40" width="48" height="15" rx="7.500" fill="rgba(25,181,232,.10)" stroke="var(--cyan)" stroke-width="1.800"/><path d="M41 44h6" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".7"/>';
+    var pk=function(sl,id){var x=AVD[sl]&&AVD[sl][id];return x?x.s:''};
+    ant=pk('antena',cfg.antena)||ant;back=pk('costas',cfg.costas);hat=pk('cabeca',cfg.cabeca);vis=pk('visor',cfg.visor);suit=pk('roupa',cfg.roupa);
+    topAnt=cfg.cabeca==='capacete'||cfg.cabeca==='coroa'||cfg.cabeca==='cartola';
   }
   var ear=function(x,ix){return '<rect class="m-ear" x="'+x+'" y="41.300" width="10.300" height="23.700" rx="5.200"/><rect x="'+ix+'" y="46.700" width="5.400" height="13.400" rx="2.700" fill="var(--cyan)"/><rect x="'+(ix+1.200)+'" y="48" width="1.200" height="4" rx=".6" fill="#fff" opacity=".6"/>'};
   return '<svg viewBox="0 0 120 120" class="'+(cls||'')+'"'+st+' data-m="'+mood+'" role="img" aria-label="Pingo, '+(av===false?'o roteador mascote':'seu robô')+'">'+back+
-   (cfg&&cfg.cabeca==='capacete'?'':ant)+
+   (topAnt?'':ant)+
    /* pernas, corpo */
    '<rect class="m-low" x="41.500" y="101" width="19.600" height="11.500" rx="5.700"/><rect class="m-low" x="62" y="101" width="19.600" height="11.500" rx="5.700"/>'+
    '<rect x="45.500" y="107.400" width="12" height="2.800" rx="1.400" fill="var(--cyan)"/><rect x="67.500" y="107.400" width="12" height="2.800" rx="1.400" fill="var(--cyan)"/>'+
    '<rect class="m-low" x="41.600" y="82.500" width="36.400" height="22" rx="11"/><rect class="m-body" x="41.600" y="80.500" width="36.400" height="22.500" rx="11"/>'+
    '<rect x="51" y="85.500" width="18" height="10" rx="5" fill="#2a1668"/><circle cx="55.500" cy="90.500" r="2.100" fill="#18ddfb"/><circle cx="60" cy="90.500" r="2.100" fill="#ffd83d"/><circle cx="64.300" cy="90.500" r="2.100" fill="#ff4fae"/>'+
+   suit+
    /* orelhas, capacete, viseira */
    ear(13.900,16.600)+ear(95.800,98.200)+
    '<rect class="m-low" x="24" y="21.300" width="72" height="63" rx="26"/><rect class="m-helm" x="24" y="18.700" width="72" height="62.700" rx="26"/>'+
@@ -1236,7 +1285,7 @@ function pingo(mood,cls,av){
    eyes+brow+cheeks+mouth+vis+
    '<g class="m-arm l"><line class="m-limb" x1="42" y1="86" x2="34" y2="93.500"/><circle class="m-hand" cx="36" cy="95.500" r="2.300"/><rect class="m-hand" x="25.500" y="91.500" width="10.500" height="11" rx="5"/><rect x="27.300" y="93.200" width="2.400" height="3.600" rx="1.200" fill="#fff" opacity=".5"/></g>'+
    '<g class="m-arm r"><line class="m-limb" x1="78" y1="86" x2="86" y2="93.500"/><circle class="m-hand" cx="84" cy="95.500" r="2.300"/><rect class="m-hand" x="84" y="91.500" width="10.500" height="11" rx="5"/><rect x="90.300" y="93.200" width="2.400" height="3.600" rx="1.200" fill="#fff" opacity=".5"/></g>'+hat+
-   (cfg&&cfg.cabeca==='capacete'?ant:'')+'</svg>';
+   (topAnt?ant:'')+'</svg>';
 }
 
 /* Pingo faz gestos (palmas, tchau, pulo) nas telas de comemoração */
@@ -1269,13 +1318,15 @@ function pingoShow(sv){
 /* ===== Fase 5: avatar robótico + inventário =====
    Um robô base com acessórios trocáveis. Itens são só estéticos (não dão vantagem em respostas).
    Itens desbloqueados ficam permanentes em S.inv.items; equipar/desequipar não gasta chips. */
-var AV_COR={padrao:['#7b3ff2','#5a22c4'],azul:['#1d7fe0','#145fb0'],verde:['#2fbf6b','#1f8f4f'],roxo:['#8a5cf0','#6a3fcf'],laranja:['#ff8a1f','#d46a0a'],grafite:['#5a6577','#3d4655']};
+var AV_COR={padrao:['#7b3ff2','#5a22c4'],azul:['#1d7fe0','#145fb0'],verde:['#2fbf6b','#1f8f4f'],roxo:['#8a5cf0','#6a3fcf'],laranja:['#ff8a1f','#d46a0a'],grafite:['#5a6577','#3d4655'],rosa:['#ff5fae','#c9307f'],vermelho:['#e5484d','#b0303a'],dourado:['#e8b923','#b98a0b']};
 var AV_OLHOS={ciano:'#19e0ff',verde:'#5be37d',magenta:'#ff5fd0',dourado:'#ffd23f'};
 var AV_SLOTS=[
  {id:'cor',nome:'Cor do corpo',obrig:1,itens:[
   {id:'padrao',nome:'Roxo Pingo',free:1},{id:'azul',nome:'Azul rede',free:1},{id:'verde',nome:'Verde LAN',req:'Conclua 3 fases',ok:function(){return doneCount()>=3}},
   {id:'roxo',nome:'Roxo VPN',req:'Conclua 1 prova final',ok:function(){return S.bosses>=1}},{id:'laranja',nome:'Laranja cabo',req:'Conclua 10 fases',ok:function(){return doneCount()>=10}},
-  {id:'grafite',nome:'Grafite datacenter',req:'Conclua 20 fases',ok:function(){return doneCount()>=20}}]},
+  {id:'grafite',nome:'Grafite datacenter',req:'Conclua 20 fases',ok:function(){return doneCount()>=20}},
+  {id:'rosa',nome:'Rosa pop',req:'Conclua 7 fases',ok:function(){return doneCount()>=7}},{id:'vermelho',nome:'Vermelho herói',req:'Conclua 2 provas finais',ok:function(){return S.bosses>=2}},
+  {id:'dourado',nome:'Dourado campeão',req:'Conclua todas as provas finais',ok:function(){return S.bosses>=PF_TOTAL()}}]},
  {id:'olhos',nome:'Olhos',obrig:1,itens:[
   {id:'ciano',nome:'Ciano',free:1},{id:'verde',nome:'Verde link',req:'Conclua 5 fases',ok:function(){return doneCount()>=5}},
   {id:'magenta',nome:'Magenta',req:'Conclua 8 fases',ok:function(){return doneCount()>=8}},{id:'dourado',nome:'Dourado',req:'Conclua 3 provas finais',ok:function(){return S.bosses>=3}}]},
@@ -1284,16 +1335,25 @@ var AV_SLOTS=[
   {id:'antena-wifi',nome:'Antena Wi-Fi especial',req:'Prêmio do evento Rede Conectada',ev:1},
   {id:'parabolica',nome:'Parabólica',req:'Conclua todas as provas finais',ok:function(){return S.bosses>=PF_TOTAL()}}]},
  {id:'cabeca',nome:'Cabeça',itens:[
-  {id:'bone',nome:'Boné de técnico',free:1},{id:'capacete',nome:'Capacete de campo',req:'Conclua 4 fases',ok:function(){return doneCount()>=4}}]},
+  {id:'bone',nome:'Boné de técnico',free:1},{id:'laco',nome:'Laço pop',req:'Conclua 2 fases',ok:function(){return doneCount()>=2}},{id:'capacete',nome:'Capacete de campo',req:'Conclua 4 fases',ok:function(){return doneCount()>=4}},
+  {id:'orelhas',nome:'Orelhinhas de gato',req:'Conclua 7 fases',ok:function(){return doneCount()>=7}},{id:'fone',nome:'Fone gamer',req:'Conclua 9 fases',ok:function(){return doneCount()>=9}},
+  {id:'cartola',nome:'Cartola mágica',req:'Conclua 15 fases',ok:function(){return doneCount()>=15}},{id:'coroa',nome:'Coroa de campeão',req:'Conclua todas as provas finais',ok:function(){return S.bosses>=PF_TOTAL()}}]},
  {id:'visor',nome:'Visor',itens:[
-  {id:'oculos',nome:'Óculos tech',req:'Conclua 1 fase',ok:function(){return doneCount()>=1}},{id:'hud',nome:'Visor HUD',req:'Conclua 4 provas finais',ok:function(){return S.bosses>=4}}]},
- {id:'costas',nome:'Mochila',itens:[
-  {id:'rack',nome:'Mini rack',req:'Conclua 6 fases',ok:function(){return doneCount()>=6}},{id:'cabos',nome:'Rolo de cabos',req:'Conclua 12 fases',ok:function(){return doneCount()>=12}}]}
+  {id:'oculos',nome:'Óculos tech',req:'Conclua 1 fase',ok:function(){return doneCount()>=1}},{id:'estrelas',nome:'Óculos de estrela',req:'Conclua 3 fases',ok:function(){return doneCount()>=3}},
+  {id:'coracao',nome:'Óculos de coração',req:'Conclua 5 fases',ok:function(){return doneCount()>=5}},{id:'mascara',nome:'Máscara de herói',req:'Conclua 2 provas finais',ok:function(){return S.bosses>=2}},
+  {id:'hud',nome:'Visor HUD',req:'Conclua 4 provas finais',ok:function(){return S.bosses>=4}}]},
+ {id:'roupa',nome:'Roupinha',itens:[
+  {id:'jaleco',nome:'Jaleco de técnico',free:1},{id:'raio',nome:'Moletom Raio',req:'Conclua 5 fases',ok:function(){return doneCount()>=5}},
+  {id:'popstar',nome:'Jaqueta pop star',req:'Conclua 10 fases',ok:function(){return doneCount()>=10}},{id:'heroi',nome:'Traje de herói',req:'Conclua 3 provas finais',ok:function(){return S.bosses>=3}}]},
+ {id:'costas',nome:'Mochila e capa',itens:[
+  {id:'rack',nome:'Mini rack',req:'Conclua 6 fases',ok:function(){return doneCount()>=6}},{id:'cabos',nome:'Rolo de cabos',req:'Conclua 12 fases',ok:function(){return doneCount()>=12}},
+  {id:'capa',nome:'Capa de herói',req:'Conclua 3 provas finais',ok:function(){return S.bosses>=3}},{id:'asas',nome:'Asas Wi-Fi',req:'Conclua 5 provas finais',ok:function(){return S.bosses>=5}}]}
 ];
-var AV_DEF={cor:'padrao',olhos:'ciano',antena:'padrao',cabeca:'',visor:'',costas:''};
+var AV_DEF={cor:'padrao',olhos:'ciano',antena:'padrao',cabeca:'',visor:'',roupa:'',costas:''};
 function avKey(slot,id){return slot+':'+id}
 function avHas(slot,it){
   if(it.free)return true;
+  if(isAdm())return true;
   if(it.ev)return (S.inv.items||[]).indexOf(it.id)>=0;
   return (S.inv.items||[]).indexOf(avKey(slot,it.id))>=0;
 }
@@ -1325,14 +1385,15 @@ function avatarHTML(){
   avSync();var cfg=avCfg();
   var h='<div class="sect">Meu robô</div><div class="avbox">'+pingo('happy','avbig',true)+'</div><p class="note" style="margin:0 0 6px;text-align:center">Itens são só visuais: não mudam as perguntas nem dão vantagem.</p>';
   AV_SLOTS.forEach(function(sl){
-    h+='<div class="avrow"><b>'+sl.nome+'</b><div class="avchips">';
+    h+='<div class="avrow"><b>'+sl.nome+'</b><div class="avgrid">';
     sl.itens.forEach(function(it){
-      var has=avHas(sl.id,it),on=cfg[sl.id]===it.id;
-      if(has)h+='<button class="avchip'+(on?' on':'')+'" data-act="avequip" data-slot="'+sl.id+'" data-id="'+it.id+'" aria-pressed="'+on+'">'+it.nome+'</button>';
-      else h+='<span class="avchip lock" aria-disabled="true">🔒 '+it.nome+'<small>'+it.req+'</small></span>';
+      var has=avHas(sl.id,it),on=cfg[sl.id]===it.id,ic=avIcon(sl.id,it);
+      if(has)h+='<button class="avchip avt'+(on?' on':'')+'" data-act="avequip" data-slot="'+sl.id+'" data-id="'+it.id+'" aria-pressed="'+on+'" aria-label="'+esc(it.nome)+'" title="'+esc(it.nome)+'">'+ic+'</button>';
+      else h+='<button class="avchip avt lock" data-act="avlock" data-n="'+esc(it.nome)+'" data-r="'+esc(it.req||'')+'" aria-label="'+esc(it.nome)+' (bloqueado)">'+ic+'<i class="avlk">'+IC.lock+'</i></button>';
     });
     h+='</div></div>';
   });
+  h+='<div class="avcap" id="avcap" aria-live="polite">Toque num item para vestir. Itens com cadeado mostram como ganhar.</div>';
   var n=0,t=0;AV_SLOTS.forEach(function(sl){sl.itens.forEach(function(it){t++;if(avHas(sl.id,it))n++})});
   return h+'<p class="note" style="margin:8px 0 0">Inventário: '+n+' de '+t+' itens.</p>';
 }
@@ -2773,7 +2834,8 @@ document.addEventListener('click',function(e){
   else if(a==='devday'){try{localStorage.setItem('pingoquest-devoff',String(devOff()+1))}catch(e){};evToday();render()}
   else if(a==='devreset'){S.ev={};S.ledger={};S.inv={items:[],coll:{}};S.maxDay='';try{localStorage.setItem('pingoquest-devoff','0')}catch(e){};save();render()}
   else if(a==='theme'){toggleTheme()}
-  else if(a==='avequip'){avEquip(t.dataset.slot,t.dataset.id);render()}
+  else if(a==='avlock'){var ac=$('#avcap');if(ac)ac.innerHTML='<b>'+esc(t.dataset.n)+'</b> · '+esc(t.dataset.r)}
+  else if(a==='avequip'){avEquip(t.dataset.slot,t.dataset.id);render();var ac2=$('#avcap'),nm=t.getAttribute('title');if(ac2&&nm)ac2.innerHTML='<b>'+esc(nm)+'</b>'}
   else if(a==='evopen'){evOpen(t.dataset.id)}
   else if(a==='evclose'){evClose()}
   else if(a==='evstep'){evStart(t.dataset.id,t.dataset.s)}
