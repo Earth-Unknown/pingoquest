@@ -350,6 +350,12 @@ svg{display:block}
 .avrow{margin:10px 0}.avrow>b{display:block;font-size:14px;margin-bottom:6px;color:var(--muted)}
 .avchips{display:flex;flex-wrap:wrap;gap:8px}
 .avchip{font:inherit;font-weight:800;font-size:14px;padding:9px 12px;border-radius:12px;border:2px solid var(--line-deep);background:var(--surface);color:var(--text,inherit);cursor:pointer;display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px}
+.world{position:relative;height:190px;border-radius:24px;overflow:hidden;margin:0 0 16px;box-shadow:0 8px 22px rgba(42,10,102,.18)}
+.world svg{position:absolute;inset:0;width:100%;height:100%}
+.world:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(42,10,102,.85))}
+.winfo{position:absolute;left:16px;right:16px;bottom:12px;z-index:2;color:#fff}
+.winfo small{font-weight:900;letter-spacing:.16em;font-size:11px;opacity:.9}.winfo b{display:block;font-size:22px;line-height:1.1}.winfo span{font-size:12px;font-weight:700;opacity:.9}
+.wprog{height:7px;border-radius:4px;background:rgba(255,255,255,.3);margin-top:7px;overflow:hidden}.wprog i{display:block;height:100%;background:#ffd83d;border-radius:4px}
 .avgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
 .avt{position:relative;aspect-ratio:1;padding:5px;border-radius:14px;align-items:center;justify-content:center;flex-direction:row}
 .avt svg{width:100%;height:100%;display:block}
@@ -839,7 +845,7 @@ function TY(q,a,hint,e){return{t:'ty',q:q,a:a,hint:hint,e:e}}
 function CL(q,cats,items,e){return{t:'cl',q:q,cats:cats,items:items,e:e}}
 function LN(title,text,touch){return{t:'learn',title:title,text:text,touch:touch}}
 var BEGINNER=[
- {title:"O que é uma rede",tag:"Seção 1 · Unidade 1",c:0,names:["Aparelhos conversando","Para que serve","Quem entra na rede"],
+ {title:"O que é uma rede",tag:"Mundo 1 · Parada 1",c:0,names:["Aparelhos conversando","Para que serve","Quem entra na rede"],
   tips:["Rede: aparelhos ligados entre si para trocar informações.","Uma rede serve para compartilhar internet, arquivos e impressora.","Host (aparelho na rede) é qualquer coisa conectada: celular, PC, TV."],
   phases:[
   [LN("Aparelhos conversando","Uma rede de computadores é um grupo de aparelhos ligados entre si para trocar informações. Pode ser o celular e a TV da sua casa, ou os computadores de uma empresa inteira.",
@@ -861,7 +867,7 @@ var BEGINNER=[
    CL("Quem pode ser host?",["Host","Não é host"],[["Notebook no Wi-Fi",0],["Videogame online",0],["TV conectada",0],["Panela elétrica sem conexão",1]],"Host precisa estar ligado à rede."),
    MP("Ligue o aparelho ao que ele costuma fazer na rede",[["Notebook","Navega e trabalha"],["Impressora","Imprime para todos"],["Smart TV","Mostra vídeos da internet"]],"Cada aparelho usa a rede de um jeito.")]
   ]},
- {title:"A rede da sua casa",tag:"Seção 1 · Unidade 2",c:0,names:["Rede local (LAN)","O roteador","O modem"],
+ {title:"A rede da sua casa",tag:"Mundo 1 · Parada 2",c:0,names:["Rede local (LAN)","O roteador","O modem"],
   tips:["LAN (Local Area Network) é a rede local, a de um lugar só.","O roteador distribui a internet para os aparelhos.","O modem recebe a internet que chega pelo cabo ou fibra."],
   phases:[
   [LN("Rede local (LAN)","A rede da sua casa é uma rede local, chamada LAN (Local Area Network). Ela fica em um lugar só: casa, escritório ou escola. Os aparelhos dela conversam entre si mesmo sem internet.",
@@ -883,7 +889,7 @@ var BEGINNER=[
    MC("A internet chega por fibra na sua casa. Quem recebe esse sinal?","O modem",["O mouse","O ventilador","A tomada"],"O modem recebe o sinal do provedor e passa adiante."),
    MP("Ligue cada um ao seu papel",[["Provedor","Vende a internet"],["Modem","Recebe a internet em casa"],["Roteador","Espalha o Wi-Fi"]],"O provedor entrega, o modem recebe e o roteador distribui.")]
   ]},
- {title:"Cabo ou Wi-Fi?",tag:"Seção 1 · Unidade 3",c:0,caso:"wifi",names:["Cabo de rede","Wi-Fi","Fibra óptica"],
+ {title:"Cabo ou Wi-Fi?",tag:"Mundo 1 · Parada 3",c:0,caso:"wifi",names:["Cabo de rede","Wi-Fi","Fibra óptica"],
   tips:["Cabo de rede é mais estável. Wi-Fi é mais prático.","Wi-Fi é a rede sem fio. Paredes e distância enfraquecem o sinal.","Fibra óptica leva dados com luz e é muito rápida."],
   phases:[
   [LN("Cabo de rede","O cabo de rede liga o aparelho direto no roteador. Por ser uma ligação física, costuma ser mais estável e rápido que o Wi-Fi. O cabo mais comum se chama UTP.",
@@ -905,7 +911,7 @@ var BEGINNER=[
    MC("Seu provedor leva fibra até sua casa. Quem recebe essa fibra?","O modem",["O mouse","O teclado","O carregador"],"O modem recebe e converte o sinal."),
    MP("Ligue cada meio à sua característica",[["Cabo UTP","Fios trançados de cobre"],["Fibra óptica","Luz dentro de um fio de vidro"],["Wi-Fi","Sinal pelo ar"]],"Cada meio leva os dados de um jeito.")]
   ]},
- {title:"O que é a internet",tag:"Seção 1 · Unidade 4",c:0,names:["Rede de redes","O provedor","Quem pede e quem responde"],
+ {title:"O que é a internet",tag:"Mundo 1 · Parada 4",c:0,names:["Rede de redes","O provedor","Quem pede e quem responde"],
   tips:["A internet é uma rede gigante que liga muitas redes.","O provedor (ISP) é a empresa que dá acesso à internet.","Cliente pede, servidor responde."],
   phases:[
   [LN("Rede de redes","A internet não é uma coisa só: é uma rede gigante que liga milhões de redes menores, como a da sua casa e a de empresas. Por isso se diz que é uma rede de redes.",
@@ -927,7 +933,7 @@ var BEGINNER=[
    MC("Você assiste a um vídeo. Quem manda o vídeo para o seu celular?","Um servidor",["O seu roteador","Um cabo","O seu modem"],"Servidores guardam e enviam os vídeos."),
    MP("Ligue cada papel",[["Cliente","Pede a página"],["Servidor","Entrega a página"],["Navegador","Mostra a página para você"]],"O cliente pede, o servidor entrega e o navegador mostra.")]
   ]},
- {title:"Endereço IP",tag:"Seção 1 · Unidade 5",c:0,caso:"print",names:["O endereço do aparelho","IP de casa e IP de fora","IP automático"],
+ {title:"Endereço IP",tag:"Mundo 1 · Parada 5",c:0,caso:"print",names:["O endereço do aparelho","IP de casa e IP de fora","IP automático"],
   tips:["IP é o endereço do aparelho na rede.","Dentro de casa os IPs são privados. Para a internet, a casa tem um IP público.","DHCP entrega o IP sozinho."],
   phases:[
   [LN("O endereço do aparelho","Todo aparelho na rede recebe um número que o identifica, o endereço IP (IP significa Protocolo de Internet). É como o endereço de uma casa: serve para os dados saberem para onde ir. Exemplo: 192.168.0.10.",
@@ -949,7 +955,7 @@ var BEGINNER=[
    MC("Qual das duas identificações pode mudar quando você troca de rede?","O IP",["O MAC","O nome do fabricante","O número de série"],"O IP muda de rede para rede. O MAC fica."),
    MP("Ligue cada sigla",[["IP","Endereço na rede"],["MAC","Número de série da placa"],["DHCP","Entrega IP automático"]],"IP é endereço, MAC é número de série e DHCP entrega IP.")]
   ]},
- {title:"Nomes de sites",tag:"Seção 1 · Unidade 6",c:0,caso:"dns",names:["Nome ou número?","A lista de contatos","Quando o site não abre"],
+ {title:"Nomes de sites",tag:"Mundo 1 · Parada 6",c:0,caso:"dns",names:["Nome ou número?","A lista de contatos","Quando o site não abre"],
   tips:["DNS traduz o nome do site em número (IP).","O DNS funciona como a agenda de contatos da internet.","Se o DNS falha, o nome não abre, mas o número pode abrir."],
   phases:[
   [LN("Nome ou número?","Os sites têm nome, como pingoquest.com, mas os computadores se encontram pelos números, os IPs. Para ligar um ao outro, existe o DNS: o tradutor que descobre o número a partir do nome.",
@@ -971,7 +977,7 @@ var BEGINNER=[
    MC("Você tenta abrir um site e aparece erro de nome não encontrado. Qual serviço provavelmente falhou?","O DNS",["O teclado","A tela","O carregador"],"Nome não encontrado costuma ser falha de DNS."),
    MP("Ligue o sintoma à possível causa",[["Nenhum site abre","Sua conexão caiu"],["Só um site não abre","Problema nesse site"],["Nome não encontrado","DNS com falha"]],"Cada sintoma aponta para uma causa diferente.")]
   ]},
- {title:"Dados e velocidade",tag:"Seção 1 · Unidade 7",c:0,caso:"lenta",names:["Bits e dados","Pacotes","Velocidade e atraso"],
+ {title:"Dados e velocidade",tag:"Mundo 1 · Parada 7",c:0,caso:"lenta",names:["Bits e dados","Pacotes","Velocidade e atraso"],
   tips:["Dados são feitos de bits: zeros e uns.","Os dados viajam em pedacinhos chamados pacotes.","Banda é a velocidade. Latência (ping) é o atraso."],
   phases:[
   [LN("Bits e dados","Tudo o que passa pela rede, como foto, vídeo e mensagem, vira zeros e uns. Cada zero ou um é um bit. Juntando muitos bits, formamos os dados.",
@@ -993,7 +999,7 @@ var BEGINNER=[
    MC("Qual situação sofre mais com latência alta?","Jogo online",["Ler um PDF salvo","Ver uma foto já baixada","Apagar um arquivo"],"Jogos precisam de resposta rápida."),
    MP("Ligue cada palavra ao significado",[["Banda","Quanto passa por segundo"],["Latência","Tempo de ida e volta"],["Ping","Teste de atraso"]],"Banda é quantidade, latência é tempo.")]
   ]},
- {title:"Equipamentos da rede",tag:"Seção 1 · Unidade 8",c:0,caso:"office",names:["O switch","Ponto de acesso e repetidor","O mapa da rede"],
+ {title:"Equipamentos da rede",tag:"Mundo 1 · Parada 8",c:0,caso:"office",names:["O switch","Ponto de acesso e repetidor","O mapa da rede"],
   tips:["Switch liga vários aparelhos por cabo.","Ponto de acesso espalha Wi-Fi. Repetidor aumenta o alcance.","Cada equipamento tem seu papel no caminho da internet."],
   phases:[
   [LN("O switch","O switch é como uma extensão com inteligência: liga vários aparelhos por cabo na mesma rede e envia os dados só para quem precisa. É muito usado em escritórios.",
@@ -1015,7 +1021,7 @@ var BEGINNER=[
    MC("O Wi-Fi aparece, mas nenhum site abre. Qual parte do caminho vale checar primeiro?","O modem e a conexão com o provedor",["O fone de ouvido","O teclado","A foto de perfil"],"O Wi-Fi pode existir mesmo sem internet chegando."),
    MP("Ligue cada parte ao que acontece se ela falhar",[["Modem desligado","Sem internet em casa"],["Roteador desligado","Sem Wi-Fi em casa"],["Celular sem Wi-Fi ligado","Só ele fica sem rede"]],"Cada falha afeta uma parte diferente.")]
   ]},
- {title:"Tipos de rede",tag:"Seção 1 · Unidade 9",c:0,names:["PAN e LAN","MAN e WAN","Como ligar a rede"],
+ {title:"Tipos de rede",tag:"Mundo 1 · Parada 9",c:0,names:["PAN e LAN","MAN e WAN","Como ligar a rede"],
   tips:["PAN é a menor: em volta de você. LAN é de um lugar.","MAN cobre uma cidade. WAN cobre grandes distâncias.","Na estrela, todos se ligam em um aparelho central."],
   phases:[
   [LN("PAN e LAN","As redes têm tamanhos diferentes. A PAN (Personal Area Network) é a rede pessoal, de poucos metros, como o celular com o fone Bluetooth. A LAN (Local Area Network) é a rede de um lugar, como sua casa.",
@@ -1037,7 +1043,7 @@ var BEGINNER=[
    MC("Qual aparelho costuma ficar no centro de uma rede doméstica?","O roteador",["O monitor","O teclado","O carregador"],"O roteador é o centro da rede da casa."),
    CL("Em uma rede em estrela:",["Verdade","Mito"],[["Existe um aparelho central",0],["Todos ligam no centro",0],["Um cabo ruim derruba todos",1],["É comum em casas e escritórios",0]],"Na estrela, um cabo com problema só afeta um aparelho.")]
   ]},
- {title:"Segurança básica",tag:"Seção 1 · Unidade 10",c:0,names:["Senha do Wi-Fi","O cadeado do site","Hábitos seguros"],
+ {title:"Segurança básica",tag:"Mundo 1 · Parada 10",c:0,names:["Senha do Wi-Fi","O cadeado do site","Hábitos seguros"],
   tips:["Senha forte e só para quem precisa.","HTTPS (cadeado) protege a conversa com o site.","Cuidado com Wi-Fi público e links estranhos."],
   phases:[
   [LN("Senha do Wi-Fi","A senha do Wi-Fi impede que desconhecidos usem a sua internet e vejam o que passa pela sua rede. Prefira uma senha longa e não use datas óbvias ou o nome da família.",
@@ -1094,7 +1100,7 @@ var ADD5=[
   MC("Qual é um bom hábito de segurança?","Manter o celular atualizado",["Clicar em links desconhecidos","Usar uma senha só","Aceitar qualquer convite"],"Atualizações corrigem falhas.")]
 ];
 ADD5.forEach(function(row,g){row.forEach(function(q,p){BEGINNER[g].phases[p].push(q)})});
-/* Por enquanto a trilha termina na Seção 1 (iniciante). O conteúdo antigo do intermediário fica guardado em LATER para ser refeito. */
+/* Por enquanto a trilha termina no Mundo 1 (iniciante). O conteúdo antigo do intermediário fica guardado em LATER para ser refeito. */
 var LATER=[OLD[1],OLD[3],OLD[4],OLD[2]];
 var GAMES=BEGINNER;
 
@@ -2123,10 +2129,31 @@ function popHTML(g,k,un,done,x){
   return '<div class="pop" style="--ax:'+x+'px"><h3>'+title+'</h3><p>'+desc+'</p>'+(done?'':'<small>Primeira vez: +'+gm+' chips</small>')+
     '<button class="popbtn" data-act="go" data-g="'+g+'" data-k="'+k+'">'+(done?'Jogar de novo':'Começar')+' +'+xp+' energia</button></div>';
 }
+
+/* Mundos: cada seção do curso é um mundo com cenário próprio. Mundo 1 = Vila Roteador. */
+var WORLD={n:1,name:'Vila Roteador',sub:'Equipamentos, pacotes e conexões',
+ places:['Praça da Rede','Casa do Pingo','Posto de Cabos','Porto da Internet','Rua dos Endereços','Agenda de Nomes','Correio de Pacotes','Central de Equipamentos','Mapa das Redes','Portão Seguro']};
+function worldScene(){
+  var h='<svg viewBox="0 0 390 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="wsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a0a66"/><stop offset=".6" stop-color="#6d3be0"/><stop offset="1" stop-color="#c88bff"/></linearGradient><linearGradient id="wgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7f0cf"/><stop offset="1" stop-color="#7cd6a6"/></linearGradient></defs><rect width="390" height="170" fill="url(#wsky)"/>';
+  [[30,22,1.5],[90,50,1.2],[160,16,1.6],[250,30,1.3],[330,18,1.8],[360,70,1.2],[60,80,1.4]].forEach(function(a){h+='<circle cx="'+a[0]+'" cy="'+a[1]+'" r="'+a[2]+'" fill="#fff" opacity=".7"/>'});
+  h+='<ellipse cx="60" cy="52" rx="24" ry="8" fill="#fff" opacity=".8"/><ellipse cx="330" cy="40" rx="20" ry="7" fill="#fff" opacity=".8"/>'+
+   '<ellipse cx="195" cy="168" rx="230" ry="44" fill="#4c24b8" opacity=".6"/><ellipse cx="195" cy="156" rx="200" ry="38" fill="url(#wgr)"/>'+
+   '<path d="M40 150Q120 128 175 118M350 150Q270 130 215 118" fill="none" stroke="#2a1668" stroke-width="3.500" stroke-linecap="round"/>'+
+   '<g transform="translate(250,18)"><rect x="-17" y="30" width="34" height="86" rx="12" fill="#8b5cf6"/><rect x="-11" y="46" width="22" height="22" rx="7" fill="#2a1668"/><circle cx="-5" cy="57" r="3" fill="#19e0ff"/><circle cx="5" cy="57" r="3" fill="#19e0ff"/><line x1="-8" y1="30" x2="-15" y2="8" stroke="#5a22c4" stroke-width="4" stroke-linecap="round"/><line x1="8" y1="30" x2="15" y2="8" stroke="#5a22c4" stroke-width="4" stroke-linecap="round"/><circle cx="-16" cy="6" r="4.500" fill="#ffd83d"/><circle cx="16" cy="6" r="4.500" fill="#ffd83d"/><path d="M-26 0q26-20 52 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/></g>';
+  [[300,'#ffe9f6'],[60,'#fff'],[130,'#e9f6ff']].forEach(function(a,i){var y=i===2?112:104;h+='<g transform="translate('+a[0]+','+y+')"><rect x="0" y="12" width="30" height="22" rx="5" fill="'+a[1]+'"/><path d="M-4 15L15 0L34 15z" fill="#5a22c4"/><rect x="11" y="20" width="8" height="14" rx="3" fill="#fff" opacity=".85"/></g>'});
+  [[110,122,-10],[170,112,0],[330,128,8],[215,126,6]].forEach(function(a){h+='<g transform="translate('+a[0]+','+a[1]+') rotate('+a[2]+')"><rect x="-7" y="-7" width="14" height="14" rx="3.500" fill="#ffd83d" stroke="#d9a400" stroke-width="1.200"/><rect x="-2" y="-7" width="4" height="14" fill="#fff" opacity=".6"/></g>'});
+  return h+'</svg>';
+}
+function worldBanner(){
+  var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
+  var t=GAMES.length*4,pct=Math.round(n/t*100);
+  return '<div class="world">'+worldScene()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
+}
+
 function pathHTML(){
-  var h='',curFound=false;
+  var h=worldBanner(),curFound=false;
   GAMES.forEach(function(g,gi){
-    h+='<section class="unit u'+(gi%5)+'"><div class="uhead"><div><div class="tag">'+g.tag+'</div><h2>'+g.title+'</h2></div>'+
+    h+='<section class="unit u'+(gi%5)+'"><div class="uhead"><div><div class="tag">Parada '+(gi+1)+' · '+(WORLD.places[gi]||'')+'</div><h2>'+g.title+'</h2></div>'+
        '<button class="tipbtn" data-act="tips" data-g="'+gi+'">Dicas</button></div><div class="nodes">';
     for(var k=0;k<4;k++){
       var key=gi+'-'+k,done=!!S.done[key],un=isUnlocked(gi,k),cur=un&&!done&&!curFound;
@@ -2142,8 +2169,8 @@ function pathHTML(){
     }
     h+='</div></section>';
   });
-  h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>Seção 2</h2>'+
-    '<div class="nspingo">'+pingo('wink','pingo-s')+'</div><p>Intermediário: o próximo nível chega em breve. Termine a Seção 1 para ficar pronto.</p>'+
+  h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>Mundo 2</h2>'+
+    '<div class="nspingo">'+pingo('wink','pingo-s')+'</div><p>Cidade IP: o próximo mundo chega em breve. Termine a Vila Roteador para ficar pronto.</p>'+
     '<button class="btn ghost" disabled>Em breve</button></section>';
   return h;
 }
