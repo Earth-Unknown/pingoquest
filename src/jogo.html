@@ -279,6 +279,17 @@ svg{display:block}
 .pzfoot{margin-top:auto;width:100%;padding-top:18px}.pzfoot .btn{width:100%}
 .pzpiece{position:fixed;z-index:130;pointer-events:none;border-radius:14px;overflow:hidden;border:4px solid #fff;box-shadow:0 0 0 3px #ffc43d,0 16px 40px rgba(0,0,0,.45),0 0 40px rgba(255,196,61,.7);background:#fff}
 .pzpiece svg{display:block;width:100%;height:100%}
+
+.frgift{flex:none;width:40px;height:40px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--primary);display:grid;place-items:center;cursor:pointer;margin-left:4px}.frgift svg{width:22px;height:22px}
+.gbtn{display:flex;align-items:center;gap:12px;width:100%;border:1.5px solid var(--line);color:inherit;font:inherit;text-align:left;cursor:pointer;margin-bottom:10px}.gbtn svg{width:30px;height:30px;color:var(--primary);flex:none}.gbtn small{display:block;color:var(--muted);font-weight:700}
+.gdot{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:99px;background:var(--bad);color:#fff;font-size:12px;font-weight:900;padding:0 6px;vertical-align:middle}
+.gtabs,.gmsgs{display:flex;gap:6px;flex-wrap:wrap}.gtab,.gmsg{border:1.5px solid var(--line);background:var(--surface);color:inherit;border-radius:99px;padding:8px 14px;font:inherit;font-weight:800;font-size:14px;cursor:pointer;min-height:40px}
+.gtab.on,.gmsg.on{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 12%,var(--surface));color:var(--primary-deep)}
+.gamts,.gitems{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.gitems{grid-template-columns:1fr 1fr}
+.gopt{border:1.5px solid var(--line);background:var(--surface);color:inherit;border-radius:16px;padding:12px 6px;font:inherit;text-align:center;cursor:pointer;min-height:64px}.gopt b{display:block;font-size:20px}.gitems .gopt b{font-size:14px}.gopt small{color:var(--muted);font-weight:700}
+.gopt.on{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 12%,var(--surface))}.gopt.lock{opacity:.45}
+.gdone{text-align:center;padding:10px 0 16px}.gbox{width:84px;height:84px;margin:6px auto 10px;border-radius:24px;background:color-mix(in srgb,var(--primary) 12%,var(--surface));color:var(--primary);display:grid;place-items:center;animation:rtpop .7s}.gbox svg{width:48px;height:48px}.gbox.sm{width:42px;height:42px;border-radius:13px;margin:0;animation:none;flex:none}.gbox.sm svg{width:24px;height:24px}
+.grow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1.5px solid var(--line)}.gopen{width:auto!important;padding:10px 16px;margin:0}
 .frcard{background:var(--surface);border:2px solid var(--line,#e4def5);border-radius:20px;padding:10px 12px}
 .frrow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:14px}
 .frrow.me{background:color-mix(in srgb,var(--roxo,#7b3ff2) 12%,transparent)}
@@ -1329,7 +1340,7 @@ window.AVT={slots:AV_SLOTS,has:avHas,cfg:avCfg,equip:avEquip,sync:avSync};
 
 /* ---------- estado ---------- */
 var KEY='pingoquest-v3';
-function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},conq:{},perfectN:0,maxDay:'',devStart:'',nick:'',code:'',fr:[],wk:null}}
+function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},conq:{},perfectN:0,maxDay:'',devStart:'',nick:'',code:'',fr:[],wk:null,gifts:{sent:[],inbox:[]}}}
 function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object')return Object.assign(blank(),s)}catch(e){}return blank()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -2698,9 +2709,17 @@ document.addEventListener('click',function(e){
   else if(a==='cztap'){czTap()}
   else if(a==='czclose'){closeChest()}
   else if(a==='amigos'){showAmigos()}
+  else if(a==='gift'){showGift(t.dataset.n)}
+  else if(a==='gtab'){GU.tab=t.dataset.t;GU.amt=0;GU.item='';showGift(GU.to,1)}
+  else if(a==='gamt'){GU.amt=+t.dataset.a;showGift(GU.to,1)}
+  else if(a==='gitem'){GU.item=t.dataset.i;showGift(GU.to,1)}
+  else if(a==='gmsg'){GU.msg=+t.dataset.m;showGift(GU.to,1)}
+  else if(a==='gsend'){giftSend()}
+  else if(a==='ginbox'){showInbox()}
+  else if(a==='gopen'){giftOpen(t.dataset.id)}
   else if(a==='amsave'){var v=($('#amnick').value||'').trim();S.nick=v.slice(0,14);save();showAmigos();render();amToast(v?'Apelido salvo!':'Apelido removido.')}
   else if(a==='amadd'){var nm=t.dataset.c?('Amigo '+t.dataset.c):(($('#amadd')&&$('#amadd').value)||'').trim();if(nm){nm=nm.slice(0,14);if(!S.fr)S.fr=[];if(!S.fr.some(function(f){return f.n.toLowerCase()===nm.toLowerCase()})){S.fr.push({n:nm,r:10+hash32(nm)%20,b:1+hash32(nm+'b')%9});save()}showAmigos();render();amToast('Agora você segue '+nm+'.')}}
-  else if(a==='amdemo'){S.fr=FR_BASE.map(function(f){return{n:f.n,r:f.r,b:f.b}});save();showAmigos();render()}
+  else if(a==='amdemo'){S.fr=FR_BASE.map(function(f){return{n:f.n,r:f.r,b:f.b}});if(!giftsS().inbox.length)GiftAPI.mockIncoming('Giovanna');save();showAmigos();render()}
   else if(a==='amclear'){S.fr=[];save();showAmigos();render()}
   else if(a==='amcopy'){var lk=t.dataset.l,ok=function(){amToast('Link copiado!')},bad=function(){var el=$('#modal .frlink');if(el){var r=document.createRange();r.selectNodeContents(el);var se=getSelection();se.removeAllRanges();se.addRange(r)}amToast('Selecionei o link: copie com o dedo.')};try{navigator.clipboard.writeText(lk).then(ok,bad)}catch(e){bad()}}
   else if(a==='amshare'){var lk2=t.dataset.l;if(navigator.share){navigator.share({title:'Pingo Quest',text:'Estude Redes comigo no Pingo Quest!',url:lk2}).catch(function(){})}else{var cb=$('[data-act=amcopy]');if(cb)cb.click()}}
@@ -3099,29 +3118,113 @@ function rankList(){
 }
 var IC_CROWN='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" fill="#ffc933" stroke="#e59a00" stroke-width="1.6" stroke-linejoin="round"/></svg>';
 function avFriend(n,me){var c=['#7b3ff2','#18b4d8','#ff4fae','#ff9a1f','#3fbf5f','#6a5cff'][hash32(n)%6];return '<span class="fav'+(me?' me':'')+'" style="background:'+c+'">'+esc(n.charAt(0).toUpperCase())+'</span>'}
-function frRows(max){
+function frRows(max,gift){
   var l=rankList(),h='';
   l.slice(0,max||99).forEach(function(r,i){
-    h+='<div class="frrow'+(r.me?' me':'')+'"><span class="frpos">'+(i===0?IC_CROWN:(i+1))+'</span>'+avFriend(r.n,r.me)+'<div class="frn"><b>'+esc(r.n)+(r.me?' (você)':'')+'</b><small>'+r.b+(r.b===1?' dia':' dias')+' de brilho</small></div><span class="frxp">'+r.xp+'<small> energia</small></span></div>';
+    h+='<div class="frrow'+(r.me?' me':'')+'"><span class="frpos">'+(i===0?IC_CROWN:(i+1))+'</span>'+avFriend(r.n,r.me)+'<div class="frn"><b>'+esc(r.n)+(r.me?' (você)':'')+'</b><small>'+r.b+(r.b===1?' dia':' dias')+' de brilho</small></div><span class="frxp">'+r.xp+'<small> energia</small></span>'+(gift&&!r.me?'<button class="frgift" data-act="gift" data-n="'+esc(r.n)+'" aria-label="Enviar presente para '+esc(r.n)+'">'+IC.gift+'</button>':'')+'</div>';
   });return h;
 }
 function amigosCard(){
   var n=(S.fr||[]).length;
-  return '<div class="sect">Amigos</div><div class="frcard">'+(n?frRows(3):'<p class="note" style="margin:0 0 10px">Convide amigos para ver quem lidera a semana em energia.</p>')+
+  return '<div class="sect">Amigos'+(pendGifts()?' <span class="gdot">'+pendGifts()+'</span>':'')+'</div><div class="frcard">'+(n?frRows(3):'<p class="note" style="margin:0 0 10px">Convide amigos para ver quem lidera a semana em energia.</p>')+
    '<button class="btn prim" data-act="amigos" style="margin-top:10px">'+(n?'Ver ranking e convidar':'Convidar amigos')+'</button></div>';
 }
 function showAmigos(codeIn){
   var code=myCode(),link=location.href.split('#')[0]+'#convite='+code,n=(S.fr||[]).length;
   var h='<div class="sheet tall" role="dialog" aria-label="Amigos"><h2 style="margin:0 0 4px">Amigos</h2><p class="note" style="margin:0 0 12px">Prévia: por enquanto os amigos são de mentira. Quando criarmos as contas online, eles viram pessoas de verdade.</p>'+
-   (codeIn?'<div class="frinv">Você abriu o convite <b>'+esc(codeIn)+'</b>. <button class="btn prim" data-act="amadd" data-c="'+esc(codeIn)+'">Seguir esse amigo</button></div>':'')+
+   (pendGifts()?'<button class="frinv gbtn" data-act="ginbox">'+IC.gift+'<span><b>Você tem '+pendGifts()+(pendGifts()===1?' presente':' presentes')+'</b><small>Toque para abrir</small></span></button>':'')+(codeIn?'<div class="frinv">Você abriu o convite <b>'+esc(codeIn)+'</b>. <button class="btn prim" data-act="amadd" data-c="'+esc(codeIn)+'">Seguir esse amigo</button></div>':'')+
    '<label class="frl" for="amnick">Seu apelido</label><div class="frline"><input id="amnick" maxlength="14" placeholder="Ex.: Lorraine" value="'+esc(S.nick||'')+'" autocomplete="off"><button class="btn ghost" data-act="amsave">Salvar</button></div>'+
    '<label class="frl">Seu link de convite</label><div class="frlink">'+esc(link)+'</div><div class="frline"><button class="btn prim" data-act="amshare" data-l="'+esc(link)+'">Convidar</button><button class="btn ghost" data-act="amcopy" data-l="'+esc(link)+'">Copiar link</button></div>'+
    '<label class="frl" for="amadd">Seguir pelo apelido</label><div class="frline"><input id="amadd" maxlength="14" placeholder="Apelido do amigo" autocomplete="off"><button class="btn ghost" data-act="amadd">Seguir</button></div>'+
-   '<div class="sect" style="margin-top:18px">Topo da semana</div><div class="frcard">'+frRows()+'</div><p class="note" style="margin:8px 0 0">Reinicia toda segunda-feira. Conta a energia ganha na semana.</p>'+
+   '<div class="sect" style="margin-top:18px">Topo da semana</div><div class="frcard">'+frRows(0,true)+'</div><p class="note" style="margin:8px 0 0">Reinicia toda segunda-feira. Conta a energia ganha na semana.</p>'+
    (n?'<button class="btn ghost" data-act="amclear" style="margin-top:10px">Remover amigos de mentira</button>':'<button class="btn ghost" data-act="amdemo" style="margin-top:10px">Ver com amigos de mentira</button>')+
    '<button class="btn prim" data-act="mclose" style="margin-top:14px">Fechar</button></div>';
   $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
 }
+/* ---------- presentes (base): hoje local e de mentira; GiftAPI é a única parte a trocar pelo Supabase ----------
+   Só itens de evento podem ser dados (os de progresso voltam sozinhos por avSync e seriam duplicados).
+   Energia e chips saem do saldo de quem dá. Ver docs/supabase-presentes.md para o banco. */
+var GIFT_OPTS={energia:[10,25,50],chips:[10,20,50]};
+var GIFT_MSGS=['Boa sorte!','Você consegue!','Presente pra você!'];
+function pendGifts(){return giftsS().inbox.filter(function(x){return !x.opened}).length}
+function giftsS(){if(!S.gifts)S.gifts={sent:[],inbox:[]};if(!S.gifts.sent)S.gifts.sent=[];if(!S.gifts.inbox)S.gifts.inbox=[];return S.gifts}
+function giftItems(){
+  var out=[];AV_SLOTS.forEach(function(sl){sl.itens.forEach(function(it){if(it.ev&&(S.inv.items||[]).indexOf(it.id)>=0)out.push({slot:sl.id,id:it.id,nome:it.nome})})});return out;
+}
+function giftItemName(id){var n=id;AV_SLOTS.forEach(function(sl){sl.itens.forEach(function(it){if(it.id===id)n=it.nome})});return n}
+function giftId(){return 'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+var GiftAPI={
+  /* devolve Promise: {ok:true,gift} ou {ok:false,err} */
+  send:function(to,g){
+    var G=giftsS(),amt=+g.amount||0;
+    if(g.type==='energia'){if(GIFT_OPTS.energia.indexOf(amt)<0||S.xp<amt)return Promise.resolve({ok:false,err:'Energia insuficiente.'});S.xp-=amt}
+    else if(g.type==='chips'){if(GIFT_OPTS.chips.indexOf(amt)<0||S.gems<amt)return Promise.resolve({ok:false,err:'Chips insuficientes.'});S.gems-=amt}
+    else if(g.type==='item'){var ix=(S.inv.items||[]).indexOf(g.item);if(ix<0||!giftItems().some(function(x){return x.id===g.item}))return Promise.resolve({ok:false,err:'Esse item não pode ser dado.'});S.inv.items.splice(ix,1)}
+    else return Promise.resolve({ok:false,err:'Presente inválido.'});
+    var gift={id:giftId(),to:to,from:S.nick||'Você',type:g.type,amount:amt,item:g.item||'',msg:g.msg||'',at:Date.now()};
+    G.sent.push(gift);save();return Promise.resolve({ok:true,gift:gift});
+  },
+  inbox:function(){return Promise.resolve(giftsS().inbox.filter(function(x){return !x.opened}))},
+  claim:function(id){
+    var G=giftsS(),g=G.inbox.filter(function(x){return x.id===id})[0];if(!g||g.opened)return Promise.resolve({ok:false});
+    var extra=0;
+    if(g.type==='energia')S.xp+=g.amount;
+    else if(g.type==='chips')S.gems+=g.amount;
+    else if(g.type==='item'){if((S.inv.items||[]).indexOf(g.item)>=0){S.gems+=20;extra=20}else S.inv.items.push(g.item)}
+    g.opened=true;save();return Promise.resolve({ok:true,gift:g,extra:extra});
+  },
+  /* só para a prévia: simula um presente chegando de um amigo de mentira */
+  mockIncoming:function(from){giftsS().inbox.push({id:giftId(),from:from,type:'chips',amount:20,item:'',msg:'Boa sorte!',at:Date.now()});save()}
+};
+IC.gift='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="5" rx="1.5"/><path d="M5 13v7h14v-7M12 8v12"/><path d="M12 8c-1-3-5-3.500-5-1.200S10 8 12 8zM12 8c1-3 5-3.500 5-1.200S14 8 12 8z"/></svg>';
+function giftDesc(g){return g.type==='item'?giftItemName(g.item):(g.amount+(g.type==='chips'?' chips':' de energia'))}
+var GU={to:'',tab:'chips',amt:0,item:'',msg:0};
+function showGift(name,keep){
+  if(!keep)GU={to:name,tab:'chips',amt:0,item:'',msg:0};
+  var items=giftItems(),ok=false,body='';
+  if(GU.tab==='item'){
+    body=items.length?'<div class="gitems">'+items.map(function(it){return '<button class="gopt'+(GU.item===it.id?' on':'')+'" data-act="gitem" data-i="'+esc(it.id)+'"><b>'+esc(it.nome)+'</b><small>Item de evento</small></button>'}).join('')+'</div><p class="note" style="margin:8px 0 0">Ao dar, você deixa de ter o item.</p>'
+      :'<p class="note" style="margin:8px 0">Você ainda não tem itens de evento para dar. Eles vêm de eventos especiais.</p>';
+    ok=!!GU.item;
+  }else{
+    var bal=GU.tab==='chips'?S.gems:S.xp;
+    body='<div class="gamts">'+GIFT_OPTS[GU.tab].map(function(a){var lock=bal<a;return '<button class="gopt'+(GU.amt===a?' on':'')+(lock?' lock':'')+'" data-act="gamt" data-a="'+a+'"'+(lock?' disabled':'')+'><b>'+a+'</b><small>'+(GU.tab==='chips'?'chips':'energia')+'</small></button>'}).join('')+'</div>';
+    ok=GU.amt>0&&bal>=GU.amt;
+  }
+  var h='<div class="sheet tall" role="dialog" aria-label="Enviar presente"><h2 style="margin:0 0 2px">Presente para '+esc(GU.to)+'</h2>'+
+   '<p class="note" style="margin:0 0 10px">Seu saldo: '+S.xp+' de energia · '+S.gems+' chips</p>'+
+   '<div class="gtabs">'+[['chips','Chips'],['energia','Energia'],['item','Item do robô']].map(function(t){return '<button class="gtab'+(GU.tab===t[0]?' on':'')+'" data-act="gtab" data-t="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div>'+body+
+   '<label class="frl" style="margin-top:14px">Recado</label><div class="gmsgs">'+GIFT_MSGS.map(function(m,i){return '<button class="gmsg'+(GU.msg===i?' on':'')+'" data-act="gmsg" data-m="'+i+'">'+m+'</button>'}).join('')+'</div>'+
+   '<button class="btn prim" data-act="gsend" style="margin-top:16px"'+(ok?'':' disabled')+'>Enviar presente</button>'+
+   '<button class="btn ghost" data-act="amigos" style="margin-top:10px">Voltar</button>'+
+   '<p class="note" style="margin:10px 0 0">Prévia: o presente ainda não chega a pessoas de verdade. Quando criarmos as contas online, ele é entregue.</p></div>';
+  $('#modal').innerHTML=h;$('#modal').hidden=false;
+}
+function giftSend(){
+  var g={type:GU.tab,amount:GU.tab==='item'?0:GU.amt,item:GU.tab==='item'?GU.item:'',msg:GIFT_MSGS[GU.msg]};
+  GiftAPI.send(GU.to,g).then(function(r){
+    if(!r.ok){showGift(GU.to,1);return}
+    $('#modal').innerHTML='<div class="sheet" role="dialog" aria-label="Presente enviado"><div class="gdone"><div class="gbox">'+IC.gift+'</div><h2>Presente enviado!</h2><p class="note">'+esc(GU.to)+' vai receber '+esc(giftDesc(r.gift))+'.</p></div><button class="btn prim" data-act="amigos">Pronto</button></div>';
+    sfx('win');buzz([20,40,30]);confetti();render();
+  });
+}
+function showInbox(){
+  GiftAPI.inbox().then(function(list){
+    var h='<div class="sheet tall" role="dialog" aria-label="Presentes recebidos"><h2 style="margin:0 0 8px">Presentes para você</h2>'+
+     (list.length?list.map(function(g){return '<div class="grow"><span class="gbox sm">'+IC.gift+'</span><div class="frn"><b>'+esc(g.from)+' mandou '+esc(giftDesc(g))+'</b><small>'+esc(g.msg||'')+'</small></div><button class="btn prim gopen" data-act="gopen" data-id="'+g.id+'">Abrir</button></div>'}).join(''):'<p class="note">Nenhum presente esperando.</p>')+
+     '<button class="btn ghost" data-act="amigos" style="margin-top:12px">Voltar</button></div>';
+    $('#modal').innerHTML=h;$('#modal').hidden=false;
+  });
+}
+function giftOpen(id){
+  GiftAPI.claim(id).then(function(r){
+    if(!r.ok){showInbox();return}
+    var g=r.gift;
+    $('#modal').innerHTML='<div class="sheet" role="dialog" aria-label="Presente aberto"><div class="gdone"><div class="gbox pop">'+IC.gift+'</div><h2>'+esc(g.from)+' mandou '+esc(giftDesc(g))+'!</h2><p class="note">'+(r.extra?'Você já tinha esse item, então ganhou '+r.extra+' chips.':'Já está com você.')+'</p></div><button class="btn prim" data-act="ginbox">Continuar</button></div>';
+    sfx('win');buzz([20,40,30]);confetti();render();
+  });
+}
+
 function amToast(t){var e=$('#modal .frmsg');if(!e){var d=document.createElement('div');d.className='frmsg';var sh=$('#modal .sheet');if(sh)sh.insertBefore(d,sh.children[1]);e=d}if(e)e.textContent=t}
 
 /* ---------- duelo: contra a máquina ou contra um amigo (por link, sem servidor) ---------- */
