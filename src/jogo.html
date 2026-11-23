@@ -1124,6 +1124,10 @@ function evRender(){
   h+='<div class="evhero"><h1>'+ev.name+'</h1><p>'+ev.blurb+'</p><span class="evtimer">'+(i.phase==='soon'?'Abre em '+fmtD(i.w.start):(i.left<=1?'Termina hoje':'Termina em '+i.left+' dias · '+fmtD(i.w.end)))+'</span></div>';
   h+='<div class="evbox"><div class="evpzrow">'+evPuzzle(ev,i.pieces,fresh)+'<div class="evpzt"><b>Projeto: '+ev.equipName+'</b><small>'+i.pieces+' de 9 peças coletadas</small><div class="evprog"><u style="width:'+Math.round(i.pieces/9*100)+'%"></u></div></div></div>'+
      '<div class="evprize'+(i.completed?' got':'')+'">'+(i.completed?IC.check+' '+ev.equipName+' montado! '+ev.prize.name+' guardada no seu inventário.':'Ao completar: <b>'+ev.prize.name+'</b>, um acessório para o seu robô.')+'</div></div>';
+  if(i.canStart&&evPool(ev).length<ev.qPerStep){
+    var fal=ev.qPerStep-evPool(ev).length,fs=Math.max(1,Math.ceil(fal/5));
+    h+='<div class="evmsg" style="margin-top:14px"><b>Falta pouco para começar!</b><br>Conclua mais '+fs+(fs===1?' fase':' fases')+' na trilha. O evento só pergunta assuntos que você já estudou ('+evPool(ev).length+' de '+ev.qPerStep+' perguntas liberadas).</div><button class="btn" data-act="evclose">Ir para a trilha</button>';
+  }
   h+='<div class="evsteps">';
   ev.steps.forEach(function(st,k){
     var d=P.steps[st.id],cls=d?'done':(i.next&&i.next.id===st.id&&i.canStart?'now':''),stat='';
@@ -1136,7 +1140,7 @@ function evRender(){
   h+='</div>';
   if(i.canStart){
     var have=evPool(ev).length;
-    if(have<ev.qPerStep)h+='<div class="evmsg">Para liberar esta etapa, estude mais fases da trilha. O evento só usa assuntos que você já viu. Você tem '+have+' de '+ev.qPerStep+' perguntas disponíveis.</div><button class="btn" disabled>Começar etapa</button>';
+    if(have<ev.qPerStep)h+='';
     else h+='<button class="btn" data-act="evstep" data-id="'+ev.id+'" data-s="'+i.next.id+'">Começar etapa '+(i.done+1)+'</button>';
   }else if(i.late)h+='<div class="evmsg">Não dá mais tempo de concluir as '+i.total+' etapas, uma por dia. Espere o próximo evento para participar.</div>';
   else if(i.doneToday&&!i.completed)h+='<div class="evmsg">Etapa de hoje concluída! A próxima fica disponível em outro dia.</div>';
