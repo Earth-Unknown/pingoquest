@@ -39,3 +39,7 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 - Peças incompletas quando o evento acaba se perdem (sem retomar).
 - Fase de teste: datas pelo relógio do aparelho (servidor só depois).
 - Eventos nunca ativam o desafio de 5 acertos nem liberam conteúdo novo.
+
+## Publicação
+- Artifact (claude.ai): publica o `index.html` como está.
+- GitHub Pages: `build-site.sh` embrulha o `index.html` (doctype, head, regra `[hidden]`) e o workflow `.github/workflows/pages.yml` publica em https://loohfranca.github.io/pingoquest/ a cada push na `main`.
