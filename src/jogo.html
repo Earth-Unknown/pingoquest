@@ -6,25 +6,35 @@
 <style>
 /* Layout: trilha vertical em zigue-zague, estilo app de lições; mascote Pingo (um roteador) */
 :root{
-  /* Paleta oficial do guia visual do Pingo Quest (neon roxo) */
+  /* Paleta oficial do guia visual do Pingo Quest. Padrão: modo claro (branco). Modo escuro: roxo neon. */
   --roxo:#7b3ff2; --roxo-fundo:#2a0a66; --lilas:#c88bff; --ciano-neon:#18ddfb; --rosa:#ff4fae; --amarelo:#ffd83d; --laranja:#ff9a1f; --verde:#7dff2b; --branco:#fff;
-  --bg:#150638; --surface:#211052; --ink:#ffffff; --muted:#b9a9e4;
-  --line:#3d2a8f; --line-deep:#31207a;
+  --bg:#ffffff; --surface:#ffffff; --ink:#1f1642; --muted:#6c6492;
+  --line:#e6e1f6; --line-deep:#d4cdee;
   --primary:#7b3ff2; --primary-deep:#5a22c4; --on-primary:#ffffff;
-  --ok:#7dff2b; --ok-deep:#4fb80e; --ok-bg:#24511c; --ok-ink:#c4ff9a;
-  --bad:#ff5a7a; --bad-deep:#cf3050; --bad-bg:#561344; --bad-ink:#ffc0d0;
-  --gold:#ffd83d; --gold-deep:#d9a400; --cyan:#18ddfb;
-  --locked:#41208f; --locked-deep:#2e1470;
-  --face:#12052e;
-  --glow:0 0 18px rgba(24,221,251,.45);
+  --ok:#3fc83f; --ok-deep:#2a9a2a; --ok-bg:#e4f9d8; --ok-ink:#27730f;
+  --bad:#ff4d6d; --bad-deep:#cf2f4e; --bad-bg:#ffe4ea; --bad-ink:#b0213f;
+  --gold:#ffd83d; --gold-deep:#d9a400; --cyan:#0fa8d4;
+  --locked:#ebe8f6; --locked-deep:#d6d0ea;
+  --face:#1b1240;
   --font:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#150638; --surface:#211052; --ink:#ffffff; --muted:#b9a9e4;
+  --line:#3d2a8f; --line-deep:#31207a;
+  --ok:#7dff2b; --ok-deep:#4fb80e; --ok-bg:#24511c; --ok-ink:#c4ff9a;
+  --bad:#ff5a7a; --bad-deep:#cf3050; --bad-bg:#561344; --bad-ink:#ffc0d0;
+  --cyan:#18ddfb;
+  --locked:#41208f; --locked-deep:#2e1470;
+  --face:#12052e;
   color-scheme:dark;
 }
 
 *{box-sizing:border-box}
+:root[data-theme="dark"] body{background-image:linear-gradient(180deg,#1b0944,#12053a);background-attachment:fixed}
 html,body{min-height:100%}
-body{background:var(--bg);background-image:linear-gradient(180deg,#1b0944,#12053a);background-attachment:fixed;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.4;
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.4;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:0 110px;-webkit-tap-highlight-color:transparent}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
@@ -74,7 +84,7 @@ svg{display:block}
 .node svg{width:34px;height:34px}
 .node.done{background:var(--gold);box-shadow:0 6px 0 var(--gold-deep);color:#fff}
 .node.cur{background:var(--uh,var(--primary));box-shadow:0 6px 0 var(--ud,var(--primary-deep)),0 0 22px color-mix(in srgb,var(--uh,#7b3ff2) 70%,transparent);color:#fff}
-.node.lock{background:color-mix(in srgb,var(--uh,#7b3ff2) 35%,#3a1d7a);box-shadow:0 6px 0 var(--locked-deep);color:var(--muted);cursor:not-allowed}
+.node.lock{background:color-mix(in srgb,var(--uh,#7b3ff2) 18%,var(--locked));box-shadow:0 6px 0 var(--locked-deep);color:var(--muted);cursor:not-allowed}
 .node:active:not(.lock){transform:translateY(6px);box-shadow:0 0 0 transparent}
 .nlabel{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
 .bubble{position:absolute;top:-46px;left:50%;transform:translateX(-50%);background:var(--surface);border:2px solid var(--line-deep);
@@ -95,7 +105,7 @@ svg{display:block}
 .nbtn svg{width:34px;height:34px}
 .nbtn svg{filter:none}.nbtn[aria-current="page"] svg{transform:translateY(-1px) scale(1.06)}
 .nbtn[data-t=path]{--ic:#18ddfb}.nbtn[data-t=missions]{--ic:#ff4fae}.nbtn[data-t=review]{--ic:#7dff2b}.nbtn[data-t=conq]{--ic:#ffd83d}.nbtn[data-t=profile]{--ic:#c88bff}
-.nbtn[aria-current="page"]{border-color:color-mix(in srgb,var(--ic) 55%,transparent);background:rgba(255,255,255,.07);color:#fff}
+.nbtn[aria-current="page"]{border-color:color-mix(in srgb,var(--ic) 65%,transparent);background:color-mix(in srgb,var(--ic) 12%,transparent);color:var(--ink)}
 
 /* perfil */
 .ph{display:flex;align-items:center;gap:16px;padding:22px 0 8px}
@@ -174,6 +184,13 @@ svg{display:block}
 .center h1{margin:6px 0 0;font-size:34px;font-weight:900}
 .center p{margin:0;color:var(--muted);font-weight:700;max-width:34ch;text-wrap:balance}
 .center .pingo-big{width:170px}
+.res2{display:flex;gap:10px;margin:18px 0 6px;width:100%;justify-content:center}
+.rt{flex:1;max-width:120px;border-radius:18px;background:var(--rc);padding:4px;opacity:0;transform:scale(.3);animation:rtpop .55s cubic-bezier(.2,1.8,.4,1) forwards}
+.rt small{display:block;padding:5px 2px 6px;font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.15)}
+.rt span{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--surface);border-radius:14px;padding:14px 4px}
+.rt span svg{width:22px;height:22px;flex:none;color:var(--rc)}.rt span b{font-size:22px;font-weight:900;color:var(--rc)}
+@keyframes rtpop{0%{opacity:0;transform:scale(.3) translateY(14px)}100%{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rt{animation-duration:.01s}}
 .res{display:flex;gap:12px;margin:14px 0 6px;width:100%}
 .res div{flex:1;border:2px solid var(--line-deep);border-radius:16px;overflow:hidden;background:var(--surface)}
 .res small{display:block;padding:5px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff}
@@ -629,158 +646,261 @@ function TY(q,a,hint,e){return{t:'ty',q:q,a:a,hint:hint,e:e}}
 function CL(q,cats,items,e){return{t:'cl',q:q,cats:cats,items:items,e:e}}
 function LN(title,text,touch){return{t:'learn',title:title,text:text,touch:touch}}
 var BEGINNER=[
- {title:"O que é uma rede",tag:"Iniciante · Etapa 1 de 6",c:0,caso:"wifi",names:["Rede de computadores","Rede de casa (LAN) e internet","Cabo ou Wi-Fi: meios de transmissão"],
-  tips:["Rede de computadores: dispositivos (hosts) interligados que trocam dados e compartilham recursos.","LAN (Local Area Network) é a rede local. A internet é uma rede de redes.","O roteador liga a LAN à internet.","Cabo UTP segue o IEEE 802.3 (Ethernet). Wi-Fi segue o IEEE 802.11."],
+ {title:"O que é uma rede",tag:"Seção 1 · Unidade 1",c:0,names:["Aparelhos conversando","Para que serve","Quem entra na rede"],
+  tips:["Rede: aparelhos ligados entre si para trocar informações.","Uma rede serve para compartilhar internet, arquivos e impressora.","Host (aparelho na rede) é qualquer coisa conectada: celular, PC, TV."],
   phases:[
-  [LN("Rede de computadores","Uma rede de computadores é um conjunto de dispositivos (hosts, ou nós) interligados por um meio de transmissão para trocar dados e compartilhar recursos, como arquivos, impressoras e o acesso à internet. Em termos simples: aparelhos conversando. Tecnicamente: dispositivos conectados que trocam informações em forma de bits.",
-    [["Host (nó)","Qualquer dispositivo conectado à rede: computador, celular, impressora, servidor."],["Meio de transmissão","O caminho por onde os dados passam: cabo, fibra óptica ou ondas de rádio."],["Dados","Informação convertida em bits (0 e 1) que trafega pela rede."],["Recurso compartilhado","Algo usado por vários dispositivos: arquivo, impressora, acesso à internet."]]),
-   MC("Qual é a definição técnica de rede de computadores?","Conjunto de dispositivos interligados que trocam dados e compartilham recursos",["Programa que protege o computador contra vírus","Cabo que liga o computador à tomada","Equipamento que serve apenas para imprimir"],"Uma rede é formada por dispositivos interligados que trocam dados e compartilham recursos."),
-   FILL("Complete a definição de rede","Uma rede de computadores interliga ___ por meio de um ___ de transmissão para trocar ___.",["dispositivos","meio","dados"],["vírus","processador"],"Dispositivos (hosts) são interligados por um meio de transmissão e trocam dados."),
-   MP("Ligue cada termo básico ao seu significado",[["Host (nó)","Dispositivo conectado à rede"],["Meio de transmissão","Caminho por onde os dados passam"],["Dados","Informação em bits (0 e 1)"],["Recurso compartilhado","Impressora, arquivo ou internet usados por vários"]],"Cada termo descreve uma parte da definição de rede."),
-   VF("Um computador isolado, sem conexão com nenhum outro dispositivo, forma uma rede por si só.",false,"Uma rede exige pelo menos dois dispositivos interligados trocando dados."),
-   TY("Digite, em inglês, o termo para qualquer dispositivo conectado a uma rede.",["host","hosts","nó"],"4 letras","Host (ou nó) é qualquer dispositivo conectado à rede.")],
-  [LN("Rede de casa (LAN) e internet","A rede de casa é uma LAN (Local Area Network, rede local): interliga os dispositivos de um local limitado, como uma casa, uma sala ou um escritório. A internet é uma rede de redes: interliga milhões de redes do mundo inteiro usando o protocolo IP. O roteador (router) liga a LAN à internet e encaminha os pacotes de dados entre elas.",
-    [["LAN","Local Area Network: rede local de um ambiente limitado, como casa ou escritório."],["Internet","Rede de redes: interliga milhões de redes pelo mundo, usando o protocolo IP."],["Roteador","Liga redes diferentes, como a LAN e a internet, e encaminha os pacotes entre elas."],["Pacote","Pequeno bloco de dados que viaja pela rede com origem e destino."]]),
-   MC("Qual é o nome técnico da rede que interliga os dispositivos de uma casa ou escritório?","LAN (Local Area Network)",["Internet","Roteador","Pacote"],"LAN é a rede local. A internet é a interligação de muitas redes."),
-   TY("Qual é a sigla, em inglês, de rede local?",["LAN","rede local","Local Area Network"],"3 letras","LAN significa Local Area Network."),
-   CL("Classifique cada descrição",["LAN (rede local)","Internet"],[["Notebook e TV da sua casa conversando",0],["Rede interna de um escritório",0],["Interliga milhões de redes pelo mundo",1],["Rede mundial de computadores",1]],"A LAN tem alcance limitado. A internet liga redes do mundo todo."),
-   FILL("Complete a frase sobre internet e roteador","A ___ é uma rede de redes, e o ___ liga a LAN a ela.",["internet","roteador"],["impressora","monitor"],"A internet interliga redes, e o roteador faz a ligação entre a LAN e ela."),
-   VF("A internet é uma única rede, parecida com a rede de uma casa, só que maior.",false,"A internet é uma rede de redes: milhões de redes independentes interligadas.")],
-  [LN("Cabo ou Wi-Fi: meios de transmissão","Os dispositivos se conectam por um meio de transmissão. Com fio: o cabo de par trançado (UTP, padrão Ethernet, IEEE 802.3) e a fibra óptica (pulsos de luz). Sem fio: o Wi-Fi (IEEE 802.11), que usa ondas de rádio. O cabo costuma ser mais estável. O Wi-Fi é mais prático, mas o sinal sofre atenuação (perda de força) com a distância e com obstáculos.",
-    [["Ethernet","Padrão de rede cabeada, IEEE 802.3. Usa cabo de par trançado (UTP)."],["Wi-Fi","Padrão de rede sem fio, IEEE 802.11. Usa ondas de rádio."],["Fibra óptica","Transmite dados por pulsos de luz. Alta velocidade e longo alcance."],["Atenuação","Perda de força do sinal com a distância e com obstáculos, como paredes."]]),
-   MC("Qual padrão IEEE é o das redes Wi-Fi (sem fio)?","IEEE 802.11",["IEEE 802.3","IEEE 802.5","IEEE 802.15"],"O Wi-Fi segue o IEEE 802.11. O 802.3 é a Ethernet (cabo)."),
-   MP("Ligue cada meio de transmissão à sua característica",[["Cabo UTP (Ethernet)","Par trançado, padrão IEEE 802.3"],["Fibra óptica","Transmite pulsos de luz"],["Wi-Fi","Ondas de rádio, padrão IEEE 802.11"],["Atenuação","Perda de força do sinal"]],"Cada meio tem sua tecnologia e seus limites."),
-   FILL("Complete sobre o Wi-Fi","O Wi-Fi usa ondas de ___ e segue o padrão IEEE ___.",["rádio","802.11"],["luz","802.3"],"Wi-Fi: ondas de rádio e IEEE 802.11."),
-   MC("O jogo online trava no Wi-Fi do quarto, que fica longe do roteador. Qual fenômeno explica isso?","Atenuação do sinal com a distância",["Falta de endereço IP","Servidor desligado","Cabo UTP rompido"],"Quanto mais longe do roteador, mais fraco o sinal Wi-Fi. Um cabo resolveria."),
-   TY("Qual meio de transmissão usa pulsos de luz?",["fibra óptica","fibra"],"Começa com F","A fibra óptica transmite dados por pulsos de luz.")]
- ]},
- {title:"Tipos de rede e desempenho",tag:"Iniciante · Etapa 2 de 6",c:0,caso:"lenta",names:["PAN, LAN, MAN e WAN","Cliente e servidor","Banda e latência"],
-  tips:["PAN (poucos metros), LAN (casa ou prédio), MAN (cidade), WAN (grandes distâncias).","Cliente faz a requisição. Servidor devolve a resposta.","Largura de banda é quanto passa por segundo (Mbps). Latência é o atraso (ms)."],
+  [LN("Aparelhos conversando","Uma rede de computadores é um grupo de aparelhos ligados entre si para trocar informações. Pode ser o celular e a TV da sua casa, ou os computadores de uma empresa inteira.",
+    [["Rede","Aparelhos ligados para trocar informações."],["Informação","Fotos, vídeos, mensagens e arquivos."],["Conexão","O caminho que liga um aparelho ao outro."]]),
+   MC("O que é uma rede de computadores?","Aparelhos ligados entre si para trocar informações",["Um programa que limpa o computador","Um tipo de cabo de energia","Uma senha para entrar no celular"],"Rede é isso: aparelhos conversando."),
+   VF("Um computador sozinho, sem ligação com nenhum outro aparelho, forma uma rede.",false,"Uma rede precisa de pelo menos dois aparelhos ligados."),
+   MC("Qual destas situações mostra uma rede funcionando?","Seu celular enviando uma foto para a TV da sala",["Um computador desligado na gaveta","Uma calculadora comum","Um livro de redes na estante"],"Celular e TV trocando informação: isso é rede."),
+   MP("Ligue cada ideia ao seu significado",[["Rede","Aparelhos ligados"],["Informação","O que passa pela rede"],["Conexão","O caminho entre aparelhos"]],"Rede liga aparelhos, a informação passa por ela e a conexão é o caminho.")],
+  [LN("Para que serve","Com uma rede você compartilha coisas: a internet, uma impressora, arquivos e até a música da caixa de som. Sem rede, cada aparelho ficaria sozinho.",
+    [["Internet","Um só acesso para vários aparelhos."],["Impressora","Todo mundo da casa pode imprimir nela."],["Arquivos","Enviar de um aparelho para o outro."]]),
+   MC("Duas pessoas da casa usam a mesma impressora pelo Wi-Fi. O que isso mostra?","Que ela está compartilhada pela rede",["Que ela não precisa de energia","Que ela é uma impressora de internet","Que o cabo é invisível"],"Compartilhar recursos é uma das principais funções da rede."),
+   VF("Uma rede permite que vários aparelhos usem a mesma internet.",true,"Isso mesmo: o roteador reparte a internet entre os aparelhos."),
+   CL("O que dá para compartilhar em uma rede?",["Dá para compartilhar","Não dá"],[["Impressora",0],["Arquivos",0],["Acesso à internet",0],["Luz da sala",1]],"Em rede compartilhamos informação e recursos, não a energia da casa."),
+   MC("Você assiste a um vídeo no celular e outra pessoa joga no PC, com a mesma internet. Por que funciona?","Os dois aparelhos estão na mesma rede",["Os dois são do mesmo tamanho","O vídeo usa o jogo","A internet só atende um por vez"],"Na mesma rede, vários aparelhos dividem a internet.")],
+  [LN("Quem entra na rede","Cada aparelho ligado à rede se chama host (aparelho da rede). Celular, notebook, TV, videogame e até lâmpada inteligente podem ser hosts.",
+    [["Host","Qualquer aparelho ligado à rede."],["Celular","Host muito comum."],["TV smart","Também é host, se estiver conectada."]]),
+   MC("Como se chama um aparelho ligado à rede?","Host",["Cabo","Sinal","Senha"],"Host é o nome técnico de qualquer aparelho conectado."),
+   VF("Um celular conectado ao Wi-Fi da casa é um host da rede.",true,"Sim, é um aparelho conectado à rede."),
+   CL("Quem pode ser host?",["Host","Não é host"],[["Notebook no Wi-Fi",0],["Videogame online",0],["TV conectada",0],["Panela elétrica sem conexão",1]],"Host precisa estar ligado à rede."),
+   MP("Ligue o aparelho ao que ele costuma fazer na rede",[["Notebook","Navega e trabalha"],["Impressora","Imprime para todos"],["Smart TV","Mostra vídeos da internet"]],"Cada aparelho usa a rede de um jeito.")]
+  ]},
+ {title:"A rede da sua casa",tag:"Seção 1 · Unidade 2",c:0,names:["Rede local (LAN)","O roteador","O modem"],
+  tips:["LAN (Local Area Network) é a rede local, a de um lugar só.","O roteador distribui a internet para os aparelhos.","O modem recebe a internet que chega pelo cabo ou fibra."],
   phases:[
-  [LN("PAN, LAN, MAN e WAN","As redes são classificadas pelo alcance geográfico. PAN (Personal Area Network): poucos metros, como o Bluetooth entre celular e fone. LAN (Local Area Network): uma casa, um escritório ou um prédio. MAN (Metropolitan Area Network): uma cidade. WAN (Wide Area Network): grandes distâncias, entre cidades e países. A internet interliga redes de todos esses tamanhos.",
-    [["PAN","Personal Area Network: alcance de poucos metros. Ex.: celular e fone por Bluetooth."],["LAN","Local Area Network: uma casa, um escritório ou um prédio."],["MAN","Metropolitan Area Network: abrange uma cidade."],["WAN","Wide Area Network: liga redes a grandes distâncias, entre cidades e países."]]),
-   MP("Ligue cada tipo de rede ao seu alcance",[["PAN","Poucos metros, como o Bluetooth"],["LAN","Casa, escritório ou prédio"],["MAN","Uma cidade"],["WAN","Grandes distâncias, entre cidades e países"]],"O que muda de uma sigla para outra é o alcance geográfico."),
-   CL("Classifique pelo alcance",["LAN","WAN"],[["Wi-Fi do seu apartamento",0],["Rede interna de uma escola",0],["Ligação entre as filiais de um banco em cidades diferentes",1],["Conexão entre dois países feita por operadoras",1]],"LAN cobre um local limitado. WAN cobre grandes distâncias."),
-   TY("Qual sigla identifica a rede de alcance pessoal, como a de um fone Bluetooth?",["PAN"],"3 letras","PAN significa Personal Area Network."),
-   MC("Uma prefeitura liga todas as secretarias espalhadas pela cidade em uma única rede. Qual tipo de rede descreve isso?","MAN (Metropolitan Area Network)",["PAN (Personal Area Network)","LAN (Local Area Network)","Wi-Fi"],"Uma rede que cobre uma cidade é uma MAN."),
-   FILL("Complete a sigla WAN","WAN significa ___ Area Network e cobre grandes ___.",["Wide","distâncias"],["Local","velocidades"],"WAN: Wide Area Network, rede de longa distância.")],
-  [LN("Cliente e servidor","Na maioria dos serviços da internet, os dispositivos têm papéis diferentes. O cliente (client) faz a requisição (request), como o navegador pedindo uma página. O servidor (server) processa o pedido e devolve a resposta (response). Esse modelo é o cliente-servidor. Servidor é um papel: um computador ou programa sempre disponível para atender clientes.",
-    [["Cliente","Dispositivo ou programa que faz a requisição. Ex.: o navegador."],["Servidor","Dispositivo ou programa que atende as requisições e envia a resposta."],["Requisição","O pedido enviado pelo cliente. Ex.: abrir uma página."],["Resposta","O que o servidor devolve ao cliente. Ex.: a página do site."]]),
-   MC("No modelo cliente-servidor, quem envia a requisição?","O cliente",["O servidor","O switch","O provedor"],"O cliente pede, o servidor responde."),
-   BL("Monte o fluxo de uma comunicação cliente-servidor",["Cliente envia a requisição","Servidor processa o pedido","Servidor envia a resposta","Cliente exibe o resultado"],"O cliente pede, o servidor processa e responde, e o cliente exibe o resultado."),
-   VF("Servidor é sempre um computador enorme, que só existe em datacenters.",false,"Servidor é um papel. Pode ser um computador comum, ou até um programa."),
-   FILL("Complete o modelo cliente-servidor","O ___ faz a requisição e o ___ devolve a resposta.",["cliente","servidor"],["roteador","pacote"],"No modelo cliente-servidor, o cliente pede e o servidor responde."),
-   TY("Como se chama o dispositivo ou programa que responde às requisições dos clientes?",["servidor","server"],"8 letras","Servidor é quem atende as requisições.")],
-  [LN("Largura de banda e latência","Duas medidas descrevem o desempenho de uma rede. A largura de banda (bandwidth) é a quantidade de dados que o link transmite por segundo, medida em bits por segundo (bps, Mbps, Gbps). A latência (latency) é o tempo que um dado leva para ir ao destino e voltar, medida em milissegundos (ms). Uma banda alta não garante latência baixa.",
-    [["Largura de banda","Quantidade de dados por segundo que o link comporta."],["Mbps","Megabits por segundo: milhões de bits por segundo."],["Latência","Atraso de ida e volta dos dados, medido em milissegundos (ms)."],["Ping","Teste que mede a latência: envia uma mensagem e espera a resposta."]]),
-   MP("Ligue cada medida à sua definição",[["Largura de banda","Quantidade de dados por segundo"],["Latência","Tempo de ida e volta dos dados"],["Ping","Teste que mede a latência"],["Mbps","Milhões de bits por segundo"]],"Banda é volume por segundo. Latência é tempo."),
-   MC("Em qual unidade se mede a latência?","Milissegundos (ms)",["Megabits por segundo (Mbps)","Gigabytes (GB)","Hertz (Hz)"],"A latência é um tempo, medida em milissegundos."),
-   VF("Quanto maior a largura de banda, menor será sempre a latência.",false,"São medidas independentes. É possível ter muita banda e latência alta."),
-   MC("O download de arquivos é rápido, mas o jogo online tem lag (atraso). Qual medida provavelmente está ruim?","A latência",["A largura de banda","A resolução da tela","A capacidade do disco"],"Lag em jogos online costuma vir de latência alta, não de falta de banda."),
-   TY("Qual medida, dada em milissegundos, indica o atraso de ida e volta dos dados?",["latência","ping"],"Começa com L","A latência é medida em milissegundos.")]
- ]},
- {title:"Equipamentos de rede",tag:"Iniciante · Etapa 3 de 6",c:0,caso:"office",names:["Modem, roteador e gateway","Switch, hub e MAC","O mapa da rede"],
-  tips:["Modem converte o sinal da operadora. Roteador liga redes e usa o IP.","Switch usa o endereço MAC. Hub repete para todas as portas.","Todos sem rede: olhe a saída da LAN. Só um: olhe o cabo e a placa dele."],
+  [LN("Rede local (LAN)","A rede da sua casa é uma rede local, chamada LAN (Local Area Network). Ela fica em um lugar só: casa, escritório ou escola. Os aparelhos dela conversam entre si mesmo sem internet.",
+    [["LAN","Rede local, de um lugar só."],["Local","Casa, sala, escritório, escola."],["Sem internet","Ainda dá para conversar entre os aparelhos."]]),
+   MC("Como se chama a rede de um lugar só, como a da sua casa?","LAN (rede local)",["Internet","Provedor","Navegador"],"LAN é a rede local."),
+   VF("Dois aparelhos da mesma casa podem se comunicar mesmo sem internet.",true,"Sim. Quem faz isso é a rede local (LAN), sem precisar da internet."),
+   MC("O Wi-Fi da sua casa é um exemplo de qual tipo de rede?","Rede local (LAN)",["Rede do mundo todo","Rede de satélite","Rede de TV a cabo"],"Dentro da casa, a rede é local."),
+   CL("Onde existe uma LAN?",["Tem LAN","Não é LAN"],[["Wi-Fi de casa",0],["Rede de uma escola",0],["Rede de um escritório",0],["A internet inteira",1]],"A LAN é pequena e fica em um lugar. A internet é gigante.")],
+  [LN("O roteador","O roteador é o aparelho que reparte a internet entre os aparelhos da casa. Ele cria o Wi-Fi e também tem portas para ligar cabos. É por ele que tudo sai para a internet.",
+    [["Roteador","Reparte a internet e cria o Wi-Fi."],["Portas","Entradas para ligar cabos."],["Wi-Fi","Sinal sem fio criado pelo roteador."]]),
+   MC("Qual aparelho reparte a internet entre os aparelhos da casa e cria o Wi-Fi?","Roteador",["Impressora","Caixa de som","Carregador"],"O roteador faz esse papel."),
+   VF("Se o roteador desliga, os aparelhos perdem o Wi-Fi da casa.",true,"Sim, o roteador é quem cria o sinal."),
+   MC("Você quer ligar o PC por cabo no roteador. Onde o cabo encaixa?","Nas portas do roteador",["Na tomada de energia","No botão de ligar","Na antena"],"O roteador tem portas para cabos de rede."),
+   MP("Ligue cada parte do roteador à sua função",[["Antena","Espalha o sinal Wi-Fi"],["Porta de rede","Recebe cabo"],["Luzes","Mostram o estado da conexão"]],"As antenas espalham o Wi-Fi, as portas recebem cabos e as luzes avisam o estado.")],
+  [LN("O modem","O modem é quem recebe a internet que chega à sua casa, pelo cabo ou pela fibra, e entrega para o roteador. Muitos provedores entregam um aparelho só, que faz as duas coisas.",
+    [["Modem","Recebe a internet de fora."],["Roteador","Divide a internet dentro de casa."],["Dois em um","Um aparelho que faz os dois papéis."]]),
+   MC("Qual aparelho recebe a internet que chega de fora da casa?","Modem",["Fone de ouvido","Mouse","Monitor"],"O modem faz a ligação com o provedor."),
+   VF("O modem e o roteador sempre são dois aparelhos separados.",false,"Muitos provedores entregam um aparelho que faz os dois papéis."),
+   MC("A internet chega por fibra na sua casa. Quem recebe esse sinal?","O modem",["O mouse","O ventilador","A tomada"],"O modem recebe o sinal do provedor e passa adiante."),
+   MP("Ligue cada um ao seu papel",[["Provedor","Vende a internet"],["Modem","Recebe a internet em casa"],["Roteador","Espalha o Wi-Fi"]],"O provedor entrega, o modem recebe e o roteador distribui.")]
+  ]},
+ {title:"Cabo ou Wi-Fi?",tag:"Seção 1 · Unidade 3",c:0,caso:"wifi",names:["Cabo de rede","Wi-Fi","Fibra óptica"],
+  tips:["Cabo de rede é mais estável. Wi-Fi é mais prático.","Wi-Fi é a rede sem fio. Paredes e distância enfraquecem o sinal.","Fibra óptica leva dados com luz e é muito rápida."],
   phases:[
-  [LN("Modem, roteador e gateway","O modem converte o sinal da operadora (fibra, cabo ou linha telefônica) em um formato que a rede entende, e hoje costuma vir junto com o roteador. O roteador (router) liga redes diferentes, como a LAN e a internet, e escolhe o caminho dos pacotes pelo endereço IP. O gateway padrão é o roteador que serve de saída da LAN para as outras redes. O ponto de acesso (AP) cria a rede Wi-Fi.",
-    [["Modem","Converte o sinal da operadora para o formato usado na rede."],["Roteador","Liga redes diferentes e encaminha pacotes usando o endereço IP."],["Gateway padrão","O roteador usado como saída da LAN para outras redes."],["Ponto de acesso (AP)","Cria a rede Wi-Fi para dispositivos sem fio."]]),
-   MC("Qual equipamento liga redes diferentes e escolhe o caminho dos pacotes pelo endereço IP?","Roteador",["Hub","Modem","Cabo UTP"],"O roteador trabalha com o endereço IP para encaminhar pacotes entre redes."),
-   MP("Ligue cada equipamento à sua função",[["Modem","Converte o sinal da operadora"],["Roteador","Liga redes e encaminha pacotes"],["Ponto de acesso","Cria a rede Wi-Fi"],["Gateway padrão","Saída da LAN para outras redes"]],"Cada equipamento tem um papel na ligação da LAN com o mundo."),
-   FILL("Complete sobre o gateway","O ___ padrão é o roteador que serve de ___ da LAN para outras redes.",["gateway","saída"],["servidor","chegada"],"O gateway padrão é a saída da LAN para outras redes."),
-   TY("Como se chama, em inglês, a saída padrão de uma LAN para outras redes?",["gateway","gateway padrão"],"7 letras","Gateway é a saída da LAN, geralmente o roteador."),
-   VF("O roteador decide o caminho dos pacotes usando o endereço IP de destino.",true,"É o endereço IP que o roteador consulta para encaminhar cada pacote.")],
-  [LN("Switch, hub e MAC","O switch conecta dispositivos da mesma rede local e encaminha cada quadro (frame) somente para a porta do destinatário, usando o endereço MAC, o identificador físico da placa de rede (48 bits). O hub, equipamento antigo, repete o sinal para todas as portas, gerando tráfego desnecessário e colisões. O firewall filtra o tráfego com regras de segurança.",
-    [["Switch","Encaminha quadros só para a porta do destinatário, pelo endereço MAC."],["MAC","Identificador físico da placa de rede, com 48 bits."],["Hub","Repete o sinal para todas as portas. Gera colisões. Está em desuso."],["Firewall","Filtra o tráfego com regras: decide o que pode entrar e sair."]]),
-   CL("Classifique cada comportamento",["Hub","Switch"],[["Repete o sinal para todas as portas",0],["Envia só para a porta do destinatário, pelo MAC",1],["Gera colisões e tráfego desnecessário",0],["Aprende em qual porta está cada MAC",1]],"O hub repete para todos. O switch entrega só ao destinatário."),
-   MC("Qual endereço o switch usa para decidir a porta de destino?","O endereço MAC",["O endereço IP","A URL do site","O nome de domínio"],"O switch trabalha na rede local com o endereço MAC."),
-   TY("Quantos bits tem um endereço MAC? (digite o número)",["48"],"Dois algarismos","O endereço MAC tem 48 bits."),
-   FILL("Complete sobre o switch","O ___ liga dispositivos da mesma rede usando o endereço ___.",["switch","MAC"],["roteador","IP"],"O switch usa o endereço MAC dentro da LAN."),
-   MC("Qual equipamento filtra o tráfego com regras de segurança?","Firewall",["Hub","Switch","Modem"],"O firewall decide o que pode entrar e sair da rede.")],
-  [LN("O mapa da rede","Em um escritório típico, os dados fazem este caminho: operadora, modem, roteador (gateway), switch, e então os computadores e impressoras. O ponto de acesso cria o Wi-Fi e o firewall protege a entrada. Conhecer o caminho ajuda a diagnosticar: se todos perdem a internet, o problema está na saída da LAN. Se só um perde, o problema é local, no cabo ou na placa de rede dele.",
-    [["Caminho dos dados","Operadora, modem, roteador, switch e, por fim, os dispositivos."],["Todos sem rede","Suspeite do que todos compartilham: switch, roteador, modem ou operadora."],["Só um sem rede","Suspeite do que é só dele: cabo, placa de rede ou configuração."],["Firewall","Protege a entrada da rede, filtrando o tráfego."]]),
-   BL("Monte o caminho dos dados, da operadora até o computador",["Operadora","Modem","Roteador","Switch","Computador"],"A operadora entrega o sinal ao modem, o roteador faz a saída da LAN, o switch distribui e o computador recebe."),
-   MC("Todos os computadores do escritório perderam a internet, mas ainda conseguem imprimir uns nos outros. Qual parte falhou?","A saída para a internet (modem, roteador ou operadora)",["O switch da LAN","A placa de rede de um computador","O cabo de uma impressora"],"A LAN funciona, pois eles se comunicam. O que falhou é a saída para a internet."),
-   MC("Só um computador perdeu a rede; os outros estão normais. Onde olhar primeiro?","No cabo e na placa de rede desse computador",["No provedor de internet","No modem","Em todos os switches"],"Se só um falhou, o problema é local desse dispositivo."),
-   CL("Onde cada equipamento atua?",["Dentro da LAN","Entre a LAN e a internet"],[["Switch",0],["Roteador",1],["Hub",0],["Modem",1]],"Switch e hub conectam dispositivos da LAN. Modem e roteador fazem a saída."),
-   VF("O switch substitui o roteador para acessar a internet.",false,"O switch só interliga dispositivos da LAN. A saída para a internet é do roteador.")]
- ]},
- {title:"Endereços IP e MAC",tag:"Iniciante · Etapa 4 de 6",c:0,caso:"print",names:["Endereço IP","IP público, privado e NAT","MAC, DHCP e máscara"],
-  tips:["IPv4: 32 bits, 4 octetos de 0 a 255. IPv6: 128 bits.","Faixas privadas: 10.x.x.x, 172.16 a 172.31 e 192.168.x.x. O NAT troca o IP privado pelo público.","MAC vem da fábrica. IP é atribuído pela rede, em geral pelo DHCP."],
+  [LN("Cabo de rede","O cabo de rede liga o aparelho direto no roteador. Por ser uma ligação física, costuma ser mais estável e rápido que o Wi-Fi. O cabo mais comum se chama UTP.",
+    [["Cabo de rede","Liga o aparelho ao roteador."],["UTP","O cabo mais comum, de fios trançados."],["Estável","Cai menos que o Wi-Fi."]]),
+   MC("Qual opção costuma ser mais estável para jogar ou trabalhar?","Cabo de rede",["Sinal de rádio","Bluetooth","Wi-Fi atrás de várias paredes"],"O cabo não sofre com paredes e interferência."),
+   VF("Um cabo de rede liga o computador diretamente ao roteador.",true,"É assim que funciona a ligação por cabo."),
+   MC("Como se chama o cabo de rede mais comum nas casas e escritórios?","UTP",["HDMI","USB-C","Cabo de antena"],"UTP é o cabo de rede mais usado."),
+   MP("Ligue a situação ao melhor meio",[["Computador de mesa fixo","Cabo"],["Celular na sala","Wi-Fi"],["Videogame que não sai do lugar","Cabo"]],"Cabo para o que fica parado, Wi-Fi para o que se move.")],
+  [LN("Wi-Fi","O Wi-Fi leva a internet pelo ar, sem fio. É prático, mas o sinal enfraquece com distância e paredes. Quanto mais longe do roteador, mais fraco.",
+    [["Wi-Fi","Rede sem fio."],["Sinal fraco","Longe do roteador ou atrás de paredes."],["Interferência","Outros aparelhos atrapalhando o sinal."]]),
+   MC("O que costuma deixar o Wi-Fi fraco?","Distância e paredes grossas",["Escolher uma cor diferente","Abrir mais abas","Ligar a luz"],"O sinal perde força no caminho."),
+   VF("Quanto mais longe do roteador, mais fraco costuma ficar o Wi-Fi.",true,"Sim, o sinal enfraquece com a distância."),
+   MC("O sinal está fraco no quarto. Qual atitude pode ajudar?","Aproximar-se do roteador",["Trocar de nome de usuário","Desligar o celular da tomada","Apagar fotos"],"Chegar mais perto melhora o sinal."),
+   CL("Cabo ou Wi-Fi?",["Cabo","Wi-Fi"],[["Liga com fio no roteador",0],["Funciona pelo ar",1],["Costuma ser mais estável",0],["Mais prático para celular",1]],"O cabo é estável. O Wi-Fi é prático.")],
+  [LN("Fibra óptica","A fibra óptica é um fio finíssimo que leva dados na forma de luz. É por ela que muita internet chega às casas hoje, e é muito rápida.",
+    [["Fibra óptica","Fio de vidro que leva dados com luz."],["Rápida","Alta velocidade de internet."],["Chega à casa","O provedor leva a fibra até o modem."]]),
+   MC("Como a fibra óptica leva os dados?","Com pulsos de luz",["Com energia da tomada","Com ondas de som","Com papel"],"A fibra transmite luz."),
+   VF("A fibra óptica é um meio de transmissão muito rápido.",true,"Sim, é um dos mais rápidos."),
+   MC("Seu provedor leva fibra até sua casa. Quem recebe essa fibra?","O modem",["O mouse","O teclado","O carregador"],"O modem recebe e converte o sinal."),
+   MP("Ligue cada meio à sua característica",[["Cabo UTP","Fios trançados de cobre"],["Fibra óptica","Luz dentro de um fio de vidro"],["Wi-Fi","Sinal pelo ar"]],"Cada meio leva os dados de um jeito.")]
+  ]},
+ {title:"O que é a internet",tag:"Seção 1 · Unidade 4",c:0,names:["Rede de redes","O provedor","Quem pede e quem responde"],
+  tips:["A internet é uma rede gigante que liga muitas redes.","O provedor (ISP) é a empresa que dá acesso à internet.","Cliente pede, servidor responde."],
   phases:[
-  [LN("Endereço IP","O endereço IP (Internet Protocol) identifica logicamente um dispositivo em uma rede, como o endereço de uma casa. No IPv4, ele tem 32 bits, escritos em 4 números de 0 a 255 separados por pontos (192.168.0.10). Cada dispositivo precisa de um IP único na sua rede. O IPv6 usa 128 bits, para ter endereços de sobra.",
-    [["IPv4","32 bits, em 4 octetos de 0 a 255. Ex.: 192.168.0.10."],["Octeto","Cada um dos 4 números do IPv4: 8 bits, de 0 a 255."],["IPv6","128 bits, escrito em hexadecimal. Foi criado porque os IPv4 acabaram."],["IP único","Dois dispositivos com o mesmo IP na mesma rede causam conflito."]]),
-   MC("Um endereço IPv4 é formado por quantos bits?","32 bits",["16 bits","48 bits","128 bits"],"O IPv4 tem 32 bits, divididos em 4 octetos de 8 bits."),
-   TY("Um endereço IPv6 tem quantos bits? (digite o número)",["128"],"Três algarismos","O IPv6 tem 128 bits."),
-   MC("Qual destes é um endereço IPv4 válido?","192.168.0.10",["256.10.0.1","192.168.0","casa.com.br"],"Cada octeto vai de 0 a 255 e são 4 octetos. 256 não é válido."),
-   FILL("Complete sobre o IPv4","Um endereço IPv4 tem ___ bits, divididos em ___ octetos.",["32","4"],["16","8"],"IPv4: 32 bits em 4 octetos."),
-   VF("Dois dispositivos na mesma rede podem usar o mesmo endereço IP ao mesmo tempo.",false,"O IP precisa ser único na rede. Repetido, causa conflito de endereço.")],
-  [LN("IP público, privado e NAT","Alguns blocos de IP são privados e usados só dentro das LANs: 10.0.0.0/8, 172.16.0.0/12 e 192.168.0.0/16. Eles não são roteados na internet. Os demais são públicos. Para sair à internet, o roteador usa o NAT (Network Address Translation), que troca o IP privado pelo público. O endereço 127.0.0.1 é o loopback: o próprio dispositivo.",
-    [["IP privado","Usado dentro da LAN: 10.x.x.x, 172.16 a 172.31 e 192.168.x.x."],["IP público","Válido na internet. Identifica a rede de casa ou o servidor."],["NAT","Network Address Translation: troca o IP privado pelo público ao sair."],["Loopback","127.0.0.1: o próprio dispositivo falando consigo mesmo."]]),
-   CL("Classifique cada endereço",["Privado","Público"],[["192.168.0.15",0],["10.0.0.7",0],["8.8.8.8",1],["200.150.10.5",1]],"192.168.x.x e 10.x.x.x são privados. Os demais, públicos."),
-   MC("Qual endereço é o loopback, que aponta para o próprio computador?","127.0.0.1",["192.168.0.1","8.8.8.8","255.255.255.0"],"127.0.0.1 é o loopback."),
-   TY("Qual é a sigla da técnica em que o roteador troca o IP privado pelo público?",["NAT"],"3 letras","NAT: Network Address Translation."),
-   VF("Um IP privado pode ser acessado diretamente por qualquer pessoa na internet.",false,"IPs privados só valem dentro da LAN. Para sair, passam pelo NAT."),
-   FILL("Complete sobre o NAT","O ___ traduz o IP privado da LAN em um IP ___ para sair à internet.",["NAT","público"],["DNS","privado"],"O NAT permite que vários dispositivos com IP privado usem um IP público.")],
-  [LN("MAC, DHCP e máscara","O endereço MAC é gravado de fábrica na placa de rede (48 bits, em hexadecimal, como A4:5E:60:C1:22:9B) e identifica o dispositivo na rede local. O IP, ao contrário, é atribuído pela rede e pode mudar. O DHCP (Dynamic Host Configuration Protocol) entrega IP, máscara, gateway e DNS automaticamente. A máscara de sub-rede (como 255.255.255.0) indica qual parte do IP é a rede e qual é o dispositivo.",
-    [["MAC","Vem de fábrica. Identifica a placa de rede na rede local."],["DHCP","Entrega IP, máscara, gateway e DNS automaticamente."],["Máscara de sub-rede","Separa a parte do IP que é rede da parte que é dispositivo."],["Notebook em outra rede","O MAC continua o mesmo. O IP muda."]]),
-   MP("Ligue cada item ao que ele faz",[["MAC","Identifica a placa de rede (48 bits)"],["IP","Identifica o dispositivo e pode mudar"],["DHCP","Entrega IP automaticamente"],["Máscara de sub-rede","Separa a parte da rede e a do dispositivo"]],"MAC é físico e fixo. IP, DHCP e máscara fazem parte da configuração da rede."),
-   MC("Você conecta um celular novo ao Wi-Fi e ele recebe um IP sozinho. Qual serviço fez isso?","DHCP",["DNS","NAT","Firewall"],"O DHCP entrega a configuração de rede automaticamente."),
-   TY("Qual é a sigla do protocolo que entrega IPs automaticamente aos dispositivos?",["DHCP"],"4 letras","DHCP: Dynamic Host Configuration Protocol."),
-   MC("Você leva o notebook do trabalho para casa. O que muda?","O endereço IP (o MAC continua o mesmo)",["O endereço MAC (o IP continua o mesmo)","Os dois continuam iguais","Os dois mudam"],"O MAC é da placa de rede. O IP é dado pela rede em que você se conecta."),
-   FILL("Complete sobre MAC e IP","O ___ vem de fábrica e identifica a placa de rede; o ___ é atribuído pela rede.",["MAC","IP"],["DNS","URL"],"MAC é fixo de fábrica. IP é atribuído pela rede.")]
- ]},
- {title:"DNS, portas e protocolos",tag:"Iniciante · Etapa 5 de 6",c:0,caso:"dns",names:["DNS e nomes de domínio","Portas e protocolos","TCP e UDP"],
-  tips:["DNS traduz nome de domínio em IP.","Portas: HTTP 80, HTTPS 443, SSH 22, DNS 53.","TCP é confiável (handshake SYN, SYN-ACK, ACK). UDP é rápido e sem garantia."],
+  [LN("Rede de redes","A internet não é uma coisa só: é uma rede gigante que liga milhões de redes menores, como a da sua casa e a de empresas. Por isso se diz que é uma rede de redes.",
+    [["Internet","Muitas redes ligadas entre si."],["Sua casa","Uma rede pequena dentro dela."],["Mundo todo","Redes de todos os países conectadas."]]),
+   MC("O que é a internet?","Uma rede gigante que liga muitas redes",["Um site famoso","Um cabo único mundial","Um programa do celular"],"A internet é uma rede de redes."),
+   VF("A rede da sua casa pode se conectar à internet.",true,"É isso que o roteador faz."),
+   MC("Por que a internet é chamada de rede de redes?","Porque liga muitas redes menores",["Porque só tem sites","Porque usa só um cabo","Porque é de uma empresa só"],"Ela conecta redes de casas, empresas e escolas."),
+   CL("É a internet ou é a sua LAN?",["Internet","LAN"],[["Liga redes do mundo todo",0],["Wi-Fi do seu apartamento",1],["Conecta países",0],["Rede de uma sala de aula",1]],"A LAN é local e a internet é global.")],
+  [LN("O provedor","Para sair da sua rede e chegar à internet, você contrata um provedor de internet (ISP, na sigla em inglês). Ele liga a sua casa ao resto da internet e cobra pelo serviço.",
+    [["Provedor","Empresa que dá acesso à internet."],["ISP","Sigla em inglês de provedor."],["Plano","Velocidade que você contrata."]]),
+   MC("Quem dá acesso à internet para a sua casa?","O provedor de internet",["O fabricante do celular","O fabricante da TV","O dono do site"],"O provedor (ISP) faz essa ligação."),
+   VF("O plano contratado define a velocidade máxima da internet.",true,"Sim, plano maior costuma significar velocidade maior."),
+   MC("A internet caiu na rua inteira. Quem provavelmente tem o problema?","O provedor",["O seu celular","O seu carregador","Seu aplicativo de música"],"Se cai para todo mundo, o problema costuma ser do provedor."),
+   MP("Ligue cada peça ao seu papel",[["Provedor","Dá acesso à internet"],["Roteador","Divide a internet em casa"],["Celular","Usa a internet"]],"O provedor entrega, o roteador divide e o aparelho usa.")],
+  [LN("Quem pede e quem responde","Quando você abre um site, seu aparelho é o cliente: ele pede a página. Do outro lado, um computador chamado servidor guarda o site e responde. É assim que a internet funciona.",
+    [["Cliente","Quem pede (seu celular ou PC)."],["Servidor","Quem guarda e entrega (o site)."],["Pedido e resposta","A conversa básica da internet."]]),
+   MC("Ao abrir um site, o que o seu celular é?","O cliente, que faz o pedido",["O servidor, que guarda o site","Um cabo de rede","Um provedor"],"O cliente pede e o servidor responde."),
+   VF("O servidor é o computador que guarda o site e responde aos pedidos.",true,"É assim mesmo."),
+   MC("Você assiste a um vídeo. Quem manda o vídeo para o seu celular?","Um servidor",["O seu roteador","Um cabo","O seu modem"],"Servidores guardam e enviam os vídeos."),
+   MP("Ligue cada papel",[["Cliente","Pede a página"],["Servidor","Entrega a página"],["Navegador","Mostra a página para você"]],"O cliente pede, o servidor entrega e o navegador mostra.")]
+  ]},
+ {title:"Endereço IP",tag:"Seção 1 · Unidade 5",c:0,caso:"print",names:["O endereço do aparelho","IP de casa e IP de fora","IP automático"],
+  tips:["IP é o endereço do aparelho na rede.","Dentro de casa os IPs são privados. Para a internet, a casa tem um IP público.","DHCP entrega o IP sozinho."],
   phases:[
-  [LN("DNS e nomes de domínio","As pessoas usam nomes, como exemplo.com.br (nome de domínio), mas a rede usa números (IP). O DNS (Domain Name System) traduz o nome de domínio no endereço IP do servidor, como a lista de contatos do celular. A URL (Uniform Resource Locator) é o endereço completo de um recurso, como https://exemplo.com.br/pagina.",
-    [["Nome de domínio","O nome fácil de lembrar, como exemplo.com.br."],["DNS","Domain Name System: traduz nome de domínio em endereço IP."],["URL","Endereço completo de um recurso: protocolo, domínio e caminho."],["Resolução de nomes","O processo de descobrir o IP de um nome de domínio."]]),
-   MC("O que o DNS faz?","Traduz nome de domínio em endereço IP",["Entrega IP automaticamente","Filtra o tráfego da rede","Aumenta a velocidade do Wi-Fi"],"O DNS resolve nomes de domínio em endereços IP."),
-   TY("Complete a sigla DNS: Domain Name ___",["System","Sistema"],"6 letras","DNS: Domain Name System."),
-   MP("Ligue cada termo do DNS ao seu significado",[["Nome de domínio","Nome fácil de lembrar do site"],["DNS","Traduz o nome em IP"],["URL","Endereço completo de um recurso"],["IP","Número que localiza o servidor"]],"O domínio é para pessoas, o IP é para a rede, e o DNS traduz um no outro."),
-   VF("Se só o DNS falhar, ainda é possível abrir o site digitando o IP dele.",true,"O servidor continua no ar. O que falhou foi a tradução do nome."),
-   MC("O Wi-Fi funciona, mas ao digitar o nome do site aparece \"não foi possível encontrar\". Qual serviço provavelmente falhou?","O DNS",["O switch","O firewall","O cabo UTP"],"A conexão existe. Falhou a resolução do nome em IP.")],
-  [LN("Portas e protocolos","Um protocolo é um conjunto de regras que define como os dispositivos se comunicam. O IP leva os dados até o dispositivo, e a porta identifica qual serviço deve atendê-los. HTTP usa a porta 80 (páginas sem criptografia). HTTPS usa a 443 (com criptografia). SSH usa a 22 (acesso remoto seguro). DNS usa a 53.",
-    [["Protocolo","Conjunto de regras de comunicação entre dispositivos."],["HTTP · 80","Carrega páginas web sem criptografia."],["HTTPS · 443","HTTP com criptografia. É o cadeado do navegador."],["SSH · 22","Acesso remoto seguro a outro dispositivo."],["DNS · 53","Resolução de nomes de domínio."]]),
-   MP("Ligue cada serviço à sua porta padrão",[["HTTP","80"],["HTTPS","443"],["SSH","22"],["DNS","53"]],"Cada serviço tem sua porta padrão."),
-   TY("Digite o número da porta padrão do HTTPS.",["443"],"Três algarismos","O HTTPS usa a porta 443."),
-   FILL("Complete sobre protocolos e portas","O ___ é um conjunto de regras de comunicação, e a ___ identifica o serviço no dispositivo.",["protocolo","porta"],["servidor","rota"],"Protocolo define as regras. A porta indica qual serviço atender."),
-   MC("Qual protocolo adiciona criptografia ao HTTP?","HTTPS",["DNS","DHCP","ICMP"],"O HTTPS é o HTTP com criptografia."),
-   CL("Classifique cada protocolo",["Com criptografia","Sem criptografia"],[["HTTPS (porta 443)",0],["SSH (porta 22)",0],["HTTP (porta 80)",1]],"HTTPS e SSH são criptografados. O HTTP não.")],
-  [LN("TCP e UDP","O TCP (Transmission Control Protocol) é confiável: abre a conexão com um handshake de 3 vias (SYN, SYN-ACK, ACK), confirma o recebimento, reenvia o que se perdeu e mantém a ordem. O UDP (User Datagram Protocol) é mais rápido, mas sem garantias: não confirma nem reenvia. O TCP serve para páginas web e e-mail. O UDP serve para videochamadas e jogos, onde o atraso incomoda mais que perder um pedaço.",
-    [["TCP","Confiável: confirma, reenvia e mantém a ordem. É mais pesado."],["UDP","Rápido e sem garantia. Usado em vídeo ao vivo e jogos."],["Handshake","SYN, SYN-ACK e ACK: o aperto de mão que abre a conexão TCP."],["Retransmissão","O TCP reenvia o que se perdeu. O UDP não."]]),
-   CL("Classifique cada característica",["TCP","UDP"],[["Confirma o recebimento e reenvia o que se perdeu",0],["Mais rápido, sem garantia de entrega",1],["Abre a conexão com handshake de 3 vias",0],["Comum em videochamadas e jogos online",1]],"O TCP prioriza a confiabilidade. O UDP prioriza a velocidade."),
-   BL("Coloque em ordem o handshake de 3 vias do TCP",["SYN","SYN-ACK","ACK"],"O cliente envia SYN, o servidor responde SYN-ACK e o cliente confirma com ACK."),
-   TY("Qual protocolo de transporte garante a entrega e a ordem dos dados?",["TCP"],"3 letras","O TCP usa confirmações e retransmissão."),
-   FILL("Complete sobre TCP e UDP","O ___ é confiável e reenvia dados perdidos; o ___ é mais rápido, mas sem garantia.",["TCP","UDP"],["DNS","HTTP"],"TCP: confiável. UDP: rápido."),
-   MC("Uma videochamada ao vivo precisa de velocidade e tolera pequenas perdas. Qual protocolo costuma ser escolhido?","UDP",["TCP","DNS","SSH"],"No ao vivo, atraso incomoda mais que perder um pedaço, por isso o UDP.")]
- ]},
- {title:"Pacotes e diagnóstico",tag:"Iniciante · Etapa 6 de 6",c:0,names:["Pacotes","Abrindo um site passo a passo","Ferramentas de diagnóstico"],
-  tips:["Os dados viajam em pacotes, com cabeçalho e carga (payload).","Abrir um site: DNS, gateway, internet, servidor, resposta.","ping testa e mede latência. ipconfig mostra IP, máscara e gateway. nslookup consulta o DNS."],
+  [LN("O endereço do aparelho","Todo aparelho na rede recebe um número que o identifica, o endereço IP (IP significa Protocolo de Internet). É como o endereço de uma casa: serve para os dados saberem para onde ir. Exemplo: 192.168.0.10.",
+    [["IP","Endereço do aparelho na rede."],["Quatro números","Separados por pontos, como 192.168.0.10."],["Único","Cada aparelho tem o seu, na mesma rede."]]),
+   MC("Para que serve o endereço IP?","Identificar o aparelho na rede",["Trocar a cor do Wi-Fi","Mudar o volume","Salvar fotos"],"O IP diz para onde os dados devem ir."),
+   MC("Qual destes parece um endereço IP?","192.168.0.10",["Pingo.quest","12 de março","Wi-Fi_casa"],"O IP tem quatro números separados por pontos."),
+   VF("Dois aparelhos da mesma rede podem ter exatamente o mesmo IP sem problema.",false,"Isso causa conflito. Cada aparelho precisa de um IP próprio."),
+   MP("Ligue cada exemplo",[["Endereço de casa","Diz onde a casa fica"],["Endereço IP","Diz onde o aparelho está na rede"],["Número da placa","Identifica o carro"]],"O IP é como o endereço do aparelho na rede.")],
+  [LN("IP de casa e IP de fora","Dentro da sua casa, os aparelhos usam IPs privados, como 192.168.0.10. Eles só valem ali dentro. Para a internet, a casa inteira aparece com um só IP público, fornecido pelo provedor.",
+    [["IP privado","Vale só dentro da rede de casa."],["IP público","Identifica sua casa na internet."],["192.168...","Começo comum de IP privado."]]),
+   MC("Qual destes é um IP privado, de uma rede de casa?","192.168.0.15",["8.8.8.8","200.10.5.1","1.1.1.1"],"192.168.x.x é uma faixa privada."),
+   VF("O IP privado do seu celular pode ser acessado diretamente por qualquer pessoa na internet.",false,"Ele só vale dentro da rede da casa."),
+   MC("Quantos IPs públicos a sua casa costuma mostrar para a internet?","Um só, o do roteador",["Um por aparelho","Nenhum","Mil"],"O roteador representa toda a casa na internet."),
+   CL("IP privado ou público?",["Privado","Público"],[["192.168.1.20",0],["10.0.0.5",0],["8.8.8.8",1],["200.150.10.1",1]],"192.168 e 10 são privados. Os outros são públicos.")],
+  [LN("IP automático e MAC","Quando você entra no Wi-Fi, o roteador entrega um IP automaticamente. Quem faz isso se chama DHCP. Já o MAC é o número de série da placa de rede: vem de fábrica e não muda.",
+    [["DHCP","Entrega o IP sozinho."],["MAC","Número de série da placa de rede."],["IP muda","MAC não muda."]]),
+   MC("Você entra no Wi-Fi de um amigo e já navega, sem digitar nenhum número. Quem entregou o seu IP?","O DHCP do roteador",["O seu navegador","A sua câmera","O seu teclado"],"O DHCP entrega o IP automaticamente."),
+   VF("O endereço MAC é o número de série da placa de rede e vem de fábrica.",true,"É isso. O IP é que pode mudar."),
+   MC("Qual das duas identificações pode mudar quando você troca de rede?","O IP",["O MAC","O nome do fabricante","O número de série"],"O IP muda de rede para rede. O MAC fica."),
+   MP("Ligue cada sigla",[["IP","Endereço na rede"],["MAC","Número de série da placa"],["DHCP","Entrega IP automático"]],"IP é endereço, MAC é número de série e DHCP entrega IP.")]
+  ]},
+ {title:"Nomes de sites",tag:"Seção 1 · Unidade 6",c:0,caso:"dns",names:["Nome ou número?","A lista de contatos","Quando o site não abre"],
+  tips:["DNS traduz o nome do site em número (IP).","O DNS funciona como a agenda de contatos da internet.","Se o DNS falha, o nome não abre, mas o número pode abrir."],
   phases:[
-  [LN("Pacotes","Os dados não viajam inteiros: são divididos em pacotes (packets). Cada pacote leva um cabeçalho (header), com origem, destino e informações de controle, e uma parte de dados, a carga útil (payload). Os pacotes podem seguir caminhos diferentes e são remontados na ordem certa no destino.",
-    [["Pacote","Bloco de dados que viaja pela rede com cabeçalho e carga."],["Cabeçalho","Origem, destino e informações de controle do pacote."],["Payload","A carga útil: a parte dos dados que o pacote transporta."],["Remontagem","No destino, os pacotes são reorganizados na ordem correta."]]),
-   MC("Como os dados trafegam por uma rede?","Divididos em pacotes",["Em um único bloco, sem divisão","Apenas em formato de texto","Somente por cabo"],"Os dados são divididos em pacotes e remontados no destino."),
-   FILL("Complete sobre o pacote","Cada pacote tem um ___ com origem e destino e uma parte de ___, chamada payload.",["cabeçalho","dados"],["rodapé","vírus"],"O cabeçalho guarda origem e destino. O payload guarda os dados."),
-   TY("Como se chama, em português, o bloco de dados que viaja pela rede com cabeçalho e carga?",["pacote","packet"],"6 letras","Pacote (packet) é o bloco de dados da rede."),
-   VF("Todos os pacotes de um arquivo precisam seguir exatamente o mesmo caminho até o destino.",false,"Eles podem seguir caminhos diferentes e são remontados no destino."),
-   MP("Ligue cada parte do pacote à sua função",[["Cabeçalho","Origem, destino e controle"],["Payload","Os dados transportados"],["Pacote","Bloco de dados que viaja"],["Remontagem","Reorganizar os pacotes no destino"]],"O pacote carrega os dados e as informações para entregá-los.")],
-  [LN("Abrindo um site passo a passo","Ao digitar o endereço de um site: 1) o navegador consulta o DNS para descobrir o IP do domínio; 2) o pedido sai da LAN pelo gateway; 3) atravessa a internet até o servidor (por TCP, na porta 443 se for HTTPS); 4) o servidor devolve a página em pacotes; 5) o navegador monta e exibe o site.",
-    [["Passo 1","O navegador consulta o DNS para descobrir o IP."],["Passo 2","O pedido sai da LAN pelo gateway."],["Passo 3","O pedido atravessa a internet até o servidor."],["Passo 4 e 5","O servidor devolve a página em pacotes e o navegador a exibe."]]),
-   BL("Monte os passos para abrir um site",["Navegador consulta o DNS","Pedido sai pelo gateway","Servidor recebe a requisição","Servidor devolve a página","Navegador exibe o site"],"Primeiro o IP, depois a saída da LAN, o servidor responde e o navegador exibe."),
-   MC("Qual é a primeira etapa ao digitar o nome de um site no navegador?","Descobrir o IP do domínio pelo DNS",["Baixar a página inteira","Enviar o pedido ao servidor","Trocar o IP do roteador"],"Sem o IP, o navegador não sabe para onde enviar o pedido."),
-   MC("Por onde o pedido sai da sua LAN em direção à internet?","Pelo gateway padrão (roteador)",["Pelo switch","Pelo hub","Pelo cabo de energia"],"O gateway é a saída da LAN para outras redes."),
-   FILL("Complete sobre abrir um site","O navegador consulta o ___ para descobrir o ___ do servidor.",["DNS","IP"],["MAC","switch"],"O DNS devolve o IP do domínio."),
-   MC("O site abre normalmente e o endereço mostra HTTPS. Qual porta padrão está sendo usada?","443",["80","22","53"],"O HTTPS usa a porta 443.")],
-  [LN("Ferramentas de diagnóstico","Quatro ferramentas básicas: o ping testa se um destino responde e mede a latência (usa o protocolo ICMP). O ipconfig (Windows) ou ip a (Linux) mostra o IP, a máscara e o gateway do computador. O tracert (Windows) ou traceroute (Linux) mostra os roteadores do caminho. O nslookup consulta o DNS.",
-    [["ping","Testa se o destino responde e mede a latência."],["ipconfig","Mostra IP, máscara e gateway no Windows."],["tracert","Mostra os roteadores pelo caminho até o destino."],["nslookup","Consulta o DNS e mostra o IP de um nome de domínio."]]),
-   MP("Ligue cada comando à sua função",[["ping","Testa se o destino responde"],["ipconfig","Mostra IP, máscara e gateway"],["tracert","Mostra os roteadores do caminho"],["nslookup","Consulta o DNS"]],"Cada comando investiga uma parte da rede."),
-   MC("Você quer saber se um servidor responde e quanto tempo demora. Qual comando usar?","ping",["ipconfig","nslookup","tracert"],"O ping testa a resposta e mede a latência."),
-   TY("Qual comando do Windows mostra o IP, a máscara e o gateway do computador?",["ipconfig"],"8 letras","O ipconfig mostra a configuração de rede no Windows."),
-   MC("O site não abre pelo nome, mas o ping para o IP 8.8.8.8 funciona. Onde está o problema?","Na resolução de nomes (DNS)",["No cabo de rede","Na placa de rede","No switch"],"A conexão com a internet funciona. Falha só a tradução do nome."),
-   FILL("Complete sobre o ping","O ___ testa se um destino responde e mede a ___.",["ping","latência"],["DNS","banda"],"O ping mede a latência.")]
- ]}
+  [LN("Nome ou número?","Os sites têm nome, como pingoquest.com, mas os computadores se encontram pelos números, os IPs. Para ligar um ao outro, existe o DNS: o tradutor que descobre o número a partir do nome.",
+    [["Nome","O que você digita."],["IP","O número que o computador usa."],["DNS","Traduz nome em número."]]),
+   MC("O que o DNS faz?","Traduz o nome do site em endereço IP",["Aumenta a velocidade do Wi-Fi","Apaga vírus","Muda a senha do roteador"],"O DNS descobre o IP do nome que você digitou."),
+   VF("Você digita o nome do site, e por trás o computador usa o IP.",true,"É isso mesmo."),
+   MC("Por que não precisamos decorar o IP dos sites?","Porque o DNS traduz os nomes",["Porque IP não existe","Porque o celular adivinha","Porque o site avisa"],"O DNS cuida disso para a gente."),
+   MP("Ligue cada item",[["Nome do site","O que a gente digita"],["IP","O número que o computador usa"],["DNS","Faz a tradução"]],"O DNS liga o nome ao número.")],
+  [LN("A lista de contatos","Pense no DNS como a lista de contatos do celular. Você toca no nome da pessoa e o celular liga para o número. Na internet, você digita o nome do site e o DNS acha o número.",
+    [["Lista de contatos","Guarda nome e número."],["DNS","Guarda nome de site e IP."],["Consulta","O navegador pergunta ao DNS."]]),
+   MC("Qual comparação descreve bem o DNS?","A lista de contatos do celular",["Uma lanterna","Um cabo de força","Uma foto"],"Nome para número, igual aos contatos."),
+   VF("Quando você digita um site, o navegador primeiro consulta o DNS.",true,"Primeiro descobre o IP e depois pede a página."),
+   MC("Qual o primeiro passo ao abrir um site pelo nome?","Descobrir o IP pelo DNS",["Baixar a página inteira","Trocar o IP do roteador","Desligar o Wi-Fi"],"Sem o IP, o pedido não sabe para onde ir."),
+   CL("Nome ou número?",["Nome","Número (IP)"],[["google.com",0],["pingoquest.com",0],["142.250.0.1",1],["8.8.8.8",1]],"Nomes são para pessoas, números são para computadores.")],
+  [LN("Quando o site não abre","Às vezes o site não abre, mas outros funcionam. Pode ser problema no DNS, no site ou na sua internet. Se alguns sites abrem e outros não, a internet está funcionando.",
+    [["Só um site","Provavelmente o problema é do site."],["Nenhum site","Provavelmente é a sua internet."],["DNS","Pode estar com problema, e o nome não é traduzido."]]),
+   MC("Só um site não abre e todos os outros abrem normalmente. O que isso sugere?","Problema no site, não na sua internet",["Seu roteador queimou","Seu celular está sem bateria","Você está sem provedor"],"Se os outros sites abrem, sua internet está boa."),
+   VF("Se nenhum site abre, o problema provavelmente é na sua conexão.",true,"Quando nada abre, comece verificando a conexão."),
+   MC("Você tenta abrir um site e aparece erro de nome não encontrado. Qual serviço provavelmente falhou?","O DNS",["O teclado","A tela","O carregador"],"Nome não encontrado costuma ser falha de DNS."),
+   MP("Ligue o sintoma à possível causa",[["Nenhum site abre","Sua conexão caiu"],["Só um site não abre","Problema nesse site"],["Nome não encontrado","DNS com falha"]],"Cada sintoma aponta para uma causa diferente.")]
+  ]},
+ {title:"Dados e velocidade",tag:"Seção 1 · Unidade 7",c:0,caso:"lenta",names:["Bits e dados","Pacotes","Velocidade e atraso"],
+  tips:["Dados são feitos de bits: zeros e uns.","Os dados viajam em pedacinhos chamados pacotes.","Banda é a velocidade. Latência (ping) é o atraso."],
+  phases:[
+  [LN("Bits e dados","Tudo o que passa pela rede, como foto, vídeo e mensagem, vira zeros e uns. Cada zero ou um é um bit. Juntando muitos bits, formamos os dados.",
+    [["Bit","Um zero ou um um (0 ou 1)."],["Dados","Muitos bits juntos."],["Tudo vira bit","Foto, vídeo e texto."]]),
+   MC("Como a informação viaja pela rede?","Em forma de zeros e uns (bits)",["Em forma de desenhos","Em forma de cores","Em forma de papel"],"Tudo vira bits."),
+   VF("Uma foto enviada pela rede é transformada em bits.",true,"Sim, tudo vira zeros e uns."),
+   MC("Qual é o menor pedaço de informação digital?","O bit",["O site","O pacote","O roteador"],"O bit é a menor unidade."),
+   MP("Ligue cada termo",[["Bit","Um zero ou um um"],["Dados","Muitos bits juntos"],["Arquivo","Dados guardados com um nome"]],"Bits formam dados e arquivos.")],
+  [LN("Pacotes","Para viajar pela rede, os dados são cortados em pedacinhos chamados pacotes. Cada pacote leva o endereço de destino, como uma encomenda. No destino, eles são montados de novo.",
+    [["Pacote","Pedacinho de dados com endereço."],["Destino","Onde o pacote precisa chegar."],["Montagem","Os pacotes se juntam no fim."]]),
+   MC("O que é um pacote de rede?","Um pedacinho dos dados com endereço de destino",["Um cabo embrulhado","Uma caixa de roteador","Um programa novo"],"Dados viajam em pacotes."),
+   VF("Um vídeo grande viaja cortado em vários pacotes.",true,"Isso mesmo, depois eles se juntam no destino."),
+   MC("Um pacote chega fora de ordem. O que acontece no destino?","Os pacotes são colocados na ordem certa",["O vídeo é apagado","A internet desliga","O roteador muda de cor"],"Na chegada eles são reorganizados."),
+   MP("Ligue o pacote à comparação",[["Pacote","Encomenda com endereço"],["Rede","Estrada dos Correios"],["Destino","Casa de quem recebe"]],"Os pacotes viajam como encomendas.")],
+  [LN("Velocidade e atraso","Banda é a velocidade da sua internet, em megabits por segundo (Mb/s): quanto maior, mais dados passam. Latência é o atraso: o tempo que a informação leva para ir e voltar. O ping mede esse atraso.",
+    [["Banda","Velocidade da internet (Mb/s)."],["Latência","Atraso, em milissegundos (ms)."],["Ping","Mede a latência."]]),
+   MC("O que mede a banda da internet?","A quantidade de dados que passa por segundo",["A cor do roteador","O tamanho do cabo","O número de aparelhos"],"Banda é a velocidade."),
+   VF("Um ping alto significa mais atraso na conexão.",true,"Ping baixo é melhor para jogos e chamadas."),
+   MC("Qual situação sofre mais com latência alta?","Jogo online",["Ler um PDF salvo","Ver uma foto já baixada","Apagar um arquivo"],"Jogos precisam de resposta rápida."),
+   MP("Ligue cada palavra ao significado",[["Banda","Quanto passa por segundo"],["Latência","Tempo de ida e volta"],["Ping","Teste de atraso"]],"Banda é quantidade, latência é tempo.")]
+  ]},
+ {title:"Equipamentos da rede",tag:"Seção 1 · Unidade 8",c:0,caso:"office",names:["O switch","Ponto de acesso e repetidor","O mapa da rede"],
+  tips:["Switch liga vários aparelhos por cabo.","Ponto de acesso espalha Wi-Fi. Repetidor aumenta o alcance.","Cada equipamento tem seu papel no caminho da internet."],
+  phases:[
+  [LN("O switch","O switch é como uma extensão com inteligência: liga vários aparelhos por cabo na mesma rede e envia os dados só para quem precisa. É muito usado em escritórios.",
+    [["Switch","Liga vários aparelhos por cabo."],["Portas","Cada aparelho em uma."],["Escritório","Lugar onde é muito comum."]]),
+   MC("Qual equipamento liga vários computadores por cabo na mesma rede?","Switch",["Mouse","Webcam","Pen drive"],"O switch cria várias portas de rede."),
+   VF("O switch envia os dados apenas para o aparelho que precisa receber.",true,"Ele é eficiente: não grita para todo mundo."),
+   MC("Um escritório tem 20 computadores por cabo. O que ajuda a ligar todos?","Um switch",["Uma lâmpada","Um relógio","Um monitor extra"],"O switch dá portas para muitos aparelhos."),
+   MP("Ligue o equipamento à função",[["Switch","Liga aparelhos por cabo"],["Roteador","Liga a rede à internet"],["Modem","Recebe a internet do provedor"]],"Cada um tem seu papel.")],
+  [LN("Ponto de acesso e repetidor","O ponto de acesso espalha Wi-Fi em um lugar onde o sinal não chega bem, ligado por cabo. O repetidor pega o sinal que já existe e repete para ir mais longe.",
+    [["Ponto de acesso","Cria Wi-Fi, ligado por cabo."],["Repetidor","Repete o sinal existente."],["Alcance","Distância que o Wi-Fi cobre."]]),
+   MC("O Wi-Fi não chega ao fundo da casa. O que pode ajudar?","Um repetidor de sinal",["Uma lâmpada maior","Um mouse novo","Um teclado sem fio"],"O repetidor aumenta o alcance."),
+   VF("O ponto de acesso ligado por cabo costuma dar um Wi-Fi mais estável que o repetidor.",true,"Por usar cabo, ele recebe a internet melhor."),
+   MC("Qual equipamento repete o sinal Wi-Fi que já existe?","Repetidor",["Switch","Modem","Impressora"],"Repetir o sinal é a função dele."),
+   CL("Qual equipamento resolve melhor?",["Repetidor","Ponto de acesso"],[["Sinal fraco no quarto, sem cabo disponível",0],["Escritório com cabo passando por todas as salas",1],["Aumentar rápido o alcance",0],["Wi-Fi mais estável em um andar",1]],"Repetidor é prático. Ponto de acesso é mais estável.")],
+  [LN("O mapa da rede","O caminho da internet em casa costuma ser assim: provedor, modem, roteador e, por fim, os aparelhos. Se um deles falha, tudo depois dele para de funcionar.",
+    [["Provedor","Começo do caminho."],["Modem e roteador","Recebem e dividem a internet."],["Aparelhos","Fim do caminho."]]),
+   MC("Qual a ordem do caminho da internet em casa?","Provedor, modem, roteador, aparelhos",["Aparelhos, modem, provedor, roteador","Roteador, aparelhos, provedor, modem","Modem, aparelhos, roteador, provedor"],"A internet vem do provedor até os aparelhos."),
+   VF("Se o modem estiver desligado, nenhum aparelho recebe internet.",true,"Sem modem, a internet não entra."),
+   MC("O Wi-Fi aparece, mas nenhum site abre. Qual parte do caminho vale checar primeiro?","O modem e a conexão com o provedor",["O fone de ouvido","O teclado","A foto de perfil"],"O Wi-Fi pode existir mesmo sem internet chegando."),
+   MP("Ligue cada parte ao que acontece se ela falhar",[["Modem desligado","Sem internet em casa"],["Roteador desligado","Sem Wi-Fi em casa"],["Celular sem Wi-Fi ligado","Só ele fica sem rede"]],"Cada falha afeta uma parte diferente.")]
+  ]},
+ {title:"Tipos de rede",tag:"Seção 1 · Unidade 9",c:0,names:["PAN e LAN","MAN e WAN","Como ligar a rede"],
+  tips:["PAN é a menor: em volta de você. LAN é de um lugar.","MAN cobre uma cidade. WAN cobre grandes distâncias.","Na estrela, todos se ligam em um aparelho central."],
+  phases:[
+  [LN("PAN e LAN","As redes têm tamanhos diferentes. A PAN (Personal Area Network) é a rede pessoal, de poucos metros, como o celular com o fone Bluetooth. A LAN (Local Area Network) é a rede de um lugar, como sua casa.",
+    [["PAN","Rede pessoal, bem pertinho."],["LAN","Rede local, de um lugar."],["Bluetooth","Exemplo de PAN."]]),
+   MC("Celular conectado ao fone por Bluetooth forma qual tipo de rede?","PAN (rede pessoal)",["WAN","MAN","Internet"],"É uma rede bem pequena, em volta de você."),
+   VF("O Wi-Fi do apartamento é um exemplo de LAN.",true,"Sim, é uma rede local."),
+   MC("Qual das duas é maior?","LAN",["PAN","Elas têm o mesmo tamanho","Nenhuma tem tamanho"],"A LAN cobre um local inteiro. A PAN é bem menor."),
+   CL("PAN ou LAN?",["PAN","LAN"],[["Fone Bluetooth no celular",0],["Rede de uma escola",1],["Smartwatch e celular",0],["Wi-Fi do escritório",1]],"PAN é pessoal. LAN é de um lugar.")],
+  [LN("MAN e WAN","A MAN (Metropolitan Area Network) cobre uma cidade. A WAN (Wide Area Network) cobre grandes distâncias, como cidades ou países. A internet é a maior WAN do mundo.",
+    [["MAN","Rede de uma cidade."],["WAN","Rede de grandes distâncias."],["Internet","A maior WAN do mundo."]]),
+   MC("Qual rede liga filiais de uma empresa em cidades diferentes?","WAN",["PAN","LAN","Bluetooth"],"WAN cobre grandes distâncias."),
+   VF("A MAN cobre uma cidade.",true,"É isso: Metropolitan Area Network."),
+   MC("Qual é a maior rede do mundo?","A internet",["A sua LAN","O fone Bluetooth","Uma PAN"],"A internet liga redes do mundo todo."),
+   MP("Ligue cada sigla ao alcance",[["PAN","Pertinho de você"],["LAN","Um lugar"],["MAN","Uma cidade"],["WAN","Países e continentes"]],"O tamanho aumenta de PAN até WAN.")],
+  [LN("Como ligar a rede","Existem várias formas de ligar os aparelhos. A mais comum hoje é a estrela: todos ligados a um aparelho central, como o switch ou o roteador. Se um cabo falha, só um aparelho cai.",
+    [["Estrela","Todos ligados a um centro."],["Centro","Roteador ou switch."],["Vantagem","Um problema não derruba todo mundo."]]),
+   MC("Em uma rede em estrela, como os aparelhos se ligam?","Todos a um aparelho central",["Um no outro, em fila","Sem nenhuma ligação","Só por Bluetooth"],"O centro liga todo mundo."),
+   VF("Na rede em estrela, se um cabo falhar só o aparelho dele fica sem rede.",true,"Esse é o ponto forte da estrela."),
+   MC("Qual aparelho costuma ficar no centro de uma rede doméstica?","O roteador",["O monitor","O teclado","O carregador"],"O roteador é o centro da rede da casa."),
+   CL("Em uma rede em estrela:",["Verdade","Mito"],[["Existe um aparelho central",0],["Todos ligam no centro",0],["Um cabo ruim derruba todos",1],["É comum em casas e escritórios",0]],"Na estrela, um cabo com problema só afeta um aparelho.")]
+  ]},
+ {title:"Segurança básica",tag:"Seção 1 · Unidade 10",c:0,names:["Senha do Wi-Fi","O cadeado do site","Hábitos seguros"],
+  tips:["Senha forte e só para quem precisa.","HTTPS (cadeado) protege a conversa com o site.","Cuidado com Wi-Fi público e links estranhos."],
+  phases:[
+  [LN("Senha do Wi-Fi","A senha do Wi-Fi impede que desconhecidos usem a sua internet e vejam o que passa pela sua rede. Prefira uma senha longa e não use datas óbvias ou o nome da família.",
+    [["Senha forte","Longa e difícil de adivinhar."],["Rede aberta","Sem senha: qualquer um entra."],["Troca","Mude se compartilhou com muita gente."]]),
+   MC("Por que o Wi-Fi da casa deve ter senha?","Para impedir que desconhecidos usem a sua rede",["Para a internet ficar mais bonita","Para o roteador gastar menos","Para os sites abrirem mais rápido"],"A senha protege a rede."),
+   VF("Uma senha longa e difícil de adivinhar é mais segura.",true,"Sim, evite datas e nomes óbvios."),
+   MC("Qual destas é a senha mais fraca?","123456",["Uma frase longa com números","Uma sequência aleatória longa","Quatro palavras sem relação"],"Sequências simples são fáceis de adivinhar."),
+   CL("Senha forte ou fraca?",["Forte","Fraca"],[["12345678",1],["Nome do cachorro + data de nascimento",1],["Frase longa e esquisita com números",0],["Sequência aleatória de 14 caracteres",0]],"Evite o óbvio e prefira longa.")],
+  [LN("O cadeado do site","Quando o endereço do site começa com HTTPS e aparece um cadeado, a conversa entre você e o site é protegida. Em sites sem cadeado, evite digitar senhas e dados do cartão.",
+    [["HTTPS","Versão protegida do HTTP."],["Cadeado","Sinal de conexão protegida."],["Sem cadeado","Não digite dados importantes."]]),
+   MC("O que o cadeado no navegador indica?","Que a conexão com o site é protegida",["Que o site é de graça","Que o site é famoso","Que o site é rápido"],"O HTTPS protege a conversa."),
+   VF("Em site sem cadeado, é melhor não digitar senha nem dados de cartão.",true,"Sem proteção, outras pessoas podem ver o que você envia."),
+   MC("Qual endereço é protegido?","https://banco.com.br",["http://banco.com.br","banco.com.br sem cadeado","um site com alerta de insegurança"],"HTTPS é a versão protegida."),
+   MP("Ligue cada situação à atitude",[["Site com cadeado","Pode confiar mais na conexão"],["Site sem cadeado","Evite digitar senhas"],["Link estranho por mensagem","Não clique"]],"Cadeado ajuda, mas cuidado com links estranhos mesmo assim.")],
+  [LN("Hábitos seguros","Pequenos cuidados evitam muito problema: atualizar o celular e o roteador, desconfiar de links estranhos e evitar digitar senhas em Wi-Fi público, como o de aeroportos e cafés.",
+    [["Atualizar","Corrige falhas de segurança."],["Wi-Fi público","Evite senhas e banco nele."],["Link estranho","Desconfie e não clique."]]),
+   MC("Qual hábito ajuda a manter o celular seguro?","Manter o sistema atualizado",["Nunca desligar o aparelho","Usar a mesma senha em tudo","Aceitar todo convite"],"Atualizações corrigem falhas."),
+   VF("Wi-Fi público é um bom lugar para acessar o aplicativo do banco.",false,"Em Wi-Fi público, evite acessar dados sensíveis."),
+   MC("Você recebe uma mensagem com um link que promete um prêmio. O que fazer?","Não clicar e apagar a mensagem",["Clicar rápido para garantir","Enviar para todos os contatos","Responder com sua senha"],"Prêmios inesperados costumam ser golpe."),
+   CL("Bom hábito ou risco?",["Bom hábito","Risco"],[["Atualizar o celular",0],["Usar senha longa",0],["Clicar em link estranho",1],["Passar a senha do Wi-Fi para qualquer um",1]],"Cuidados simples evitam dores de cabeça.")]
+  ]}
 ];
-
+/* 5ª pergunta de cada fase (a Fase 2 conta 5 acertos seguidos) */
+var ADD5=[
+ [MC("Qual par forma uma rede, mesmo sem internet?","Celular e TV trocando uma foto",["Dois livros na mesa","Uma lâmpada e uma tomada","Um mouse sem pilha"],"Dois aparelhos trocando informação já formam uma rede."),
+  MC("Para quê serve compartilhar a internet em uma rede?","Para vários aparelhos usarem a mesma conexão",["Para o celular não precisar de bateria","Para deixar a casa mais fria","Para trocar a senha do banco"],"A rede reparte a internet entre os aparelhos."),
+  MC("Qual é o nome do aparelho ligado à rede, como o seu celular?","Host",["Cabo","Provedor","Sinal"],"Host é qualquer aparelho conectado.")],
+ [MC("Onde uma rede local (LAN) costuma existir?","Em uma casa, escola ou escritório",["No mundo inteiro ao mesmo tempo","Dentro do cabo de energia","Só em satélites"],"A LAN fica em um lugar."),
+  MC("Quem cria o sinal Wi-Fi da sua casa na maioria dos casos?","O roteador",["O teclado","O monitor","O carregador"],"O roteador espalha o Wi-Fi."),
+  MC("O que o modem faz?","Recebe a internet que vem do provedor",["Imprime documentos","Toca música","Mostra vídeos"],"Ele faz a ligação com o provedor.")],
+ [MC("Qual opção costuma ser mais estável: cabo ou Wi-Fi?","O cabo",["O Wi-Fi sempre","Os dois sempre iguais","Nenhum funciona"],"O cabo sofre menos interferência."),
+  MC("Qual destes atrapalha o sinal do Wi-Fi?","Paredes grossas",["Um copo d'água","Um quadro de foto","Uma planta pequena"],"Paredes grossas enfraquecem o sinal."),
+  MC("Qual meio de transmissão usa luz?","Fibra óptica",["Cabo UTP","Wi-Fi","Bluetooth"],"A fibra leva os dados em pulsos de luz.")],
+ [MC("Como podemos descrever a internet?","Uma rede de redes, que liga muitas redes do mundo",["Um site","Um programa de celular","Um cabo único"],"A internet interliga milhões de redes."),
+  MC("Quem fornece o acesso à internet?","O provedor",["O celular","O roteador sozinho","A TV"],"O provedor (ISP) faz essa ligação."),
+  MC("Quando você abre um site, quem pede a página?","O cliente (seu aparelho)",["O servidor","O cabo","O provedor"],"O cliente pede e o servidor responde.")],
+ [MC("O endereço IP identifica o quê?","O aparelho na rede",["A cor do cabo","O nome do provedor","O volume do som"],"O IP é o endereço do aparelho."),
+  MC("Quem entrega o IP automaticamente quando você entra no Wi-Fi?","O DHCP",["O teclado","O monitor","O cabo de rede"],"DHCP entrega IP sozinho."),
+  MC("O que o endereço MAC é?","O número de série da placa de rede",["O nome do Wi-Fi","A senha do roteador","O endereço do site"],"O MAC vem de fábrica.")],
+ [MC("Qual é o trabalho do DNS na internet?","Descobre o número (IP) a partir do nome do site",["Aumenta a bateria","Limpa o histórico","Troca a senha"],"DNS traduz nome em número."),
+  MC("Qual é a comparação mais próxima do DNS?","Uma lista de contatos",["Um carregador","Um fone","Uma lanterna"],"Nome leva ao número."),
+  MC("Só um site não abre, e os outros abrem. O que isso sugere?","O problema está nesse site",["Sua internet caiu","O roteador queimou","O celular quebrou"],"Se outros sites abrem, sua conexão está ok.")],
+ [MC("Em que forma uma mensagem viaja pelo cabo?","Em bits, zeros e uns",["Em papel","Em ondas de voz","Em desenhos"],"Tudo vira bits."),
+  MC("O que é um pacote?","Um pedaço dos dados com endereço de destino",["Um cabo especial","Um aplicativo","Uma senha"],"Os dados viajam em pacotes."),
+  MC("O que mede o ping?","O atraso (latência) da conexão",["A cor do Wi-Fi","O tamanho do arquivo","A senha"],"Ping baixo significa pouco atraso.")],
+ [MC("Qual equipamento liga vários aparelhos por cabo na mesma rede?","Switch",["Mouse","Webcam","Teclado"],"O switch tem várias portas."),
+  MC("O que o repetidor faz?","Repete o sinal Wi-Fi para ir mais longe",["Cria um site","Troca o IP","Aumenta a bateria"],"Ele aumenta o alcance do sinal."),
+  MC("Por onde a internet passa até chegar ao seu celular?","Provedor, modem, roteador, aparelhos",["Aparelhos, roteador, modem, provedor","Roteador, provedor, aparelhos, modem","Modem, aparelhos, provedor, roteador"],"Vem do provedor até os aparelhos.")],
+ [MC("A rede entre celular e fone Bluetooth é uma...","PAN",["WAN","MAN","Internet"],"É uma rede pessoal."),
+  MC("A WAN cobre...","Grandes distâncias, como cidades ou países",["Uma mesa","Um bolso","Uma sala"],"WAN é a rede de longa distância."),
+  MC("Na rede em estrela, o que fica no centro?","Um aparelho central, como o roteador ou o switch",["Um computador qualquer","Um cabo único","Nada"],"Todos ligam no centro.")],
+ [MC("Qual é a senha de Wi-Fi mais forte?","Uma frase longa com números",["12345678","Seu nome","A data de aniversário"],"Longa e imprevisível é melhor."),
+  MC("O que o cadeado do site indica?","A conexão é protegida (HTTPS)",["O site é gratuito","O site é novo","O site é lento"],"HTTPS protege a conversa."),
+  MC("Qual é um bom hábito de segurança?","Manter o celular atualizado",["Clicar em links desconhecidos","Usar uma senha só","Aceitar qualquer convite"],"Atualizações corrigem falhas.")]
+];
+ADD5.forEach(function(row,g){row.forEach(function(q,p){BEGINNER[g].phases[p].push(q)})});
 var GAMES=BEGINNER.concat([OLD[1],OLD[3],OLD[4],OLD[2]]);
 [["Intermediário · Etapa 1 de 4",1],["Intermediário · Etapa 2 de 4",1],["Intermediário · Etapa 3 de 4",1],["Avançado · Modelo OSI",3]].forEach(function(x,i){GAMES[BEGINNER.length+i].tag=x[0];GAMES[BEGINNER.length+i].c=x[1]});
 
@@ -988,25 +1108,38 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
    S.know[cid] = {seen, ok, bad, last}: o que o aluno viu e como foi. */
 var CUR={
  'rede.def':{n:'O que é uma rede',pre:[],l:'0-0'},
- 'rede.host':{n:'Host (nó)',pre:['rede.def'],l:'0-0'},
- 'lan':{n:'LAN (rede local)',pre:['rede.def'],l:'0-1'},
- 'internet':{n:'Internet (rede de redes)',pre:['lan'],l:'0-1'},
- 'meio.transmissao':{n:'Meios de transmissão (cabo, fibra, Wi-Fi)',pre:['rede.def'],l:'0-2'},
- 'rede.alcance':{n:'PAN, LAN, MAN e WAN',pre:['lan'],l:'1-0'},
- 'cliente.servidor':{n:'Cliente e servidor',pre:['rede.def'],l:'1-1'},
- 'banda.latencia':{n:'Largura de banda e latência',pre:['rede.def'],l:'1-2'},
- 'equip.roteador':{n:'Modem, roteador e gateway',pre:['lan','internet'],l:'2-0'},
- 'equip.switch':{n:'Switch, hub e MAC',pre:['equip.roteador'],l:'2-1'},
- 'rede.mapa':{n:'O mapa da rede',pre:['equip.switch'],l:'2-2'},
- 'ip.v4':{n:'Endereço IP (IPv4 e IPv6)',pre:['rede.def'],l:'3-0'},
- 'ip.privado':{n:'IP público, privado e NAT',pre:['ip.v4','equip.roteador'],l:'3-1'},
- 'ip.mac.dhcp':{n:'MAC, DHCP e máscara',pre:['ip.v4','equip.switch'],l:'3-2'},
- 'dns':{n:'DNS e nomes de domínio',pre:['ip.v4'],l:'4-0'},
- 'portas':{n:'Portas e protocolos',pre:['cliente.servidor','ip.v4'],l:'4-1'},
- 'tcp.udp':{n:'TCP e UDP',pre:['portas'],l:'4-2'},
- 'pacotes':{n:'Pacotes',pre:['rede.def'],l:'5-0'},
- 'web.fluxo':{n:'Abrindo um site passo a passo',pre:['dns','equip.roteador','pacotes','portas'],l:'5-1'},
- 'diag.cmd':{n:'ping, ipconfig, tracert e nslookup',pre:['ip.v4','dns','banda.latencia'],l:'5-2'},
+ 'rede.uso':{n:'Para que serve uma rede',pre:['rede.def'],l:'0-1'},
+ 'rede.host':{n:'Host (aparelho da rede)',pre:['rede.def'],l:'0-2'},
+ 'lan':{n:'Rede local (LAN)',pre:['rede.def'],l:'1-0'},
+ 'equip.roteador':{n:'Roteador',pre:['lan'],l:'1-1'},
+ 'equip.modem':{n:'Modem',pre:['equip.roteador'],l:'1-2'},
+ 'meio.transmissao':{n:'Cabo de rede',pre:['rede.def'],l:'2-0'},
+ 'meio.wifi':{n:'Wi-Fi',pre:['lan'],l:'2-1'},
+ 'meio.fibra':{n:'Fibra óptica',pre:['meio.transmissao'],l:'2-2'},
+ 'internet':{n:'Internet (rede de redes)',pre:['lan'],l:'3-0'},
+ 'isp':{n:'Provedor de internet',pre:['internet'],l:'3-1'},
+ 'cliente.servidor':{n:'Cliente e servidor',pre:['internet'],l:'3-2'},
+ 'ip.v4':{n:'Endereço IP',pre:['rede.host'],l:'4-0'},
+ 'ip.privado':{n:'IP privado e público',pre:['ip.v4','equip.roteador'],l:'4-1'},
+ 'ip.mac.dhcp':{n:'IP automático (DHCP) e MAC',pre:['ip.v4'],l:'4-2'},
+ 'dns':{n:'DNS: nome em número',pre:['ip.v4','internet'],l:'5-0'},
+ 'dns.agenda':{n:'DNS como lista de contatos',pre:['dns'],l:'5-1'},
+ 'dns.falha':{n:'Quando o site não abre',pre:['dns.agenda'],l:'5-2'},
+ 'dados.bits':{n:'Bits e dados',pre:['rede.def'],l:'6-0'},
+ 'pacotes':{n:'Pacotes',pre:['dados.bits'],l:'6-1'},
+ 'banda.latencia':{n:'Velocidade (banda) e atraso (latência)',pre:['pacotes'],l:'6-2'},
+ 'equip.switch':{n:'Switch',pre:['lan'],l:'7-0'},
+ 'equip.ap':{n:'Ponto de acesso e repetidor',pre:['meio.wifi'],l:'7-1'},
+ 'rede.mapa':{n:'O mapa da rede',pre:['equip.modem','equip.roteador'],l:'7-2'},
+ 'rede.alcance':{n:'PAN e LAN',pre:['lan'],l:'8-0'},
+ 'rede.man.wan':{n:'MAN e WAN',pre:['rede.alcance','internet'],l:'8-1'},
+ 'rede.topologia':{n:'Rede em estrela',pre:['equip.switch'],l:'8-2'},
+ 'seg.senha':{n:'Senha do Wi-Fi',pre:['meio.wifi'],l:'9-0'},
+ 'seg.https':{n:'O cadeado do site (HTTPS)',pre:['internet'],l:'9-1'},
+ 'seg.habitos':{n:'Hábitos seguros',pre:['seg.senha'],l:'9-2'}
+};
+/* conceitos do intermediário/avançado (serão refeitos depois): índice do jogo deslocado para depois da trilha iniciante */
+var OLDCUR={
  'i1.equipamentos':{n:'Hub, switch e roteador (revisão)',pre:['equip.switch'],l:'6-0'},
  'i1.mac.cabos':{n:'MAC e cabos (revisão)',pre:['ip.mac.dhcp','meio.transmissao'],l:'6-1'},
  'i1.wifi.vlan':{n:'Wi-Fi, VLAN e padrões',pre:['meio.transmissao','equip.switch','lan'],l:'6-2'},
@@ -1019,18 +1152,13 @@ var CUR={
  'osi.camadas':{n:'As 7 camadas do OSI',pre:['tcp.udp','equip.switch'],l:'9-0'},
  'osi.funcoes':{n:'O que cada camada trata',pre:['osi.camadas'],l:'9-1'},
  'osi.encapsulamento':{n:'Encapsulamento',pre:['osi.funcoes','pacotes'],l:'9-2'}
+
 };
+Object.keys(OLDCUR).forEach(function(id){var d=OLDCUR[id],pt=d.l.split('-');d.l=(+pt[0]-6+BEGINNER.length)+'-'+pt[1];CUR[id]=d});
+Object.keys(CUR).forEach(function(id){CUR[id].pre=CUR[id].pre.filter(function(x){return !!CUR[x]})});
 /* dificuldade (1 a 3) das 5 perguntas de cada fase, na ordem em que aparecem */
-var DIFS={
- '0-0':[1,2,1,2,1],'0-1':[1,1,2,2,2],'0-2':[1,1,2,2,1],
- '1-0':[1,2,1,2,1],'1-1':[1,2,2,1,1],'1-2':[1,1,2,3,1],
- '2-0':[1,1,2,1,1],'2-1':[2,1,1,2,1],'2-2':[2,3,3,2,2],
- '3-0':[1,1,2,2,1],'3-1':[2,1,1,2,2],'3-2':[1,2,1,3,2],
- '4-0':[1,1,1,2,3],'4-1':[1,1,2,1,2],'4-2':[2,2,1,2,3],
- '5-0':[1,2,1,2,1],'5-1':[2,1,2,2,2],'5-2':[1,1,1,3,2]
-};
-/* perguntas de uma fase que cobrem outro conceito da mesma fase (índice entre as perguntas, sem contar cartões) */
-var OVR={'0-0':{2:'rede.host',4:'rede.host'},'0-1':{2:'internet',3:'internet',4:'internet'}};
+var DIFS={};
+var OVR={};
 var PHCON={};
 (function(){
   Object.keys(CUR).forEach(function(id){var l=CUR[id].l;(PHCON[l]=PHCON[l]||[]).push(id)});
@@ -1039,7 +1167,7 @@ var PHCON={};
     ph.forEach(function(q){
       if(q.t==='learn'){q.teach=con;return}
       q.cid=(OVR[key]&&OVR[key][n])||con[0];
-      q.dif=(DIFS[key]||[])[n]||(gi>=9?3:2);
+      q.dif=(DIFS[key]||[])[n]||(gi<BEGINNER.length?[1,1,2,1,2][n]||1:(gi>=BEGINNER.length+3?3:2));
       q.rs=gi<BEGINNER.length?'aprovado':'legado';
       q.lk=key;n++;
     });
@@ -1105,6 +1233,51 @@ var EXTRA={
   {t:"mc",cid:"osi.encapsulamento",q:"Um pacote IP é colocado dentro de um quadro Ethernet para ir ao próximo equipamento. Como se chama esse processo e em qual camada ocorre?",o:["Encapsulamento, na camada de Enlace (2)", "Segmentação, na camada de Rede (3)", "Criptografia, na camada de Apresentação (6)", "Roteamento, na camada Física (1)"],a:0,e:"Cada camada adiciona seu cabeçalho aos dados da camada de cima. O quadro é a PDU do Enlace."}
  ]
 };
+var NEWX={
+ 0:[
+  {t:"mc",cid:"rede.def",q:"Seu primo diz: «meu notebook está desligado da internet, então não faz parte de nenhuma rede». Isso é verdade?",o:["Não: ele pode estar ligado a outros aparelhos da casa sem internet","Sim: rede só existe com internet","Sim: notebook nunca entra em rede","Não: rede é só cabo de energia"],a:0,e:"Rede é ligação entre aparelhos. A internet é só um dos recursos que ela pode dar."},
+  {t:"mc",cid:"rede.def",q:"Qual destes exemplos NÃO é uma rede de computadores?",o:["Duas pessoas conversando em voz alta numa sala","Celular e TV trocando uma foto","Computadores de uma escola ligados","Um notebook enviando arquivo para a impressora"],a:0,e:"Conversa em voz alta não liga aparelhos entre si."},
+  {t:"mc",cid:"rede.uso",q:"A família quer imprimir de três aparelhos diferentes sem trocar cabos. O que resolve melhor?",o:["Colocar a impressora na rede, compartilhada","Comprar três impressoras","Trocar o cabo toda vez","Imprimir só pelo celular de um"],a:0,e:"Compartilhar a impressora na rede é um uso clássico."}],
+ 1:[
+  {t:"mc",cid:"lan",q:"Na sua casa, a TV não abre vídeos da internet, mas o celular ainda manda foto para ela. O que isso mostra?",o:["A rede local funciona mesmo sem internet","A TV quebrou","O celular é o roteador","A casa não tem rede"],a:0,e:"A LAN permite conversa interna sem a internet."},
+  {t:"mc",cid:"lan",q:"Qual destes é o melhor exemplo de LAN?",o:["A rede de uma sala de informática da escola","A internet do mundo inteiro","Conexão entre dois países","Rede de uma operadora nacional"],a:0,e:"LAN é rede de um lugar só."},
+  {t:"mc",cid:"equip.roteador",q:"Você ligou um cabo no PC, mas ele não conecta. Antes de culpar o provedor, o que verificar primeiro?",o:["Se o cabo está encaixado numa porta do roteador","Se a TV está ligada","A cor da parede","O volume do celular"],a:0,e:"O cabo precisa estar na porta certa do roteador."}],
+ 2:[
+  {t:"mc",cid:"meio.transmissao",q:"Uma empresa quer uma ligação estável para uma videochamada importante no computador fixo. O que escolher?",o:["Cabo de rede","Wi-Fi atrás de duas paredes","Bluetooth","Um repetidor longe do roteador"],a:0,e:"O cabo é mais estável."},
+  {t:"mc",cid:"meio.transmissao",q:"O cabo de rede mais comum nas casas é o UTP. O que ele tem de característica?",o:["Fios de cobre trançados","Luz dentro de vidro","Ondas de rádio","Papel"],a:0,e:"UTP significa par trançado sem blindagem."},
+  {t:"mc",cid:"meio.wifi",q:"O Wi-Fi está ótimo na sala e fraco no quarto do fundo. Qual é a explicação mais provável?",o:["Distância e paredes enfraquecem o sinal","O celular usa outra internet","O provedor sabe em que cômodo você está","A internet cansa de noite"],a:0,e:"Distância e obstáculos reduzem o sinal."}],
+ 3:[
+  {t:"mc",cid:"internet",q:"Dois amigos estão em cidades diferentes e jogam juntos. Que rede liga as duas casas?",o:["A internet, que liga redes do mundo","A LAN da casa de um deles","Um cabo único entre as casas","O Bluetooth"],a:0,e:"Casas diferentes se ligam pela internet."},
+  {t:"mc",cid:"internet",q:"Qual é o motivo de chamarmos a internet de rede de redes?",o:["Ela interliga muitas redes menores","Porque só existe em sites","Porque tem só um roteador","Porque é de uma única empresa"],a:0,e:"É a interligação de muitas redes."},
+  {t:"mc",cid:"isp",q:"A internet some em um bairro inteiro ao mesmo tempo. Qual a causa mais provável?",o:["Um problema no provedor","Todos esqueceram a senha","Todos trocaram de celular","O Wi-Fi ficou cansado"],a:0,e:"Se falha para muita gente, o problema costuma ser do provedor."}],
+ 4:[
+  {t:"mc",cid:"ip.v4",q:"Dois computadores da mesma rede ficaram com o mesmo IP. O que costuma acontecer?",o:["Conflito: a rede pode falhar para os dois","Nada, é normal","Fica mais rápido","Eles trocam de nome"],a:0,e:"IP precisa ser único na rede."},
+  {t:"mc",cid:"ip.v4",q:"Qual destes é um endereço IP válido?",o:["192.168.1.20","999.1.1.1.1","casa.pingo","192-168-1"],a:0,e:"O IP tem quatro números de 0 a 255."},
+  {t:"mc",cid:"ip.privado",q:"O IP do seu celular é 192.168.0.12. Dá para um desconhecido na internet acessá-lo direto por esse número?",o:["Não, ele só vale dentro da sua rede","Sim, qualquer um acessa","Sim, se tiver o nome do celular","Só se o Wi-Fi estiver desligado"],a:0,e:"IP privado só vale na rede local."}],
+ 5:[
+  {t:"mc",cid:"dns",q:"Você digita um site e vê erro de nome não encontrado, mas o número IP do site abre normalmente. Qual serviço está com falha?",o:["O DNS","O teclado","A energia","O cabo de vídeo"],a:0,e:"O número abre, o nome não: o DNS falhou."},
+  {t:"mc",cid:"dns",q:"Por que o DNS é útil para as pessoas?",o:["Porque ninguém precisa decorar números de IP","Porque aumenta a bateria","Porque limpa o celular","Porque cria Wi-Fi"],a:0,e:"Ele traduz nome em número."},
+  {t:"mc",cid:"dns.agenda",q:"Comparando o DNS com a agenda do celular, o que seria o IP?",o:["O número de telefone do contato","O nome do contato","A foto do contato","O toque do celular"],a:0,e:"Nome vira número, como na agenda."}],
+ 6:[
+  {t:"mc",cid:"dados.bits",q:"Uma foto de 5 MB está sendo enviada. Em que forma ela viaja pela rede?",o:["Zeros e uns (bits)","Pequenas letras","Cores soltas","Papel digital"],a:0,e:"Tudo vira bits."},
+  {t:"mc",cid:"dados.bits",q:"Qual afirmação descreve melhor o que é um bit?",o:["Um zero ou um um","Um tipo de cabo","Um site","Um pacote inteiro"],a:0,e:"O bit é a menor unidade."},
+  {t:"mc",cid:"pacotes",q:"Um vídeo grande chega no destino perfeito, mesmo que os pacotes tenham chegado fora de ordem. O que explica isso?",o:["Eles são reorganizados no destino","O vídeo é pequeno","A internet nunca erra","Os pacotes não existem"],a:0,e:"Os pacotes são remontados na ordem certa."}],
+ 7:[
+  {t:"mc",cid:"equip.switch",q:"O escritório tem 24 computadores por cabo e só uma porta livre no roteador. O que ajuda?",o:["Um switch ligado ao roteador","Mais um mouse","Uma tomada nova","Trocar o monitor"],a:0,e:"O switch multiplica as portas."},
+  {t:"mc",cid:"equip.switch",q:"Qual afirmação sobre o switch está correta?",o:["Ele liga aparelhos por cabo na mesma rede","Ele substitui o provedor","Ele só funciona com Bluetooth","Ele cria o site"],a:0,e:"É a função do switch."},
+  {t:"mc",cid:"equip.ap",q:"Uma casa de dois andares tem sinal fraco no andar de cima, e há um cabo de rede chegando lá. Qual solução tende a ser mais estável?",o:["Um ponto de acesso ligado por cabo","Um repetidor no meio da escada","Trocar o nome do Wi-Fi","Desligar o roteador"],a:0,e:"O ponto de acesso por cabo é mais estável que o repetidor."}],
+ 8:[
+  {t:"mc",cid:"rede.alcance",q:"Seu smartwatch se conecta ao celular por Bluetooth. Que tipo de rede é essa?",o:["PAN (rede pessoal)","WAN","MAN","Internet"],a:0,e:"É uma rede bem pequena, em volta de você."},
+  {t:"mc",cid:"rede.alcance",q:"Qual é a diferença entre PAN e LAN?",o:["A PAN é bem menor, em volta da pessoa; a LAN cobre um lugar","A PAN é do mundo e a LAN é de casa","Não há diferença","A LAN só existe sem fio"],a:0,e:"PAN é pessoal e LAN é de um local."},
+  {t:"mc",cid:"rede.man.wan",q:"Uma rede liga as agências de um banco em cinco estados. Que tipo de rede é essa?",o:["WAN","PAN","LAN de casa","Bluetooth"],a:0,e:"WAN cobre grandes distâncias."}],
+ 9:[
+  {t:"mc",cid:"seg.senha",q:"Qual é a senha de Wi-Fi mais segura?",o:["Uma frase longa e esquisita com números","123456","O nome do cachorro","A data de aniversário"],a:0,e:"Senhas longas e imprevisíveis são mais seguras."},
+  {t:"mc",cid:"seg.senha",q:"Por que não é bom usar a mesma senha para tudo?",o:["Se uma vazar, as outras ficam expostas","Porque senhas se cansam","Porque o roteador reclama","Porque ocupa memória"],a:0,e:"Uma senha vazada abre todas as contas."},
+  {t:"mc",cid:"seg.https",q:"Você vai pagar uma compra e o site está sem cadeado. O que fazer?",o:["Não digitar dados do cartão","Digitar rápido","Mandar a senha por mensagem","Ignorar o aviso"],a:0,e:"Sem proteção, evite dados sensíveis."}]
+};
+/* os extras da trilha iniciante foram refeitos (NEWX); os do intermediário/avançado mudam de índice */
+(function(){var old=EXTRA,out={};Object.keys(old).forEach(function(k){if(+k<6)return;out[+k-6+BEGINNER.length]=old[k]});
+  Object.keys(NEWX).forEach(function(k){out[k]=NEWX[k]});EXTRA=out})();
 Object.keys(EXTRA).forEach(function(g){EXTRA[g].forEach(function(q){q.dif=3;q.rs='aprovado';q.lk='x'+g;q.x=1})});
 /* Desafio do Pingo (só na trilha): 5 acertos seguidos no mesmo assunto liberam 3 perguntas extras opcionais */
 var SQ={g:-1,n:0};
@@ -1503,6 +1676,10 @@ function pathHTML(){
   });
   return h;
 }
+function themeNow(){try{return localStorage.getItem('pingoquest-theme')==='dark'?'dark':'light'}catch(e){return'light'}}
+function applyTheme(){document.documentElement.setAttribute('data-theme',themeNow())}
+function toggleTheme(){try{localStorage.setItem('pingoquest-theme',themeNow()==='dark'?'light':'dark')}catch(e){}applyTheme();render()}
+applyTheme();
 var admTaps=0,admAsk=false,admErr='';
 function admHTML(){
   if(isAdm())return '<div class="sect" style="margin-top:14px">Modo dono</div><button class="btn ghost" data-act="devday" style="margin-bottom:10px">Avançar 1 dia para testar o evento (hoje: '+fmtD(evToday())+')</button><button class="btn ghost" data-act="devreset" style="margin-bottom:10px">Reiniciar o evento (teste)</button><button class="btn ghost" data-act="admoff" style="margin-bottom:10px">Sair do modo dono</button>';
@@ -1528,7 +1705,7 @@ function profileHTML(){
    '<div class="tile"><span style="color:var(--cyan);display:contents">'+IC.gem+'</span><div><b>'+S.gems+'</b><span>cristais</span></div></div></div>'+
    '';
   h+=avatarHTML();
-  h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button>'+admHTML()+'<button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
+  h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="theme" style="margin-bottom:10px">Tema: '+(themeNow()==='dark'?'escuro (roxo)':'claro')+'</button><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button>'+admHTML()+'<button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
      '<p class="note" style="margin-top:12px">O progresso fica salvo neste navegador.</p>';
   return h;
 }
@@ -1786,17 +1963,18 @@ function finishLesson(){
   }
   S.xp+=xp;S.gems+=gems;touchStreak();save();
   var acc=L.qb?Math.round(L.qb/(L.qb+L.miss)*100):100;
-  var title=L.kind==='extra'?(xw?'Desafio superado!':'Quase lá!'):L.kind==='practice'?'Vida recuperada!':(L.kind==='review'?'Revisão concluída!':(L.kind==='boss'?'Prova final concluída!':'Fase concluída!'));
-  var sub=L.kind==='extra'?(xw?'Você aplicou o assunto em situações novas. Isso é aprender de verdade.':'Esse desafio é mais difícil de propósito. Nada do seu progresso foi perdido, e os erros foram para a Revisão.'):L.kind==='practice'?'Você ganhou 1 vida. Bom treino.':(L.kind==='review'?'Revisar os erros ajuda a fixar o conteúdo.':L.miss===0?'Sem nenhum erro. Perfeito!':'Os erros também ensinam. Revise as dicas do jogo se quiser.');
+  var perfect=L.miss===0&&(L.kind==='phase'||L.kind==='boss');
+  var title=L.kind==='extra'?(xw?'Desafio superado!':'Quase lá!'):L.kind==='practice'?'Vida recuperada!':(L.kind==='review'?'Revisão concluída!':(perfect?'Lição perfeita!':(L.kind==='boss'?'Prova final concluída!':'Fase concluída!')));
+  var sub=L.kind==='extra'?(xw?'Você mandou bem!':'Os erros foram para a Revisão.'):L.kind==='practice'?'+1 vida':(L.kind==='review'?'Bom treino!':(L.miss===0?'Esse momento é seu!':'Errar também ensina.'));
+  var tiles=[{c:'#ffb800',l:'Total de XP',v:IC.bolt+'<b>'+xp+'</b>'},{c:'#18b9e8',l:'Precisão',v:IC.target+'<b>'+acc+'%</b>'}];
+  if(gems>0)tiles.push({c:'#ff4fae',l:'Cristais',v:IC.gem+'<b>+'+gems+'</b>'});
+  else if(UP)tiles.push({c:'#ff8a1f',l:'Sequência',v:IC.flame+'<b>'+UP.n+'</b>'});
+  var tl=tiles.map(function(t,i){return'<div class="rt" style="--rc:'+t.c+';animation-delay:'+(0.55+i*0.62)+'s"><small>'+t.l+'</small><span>'+t.v+'</span></div>'}).join('');
   $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p>'+
-   (xoffer?'<div class="xch"><b>Desafio do Pingo</b><p>Você acertou 5 seguidas! Que tal '+xoffer.qs.length+' perguntas mais difíceis sobre <i>'+GAMES[xoffer.g].title+'</i>? É opcional. Se errar, você não perde nada do que já conquistou.</p><small>'+((S.xch[xoffer.g]&&S.xch[xoffer.g].w)?'Treino extra: +15 XP se acertar.':'Primeira vez: até +15 cristais se acertar.')+'</small></div>':'')+
-   '<div class="res"><div><small style="background:#d99a00">XP</small><b>+'+xp+'</b></div>'+
-   '<div><small style="background:#1e9a52">Precisão</small><b>'+acc+'%</b></div>'+
-   '<div><small style="background:#0d8fc0">Melhor ping</small><b>'+Math.max(4,120-(L.best||0)*14)+' ms</b></div></div>'+
-   (gems>0?'<div class="gpill">+'+gems+' cristais</div>':'')+
-   (UP?'<div class="gpill" style="border-color:#ff8a1f;margin-top:8px"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span>'+UP.n+(UP.n===1?' dia seguido':' dias seguidos')+(UP.lupa?' · Lupa do Pingo desbloqueada!':'')+'</div>':'')+
-   ((L.seen&&L.seen.length)?'<div class="learned"><small>O que você aprendeu</small><div class="lchips">'+L.seen.map(function(x){return'<span class="lchip">'+IC.check+x+'</span>'}).join('')+'</div></div>':'')+'</div></div>'+
+   (xoffer?'<div class="xch"><b>Desafio do Pingo</b><p>5 acertos seguidos! Quer tentar '+xoffer.qs.length+' perguntas mais difíceis? É opcional.</p></div>':'')+
+   '<div class="res2">'+tl+'</div></div></div>'+
    '<div class="lfoot">'+xcard+'<button class="btn" data-act="lclose">'+(xcard?'Agora não':'Continuar')+'</button></div></div>';
+  tiles.forEach(function(t,i){setTimeout(function(){if(L&&L.kind==='done')sfx('plim'+Math.min(i,2))},(0.55+i*0.62)*1000+120)});
   L.xo=xoffer;L.kind='done';sfx('win');confetti();
 }
 function showNoHearts(){
@@ -1986,6 +2164,7 @@ document.addEventListener('click',function(e){
   else if(a==='admoff'){try{localStorage.removeItem('pingoquest-adm');localStorage.setItem('pingoquest-devoff','0')}catch(e){}render()}
   else if(a==='devday'){try{localStorage.setItem('pingoquest-devoff',String(devOff()+1))}catch(e){};evToday();render()}
   else if(a==='devreset'){S.ev={};S.ledger={};S.inv={items:[],coll:{}};S.maxDay='';try{localStorage.setItem('pingoquest-devoff','0')}catch(e){};save();render()}
+  else if(a==='theme'){toggleTheme()}
   else if(a==='avequip'){avEquip(t.dataset.slot,t.dataset.id);render()}
   else if(a==='evopen'){evOpen(t.dataset.id)}
   else if(a==='evclose'){evClose()}
@@ -2115,10 +2294,13 @@ var SFX={
  bad:function(){tone(310,0,.26,'sine',.07,210)},
  coin:function(){bell(1319,0,.2,.06);bell(1760,.07,.34,.06)},
  open:function(){[523,659,784,988,1175,1319,1568,2093].forEach(function(f,i){bell(f,i*.075,.5,.06)});tone(262,0,.5,'sine',.06,392)},
+ plim0:function(){bell(988,0,.35,.09);bell(1319,.05,.45,.06)},
+ plim1:function(){bell(1175,0,.35,.09);bell(1568,.05,.45,.06)},
+ plim2:function(){bell(1319,0,.4,.09);bell(1760,.05,.5,.07);bell(2093,.12,.5,.04)},
  win:function(){[523,659,784,1047].forEach(function(f,i){bell(f,i*.11,.4,.08)});bell(1319,.5,.7,.06);bell(1568,.62,.8,.04)}
 };
 /* navegar = quase mudo e só uma vibração leve; escolher = clique macio; avançar/confirmar/recompensa = som mais rico */
-var ACTSND={avequip:'sel',pick:'sel',vf:'sel',fadd:'sel',fdel:'sel',badd:'sel',bdel:'sel',clset:'sel',mp:'sel',cpick:'sel',cguess:'sel',obpick:'sel',setplan:'sel',
+var ACTSND={theme:'sel',avequip:'sel',pick:'sel',vf:'sel',fadd:'sel',fdel:'sel',badd:'sel',bdel:'sel',clset:'sel',mp:'sel',cpick:'sel',cguess:'sel',obpick:'sel',setplan:'sel',
  next:'adv',lnext:'adv',obnext:'adv',obplan:'adv',obgo:'adv',lclose:'adv',cdone:'adv',cagain:'adv',
  go:'go',evstep:'go',evopen:'go',evback:'adv',evclose:'nav',daily:'go',review:'go',practice:'go',obstart:'go',xch:'go'};
 function sfx(n){if(!SND.on)return;try{SFX[n]()}catch(e){}}

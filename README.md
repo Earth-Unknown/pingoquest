@@ -59,3 +59,10 @@ Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fi
 ### Modo dono
 As ferramentas de teste (avançar dia, reiniciar evento) só aparecem para quem ativar o "Modo dono" neste aparelho: tocar 7 vezes no título "Meu perfil" e digitar o código. O código não está no repositório, só o hash dele. É uma trava de interface (o navegador é de quem joga); a proteção de verdade das datas de evento exige servidor.
 Teste: `CODIGO=<arquivo com o código> node tests/dono.test.js`.
+
+### Tema e trilha iniciante (v2)
+- Tema padrão **claro (branco)** com cores vivas; **escuro (roxo neon)** opcional em Perfil › Ajustes (`pingoquest-theme`).
+- Trilha iniciante refeita em **10 unidades** (Seção 1 · Unidade 1 a 10), só conceitos básicos, siglas entre parênteses. Só formatos de selecionar (múltipla escolha, V/F, ligar, classificar). Sem digitar nem completar frase.
+- Cada fase tem 5 perguntas (o Desafio do Pingo conta 5 acertos seguidos). Extras do desafio refeitos por unidade (`NEWX`).
+- Fim de lição: pouco texto, cartões de XP/precisão/cristais (ou sequência) aparecem um a um com som.
+- O intermediário/avançado (jogos 10 a 13) ainda é o conteúdo antigo e será refeito.
