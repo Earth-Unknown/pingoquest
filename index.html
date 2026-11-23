@@ -204,6 +204,21 @@ svg{display:block}
 .rt span svg{width:22px;height:22px;flex:none;color:var(--rc)}.rt span b{font-size:22px;font-weight:900;color:var(--rc)}
 @keyframes rtpop{0%{opacity:0;transform:translateY(170px) scale(.35)}55%{opacity:1;transform:translateY(-12px) scale(1.08)}78%{transform:translateY(3px) scale(.97)}100%{opacity:1;transform:none}}
 .rt b.bump{animation:numbump .4s cubic-bezier(.3,1.8,.5,1)}
+.brx{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));background:radial-gradient(circle at 50% 38%,#2a1670 0%,#170a42 58%,#10052f 100%);color:#fff;text-align:center;overflow:hidden}
+.brglow{position:absolute;left:50%;top:38%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,60,.55) 0%,rgba(255,120,200,.22) 38%,transparent 66%);opacity:calc(var(--p)*.95);transform:scale(calc(.55 + var(--p)*.6));transition:opacity .12s,transform .12s;pointer-events:none}
+.brstar{position:relative;width:min(58vw,240px);aspect-ratio:1;display:grid;place-items:center;margin-top:-10vh}
+.brsvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.brsvg .brl{opacity:var(--p);transition:opacity .12s}
+.brx:not(.on) .brsvg{transform:scale(calc(.92 + var(--p)*.1));transition:transform .12s}
+.brn{position:relative;font-size:min(16vw,64px);font-weight:900;color:#3b2400;opacity:calc(var(--p)*var(--p));text-shadow:0 2px 0 rgba(255,255,255,.4)}
+.brh{position:relative;margin:18px 0 0;font-size:clamp(24px,7vw,32px);font-weight:900;line-height:1.15;text-wrap:balance;max-width:20ch}
+.brp{position:relative;margin:0;min-height:1.4em;color:#d9ccff;font-weight:700}
+.brpingo{position:relative;min-height:0}.brpingo .pingo-big{width:110px}
+.brfoot{position:absolute;left:0;right:0;bottom:0;padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px))}
+.brfoot .btn{width:100%}
+.brx.on .brstar{animation:brpop .7s cubic-bezier(.2,1.7,.4,1)}
+@keyframes brpop{0%{transform:scale(.8)}50%{transform:scale(1.18) rotate(6deg)}100%{transform:scale(1)}}
+.brspark{position:fixed;z-index:120;pointer-events:none;font-weight:900;text-shadow:0 0 8px currentColor}
 .cpills{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 14px);display:flex;justify-content:center;gap:10px;z-index:60;pointer-events:none}
 .cp{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;background:var(--surface);border:2px solid var(--line);font-weight:900;font-size:17px;box-shadow:0 4px 0 var(--line-deep);animation:cpin .45s cubic-bezier(.2,1.6,.4,1) both}
 .cp svg{width:20px;height:20px;flex:none}.cp small{font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
@@ -1027,7 +1042,7 @@ function dailyCase(){return CASE_IDS[hashStr(today())%CASE_IDS.length]}
 
 /* ---------- ícones ---------- */
 var IC={
- flame:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4.2 6 6.2 6 12a6 6 0 0 1-12 0c0-3 2-4.2 2.4-7.2C10 7.600 11 6 12 2zm0 11c-1.500 1.600-2 2.400-2 3.500a2 2 0 0 0 4 0c0-1.100-.5-1.900-2-3.500z"/></svg>',
+ brilho:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 2.500c.9 5.600 3.600 8.300 9.200 9.200-5.600.9-8.300 3.600-9.200 9.200-.9-5.600-3.600-8.300-9.200-9.200C7.400 10.800 10.100 8.100 11 2.500z" stroke="currentColor" stroke-width="1.600" stroke-linejoin="round"/><path d="M19 3l.8 2.200 2.200.8-2.200.8L19 9l-.8-2.200-2.200-.8 2.200-.8z"/></svg>',
  gem:'<svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="currentColor"/><path d="M2 9h20M9 3l-2 6 5 12 5-12-2-6" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.300" stroke-linejoin="round"/></svg>',
  heart:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.350l-1.450-1.320C5.400 15.360 2 12.280 2 8.500 2 5.420 4.420 3 7.500 3c1.740 0 3.410.810 4.500 2.090C13.090 3.810 14.760 3 16.500 3 19.580 3 22 5.420 22 8.500c0 3.780-3.400 6.860-8.550 11.540L12 21.350z"/></svg>',
  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.500l5 5L20 6.500"/></svg>',
@@ -1740,7 +1755,7 @@ var tab='path',openNode=null;
 function isUnlocked(g,k){var p=k>0?g+'-'+(k-1):(g>0?(g-1)+'-3':null);return !p||!!S.done[p]}
 var OFF=[0,44,0,-44];
 function topHTML(){
-  return '<button class="stat s-streak" data-act="streak" title="Ver minha sequência" aria-label="Ver minha sequência">'+IC.flame+'<span>'+streakNow()+'</span></button>'+
+  return '<button class="stat s-streak" data-act="streak" title="Ver meu brilho" aria-label="Ver meu brilho">'+IC.brilho+'<span>'+streakNow()+'</span></button>'+
    '<div class="stat s-gems" title="Chips">'+IC.gem+'<span>'+S.gems+'</span></div>'+
    '<div class="stat s-heart" title="Vidas">'+IC.heart+'<span>'+S.hearts+'</span></div>';
 }
@@ -1804,7 +1819,7 @@ function profileHTML(){
   var acc=S.total?Math.round(S.ok/S.total*100):0;
   var h='<div class="ph">'+pingo('happy','pingo-big',true)+'<div><h1 data-act="admtap">Meu perfil</h1><p>Redes de Computadores</p></div></div><div class="grid">'+
    '<div class="tile">'+IC.bolt+'<div><b>'+S.xp+'</b><span>Energia total</span></div></div>'+
-   '<div class="tile"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span><div><b>'+streakNow()+'</b><span>dias seguidos</span></div></div>'+
+   '<div class="tile"><span style="color:#ff8a1f;display:contents">'+IC.brilho+'</span><div><b>'+streakNow()+'</b><span>dias de brilho</span></div></div>'+
    '<div class="tile">'+IC.map+'<div><b>'+doneCount()+' / '+total()+'</b><span>fases concluídas</span></div></div>'+
    '<div class="tile">'+IC.skull+'<div><b>'+S.bosses+' / '+GAMES.filter(function(g){return !g.caso}).length+'</b><span>provas finais</span></div></div>'+
    '<div class="tile">'+IC.target+'<div><b>'+acc+'%</b><span>de acertos</span></div></div>'+
@@ -2048,6 +2063,35 @@ function next(){
   initQ();drawLesson();
 }
 function closeLesson(){L=null;$('#lesson').hidden=true;document.body.classList.remove('lock');if(EVP){document.body.classList.add('lock');evRender()}render()}
+/* depois de coletar a energia, se o dia de hoje acendeu o brilho, mostra a tela de arrastar */
+function endDone(){
+  if(L&&L.kind==='done'&&UP&&UP.n&&!UP.shown){UP.shown=1;brilhoScreen(UP.n,UP.lupa)}else closeLesson();
+}
+var BR_STAR='<svg viewBox="0 0 120 120" class="brsvg" aria-hidden="true"><defs><linearGradient id="brg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6b0"/><stop offset="1" stop-color="#ffb020"/></linearGradient></defs><path class="bru" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="#2c2266" stroke="#2c2266" stroke-width="8" stroke-linejoin="round"/><path class="brl" d="M60 8C64 40 80 56 112 60 80 64 64 80 60 112 56 80 40 64 8 60 40 56 56 40 60 8Z" fill="url(#brg)" stroke="url(#brg)" stroke-width="8" stroke-linejoin="round"/></svg>';
+function brilhoScreen(n,lupa){
+  L={kind:'brilho',n:n,lupa:lupa};
+  $('#lesson').hidden=false;document.body.classList.add('lock');
+  $('#lesson').innerHTML='<div class="brx" style="--p:0"><div class="brglow"></div><div class="brstar">'+BR_STAR+'<b class="brn">'+n+'</b></div>'+
+   '<h1 class="brh">Arraste para acender o seu brilho!</h1><p class="brp"></p><div class="brpingo"></div>'+
+   '<div class="brfoot">'+slideHTML('brilho','Arraste para acender')+'</div></div>';
+}
+function brilhoOn(){
+  var bx=document.querySelector('#lesson .brx');if(!bx||bx.classList.contains('on'))return;
+  bx.classList.add('on');bx.style.setProperty('--p','1');
+  var n=L&&L.n||1,lu=L&&L.lupa;
+  bx.querySelector('.brh').textContent=n===1?'Seu primeiro dia de brilho!':n+' dias de brilho!';
+  bx.querySelector('.brp').textContent=lu?'Você desbloqueou a Lupa do Pingo!':'Volte amanhã para manter o brilho aceso.';
+  bx.querySelector('.brpingo').innerHTML=pingo('cheer','pingo-big');
+  bx.querySelector('.brfoot').innerHTML='<button class="btn" data-act="lclose">Continuar</button>';
+  sfx('win');buzz([20,40,30]);confetti();
+  var st=bx.querySelector('.brstar').getBoundingClientRect(),cx=st.left+st.width/2,cy=st.top+st.height/2;
+  if(!NOANIM)for(var i=0;i<14;i++)(function(i){
+    var el=document.createElement('div');el.className='brspark';el.textContent='✦';el.style.left=cx+'px';el.style.top=cy+'px';
+    el.style.color=['#ffd83d','#ff4fae','#18ddfb','#7dff2b','#fff'][i%5];el.style.fontSize=(14+(i%3)*6)+'px';document.body.appendChild(el);
+    var ang=i/14*Math.PI*2,d=110+(i%4)*30;
+    el.animate([{transform:'translate(-50%,-50%) scale(.2)',opacity:1},{transform:'translate(calc(-50% + '+Math.cos(ang)*d+'px),calc(-50% + '+Math.sin(ang)*d+'px)) scale(1.1)',opacity:0}],{duration:900+(i%3)*150,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish=function(){el.remove()};
+  })(i);
+}
 function finishLesson(){
   if(L.kind==='event'){finishEvent();return}
   var first=false,xp=10,gems=0;
@@ -2074,7 +2118,7 @@ function finishLesson(){
   var sub=L.kind==='extra'?(xw?'Você mandou bem!':'Os erros foram para a Revisão.'):L.kind==='practice'?'+1 vida':(L.kind==='review'?'Bom treino!':(L.miss===0?'Esse momento é seu!':'Errar também ensina.'));
   var tiles=[{c:'#ffb800',l:'Energia total',v:IC.bolt+'<b data-to="'+xp+'">0</b>'},{c:'#18b9e8',l:'Precisão',v:IC.target+'<b data-to="'+acc+'" data-suf="%">0%</b>'}];
   if(gems>0)tiles.push({c:'#ff4fae',l:'Chips',v:IC.gem+'<b data-to="'+gems+'" data-pre="+">+0</b>'});
-  else if(UP)tiles.push({c:'#ff8a1f',l:'Sequência',v:IC.flame+'<b data-to="'+UP.n+'">0</b>'});
+  else if(UP)tiles.push({c:'#ff8a1f',l:'Brilho',v:IC.brilho+'<b data-to="'+UP.n+'">0</b>'});
   var tl=tiles.map(function(t,i){return'<div class="rt" style="--rc:'+t.c+';animation-delay:'+(0.55+i*0.62)+'s"><small>'+t.l+'</small><span>'+t.v+'</span></div>'}).join('');
   $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p>'+
    (xoffer?'<div class="xch"><b>Desafio do Pingo</b><p>5 acertos seguidos! Quer tentar '+xoffer.qs.length+' perguntas mais difíceis? É opcional.</p></div>':'')+
@@ -2119,7 +2163,7 @@ function collectFx(){
   bar.innerHTML='<div class="cp e">'+IC.bolt+'<b>'+e0+'</b><small>energia</small></div>'+(gm>0?'<div class="cp g"><span style="color:#ff4fae;display:contents">'+IC.gem+'</span><b>'+g0+'</b><small>chips</small></div>':'');
   root.appendChild(bar);
   var pe=bar.querySelector('.cp.e b'),pg=bar.querySelector('.cp.g b'),landed=0,total=0,done=false;
-  function finish(){if(done)return;done=true;COLLECTING=false;sfx('plim2');setTimeout(function(){bar.remove();closeLesson()},500)}
+  function finish(){if(done)return;done=true;COLLECTING=false;sfx('plim2');setTimeout(function(){bar.remove();endDone()},500)}
   setTimeout(function(){
     var jobs=[];
     if(eT)jobs.push({tile:eT,ic:IC.bolt,col:'#ffb800',pill:bar.querySelector('.cp.e'),b:pe,from:e0,add:xp});
@@ -2327,7 +2371,8 @@ document.addEventListener('click',function(e){
   else if(a==='bdel'){var id=+t.dataset.id;L.sel=L.sel.filter(function(x){return x!==id});drawLesson()}
   else if(a==='check'){check()}
   else if(a==='next'){next()}
-  else if(a==='lclose'){closeLesson()}
+  else if(a==='lclose'){if(L&&L.kind==='done')endDone();else closeLesson()}
+  else if(a==='brilho'){brilhoOn()}
   else if(a==='collect'){collectFx()}
   else if(a==='admtap'){if(!isAdm()){admTaps++;if(admTaps>=7){admTaps=0;admAsk=true;render()}}}
   else if(a==='admok'){var ic=document.getElementById('admcode');admCheck(ic?ic.value.trim():'')}
@@ -2363,12 +2408,12 @@ function showWelcome(){
   var back=S.xp>0||doneCount()>0,st=streakNow();
   var title=back?'Que bom te ver de novo!':'Oi! Eu sou o Pingo';
   var text=back
-    ? 'Você já concluiu '+doneCount()+' de '+total()+' fases'+(st>0?' e está com '+st+(st===1?' dia':' dias')+' de sequência':'')+'. Bora continuar?'
+    ? 'Você já concluiu '+doneCount()+' de '+total()+' fases'+(st>0?' e está com '+st+(st===1?' dia':' dias')+' de brilho':'')+'. Bora continuar?'
     : 'Bem-vindo ao Pingo Quest! Aqui você aprende Redes de Computadores resolvendo casos de verdade, do zero ao avançado, um passo de cada vez.';
   $('#welcome').innerHTML='<div class="wcard" role="dialog" aria-modal="true" aria-label="Boas-vindas">'+pingo('cheer','pingo-w')+
     '<h2>'+title+'</h2><p>'+text+'</p>'+
     '<div class="wpills"><span class="wpill"><span style="display:contents">'+IC.search+'</span>Resolva casos</span>'+
-    '<span class="wpill"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span>Sequência diária</span>'+
+    '<span class="wpill"><span style="color:#ff8a1f;display:contents">'+IC.brilho+'</span>Brilho diário</span>'+
     '<span class="wpill"><span style="color:var(--bad);display:contents">'+IC.heart+'</span>5 vidas</span></div>'+
     '<button class="btn" data-act="'+(back?'wclose':'obgo')+'" id="wgo">'+(back?'Continuar':'Vamos começar')+'</button></div>';
   $('#welcome').hidden=false;document.body.classList.add('lock');
@@ -2526,6 +2571,7 @@ function slMove(x){
   SL.dx=Math.max(0,Math.min(SL.max,x-SL.x0));if(SL.dx>6)SL.moved=true;
   SL.k.style.transform='translateX('+SL.dx+'px)';
   var t=SL.el.querySelector('.sl-txt');if(t)t.style.opacity=String(1-SL.dx/SL.max);
+  var bx=SL.el.closest('.brx');if(bx)bx.style.setProperty('--p',(SL.dx/SL.max).toFixed(3));
 }
 /* mouse/caneta: pointer events */
 document.addEventListener('pointerdown',function(e){
@@ -2559,9 +2605,11 @@ function slideEnd(e){
   var s2=SL;SL=null;
   if(s2.dx>=s2.max*.7){
     s2.k.style.transition='transform .12s';s2.k.style.transform='translateX('+s2.max+'px)';s2.el.classList.add('done');
+    var bx3=s2.el.closest('.brx');if(bx3)bx3.style.setProperty('--p','1');
     sfx('confirm');buzz([12,30,20]);var a=s2.el.dataset.slide;setTimeout(function(){fireAct(a)},150);
   }else{
     s2.k.style.transition='transform .22s';s2.k.style.transform='translateX(0)';
+    var bx2=s2.el.closest('.brx');if(bx2)bx2.style.setProperty('--p','0');
     var t=s2.el.querySelector('.sl-txt');if(t)t.style.opacity='1';
     if(!s2.moved){s2.el.classList.remove('nudge');void s2.el.offsetWidth;s2.el.classList.add('nudge');sfx('tap')}
   }
@@ -2645,7 +2693,7 @@ document.addEventListener('input',function(e){
 document.addEventListener('keydown',function(e){
   if(e.key==='Enter'&&e.target&&e.target.id==='tyin'&&L&&L.state==='ask'&&L.sel.trim()){e.preventDefault();e.target.blur();check()}
 });
-/* ---------- tela de sequência ---------- */
+/* ---------- tela de brilho (dias seguidos) ---------- */
 var MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 function weekDays(){
   var d=new Date(),k=(d.getDay()+6)%7,out=[];d.setDate(d.getDate()-k);
@@ -2662,11 +2710,11 @@ function showStreak(){
   var lupa=S.lupa
     ? '<div class="lupa on"><span class="li">'+IC.search+'</span><div><b>Lupa do Pingo desbloqueada</b><small>Nos casos, ela aponta qual aparelho verificar primeiro.</small></div></div>'
     : '<div class="lupa"><span class="li">'+IC.search+'</span><div><b>Lupa do Pingo</b><small>Chegue a 7 dias seguidos para desbloquear. Faltam '+Math.max(0,7-st)+'.</small></div></div>';
-  var h='<div class="sheet tall" role="dialog" aria-label="Minha sequência">'+
-   '<div class="stk"><span class="stkp">'+pingo(st>0?'cheer':'happy','pingo-s')+'</span><div><div class="big"><span style="color:#ff8a1f;display:contents">'+IC.flame+'</span>'+st+'</div><small>'+(st===1?'dia seguido':'dias seguidos')+(S.best>st?' · recorde '+S.best:'')+'</small></div></div>'+
+  var h='<div class="sheet tall" role="dialog" aria-label="Meu brilho">'+
+   '<div class="stk"><span class="stkp">'+pingo(st>0?'cheer':'happy','pingo-s')+'</span><div><div class="big"><span style="color:#ff8a1f;display:contents">'+IC.brilho+'</span>'+st+'</div><small>'+(st===1?'dia seguido':'dias seguidos')+(S.best>st?' · recorde '+S.best:'')+'</small></div></div>'+
    '<div class="wdays" style="margin-top:14px">'+wk7+'</div>'+
    '<div class="prog"><div class="row"><span>Meta da semana</span><span>'+gp+' de '+plan+' dias</span></div><div class="bar gold"><i style="width:'+(gp/plan*100)+'%"></i></div></div>'+
-   '<p class="note" style="margin:10px 0 0">'+(g===0?'No plano de 7 dias, todo dia conta.':'Seu plano permite até '+g+(g===1?' dia':' dias')+' de folga seguido'+(g===1?'':'s')+' sem perder a sequência.')+'</p>'+
+   '<p class="note" style="margin:10px 0 0">'+(g===0?'No plano de 7 dias, todo dia conta.':'Seu plano permite até '+g+(g===1?' dia':' dias')+' de folga seguido'+(g===1?'':'s')+' sem perder o brilho.')+'</p>'+
    '<div class="sect" style="margin-top:18px">'+MESES[m]+' de '+y+'</div><div class="cal">'+cal+'</div>'+
    lupa+
    '<div class="sect" style="margin-top:18px">Meu plano</div><div class="plans">'+[3,5,7].map(function(n){return '<button class="pl'+(plan===n?' on':'')+'" data-act="setplan" data-n="'+n+'"><b>'+n+'</b><small>dias por semana</small></button>'}).join('')+'</div>'+
