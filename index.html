@@ -1009,21 +1009,21 @@ IC.search='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid
 function pingo(mood,cls,av){
   /* Pingo v2: capacete lilás, viseira preta, olhos ciano (um pisca), sorriso rosa, fones com "P",
      antena curva com bolinha amarela, mochila laranja e emblema "P" no peito. */
-  var eyes,mouth,brow='',cheeks='<circle cx="38" cy="62" r="3.600" fill="#ff4fae" opacity=".55"/><circle cx="82" cy="62" r="3.600" fill="#ff4fae" opacity=".55"/>';
+  var eyes,mouth,brow='',cheeks='<circle cx="39" cy="63" r="3.200" fill="#ff4fae" opacity=".55"/><circle cx="81" cy="63" r="3.200" fill="#ff4fae" opacity=".55"/>';
   if(mood==='sad'){
     eyes='<ellipse class="m-oval" cx="46" cy="53" rx="4.500" ry="6.500"/><ellipse class="m-oval" cx="74" cy="53" rx="4.500" ry="6.500"/><circle cx="44.500" cy="50.500" r="1.600" fill="#fff"/><circle cx="72.500" cy="50.500" r="1.600" fill="#fff"/>';
     brow='<path class="m-eye" d="M39 46l13-4M81 46l-13-4"/>';
-    mouth='<path d="M52 70q8-7 16 0" fill="none" stroke="#ff4fae" stroke-width="3.600" stroke-linecap="round"/>';
+    mouth='<path d="M55 68q5-5 10 0" fill="none" stroke="#ff4fae" stroke-width="3.200" stroke-linecap="round"/>';
     cheeks='';
   }else if(mood==='cheer'){
     eyes='<path class="m-eye" d="M39 55q7-11 14 0M67 55q7-11 14 0"/>';
-    mouth='<path d="M49 61q11-2 22 0q0 15-11 15q-11 0-11-15z" fill="#ff4fae"/><path d="M54 70q6-5 12 0q-6 5-12 0z" fill="#ff9fd0"/>';
+    mouth='<path d="M53 62q7-1.500 14 0q0 9-7 9q-7 0-7-9z" fill="#ff4fae"/><path d="M56.500 67.500q3.500-3 7 0q-3.500 3-7 0z" fill="#ff9fd0"/>';
   }else if(mood==='wink'){
     eyes='<ellipse class="m-oval" cx="46" cy="53" rx="5" ry="8"/><circle cx="44" cy="49.500" r="2" fill="#fff"/><path class="m-eye" d="M66 55q7-11 14 0"/>';
-    mouth='<path d="M50 63q10 10 20 0" fill="none" stroke="#ff4fae" stroke-width="3.800" stroke-linecap="round"/>';
+    mouth='<path d="M54 63q6 6 12 0" fill="none" stroke="#ff4fae" stroke-width="3.400" stroke-linecap="round"/>';
   }else{
     eyes='<ellipse class="m-oval" cx="46" cy="53" rx="5" ry="8"/><circle cx="44" cy="49.500" r="2" fill="#fff"/><ellipse class="m-oval r" cx="74" cy="53" rx="5" ry="8"/><circle cx="72" cy="49.500" r="2" fill="#fff"/>';
-    mouth='<path d="M50 63q10 10 20 0" fill="none" stroke="#ff4fae" stroke-width="3.800" stroke-linecap="round"/>';
+    mouth='<path d="M54 63q6 6 12 0" fill="none" stroke="#ff4fae" stroke-width="3.400" stroke-linecap="round"/>';
   }
   var cfg=av?avCfg():null,st='',back='',ant,hat='',vis='';
   ant='<path class="m-ant" d="M58 24C57 10 68 7 79 11" fill="none"/><circle class="m-tip" cx="82" cy="12" r="7"/><circle cx="80" cy="10" r="2" fill="#fff" opacity=".8"/>';
