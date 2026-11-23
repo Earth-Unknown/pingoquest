@@ -198,6 +198,14 @@ svg{display:block}
 .rt span svg{width:22px;height:22px;flex:none;color:var(--rc)}.rt span b{font-size:22px;font-weight:900;color:var(--rc)}
 @keyframes rtpop{0%{opacity:0;transform:translateY(170px) scale(.35)}55%{opacity:1;transform:translateY(-12px) scale(1.08)}78%{transform:translateY(3px) scale(.97)}100%{opacity:1;transform:none}}
 .rt b.bump{animation:numbump .4s cubic-bezier(.3,1.8,.5,1)}
+.cpills{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 14px);display:flex;justify-content:center;gap:10px;z-index:60;pointer-events:none}
+.cp{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;background:var(--surface);border:2px solid var(--line);font-weight:900;font-size:17px;box-shadow:0 4px 0 var(--line-deep);animation:cpin .45s cubic-bezier(.2,1.6,.4,1) both}
+.cp svg{width:20px;height:20px;flex:none}.cp small{font-size:11px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.cp.e{color:#d99a00;border-color:#ffb800}.cp.g{color:#ff4fae;border-color:#ff4fae}
+.cp.bump{animation:cpbump .25s ease-out}
+@keyframes cpin{from{transform:translateY(-80px);opacity:0}to{transform:none;opacity:1}}
+@keyframes cpbump{0%{transform:scale(1)}45%{transform:scale(1.14)}100%{transform:scale(1)}}
+.cpart{position:fixed;width:24px;height:24px;margin:-12px 0 0 -12px;z-index:70;pointer-events:none}.cpart svg{width:100%;height:100%}
 @keyframes numbump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.rt{animation-duration:.01s}}
 .res{display:flex;gap:12px;margin:14px 0 6px;width:100%}
@@ -2060,12 +2068,12 @@ function finishLesson(){
   $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p>'+
    (xoffer?'<div class="xch"><b>Desafio do Pingo</b><p>5 acertos seguidos! Quer tentar '+xoffer.qs.length+' perguntas mais difíceis? É opcional.</p></div>':'')+
    '<div class="res2">'+tl+'</div></div></div>'+
-   '<div class="lfoot">'+xcard+'<button class="btn" data-act="lclose">'+(xcard?'Agora não':(xp>0?'Coletar energia':'Continuar'))+'</button></div></div>';
+   '<div class="lfoot">'+xcard+'<button class="btn" data-act="'+(!xcard&&xp>0?'collect':'lclose')+'">'+(xcard?'Agora não':(xp>0?'Coletar energia':'Continuar'))+'</button></div></div>';
   tiles.forEach(function(t,i){
     setTimeout(function(){if(L&&L.kind==='done')sfx('plim'+Math.min(i,2))},(0.55+i*0.62)*1000+260);
     setTimeout(function(){var el=$('#lesson .res2').children[i];if(el)countUp(el.querySelector('b'))},(0.55+i*0.62)*1000+380);
   });
-  L.xo=xoffer;L.kind='done';sfx('win');confetti();
+  L.xo=xoffer;L.cx=xp;L.cg=gems;L.kind='done';sfx('win');confetti();
 }
 /* números sobem até o valor final, com tique suave a cada passo */
 function countUp(b){
@@ -2084,6 +2092,48 @@ function countUp(b){
   }
   requestAnimationFrame(fr);
   setTimeout(function(){if(b.isConnected&&b.textContent!==pre+to+suf)fin()},dur+400);
+}
+/* "Coletar energia": a energia e os chips voam do quadrinho para o total no topo e vão somando */
+var COLLECTING=false;
+function collectFx(){
+  var root=$('#lesson'),xp=L&&L.cx||0,gm=L&&L.cg||0;
+  if(COLLECTING)return;
+  if(NOANIM||!xp){closeLesson();return}
+  COLLECTING=true;
+  var btn=root.querySelector('.lfoot .btn');if(btn)btn.disabled=true;
+  var tiles=root.querySelectorAll('.res2 .rt'),eT=tiles[0],gT=null;
+  [].forEach.call(tiles,function(el){if(/chips/i.test(el.querySelector('small').textContent))gT=el});
+  var bar=document.createElement('div');bar.className='cpills';
+  var e0=S.xp-xp,g0=S.gems-gm;
+  bar.innerHTML='<div class="cp e">'+IC.bolt+'<b>'+e0+'</b><small>energia</small></div>'+(gm>0?'<div class="cp g"><span style="color:#ff4fae;display:contents">'+IC.gem+'</span><b>'+g0+'</b><small>chips</small></div>':'');
+  root.appendChild(bar);
+  var pe=bar.querySelector('.cp.e b'),pg=bar.querySelector('.cp.g b'),landed=0,total=0,done=false;
+  function finish(){if(done)return;done=true;COLLECTING=false;sfx('plim2');setTimeout(function(){bar.remove();closeLesson()},500)}
+  setTimeout(function(){
+    var jobs=[];
+    if(eT)jobs.push({tile:eT,ic:IC.bolt,col:'#ffb800',pill:bar.querySelector('.cp.e'),b:pe,from:e0,add:xp});
+    if(gT&&gm>0)jobs.push({tile:gT,ic:'<span style="color:#ff4fae;display:contents">'+IC.gem+'</span>',col:'#ff4fae',pill:bar.querySelector('.cp.g'),b:pg,from:g0,add:gm});
+    jobs.forEach(function(j){
+      var r=j.tile.getBoundingClientRect(),q=j.pill.getBoundingClientRect(),n=Math.min(9,Math.max(5,j.add)),sx=r.left+r.width/2,sy=r.top+r.height/2,tx=q.left+22,ty=q.top+q.height/2;
+      j.tile.style.transition='transform .3s';j.tile.style.transform='scale(.9)';setTimeout(function(){j.tile.style.transform=''},300);
+      total+=n;
+      for(var i=0;i<n;i++)(function(i){
+        var el=document.createElement('div');el.className='cpart';el.innerHTML=j.ic;el.style.left=sx+'px';el.style.top=sy+'px';
+        el.style.opacity='0';document.body.appendChild(el);
+        var dx=tx-sx,dy=ty-sy,wob=(i%2?1:-1)*(20+i*5);
+        var an=el.animate([{transform:'translate(0,0) scale(.5)',opacity:0},{transform:'translate('+(dx*.35+wob)+'px,'+(dy*.2-40)+'px) scale(1.25)',opacity:1,offset:.3},{transform:'translate('+dx+'px,'+dy+'px) scale(.55)',opacity:1}],{duration:750,delay:i*85,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
+        an.onfinish=function(){
+          el.remove();landed++;
+          j.b.textContent=Math.round(j.from+j.add*(i+1)/n);
+          j.pill.classList.remove('bump');void j.pill.offsetWidth;j.pill.classList.add('bump');
+          sfx('tick');buzz(8);
+          if(i===n-1)j.b.textContent=j.from+j.add;
+          if(landed>=total)setTimeout(finish,350);
+        };
+      })(i);
+    });
+  },420);
+  setTimeout(finish,4200);
 }
 function showNoHearts(){
   var can=S.gems>=60;
@@ -2267,6 +2317,7 @@ document.addEventListener('click',function(e){
   else if(a==='check'){check()}
   else if(a==='next'){next()}
   else if(a==='lclose'){closeLesson()}
+  else if(a==='collect'){collectFx()}
   else if(a==='admtap'){if(!isAdm()){admTaps++;if(admTaps>=7){admTaps=0;admAsk=true;render()}}}
   else if(a==='admok'){var ic=document.getElementById('admcode');admCheck(ic?ic.value.trim():'')}
   else if(a==='admoff'){try{localStorage.removeItem('pingoquest-adm');localStorage.setItem('pingoquest-devoff','0')}catch(e){}render()}
@@ -2410,7 +2461,7 @@ var SFX={
 };
 /* navegar = quase mudo e só uma vibração leve; escolher = clique macio; avançar/confirmar/recompensa = som mais rico */
 var ACTSND={theme:'sel',avequip:'sel',pick:'sel',vf:'sel',fadd:'sel',fdel:'sel',badd:'sel',bdel:'sel',clset:'sel',mp:'sel',cpick:'sel',cguess:'sel',obpick:'sel',setplan:'sel',
- next:'adv',lnext:'adv',obnext:'adv',obplan:'adv',obgo:'adv',lclose:'adv',cdone:'adv',cagain:'adv',
+ next:'adv',lnext:'adv',obnext:'adv',obplan:'adv',obgo:'adv',lclose:'adv',collect:'adv',cdone:'adv',cagain:'adv',
  go:'go',evstep:'go',evopen:'go',evback:'adv',evclose:'nav',daily:'go',review:'go',practice:'go',obstart:'go',xch:'go'};
 function sfx(n){if(!SND.on)return;try{SFX[n]()}catch(e){}}
 function buzz(ms){try{if(SND.on&&navigator.vibrate)navigator.vibrate(ms)}catch(e){}}
