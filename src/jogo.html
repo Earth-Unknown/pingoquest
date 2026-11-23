@@ -728,6 +728,22 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .btn.prim:active{box-shadow:0 0 0 transparent}
 .cqico{filter:saturate(.6) brightness(1.06)}
 .cqtile.on,.cqtile.got{border-color:color-mix(in srgb,var(--gold) 55%,var(--line))}
+
+/* Mundo: a trilha é o cenário */
+.unit{--uh:#7b3ff2;--ud:#5a22c4;background:linear-gradient(180deg,rgba(150,225,185,.22),rgba(200,139,255,.12));border-radius:26px;padding:12px 10px 18px;margin-top:16px}
+.unit .uhead{background:transparent;border:0;border-left:0;box-shadow:none;padding:6px 6px 0;color:var(--ink);justify-content:flex-start}
+.unit .uhead>div{flex:1;min-width:0}.unit .uhead .tag{color:var(--primary);font-size:11px}.unit .uhead h2{font-size:20px;color:var(--ink)}
+.lsub{font-size:12.5px;font-weight:700;color:var(--muted);margin-top:1px}
+.lm{flex:none;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#6d3be0);box-shadow:0 4px 0 #5a22c4;display:grid;place-items:center}.lm svg{width:30px;height:30px}
+.nodes{position:relative}.nodes:before{content:"";position:absolute;left:50%;top:44px;bottom:36px;border-left:5px dotted color-mix(in srgb,#8b5cf6 40%,transparent);transform:translateX(-50%);z-index:0}
+.nw{z-index:1}
+.node.done{background:#8ccfa9;box-shadow:0 6px 0 #5fa882;color:#fff}
+.node.cur{background:#7b3ff2;box-shadow:0 6px 0 #5a22c4,0 0 0 7px rgba(123,63,242,.18);color:#fff}
+.node.bossn{background:#ff9a1f;box-shadow:0 6px 0 #d96f00;color:#fff}.node.bossn.done{background:#8ccfa9;box-shadow:0 6px 0 #5fa882}
+.node.lock{background:#d9d1f2;box-shadow:0 6px 0 #bdb3e0;color:#fff}.node.bossn.lock{background:#e8d8c4;box-shadow:0 6px 0 #d3bfa6}
+.nodes:after{content:"";position:absolute;right:16px;top:70px;width:26px;height:26px;border-radius:7px;background:#ffd83d;border:2px solid #d9a400;transform:rotate(10deg);opacity:.9}
+:root[data-theme="dark"] .unit{background:linear-gradient(180deg,rgba(150,225,185,.08),rgba(200,139,255,.08))}
+:root[data-theme="dark"] .unit .uhead h2{color:#fff}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -2139,6 +2155,19 @@ function popHTML(g,k,un,done,x){
 /* Mundos: cada seção do curso é um mundo com cenário próprio. Mundo 1 = Vila Roteador. */
 var WORLD={n:1,name:'Vila Roteador',sub:'Equipamentos, pacotes e conexões',
  places:['Praça da Rede','Casa do Pingo','Posto de Cabos','Porto da Internet','Rua dos Endereços','Agenda de Nomes','Correio de Pacotes','Central de Equipamentos','Mapa das Redes','Portão Seguro']};
+var PLACE_IC=[
+ '<circle cx="20" cy="20" r="6" fill="#fff"/><circle cx="8" cy="10" r="4" fill="#ffd83d"/><circle cx="32" cy="10" r="4" fill="#ff9fd0"/><circle cx="8" cy="31" r="4" fill="#19e0ff"/><circle cx="32" cy="31" r="4" fill="#8ff0a8"/><path d="M8 10L20 20L32 10M8 31L20 20L32 31" stroke="#fff" stroke-width="2.500" fill="none"/>',
+ '<path d="M5 19L20 6l15 13z" fill="#fff"/><rect x="9" y="19" width="22" height="16" rx="3" fill="#fff"/><rect x="17" y="25" width="7" height="10" rx="2" fill="#7b3ff2"/>',
+ '<rect x="6" y="14" width="14" height="12" rx="3" fill="#fff"/><rect x="20" y="17" width="14" height="6" rx="3" fill="#ffd83d"/><path d="M2 20h4M34 20h4" stroke="#fff" stroke-width="3" stroke-linecap="round"/>',
+ '<circle cx="20" cy="20" r="14" fill="none" stroke="#fff" stroke-width="3"/><ellipse cx="20" cy="20" rx="6" ry="14" fill="none" stroke="#fff" stroke-width="2.500"/><path d="M6 20h28" stroke="#fff" stroke-width="2.500"/>',
+ '<path d="M20 4a10 10 0 0 1 10 10c0 8-10 20-10 20S10 22 10 14A10 10 0 0 1 20 4z" fill="#fff"/><circle cx="20" cy="14" r="4" fill="#7b3ff2"/>',
+ '<rect x="9" y="5" width="22" height="30" rx="4" fill="#fff"/><circle cx="20" cy="15" r="4" fill="#7b3ff2"/><path d="M13 27q7-8 14 0" fill="#7b3ff2"/>',
+ '<rect x="7" y="9" width="26" height="24" rx="6" fill="#ffd83d"/><path d="M7 18h26" stroke="#d9a400" stroke-width="2.500"/><rect x="17.500" y="9" width="5" height="24" fill="#fff" opacity=".85"/>',
+ '<rect x="5" y="21" width="30" height="13" rx="6" fill="#fff"/><circle cx="12" cy="27.500" r="2" fill="#7b3ff2"/><circle cx="19" cy="27.500" r="2" fill="#5be37d"/><line x1="11" y1="21" x2="8" y2="9" stroke="#fff" stroke-width="3" stroke-linecap="round"/><line x1="29" y1="21" x2="32" y2="9" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M14 8q6-6 12 0" stroke="#ffd83d" stroke-width="3" fill="none" stroke-linecap="round"/>',
+ '<path d="M4 9l10-4 12 4 10-4v26l-10 4-12-4-10 4z" fill="#fff"/><path d="M14 5v26M26 9v26" stroke="#7b3ff2" stroke-width="2"/>',
+ '<path d="M20 4l14 6v10q0 12-14 17Q6 32 6 20V10z" fill="#fff"/><path d="M13 20l5 5 9-10" stroke="#7b3ff2" stroke-width="3.500" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'];
+function placeIcon(i){return '<svg viewBox="0 0 40 40" aria-hidden="true">'+(PLACE_IC[i]||PLACE_IC[0])+'</svg>'}
+
 function worldScene(){
   var h='<svg viewBox="0 0 390 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="wsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a0a66"/><stop offset=".6" stop-color="#6d3be0"/><stop offset="1" stop-color="#c88bff"/></linearGradient><linearGradient id="wgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7f0cf"/><stop offset="1" stop-color="#7cd6a6"/></linearGradient></defs><rect width="390" height="170" fill="url(#wsky)"/>';
   [[30,22,1.5],[90,50,1.2],[160,16,1.6],[250,30,1.3],[330,18,1.8],[360,70,1.2],[60,80,1.4]].forEach(function(a){h+='<circle cx="'+a[0]+'" cy="'+a[1]+'" r="'+a[2]+'" fill="#fff" opacity=".7"/>'});
@@ -2153,7 +2182,7 @@ function worldScene(){
 function worldBanner(){
   var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
   var t=GAMES.length*4,pct=Math.round(n/t*100);
-  return '<button class="world" data-act="mundo" aria-label="Abrir o Mundo '+WORLD.n+'">'+worldScene()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></button>';
+  return '<div class="world">'+worldScene()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
 }
 
 function showMundo(){
@@ -2170,12 +2199,12 @@ function showMundo(){
 function pathHTML(){
   var h=worldBanner(),curFound=false;
   GAMES.forEach(function(g,gi){
-    h+='<section class="unit u'+(gi%5)+'"><div class="uhead"><div><div class="tag">Parada '+(gi+1)+' · '+(WORLD.places[gi]||'')+'</div><h2>'+g.title+'</h2></div>'+
+    h+='<section class="unit u'+(gi%5)+'"><div class="uhead"><span class="lm">'+placeIcon(gi)+'</span><div><div class="tag">Parada '+(gi+1)+'</div><h2>'+(WORLD.places[gi]||g.title)+'</h2><div class="lsub">'+g.title+'</div></div>'+
        '<button class="tipbtn" data-act="tips" data-g="'+gi+'">Dicas</button></div><div class="nodes">';
     for(var k=0;k<4;k++){
       var key=gi+'-'+k,done=!!S.done[key],un=isUnlocked(gi,k),cur=un&&!done&&!curFound;
       if(cur)curFound=true;
-      var cls=done?'done':(cur?'cur':(un?'cur':'lock'));
+      var cls=(done?'done':(cur?'cur':(un?'cur':'lock')))+(k===3?' bossn':'');
       var icon=done?IC.check:(un?(k===3?(g.caso?IC.search:IC.boss):IC.play):IC.lock);
       var x=OFF[k],label=k===3?(g.caso?'Caso':'Prova final'):(g.names?'Lição ':'Fase ')+(k+1);
       h+='<div class="nw" style="--x:'+x+'px">';
@@ -2900,7 +2929,6 @@ document.addEventListener('keydown',function(e){
 });
 
 render();
-if(S.onb&&!S.wseen&&!navigator.webdriver)setTimeout(function(){if($('#modal').hidden)showMundo()},500);
 (function(){var c=document.querySelector('.node.cur');if(c&&c.scrollIntoView){try{c.scrollIntoView({block:'center'})}catch(e){}}})();
 
 /* ---------- boas-vindas do Pingo ---------- */
