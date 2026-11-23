@@ -351,8 +351,8 @@ svg.poke .m-smile{animation:smoff .8s ease-in-out}
 svg.poke .m-wow{animation:wow .8s ease-in-out}
 @keyframes wow{0%,100%{transform:scale(0)}18%,72%{transform:scale(1)}}
 @keyframes smoff{0%,100%{opacity:1}12%,80%{opacity:0}}
-.m-limb{stroke:var(--primary-deep);stroke-width:7;stroke-linecap:round}
-.m-hand{fill:var(--primary);stroke:var(--primary-deep);stroke-width:2}
+.m-limb{stroke:var(--primary-deep);stroke-width:6;stroke-linecap:round}
+.m-hand{fill:var(--primary);stroke:var(--primary-deep);stroke-width:1.600}
 .m-arm{transform-box:view-box}.m-arm.l{transform-origin:40px 90px}.m-arm.r{transform-origin:80px 90px}
 svg.act-wave .m-arm.r{animation:awave 1.9s ease-in-out}
 svg.act-clap .m-arm.l{animation:aclapl 1s ease-in-out}svg.act-clap .m-arm.r{animation:aclapr 1s ease-in-out}
@@ -1093,7 +1093,7 @@ function pingo(mood,cls,av){
    '<rect class="m-face" x="29" y="33" width="62" height="42" rx="21"/>'+
    '<path d="M37 38q6-4 14-4" fill="none" stroke="#fff" stroke-width="2.500" stroke-linecap="round" opacity=".25"/>'+
    eyes+brow+cheeks+mouth+vis+
-   '<g class="m-arm l"><line class="m-limb" x1="40" y1="90" x2="30" y2="98.500"/><line x1="33.600" y1="95.500" x2="31.400" y2="97.300" stroke="#efe6ff" stroke-width="8.500"/><circle class="m-hand" cx="27.500" cy="100.500" r="7"/><ellipse cx="25.500" cy="98.500" rx="2.200" ry="1.500" fill="#fff" opacity=".55" transform="rotate(-35 25.500 98.500)"/></g><g class="m-arm r"><line class="m-limb" x1="80" y1="90" x2="90" y2="98.500"/><line x1="86.400" y1="95.500" x2="88.600" y2="97.300" stroke="#efe6ff" stroke-width="8.500"/><circle class="m-hand" cx="92.500" cy="100.500" r="7"/><ellipse cx="90.500" cy="98.500" rx="2.200" ry="1.500" fill="#fff" opacity=".55" transform="rotate(-35 90.500 98.500)"/></g>'+hat+
+   '<g class="m-arm l"><line class="m-limb" x1="40" y1="90" x2="31" y2="97"/><circle class="m-hand" cx="33.600" cy="99.300" r="2.400"/><rect class="m-hand" x="23.500" y="94.500" width="9.500" height="10.500" rx="4.500"/><rect x="25.200" y="96.200" width="2.400" height="3.600" rx="1.200" fill="#fff" opacity=".5"/></g><g class="m-arm r"><line class="m-limb" x1="80" y1="90" x2="89" y2="97"/><circle class="m-hand" cx="86.400" cy="99.300" r="2.400"/><rect class="m-hand" x="87" y="94.500" width="9.500" height="10.500" rx="4.500"/><rect x="92.400" y="96.200" width="2.400" height="3.600" rx="1.200" fill="#fff" opacity=".5"/></g>'+hat+
    (cfg&&cfg.cabeca==='capacete'?ant:'')+'</svg>';
 }
 
