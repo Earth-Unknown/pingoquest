@@ -1046,22 +1046,22 @@ function pingo(mood,cls,av){
   /* Pingo v3 (referência "Robô Kawaii Roxo"): capacete lilás grande, viseira escura, orelhas roxas com luz ciano,
      bochechas brilhantes, boca aberta rosa, peito com 3 luzinhas, antena curva com bolinha amarela. Sem mochila fixa. */
   var eyes,mouth,brow='',
-  cheeks='<ellipse cx="40" cy="59.500" rx="4.300" ry="3.500" fill="#ff5fae"/><ellipse cx="80" cy="59.500" rx="4.300" ry="3.500" fill="#ff5fae"/><ellipse cx="38.600" cy="58" rx="1.500" ry="1" fill="#fff" opacity=".7"/><ellipse cx="78.600" cy="58" rx="1.500" ry="1" fill="#fff" opacity=".7"/>',
+  cheeks='<ellipse cx="38.500" cy="61" rx="3.700" ry="3" fill="#ff5fae"/><ellipse cx="81.500" cy="61" rx="3.700" ry="3" fill="#ff5fae"/><ellipse cx="37.300" cy="59.900" rx="1.200" ry=".8" fill="#fff" opacity=".7"/><ellipse cx="80.300" cy="59.900" rx="1.200" ry=".8" fill="#fff" opacity=".7"/>',
   D='<g class="m-smile"><path d="M53.500 57.300h13q0 8.500-6.500 8.500t-6.500-8.500z" fill="#ff5fae"/><ellipse cx="60" cy="63.600" rx="3.600" ry="2.100" fill="#ff9fd0"/></g><ellipse class="m-wow" cx="60" cy="63" rx="5.200" ry="6" fill="#ff5fae"/><ellipse class="m-wow" cx="60" cy="66" rx="3" ry="2.200" fill="#ff9fd0"/>';
   var oval=function(cx,cy,rx,ry){return '<ellipse class="m-oval" cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'"/><circle cx="'+(cx-1.800)+'" cy="'+(cy-ry*.45)+'" r="1.700" fill="#fff"/>'};
   if(mood==='sad'){
-    eyes=oval(46.500,52,4.400,6)+oval(73.500,52,4.400,6);
-    brow='<path class="m-eye" d="M39.500 45l12-4M80.500 45l-12-4"/>';
+    eyes=oval(46.500,48.500,3.700,5)+oval(73.500,48.500,3.700,5);
+    brow='<path class="m-eye" d="M39.500 41.500l12-3.500M80.500 41.500l-12-3.500"/>';
     mouth='<path d="M56 67.500q4-5 8 0" fill="none" stroke="#ff5fae" stroke-width="3.200" stroke-linecap="round"/>';
     cheeks='';
   }else if(mood==='cheer'){
-    eyes='<path class="m-eye" d="M39.500 55q7.500-14 15 0M65.500 55q7.500-14 15 0"/>';
+    eyes='<path class="m-eye" d="M40.500 52q6.500-12 13 0M66.500 52q6.500-12 13 0"/>';
     mouth=D;
   }else if(mood==='wink'){
-    eyes=oval(46.500,50.500,4.600,7.200)+'<path class="m-eye" d="M66.500 54q7-13 14 0"/>';
+    eyes=oval(46.500,48,3.800,5.400)+'<path class="m-eye" d="M67 51q6.500-12 13 0"/>';
     mouth=D;
   }else{
-    eyes=oval(46.500,50.500,4.600,7.200)+'<g class="r">'+oval(73.500,50.500,4.600,7.200)+'</g>';
+    eyes=oval(46.500,48,3.800,5.400)+'<g class="r">'+oval(73.500,48,3.800,5.400)+'</g>';
     mouth=D;
   }
   var cfg=av===false?null:avCfg(),st='',back='',ant,hat='',vis='';
@@ -1076,8 +1076,8 @@ function pingo(mood,cls,av){
     else if(cfg.costas==='cabos')back='<rect x="13" y="42" width="94" height="60" rx="14" fill="#ff8a1f"/><circle cx="13" cy="78" r="9" fill="none" stroke="#3b82f6" stroke-width="4"/><circle cx="107" cy="78" r="9" fill="none" stroke="#5be37d" stroke-width="4"/>';
     if(cfg.cabeca==='bone')hat='<path d="M23 36q0-23 37-23q37 0 37 23z" fill="#ffb700"/><rect x="17" y="33" width="43" height="7" rx="3.500" fill="#e09b00"/>';
     else if(cfg.cabeca==='capacete')hat='<path d="M20 40q0-30 40-30q40 0 40 30z" fill="#ffcf33"/><rect x="18" y="37" width="84" height="6" rx="3" fill="#e0a800"/><rect x="55" y="10" width="10" height="28" fill="#e0a800"/>';
-    if(cfg.visor==='oculos')vis='<circle cx="46.500" cy="51" r="10.500" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><circle cx="73.500" cy="51" r="10.500" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><path d="M57 49q3-3 6 0" fill="none" stroke="#fff" stroke-width="2"/>';
-    else if(cfg.visor==='hud')vis='<rect x="35" y="41" width="50" height="17" rx="8.500" fill="rgba(25,181,232,.10)" stroke="var(--cyan)" stroke-width="1.800"/><path d="M41 45.500h7" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".7"/>';
+    if(cfg.visor==='oculos')vis='<circle cx="46.500" cy="48.500" r="8.800" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><circle cx="73.500" cy="48.500" r="8.800" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><path d="M55.300 47q4.700-3 9.400 0" fill="none" stroke="#fff" stroke-width="2"/>';
+    else if(cfg.visor==='hud')vis='<rect x="36" y="40" width="48" height="15" rx="7.500" fill="rgba(25,181,232,.10)" stroke="var(--cyan)" stroke-width="1.800"/><path d="M41 44h6" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".7"/>';
   }
   var ear=function(x,ix){return '<rect class="m-ear" x="'+x+'" y="41.300" width="10.300" height="23.700" rx="5.200"/><rect x="'+ix+'" y="46.700" width="5.400" height="13.400" rx="2.700" fill="var(--cyan)"/><rect x="'+(ix+1.200)+'" y="48" width="1.200" height="4" rx=".6" fill="#fff" opacity=".6"/>'};
   return '<svg viewBox="0 0 120 120" class="'+(cls||'')+'"'+st+' data-m="'+mood+'" role="img" aria-label="Pingo, '+(av===false?'o roteador mascote':'seu robô')+'">'+back+
