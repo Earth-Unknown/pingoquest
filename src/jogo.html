@@ -350,12 +350,18 @@ svg{display:block}
 .avrow{margin:10px 0}.avrow>b{display:block;font-size:14px;margin-bottom:6px;color:var(--muted)}
 .avchips{display:flex;flex-wrap:wrap;gap:8px}
 .avchip{font:inherit;font-weight:800;font-size:14px;padding:9px 12px;border-radius:12px;border:2px solid var(--line-deep);background:var(--surface);color:var(--text,inherit);cursor:pointer;display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px}
-.world{position:relative;height:190px;border-radius:24px;overflow:hidden;margin:0 0 16px;box-shadow:0 8px 22px rgba(42,10,102,.18)}
+.world{display:block;width:100%;border:0;padding:0;text-align:left;font:inherit;cursor:pointer;position:relative;height:190px;border-radius:24px;overflow:hidden;margin:0 0 16px;box-shadow:0 8px 22px rgba(42,10,102,.18)}
 .world svg{position:absolute;inset:0;width:100%;height:100%}
 .world:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(42,10,102,.85))}
 .winfo{position:absolute;left:16px;right:16px;bottom:12px;z-index:2;color:#fff}
 .winfo small{font-weight:900;letter-spacing:.16em;font-size:11px;opacity:.9}.winfo b{display:block;font-size:22px;line-height:1.1}.winfo span{font-size:12px;font-weight:700;opacity:.9}
 .wprog{height:7px;border-radius:4px;background:rgba(255,255,255,.3);margin-top:7px;overflow:hidden}.wprog i{display:block;height:100%;background:#ffd83d;border-radius:4px}
+.wsheet{padding:0;overflow:auto}.wsc{position:relative;height:230px}.wsc svg{position:absolute;inset:0;width:100%;height:100%}
+.wtt{position:absolute;left:0;right:0;top:20px;text-align:center;color:#fff}.wtt small{font-weight:900;letter-spacing:.2em;font-size:12px;opacity:.9}.wtt h2{margin:2px 0 0;font-size:30px;line-height:1.05}
+.wpg{position:relative;height:0;z-index:2}.wping{position:absolute;left:34px;top:-92px;width:128px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.25))}.wbag{position:absolute;left:20px;top:-14px;width:44px}
+.wbub{position:absolute;right:18px;top:-78px;width:170px;background:#fff;color:#1f1642;border-radius:18px;padding:10px 12px;font-weight:800;font-size:13px;line-height:1.25;box-shadow:0 8px 18px rgba(0,0,0,.2)}
+.wbody{padding:62px 22px 22px;background:var(--surface);position:relative}.wbody h3{margin:0 0 6px;font-size:19px}.wbody p{color:var(--muted);font-size:14px;line-height:1.4;margin:0}
+.wchips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}.wchips span{background:var(--line);color:var(--primary-deep);font-weight:900;font-size:12px;padding:6px 10px;border-radius:12px}
 .avgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
 .avt{position:relative;aspect-ratio:1;padding:5px;border-radius:14px;align-items:center;justify-content:center;flex-direction:row}
 .avt svg{width:100%;height:100%;display:block}
@@ -2147,7 +2153,18 @@ function worldScene(){
 function worldBanner(){
   var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
   var t=GAMES.length*4,pct=Math.round(n/t*100);
-  return '<div class="world">'+worldScene()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
+  return '<button class="world" data-act="mundo" aria-label="Abrir o Mundo '+WORLD.n+'">'+worldScene()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></button>';
+}
+
+function showMundo(){
+  var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
+  S.wseen=1;save();
+  var h='<div class="sheet tall wsheet" role="dialog" aria-label="Mundo '+WORLD.n+'"><div class="wsc">'+worldScene()+'<div class="wtt"><small>MUNDO '+WORLD.n+'</small><h2>'+WORLD.name+'</h2></div></div>'+
+   '<div class="wpg">'+pingo('happy','wping')+'<svg class="wbag" viewBox="0 0 40 40"><rect x="4" y="10" width="32" height="26" rx="9" fill="#ff9a1f"/><path d="M12 10q8-12 16 0" fill="none" stroke="#d96f00" stroke-width="3"/><rect x="14" y="20" width="12" height="8" rx="3" fill="#ffd83d"/></svg><div class="wbub">Oi! Eu sou o carteiro de dados. Vem comigo entregar os pacotes!</div></div>'+
+   '<div class="wbody"><h3>Onde tudo se conecta</h3><p>Descubra como casas, cabos e Wi-Fi se ligam ao roteador, e como os pacotes de dados viajam até você.</p>'+
+   '<div class="wchips"><span>'+WORLD.places.length+' paradas</span><span>'+PF_TOTAL()+' provas finais</span><span>'+n+' de '+(GAMES.length*4)+' etapas</span></div>'+
+   '<button class="btn prim" data-act="mclose">Entrar no mundo</button></div></div>';
+  $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
 }
 
 function pathHTML(){
@@ -2804,6 +2821,7 @@ document.addEventListener('click',function(e){
     $('#modal').innerHTML='<div class="sheet" role="dialog" aria-label="Dicas"><h2>Dicas: '+g2.title+'</h2><ul>'+g2.tips.map(function(x){return'<li>'+x+'</li>'}).join('')+'</ul><button class="btn prim" data-act="mclose">Entendi</button></div>';
     $('#modal').hidden=false;
   }
+  else if(a==='mundo'){showMundo()}
   else if(a==='mclose'){$('#modal').hidden=true}
   else if(a==='chestopen'){openChest()}
   else if(a==='cztap'){czTap()}
@@ -2882,6 +2900,7 @@ document.addEventListener('keydown',function(e){
 });
 
 render();
+if(S.onb&&!S.wseen&&!navigator.webdriver)setTimeout(function(){if($('#modal').hidden)showMundo()},500);
 (function(){var c=document.querySelector('.node.cur');if(c&&c.scrollIntoView){try{c.scrollIntoView({block:'center'})}catch(e){}}})();
 
 /* ---------- boas-vindas do Pingo ---------- */
