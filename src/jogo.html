@@ -2162,20 +2162,45 @@ function pingoPoke(svg){
 function fireAct(a){var b=document.createElement('button');b.dataset.act=a;b.style.display='none';document.body.appendChild(b);b.click();if(b.parentNode)b.parentNode.removeChild(b)}
 var ARW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
 function slideHTML(act,label){return '<div class="slide" data-slide="'+act+'" tabindex="0" role="button" aria-label="'+label+'"><span class="sl-txt">'+label+'</span><span class="sl-knob">'+ARW+'</span></div>'}
-var SL=null;
+var SL=null,SLtap=0;
+function slStart(k,x,id,type){
+  var el=k.parentNode;if(!el||el.classList.contains('done'))return;
+  SL={el:el,k:k,x0:x,dx:0,max:Math.max(1,el.clientWidth-k.offsetWidth-8),id:id,type:type,moved:false};
+  k.style.transition='none';
+}
+function slMove(x){
+  if(!SL)return;
+  SL.dx=Math.max(0,Math.min(SL.max,x-SL.x0));if(SL.dx>6)SL.moved=true;
+  SL.k.style.transform='translateX('+SL.dx+'px)';
+  var t=SL.el.querySelector('.sl-txt');if(t)t.style.opacity=String(1-SL.dx/SL.max);
+}
+/* mouse/caneta: pointer events */
 document.addEventListener('pointerdown',function(e){
+  if(e.pointerType==='touch')return;
   var k=e.target.closest&&e.target.closest('.sl-knob');if(!k)return;
-  var el=k.parentNode;if(el.classList.contains('done'))return;
-  SL={el:el,k:k,x0:e.clientX,dx:0,max:Math.max(1,el.clientWidth-k.offsetWidth-8),id:e.pointerId,moved:false};
-  k.style.transition='none';try{k.setPointerCapture(e.pointerId)}catch(err){}
+  slStart(k,e.clientX,e.pointerId,'p');
+  try{k.setPointerCapture(e.pointerId)}catch(err){}
   e.preventDefault();
 });
 document.addEventListener('pointermove',function(e){
-  if(!SL||e.pointerId!==SL.id)return;
-  SL.dx=Math.max(0,Math.min(SL.max,e.clientX-SL.x0));if(SL.dx>6)SL.moved=true;
-  SL.k.style.transform='translateX('+SL.dx+'px)';
-  var t=SL.el.querySelector('.sl-txt');if(t)t.style.opacity=String(1-SL.dx/SL.max);
+  if(!SL||SL.type!=='p'||e.pointerId!==SL.id)return;slMove(e.clientX);
 });
+/* celular: touch events (mais confiável em navegadores de app) */
+document.addEventListener('touchstart',function(e){
+  var k=e.target.closest&&e.target.closest('.sl-knob');if(!k||SL)return;
+  var t=e.changedTouches[0];slStart(k,t.clientX,t.identifier,'t');
+  /* toque duplo rápido também confirma, para quem não consegue arrastar */
+  var now=Date.now();if(now-SLtap<350&&SL){SL.dx=SL.max;SL.moved=true;SLtap=0;slideEnd({pointerId:SL.id});e.preventDefault();return}SLtap=now;
+},{passive:false});
+document.addEventListener('touchmove',function(e){
+  if(!SL||SL.type!=='t')return;
+  for(var i=0;i<e.changedTouches.length;i++)if(e.changedTouches[i].identifier===SL.id){slMove(e.changedTouches[i].clientX);e.preventDefault();break}
+},{passive:false});
+document.addEventListener('touchend',function(e){
+  if(!SL||SL.type!=='t')return;
+  for(var i=0;i<e.changedTouches.length;i++)if(e.changedTouches[i].identifier===SL.id){slideEnd({pointerId:SL.id});break}
+});
+document.addEventListener('touchcancel',function(e){if(SL&&SL.type==='t')slideEnd({pointerId:SL.id})});
 function slideEnd(e){
   if(!SL||(e&&e.pointerId!==undefined&&e.pointerId!==SL.id))return;
   var s2=SL;SL=null;
@@ -2188,7 +2213,7 @@ function slideEnd(e){
     if(!s2.moved){s2.el.classList.remove('nudge');void s2.el.offsetWidth;s2.el.classList.add('nudge');sfx('tap')}
   }
 }
-document.addEventListener('pointerup',slideEnd);document.addEventListener('pointercancel',slideEnd);
+document.addEventListener('pointerup',function(e){if(SL&&SL.type==='p')slideEnd(e)});document.addEventListener('pointercancel',function(e){if(SL&&SL.type==='p')slideEnd(e)});
 document.addEventListener('keydown',function(e){
   var el=e.target.closest&&e.target.closest('.slide');
   if(el&&(e.key==='Enter'||e.key===' ')){e.preventDefault();if(!el.classList.contains('done')){el.classList.add('done');sfx('confirm');fireAct(el.dataset.slide)}}
