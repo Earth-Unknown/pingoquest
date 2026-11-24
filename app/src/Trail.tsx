@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import art from './legacy/art.json'
 import { popIn } from './Fx'
 import { Pingo } from './Pingo'
@@ -29,9 +29,11 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
   const mundo=cur.json.mundos[0],par:any[]=mundo.paradas||[]
   const done=S.done||{}
   const isUn=(g:number,k:number)=>{const p=k>0?g+'-'+(k-1):(g>0?(g-1)+'-3':null);return !p||!!done[p]}
-  const [open,setOpen]=useState<number|null>(null)
+  const [openNode,setOpenNode]=useState<string|null>(null) // balão da etapa tocada (igual ao jogo)
   const [play,setPlay]=useState<{g:number;k:number}|null>(null)
   const [tips,setTips]=useState<number|null>(null)
+  // tocar em qualquer outro lugar fecha o balão (o balão e os nós param a propagação)
+  useEffect(()=>{if(!openNode)return;const f=()=>setOpenNode(null);document.addEventListener('click',f);return()=>document.removeEventListener('click',f)},[openNode])
   const [kase,setKase]=useState<{g:number;id:string}|null>(null)
   const games=useMemo(()=>parseCurso(cur.json),[cur])
   const casoTitulo=(id:string)=>(cur.json.casos||[]).find((c:any)=>c.id===id)?.title||''
@@ -85,26 +87,41 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
         const x=OFF[k],nm=k===3?(p.chamado?casoTitulo(p.chamado):''):(p.fases?.[k]?.nome||'')
         const label=k===3?(p.chamado?'Caso':'Prova final'):'Lição '+(k+1)
         const cls=(d?'done':(un?'cur':'lock'))+(k===3?' bossn':'')
-        return <div className="nw" key={k} style={{'--x':x+'px'} as any}>
+        return <React.Fragment key={k}><div className="nw" style={{'--x':x+'px'} as any}>
           {isCur&&<><div className="bubble" style={arriving(ativo+':'+key)?{visibility:'hidden'}:undefined}>Começar</div><span style={{display:'contents',visibility:arriving(ativo+':'+key)?'hidden':'visible'}}><Pingo S={S} cls={'pingo '+(x>0?'r':'l')}/></span></>}
-          <button data-k={ativo+':'+key} className={'node '+cls} onClick={()=>setOpen(gi)} aria-label={p.titulo+', '+label+(un?'':' (bloqueada)')}>
+          <button data-k={ativo+':'+key} className={'node '+cls} onClick={e=>{e.stopPropagation();setOpenNode(openNode===key?null:key)}} aria-label={p.titulo+', '+label+(un?'':' (bloqueada)')}>
             <Html h={nodeArt(ativo,gi,k)+(d?'<span class="bdg ok">'+A.IC.check+'</span>':(un?'':'<span class="bdg lk">'+A.IC.lock+'</span>'))}/></button>
           <div className={'nlabel '+(x>0?'R':'L')}><b>{label}</b>{nm&&<small>{nm}</small>}</div>
-        </div>})}</div>
+        </div>
+        {openNode===key&&<NodePop key={'p'+key} x={x} un={un} done={d} g={p} k={k} caso={k===3&&p.chamado?casoTitulo(p.chamado):''} nome={p.fases?.[k]?.nome}
+          onGo={()=>{setOpenNode(null);if(k===3&&p.chamado)setKase({g:gi,id:p.chamado});else setPlay({g:gi,k})}}/>}
+        </React.Fragment>})}</div>
     </section>)}
+    <section className="nextsec"><span className="nschip">A seguir</span>
+      <h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>{ativo==='linux'?'Em breve':'Mundo 2'}</h2>
+      <div className="nspingo"><Pingo S={S} mood="wink" cls="pingo-s"/></div>
+      <p>{ativo==='linux'?'Mais paradas de Linux chegam em breve. Termine todas as de agora para ficar pronto.':'Cidade IP: o próximo mundo chega em breve. Termine a Vila Roteador para ficar pronto.'}</p>
+      <button className="btn ghost" disabled>Em breve</button></section>
     {tips!==null&&<div id="modal" onClick={()=>setTips(null)}><div className="sheet" ref={popIn} role="dialog" aria-label="Dicas" onClick={e=>e.stopPropagation()}>
       <h2>Dicas: {par[tips].titulo}</h2><ul>{(par[tips].dicas||[]).map((d:string,i:number)=><li key={i}>{d}</li>)}</ul>
       <button className="btn prim" onClick={()=>setTips(null)}>Entendi</button></div></div>}
-    {open!==null&&<div id="modal" onClick={()=>setOpen(null)}><div className="sheet tall" ref={popIn} role="dialog" onClick={e=>e.stopPropagation()}>
-      <div className="shead"><span className="lm"><Html h={placeIcon(open)}/></span><div><div className="tag">Parada {open+1}</div><h2>{par[open].lugar||par[open].titulo}</h2><div className="lsub">{par[open].titulo}</div></div></div>
-      <div className="srows">{[0,1,2,3].map(k=>{const key=open+'-'+k,d=!!done[key],un=isUn(open,k),p=par[open]
-        const title=k===3?(p.chamado?'Caso · '+casoTitulo(p.chamado):'Prova final'):(p.fases?.[k]?.nome||'Fase '+(k+1))
-        return <button key={k} disabled={!un} onClick={()=>{if(k===3&&p.chamado)setKase({g:open,id:p.chamado});else setPlay({g:open,k});setOpen(null)}} className={'srow'+(d?' done':(un?'':' lock'))+(k===3?' fin':'')}><span className="srt"><small>{k===3?(p.chamado?'Caso':'Prova final'):'Lição '+(k+1)}</small><b>{title}</b></span><em>{d?'Jogar de novo':(un?'Jogar':'Bloqueada')}</em></button>})}</div>
-      <button className="btn prim" onClick={()=>setOpen(null)}>Fechar</button></div></div>}
     {walk&&root.current&&<Walker S={S} walk={walk} root={root.current} onEnd={()=>setWalk(null)}/>}
     <EventFab S={S} json={cur.json} onOpen={setEvOpen}/>
     {evOpen&&<EventPage S={S} json={cur.json} id={evOpen} onClose={()=>setEvOpen(null)} refresh={refresh}/>}
     {kase&&<Case key={kase.id} S={S} def={(cur.json.casos||[]).find((c:any)=>c.id===kase.id)} kind="node" keyId={kase.g+'-3'} replay={!!done[kase.g+'-3']} onClose={()=>{setKase(null);refresh()}}/>}
     {play&&<Lesson key={play.g+'-'+play.k} S={S} qs={lessonQs(games[play.g],play.k)} kind={play.k===3?'boss':'phase'} keyId={play.g+'-'+play.k} onClose={()=>{setPlay(null);refresh()}}/>}
   </div>
+}
+
+/** Balão da etapa (igual ao do jogo): título, descrição, chips da primeira vez e botão de começar */
+function NodePop({x,un,done,g,k,caso,nome,onGo}:{x:number;un:boolean;done:boolean;g:any;k:number;caso:string;nome?:string;onGo:()=>void}){
+  const stop=(e:React.MouseEvent)=>e.stopPropagation()
+  let title:string,desc:string,xp:number,gm:number
+  if(k===3&&g.chamado){title='Caso · '+caso;desc='Um problema de verdade: investigue as pistas, levante uma hipótese e resolva.';xp=15;gm=10}
+  else if(k<3){title='Lição '+(k+1)+' · '+(nome||'');desc='Uma explicação curta e perguntas simples. Sem pressa.';xp=10;gm=10}
+  else{title='Prova final';desc='Prova final: 6 perguntas misturadas da etapa toda. Capriche!';xp=25;gm=25}
+  if(!un)return <div className="pop lockedp" style={{'--ax':x+'px'} as any} onClick={stop}><h3>{title}</h3><p>Conclua a etapa anterior para desbloquear.</p></div>
+  return <div className="pop" style={{'--ax':x+'px'} as any} onClick={stop} ref={popIn}><h3>{title}</h3><p>{desc}</p>
+    {!done&&<small>Primeira vez: +{gm} chips</small>}
+    <button className="popbtn" onClick={onGo}>{done?'Jogar de novo':'Começar'} +{xp} energia</button></div>
 }

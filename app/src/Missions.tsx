@@ -5,6 +5,7 @@ import { Case } from './Case'
 import { sfx } from './lib/sound'
 import { confetti, motion } from './Fx'
 import { DuelCard } from './Duel'
+import { Slide } from './Slide'
 import { pendingDuel } from './lib/duel'
 import { cursoAtivo } from './lib/progress'
 import { dailyCase, weekOf, claimWeek, WGOAL } from './lib/cases'
@@ -23,7 +24,16 @@ export function Missions({S,refresh}:{S:any;refresh:()=>void}){
   return <div className="screen">
     <DuelCard S={S} refresh={refresh} startPending={!!pendingDuel()}/>
     <div className="sect" style={{marginTop:20}}>Missões</div>
-    <p className="note" style={{margin:'0 0 14px'}}>Metas do dia para resolver com o Pingo. As metas rápidas dão chips extras.</p>
+    <p className="note" style={{margin:'0 0 14px'}}>Chamados e operações para resolver com o Pingo. As metas rápidas dão chips extras.</p>
+    {def&&<div className="card call"><span className="ctag">Chamado do dia</span><h3 style={{marginBottom:6}}>{def.title}</h3>
+      <p className="note" style={{margin:'0 0 14px'}}>{def.intro}</p>
+      {d.call?<button className="btn" disabled>Chamado atendido hoje</button>:<Slide label="Arraste para atender · +20" onDone={()=>setCall(true)}/>}</div>}
+    <div className="card"><h3>Operação da semana</h3>
+      <p className="note" style={{margin:'0 0 12px'}}>Operação Escritório Conectado: atenda {WGOAL} chamados do dia em qualquer dia da semana. Cada chamado traz um problema de rede diferente para investigar.</p>
+      <div className="wdays" aria-label="Dias com chamado atendido">{L7.map((l,i)=><span key={i} className={'wd'+(w.days.includes(i)?' on':'')+(i===td?' now':'')}><i>{w.days.includes(i)&&<Html h={A.IC.check}/>}</i>{l}</span>)}</div>
+      <div className="bar gold" role="progressbar" aria-valuenow={wn} aria-valuemax={WGOAL}><i style={{width:wn/WGOAL*100+'%'}}/><span>{wn} / {WGOAL} chamados</span></div>
+      {w.claimed?<p className="note" style={{margin:'12px 0 0'}}>Selo de Técnico da Semana conquistado.</p>
+      :wn>=WGOAL&&<div style={{marginTop:14}}><Slide label="Arraste para pegar o selo · +60" onDone={()=>{sfx('win');confetti();act(claimWeek)}}/></div>}</div>
     <div className="card"><h3>Meta diária</h3>
       <div className="bar gold" role="progressbar" aria-valuenow={xp} aria-valuemax={GOAL}><i style={{width:xp/GOAL*100+'%'}}/><span>{xp} / {GOAL} energia</span></div></div>
     <div className="card"><h3>Metas rápidas</h3>
@@ -38,15 +48,6 @@ export function Missions({S,refresh}:{S:any;refresh:()=>void}){
       <div className="cc-t"><h3>Baú do Pingo</h3><p className="note">{d.chest?'Aberto hoje. Volte amanhã para outro!':rdy?'Você completou as 3 metas rápidas! Abra o baú.':`Complete as 3 metas rápidas para abrir o baú (${nd} de 3).`}</p>
         {rdy&&<button className="btn blue" onClick={()=>{sfx('open');confetti(60,50,60);act(openChest)}}>Abrir baú · +{CHEST_GEMS}</button>}</div>
     </div>
-    {def&&<div className="card call"><span className="ctag">Chamado do dia</span><h3 style={{marginBottom:6}}>{def.title}</h3>
-      <p className="note" style={{margin:'0 0 14px'}}>{def.intro}</p>
-      {d.call?<button className="btn" disabled>Chamado atendido hoje</button>:<button className="btn prim" onClick={()=>setCall(true)}>Atender · +20</button>}</div>}
-    <div className="card"><h3>Operação da semana</h3>
-      <p className="note" style={{margin:'0 0 12px'}}>Atenda {WGOAL} chamados do dia em qualquer dia da semana para ganhar o selo de Técnico da Semana.</p>
-      <div className="wdays" aria-label="Dias com chamado atendido">{L7.map((l,i)=><span key={i} className={'wd'+(w.days.includes(i)?' on':'')+(i===td?' now':'')}><i>{w.days.includes(i)&&<Html h={A.IC.check}/>}</i>{l}</span>)}</div>
-      <div className="bar gold" role="progressbar" aria-valuenow={wn} aria-valuemax={WGOAL}><i style={{width:wn/WGOAL*100+'%'}}/><span>{wn} / {WGOAL} chamados</span></div>
-      {w.claimed?<p className="note" style={{margin:'12px 0 0'}}>Selo de Técnico da Semana conquistado.</p>
-      :wn>=WGOAL&&<button className="btn blue" style={{marginTop:14}} onClick={()=>{sfx('win');confetti();act(claimWeek)}}>Pegar o selo · +60</button>}</div>
     {call&&def&&<Case S={S} def={def} kind="daily" onClose={()=>{setCall(false);refresh()}}/>}
   </div>
 }
