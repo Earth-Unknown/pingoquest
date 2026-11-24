@@ -3538,7 +3538,8 @@
      "feito": {
       "cmd": "^\\s*whoami"
      },
-     "ok": "Esse é você no sistema."
+     "ok": "Esse é você no sistema.",
+     "resposta": "whoami"
     },
     {
      "texto": "Descubra o nome desta máquina",
@@ -3546,7 +3547,8 @@
      "feito": {
       "cmd": "^\\s*hostname"
      },
-     "ok": "Nome anotado."
+     "ok": "Nome anotado.",
+     "resposta": "hostname"
     },
     {
      "texto": "Descubra em que pasta você está",
@@ -3554,7 +3556,8 @@
      "feito": {
       "cmd": "^\\s*pwd"
      },
-     "ok": "Você está na sua pasta pessoal."
+     "ok": "Você está na sua pasta pessoal.",
+     "resposta": "pwd"
     }
    ],
    "cenario": {
@@ -3563,7 +3566,21 @@
    },
    "conclusao": "Você se reconheceu no servidor com whoami, hostname e pwd",
    "explicacao": "whoami mostra o usuário, hostname mostra o nome da máquina e pwd mostra a pasta atual. São os três primeiros comandos de quem chega a um servidor novo.",
-   "final": "Reconhecimento feito!"
+   "final": "Reconhecimento feito!",
+   "guia": [
+    {
+     "cmd": "whoami",
+     "serve": "mostra o seu nome de usuário"
+    },
+    {
+     "cmd": "hostname",
+     "serve": "mostra o nome da máquina"
+    },
+    {
+     "cmd": "pwd",
+     "serve": "mostra a pasta em que você está"
+    }
+   ]
   },
   {
    "id": "lx_comandos",
@@ -3579,14 +3596,16 @@
      "feito": {
       "cmd": "^\\s*ls\\s+(-\\w*a|.*\\s-\\w*a)"
      },
-     "ok": "Apareceu um arquivo com ponto no começo."
+     "ok": "Apareceu um arquivo com ponto no começo.",
+     "resposta": "ls -a"
     },
     {
      "texto": "Veja os detalhes dos arquivos (tamanho, dono, permissões)",
      "dica": "Use a opção -l.",
      "feito": {
       "cmd": "^\\s*ls\\s+(-\\w*l|.*\\s-\\w*l)"
-     }
+     },
+     "resposta": "ls -l"
     },
     {
      "texto": "Leia o recado escondido",
@@ -3594,7 +3613,8 @@
      "feito": {
       "saida": "Reunião às 15h"
      },
-     "ok": "Recado lido."
+     "ok": "Recado lido.",
+     "resposta": "cat .recado"
     }
    ],
    "fs": {
@@ -3604,7 +3624,25 @@
    },
    "conclusao": "Você achou e leu um arquivo oculto",
    "explicacao": "ls -a mostra arquivos ocultos (os que começam com ponto). ls -l mostra detalhes. cat lê o conteúdo.",
-   "final": "Recado encontrado!"
+   "final": "Recado encontrado!",
+   "guia": [
+    {
+     "cmd": "ls",
+     "serve": "lista os arquivos da pasta"
+    },
+    {
+     "cmd": "ls -a",
+     "serve": "inclui os arquivos ocultos (começam com ponto)"
+    },
+    {
+     "cmd": "ls -l",
+     "serve": "mostra detalhes: dono, tamanho e permissões"
+    },
+    {
+     "cmd": "cat arquivo",
+     "serve": "mostra o conteúdo do arquivo"
+    }
+   ]
   },
   {
    "id": "lx_pastas",
@@ -3620,7 +3658,8 @@
      "feito": {
       "cwd": "/var/log"
      },
-     "ok": "Você chegou na pasta dos logs."
+     "ok": "Você chegou na pasta dos logs.",
+     "resposta": "cd /var/log"
     },
     {
      "texto": "Volte para a sua pasta pessoal",
@@ -3628,7 +3667,8 @@
      "feito": {
       "cwd": "/home/aluno"
      },
-     "ok": "Em casa!"
+     "ok": "Em casa!",
+     "resposta": "cd"
     },
     {
      "texto": "Entre na pasta docs usando caminho relativo",
@@ -3636,7 +3676,8 @@
      "feito": {
       "cwd": "/home/aluno/docs"
      },
-     "ok": "Dentro de docs."
+     "ok": "Dentro de docs.",
+     "resposta": "cd docs"
     }
    ],
    "cenario": {
@@ -3650,7 +3691,25 @@
    },
    "conclusao": "Você navegou com caminhos absolutos e relativos",
    "explicacao": "O caminho absoluto começa em / e vale de qualquer lugar. O relativo parte da pasta atual. cd sem argumento volta para a pasta pessoal.",
-   "final": "De volta ao mapa!"
+   "final": "De volta ao mapa!",
+   "guia": [
+    {
+     "cmd": "cd pasta",
+     "serve": "entra na pasta"
+    },
+    {
+     "cmd": "cd",
+     "serve": "volta para a sua pasta pessoal"
+    },
+    {
+     "cmd": "cd ..",
+     "serve": "sobe uma pasta"
+    },
+    {
+     "cmd": "pwd",
+     "serve": "mostra onde você está"
+    }
+   ]
   },
   {
    "id": "lx_arquivos",
@@ -3665,21 +3724,24 @@
      "dica": "mkdir cria pastas.",
      "feito": {
       "existe": "/home/aluno/projetos"
-     }
+     },
+     "resposta": "mkdir projetos"
     },
     {
      "texto": "Crie o arquivo ideias.txt dentro de projetos",
      "dica": "touch projetos/ideias.txt",
      "feito": {
       "existe": "/home/aluno/projetos/ideias.txt"
-     }
+     },
+     "resposta": "touch projetos/ideias.txt"
     },
     {
      "texto": "Copie relatorio.txt para dentro de projetos",
      "dica": "cp origem destino. A origem continua existindo.",
      "feito": {
       "existe": "/home/aluno/projetos/relatorio.txt"
-     }
+     },
+     "resposta": "cp relatorio.txt projetos/"
     },
     {
      "texto": "Renomeie rascunho.txt para final.txt",
@@ -3687,14 +3749,16 @@
      "feito": {
       "existe": "/home/aluno/final.txt",
       "naoexiste": "/home/aluno/rascunho.txt"
-     }
+     },
+     "resposta": "mv rascunho.txt final.txt"
     },
     {
      "texto": "Apague o arquivo lixo.txt",
      "dica": "rm apaga. Confira o nome antes!",
      "feito": {
       "naoexiste": "/home/aluno/lixo.txt"
-     }
+     },
+     "resposta": "rm lixo.txt"
     }
    ],
    "fs": {
@@ -3704,7 +3768,29 @@
    },
    "conclusao": "Você organizou a pasta com mkdir, touch, cp, mv e rm",
    "explicacao": "mkdir cria pasta, touch cria arquivo vazio, cp copia, mv move ou renomeia e rm apaga. No terminal não há lixeira, então confira antes de apagar.",
-   "final": "Pasta organizada!"
+   "final": "Pasta organizada!",
+   "guia": [
+    {
+     "cmd": "mkdir nome",
+     "serve": "cria uma pasta"
+    },
+    {
+     "cmd": "touch nome",
+     "serve": "cria um arquivo vazio"
+    },
+    {
+     "cmd": "cp origem destino",
+     "serve": "copia (o original fica)"
+    },
+    {
+     "cmd": "mv origem destino",
+     "serve": "move ou renomeia"
+    },
+    {
+     "cmd": "rm nome",
+     "serve": "apaga (não tem lixeira!)"
+    }
+   ]
   },
   {
    "id": "lx_logs",
@@ -3719,14 +3805,16 @@
      "dica": "tail mostra o fim do arquivo. O log está em /var/log/app.log.",
      "feito": {
       "cmd": "^\\s*tail\\s"
-     }
+     },
+     "resposta": "tail /var/log/app.log"
     },
     {
      "texto": "Mostre só as linhas com ERRO",
      "dica": "grep ERRO /var/log/app.log",
      "feito": {
       "cmd": "grep\\s+(-\\w+\\s+)*ERRO"
-     }
+     },
+     "resposta": "grep ERRO /var/log/app.log"
     },
     {
      "texto": "Conte quantas linhas têm ERRO",
@@ -3734,7 +3822,8 @@
      "feito": {
       "cmd": "(grep\\s+ERRO\\s+\\S+\\s*\\|\\s*wc\\s+-l|grep\\s+-c\\s+ERRO|cat\\s+\\S+\\s*\\|\\s*grep\\s+ERRO\\s*\\|\\s*wc\\s+-l)"
      },
-     "ok": "São 3 erros. Já dá para investigar."
+     "ok": "São 3 erros. Já dá para investigar.",
+     "resposta": "grep ERRO /var/log/app.log | wc -l"
     }
    ],
    "fs": {
@@ -3742,7 +3831,25 @@
    },
    "conclusao": "Você filtrou e contou os erros do log",
    "explicacao": "tail mostra o fim, grep filtra linhas e wc -l conta. Juntos, com pipe, respondem «quantos erros houve?» em uma linha.",
-   "final": "3 erros achados!"
+   "final": "3 erros achados!",
+   "guia": [
+    {
+     "cmd": "tail arquivo",
+     "serve": "mostra as últimas linhas"
+    },
+    {
+     "cmd": "grep texto arquivo",
+     "serve": "mostra só as linhas com o texto"
+    },
+    {
+     "cmd": "wc -l",
+     "serve": "conta linhas"
+    },
+    {
+     "cmd": "comando1 | comando2",
+     "serve": "liga a saída de um na entrada do outro"
+    }
+   ]
   },
   {
    "id": "lx_esteira",
@@ -3760,7 +3867,8 @@
        "/home/aluno/pendentes.txt",
        "pendente"
       ]
-     }
+     },
+     "resposta": "grep pendente vendas.txt > pendentes.txt"
     },
     {
      "texto": "Acrescente a linha «fim do relatorio» ao final de pendentes.txt",
@@ -3770,14 +3878,16 @@
        "/home/aluno/pendentes.txt",
        "fim do relatorio"
       ]
-     }
+     },
+     "resposta": "echo fim do relatorio >> pendentes.txt"
     },
     {
      "texto": "Conte quantas linhas o relatório tem",
      "dica": "wc -l pendentes.txt, ou cat pendentes.txt | wc -l",
      "feito": {
       "cmd": "wc\\s+-l"
-     }
+     },
+     "resposta": "wc -l pendentes.txt"
     }
    ],
    "fs": {
@@ -3785,7 +3895,29 @@
    },
    "conclusao": "Você filtrou, gravou e acrescentou com pipes e redirecionamento",
    "explicacao": "> grava a saída num arquivo (substituindo); >> acrescenta ao fim. O pipe | passa a saída de um comando para o próximo.",
-   "final": "Relatório pronto!"
+   "final": "Relatório pronto!",
+   "guia": [
+    {
+     "cmd": "grep texto arquivo",
+     "serve": "filtra linhas"
+    },
+    {
+     "cmd": "comando > arquivo",
+     "serve": "grava a saída no arquivo (substitui)"
+    },
+    {
+     "cmd": "comando >> arquivo",
+     "serve": "acrescenta ao fim do arquivo"
+    },
+    {
+     "cmd": "echo texto",
+     "serve": "escreve um texto"
+    },
+    {
+     "cmd": "wc -l arquivo",
+     "serve": "conta as linhas"
+    }
+   ]
   },
   {
    "id": "lx_portaria",
@@ -3800,7 +3932,8 @@
      "dica": "ls -l mostra as permissões na primeira coluna.",
      "feito": {
       "cmd": "^\\s*ls\\s+(-\\w*l|.*\\s-\\w*l)"
-     }
+     },
+     "resposta": "ls -l"
     },
     {
      "texto": "Dê a permissão de executar ao backup.sh",
@@ -3811,7 +3944,8 @@
        "x"
       ]
      },
-     "ok": "Agora ele tem o x."
+     "ok": "Agora ele tem o x.",
+     "resposta": "chmod +x backup.sh"
     },
     {
      "texto": "Execute o script",
@@ -3819,7 +3953,8 @@
      "feito": {
       "exec": "/home/aluno/backup.sh"
      },
-     "ok": "Backup rodou!"
+     "ok": "Backup rodou!",
+     "resposta": "./backup.sh"
     },
     {
      "texto": "Proteja nota.txt contra alterações (tire a escrita)",
@@ -3829,7 +3964,8 @@
        "/home/aluno/nota.txt",
        "w"
       ]
-     }
+     },
+     "resposta": "chmod -w nota.txt"
     }
    ],
    "fs": {
@@ -3841,7 +3977,25 @@
    },
    "conclusao": "Você liberou a execução e protegeu um arquivo com chmod",
    "explicacao": "Sem a permissão x o script não executa («Permissão negada»). chmod +x libera; chmod -w impede alterações.",
-   "final": "Portaria liberada!"
+   "final": "Portaria liberada!",
+   "guia": [
+    {
+     "cmd": "ls -l",
+     "serve": "mostra as permissões"
+    },
+    {
+     "cmd": "chmod +x arquivo",
+     "serve": "permite executar"
+    },
+    {
+     "cmd": "chmod -w arquivo",
+     "serve": "tira a permissão de escrever"
+    },
+    {
+     "cmd": "./arquivo",
+     "serve": "executa o arquivo da pasta atual"
+    }
+   ]
   },
   {
    "id": "lx_admin",
@@ -3856,7 +4010,8 @@
      "dica": "whoami",
      "feito": {
       "cmd": "^\\s*whoami"
-     }
+     },
+     "resposta": "whoami"
     },
     {
      "texto": "Crie a pasta /etc/pingo.d como administrador",
@@ -3864,7 +4019,8 @@
      "feito": {
       "existe": "/etc/pingo.d"
      },
-     "ok": "Pasta criada com poderes de administrador."
+     "ok": "Pasta criada com poderes de administrador.",
+     "resposta": "sudo mkdir /etc/pingo.d"
     },
     {
      "texto": "Copie pingo.conf para /etc/pingo.d/",
@@ -3872,7 +4028,8 @@
      "feito": {
       "existe": "/etc/pingo.d/pingo.conf"
      },
-     "ok": "Configuração instalada."
+     "ok": "Configuração instalada.",
+     "resposta": "sudo cp pingo.conf /etc/pingo.d/"
     }
    ],
    "fs": {
@@ -3881,7 +4038,25 @@
    },
    "conclusao": "Você usou o sudo só nos comandos que precisavam",
    "explicacao": "Arquivos de sistema pertencem ao root. O sudo dá poder de administrador a um comando só, sem virar root o tempo todo.",
-   "final": "Configuração instalada!"
+   "final": "Configuração instalada!",
+   "guia": [
+    {
+     "cmd": "whoami",
+     "serve": "mostra quem você é"
+    },
+    {
+     "cmd": "sudo comando",
+     "serve": "roda UM comando como administrador"
+    },
+    {
+     "cmd": "mkdir pasta",
+     "serve": "cria pasta"
+    },
+    {
+     "cmd": "cp origem destino",
+     "serve": "copia arquivos"
+    }
+   ]
   },
   {
    "id": "lx_maquinas",
@@ -3896,7 +4071,8 @@
      "dica": "ps",
      "feito": {
       "cmd": "^\\s*(ps|top)\\b"
-     }
+     },
+     "resposta": "ps"
     },
     {
      "texto": "Encerre o processo travado (travado.sh)",
@@ -3904,14 +4080,16 @@
      "feito": {
       "matou": 2201
      },
-     "ok": "Processo encerrado."
+     "ok": "Processo encerrado.",
+     "resposta": "kill 2201"
     },
     {
      "texto": "Atualize a lista de pacotes",
      "dica": "sudo apt update",
      "feito": {
       "cmd": "sudo\\s+apt\\s+update"
-     }
+     },
+     "resposta": "sudo apt update"
     },
     {
      "texto": "Instale o htop",
@@ -3919,7 +4097,8 @@
      "feito": {
       "instalou": "htop"
      },
-     "ok": "htop instalado."
+     "ok": "htop instalado.",
+     "resposta": "sudo apt install htop"
     }
    ],
    "processos": [
@@ -3947,7 +4126,25 @@
    ],
    "conclusao": "Você encerrou um processo e instalou um pacote",
    "explicacao": "ps mostra os processos e seus PID; kill PID encerra. Instalar com apt exige sudo, e «apt update» vem antes para atualizar a lista.",
-   "final": "Servidor aliviado!"
+   "final": "Servidor aliviado!",
+   "guia": [
+    {
+     "cmd": "ps",
+     "serve": "lista os processos e os PIDs"
+    },
+    {
+     "cmd": "kill PID",
+     "serve": "encerra o processo"
+    },
+    {
+     "cmd": "sudo apt update",
+     "serve": "atualiza a lista de pacotes"
+    },
+    {
+     "cmd": "sudo apt install nome",
+     "serve": "instala um programa"
+    }
+   ]
   },
   {
    "id": "lx_torre",
@@ -3962,7 +4159,8 @@
      "dica": "ip a",
      "feito": {
       "cmd": "^\\s*ip\\s+a"
-     }
+     },
+     "resposta": "ip a"
     },
     {
      "texto": "Teste se gateway.local responde",
@@ -3970,7 +4168,8 @@
      "feito": {
       "cmd": "^\\s*ping\\s+(-\\w+\\s+\\d+\\s+)?gateway\\.local"
      },
-     "ok": "O gateway respondeu."
+     "ok": "O gateway respondeu.",
+     "resposta": "ping gateway.local"
     },
     {
      "texto": "Busque o status do serviço em http://servidor.local/status",
@@ -3978,7 +4177,8 @@
      "feito": {
       "saida": "ativo"
      },
-     "ok": "O serviço está ativo."
+     "ok": "O serviço está ativo.",
+     "resposta": "curl http://servidor.local/status"
     }
    ],
    "rede": {
@@ -3993,7 +4193,21 @@
    },
    "conclusao": "Você testou a rede com ip, ping e curl",
    "explicacao": "ip a mostra seu IP, ping testa se o destino responde e curl busca o conteúdo do serviço. Rede ok + serviço ativo = problema não estava na torre.",
-   "final": "Torre no ar!"
+   "final": "Torre no ar!",
+   "guia": [
+    {
+     "cmd": "ip a",
+     "serve": "mostra seu endereço IP"
+    },
+    {
+     "cmd": "ping destino",
+     "serve": "testa se o destino responde"
+    },
+    {
+     "cmd": "curl endereço",
+     "serve": "busca o conteúdo de uma página"
+    }
+   ]
   }
  ],
  "eventos": [],
@@ -9848,6 +10062,15 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .cflag svg{width:24px;height:24px}.cflag b{font-weight:900;letter-spacing:.02em}
 .cflag.cf-linux{background:#0d0620;color:#7dff2b;border:2px solid #18ddfb;font-family:ui-monospace,Menlo,monospace}.cflag.cf-linux b:before{content:"$ ";color:#18ddfb}
 .world.w-linux{box-shadow:0 8px 22px rgba(24,221,251,.25)}
+
+.tdots{display:flex;gap:6px;margin:0 0 10px}.tdots i{flex:1;height:8px;border-radius:5px;background:var(--line)}.tdots i.ok{background:var(--ok,#3fbf5f)}.tdots i.now{background:var(--cyan);box-shadow:0 0 8px rgba(24,221,251,.6)}
+.tcur{background:var(--surface);border:2px solid var(--cyan);border-radius:16px;padding:12px 14px;margin-bottom:12px}.tcur small{display:block;color:var(--muted);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.06em}.tcur b{display:block;font-size:17px;margin-top:2px}
+.tcur.ok{border-color:var(--ok,#3fbf5f)}.tfirst{margin:8px 0 0;font-size:13px;color:var(--muted);font-weight:700}
+.thint{display:flex;gap:8px;align-items:center;margin-top:10px;background:color-mix(in srgb,var(--yellow,#ffd83d) 25%,var(--surface));border-radius:12px;padding:8px 10px;font-weight:700;font-size:14px}.thint svg{width:20px;height:20px;flex:none}
+.thint.cmd{flex-wrap:wrap;background:#0d0620;color:#7dff2b}.thint code{font:700 14px ui-monospace,Menlo,monospace;word-break:break-all}.thint button{margin-left:auto;border:0;border-radius:10px;background:var(--cyan);color:#0d0620;font:800 12px inherit;padding:8px 10px;min-height:36px}
+.gsteps{display:flex;gap:6px;margin:10px 0 14px;flex-wrap:wrap}.gsteps span{display:flex;align-items:center;gap:6px;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:4px 10px 4px 4px;font-weight:800;font-size:13px}.gsteps i{width:22px;height:22px;border-radius:50%;background:#7b3ff2;color:#fff;display:grid;place-items:center;font-style:normal;font-size:11px}
+.glist{display:flex;flex-direction:column;gap:6px}.glist>div{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:8px 12px}.glist code{font:800 14px ui-monospace,Menlo,monospace;color:#7b3ff2}.glist span{font-size:13px;font-weight:700}
+.trow .btn svg{width:16px;height:16px;vertical-align:-3px}.trow>span{flex:1;display:flex}.trow>span .btn{flex:1}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -11422,7 +11645,7 @@ function tmTok(s){
   flush();return r;
 }
 function tmInit(def){
-  var sc=def.cenario||{},u=sc.usuario||'aluno',T={user:u,host:sc.maquina||'servidor',home:'/home/'+u,fs:{},cwd:'',hist:[],out:[],ran:[],erros:0,killed:{},inst:{},exec:{},done:{},def:def,hi:-1};
+  var sc=def.cenario||{},u=sc.usuario||'aluno',T={user:u,host:sc.maquina||'servidor',home:'/home/'+u,fs:{},cwd:'',hist:[],out:[],ran:[],erros:0,killed:{},inst:{},exec:{},done:{},hl:{},def:def,hi:-1};
   function mk(p,dir,t){
     var par=tmDir(p);if(par!==p&&!T.fs[par])mk(par,true);
     if(T.fs[p])return T.fs[p];
@@ -11659,32 +11882,52 @@ function startTerm(o){
   TM=tmInit(def);
   C={id:o.id,def:def,fault:{id:'t',cause:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',need:[],clues:{}},kind:o.kind,key:o.key,replay:!!o.replay,insp:TM.ran,wrongSet:[],wrong:0,stage:'term',guided:!(rec&&rec.n>0)&&!o.replay,term:true};
   $('#lesson').hidden=false;document.body.classList.add('lock');drawTerm();
-  setTimeout(function(){var i=$('#tin');if(i)i.focus()},200);
+  if(C.guided)showGuia(true);else setTimeout(function(){var i=$('#tin');if(i)i.focus()},200);
 }
-function tmSteps(){
-  var T=TM,h='';
-  (T.def.passos||[]).forEach(function(s,i){
-    var d=T.done[i];h+='<div class="tstep'+(d?' ok':'')+'"><i>'+(d?IC.check:(i+1))+'</i><span>'+esc(s.texto)+'</span></div>'});
-  return h;
+function tmCur(){var st=TM.def.passos||[],i;for(i=0;i<st.length;i++)if(!TM.done[i])return i;return -1}
+function tmCost(i){var l=TM.hl[i]||0,r=TM.def.passos[i].resposta;if(l<1)return C.guided?0:5;if(l<2&&r)return 15;return -1}
+function tmDots(){return (TM.def.passos||[]).map(function(x,i){return'<i class="'+(TM.done[i]?'ok':(i===tmCur()?'now':''))+'"></i>'}).join('')}
+function tmStep(){
+  var T=TM,i=tmCur(),st=T.def.passos||[];
+  if(i<0)return'<div class="tcur ok"><small>Tudo pronto</small><b>Todos os passos concluídos!</b></div>';
+  var h='<div class="tcur"><small>Passo '+(i+1)+' de '+st.length+'</small><b>'+esc(st[i].texto)+'</b>',l=T.hl[i]||0;
+  if(l>=1)h+='<div class="thint"><span>'+IC.search+'</span>'+esc(st[i].dica||'Tente o comando help.')+'</div>';
+  if(l>=2)h+='<div class="thint cmd"><code>'+esc(st[i].resposta)+'</code><button data-act="tfill">Colocar no terminal</button></div>';
+  if(!l&&!T.ran.length)h+='<p class="tfirst">Digite o comando no terminal abaixo e toque em Enviar. Sem ideia? Toque em Guia ou Dica.</p>';
+  return h+'</div>';
 }
 function tmOut(){
   return TM.out.map(function(l){return'<div class="tml '+l.k+'">'+esc(l.t)+'</div>'}).join('');
+}
+function tmDicaBtn(){
+  var i=tmCur(),c=i<0?-1:tmCost(i);
+  if(c<0)return'<button class="btn ghost" data-act="tdica" disabled>Sem dicas</button>';
+  return'<button class="btn ghost" data-act="tdica">Dica'+(c?' · '+IC.gem+c:' grátis')+'</button>';
 }
 function drawTerm(){
   var c=C,d=c.def,T=TM,
   h='<div class="lw"><div class="lhead"><button class="xbtn" data-act="cclose" aria-label="Sair do chamado">'+IC.x+'</button>'+
    '<div class="ctitle"><small>'+(c.kind==='daily'?'Chamado do dia':'Chamado')+'</small><b>'+esc(d.title)+'</b></div>'+starRow(Math.max(1,3-c.wrong))+'</div><div class="lbody">'+
+   '<div class="tdots" id="tdots">'+tmDots()+'</div>'+
    '<div class="say"><span class="sp">'+pingo('happy','pingo-s')+'</span><div class="bub"><p id="tmsg">'+esc(T.msg)+'</p></div></div>'+
-   '<div class="tlabel">O que fazer</div><div class="tsteps" id="tsteps">'+tmSteps()+'</div>'+
+   '<div id="tstep">'+tmStep()+'</div>'+
    '<div class="term" id="term"><div class="tmx" id="tmx">'+tmOut()+'</div><label class="tprompt"><span id="tps">'+esc(tmPrompt())+'</span><input id="tin" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" aria-label="Digite um comando"></label></div>'+
    '<div class="tkeys">'+['|','>','>>','~','/','-','..'].map(function(k){return'<button data-act="tkey" data-k="'+k+'">'+k+'</button>'}).join('')+'<button data-act="tup" aria-label="Comando anterior">↑</button></div>'+
-   '</div><div class="lfoot"><div class="trow"><button class="btn ghost" data-act="tdica">Dica</button><button class="btn prim" data-act="trun">Enviar</button></div></div></div>';
+   '</div><div class="lfoot"><div class="trow"><button class="btn ghost" data-act="tguia">Guia</button><span id="tdica">'+tmDicaBtn()+'</span><button class="btn prim" data-act="trun">Enviar</button></div></div></div>';
   $('#lesson').innerHTML=h;
   var el=$('#tmx');if(el)el.scrollTop=el.scrollHeight;
 }
 function tmRefresh(){
-  var a=$('#tsteps'),b=$('#tmx'),c=$('#tps'),m=$('#tmsg');
-  if(a)a.innerHTML=tmSteps();if(b){b.innerHTML=tmOut();b.scrollTop=b.scrollHeight}if(c)c.textContent=tmPrompt();if(m)m.textContent=TM.msg;
+  var a=$('#tdots'),s=$('#tstep'),b=$('#tmx'),c=$('#tps'),m=$('#tmsg'),d=$('#tdica');
+  if(a)a.innerHTML=tmDots();if(s)s.innerHTML=tmStep();if(b){b.innerHTML=tmOut();b.scrollTop=b.scrollHeight}if(c)c.textContent=tmPrompt();if(m)m.textContent=TM.msg;if(d)d.innerHTML=tmDicaBtn();
+}
+function showGuia(first){
+  var d=C.def,h='<div class="sheet tall" role="dialog" aria-label="Guia do chamado"><div class="cqhead">'+pingo('happy','cqping')+'<div class="cqbub">'+(first?'Antes de começar, veja os comandos deste chamado!':'Guia rápido dos comandos')+'</div></div>'+
+   '<div class="gsteps"><span><i>1</i>Leia o passo</span><span><i>2</i>Digite o comando</span><span><i>3</i>Toque em Enviar</span></div>'+
+   '<div class="tlabel">Comandos deste chamado</div><div class="glist">'+(d.guia||[]).map(function(g){return'<div><code>'+esc(g.cmd)+'</code><span>'+esc(g.serve)+'</span></div>'}).join('')+'</div>'+
+   '<p class="note" style="margin:10px 0 0">Errou? Sem problema: leia a mensagem em rosa e tente de novo. As dicas custam chips; a primeira vez de cada chamado tem dica grátis.</p>'+
+   '<button class="btn prim" data-act="mclose" style="margin-top:14px">'+(first?'Entendi, vamos lá!':'Fechar')+'</button></div>';
+  $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
 }
 function tmSubmit(){
   var inp=$('#tin');if(!inp||!TM||!C||C.stage!=='term')return;
@@ -11704,10 +11947,13 @@ function tmSubmit(){
 }
 document.addEventListener('keydown',function(e){if(e.target&&e.target.id==='tin'){if(e.key==='Enter'){e.preventDefault();tmSubmit()}else if(e.key==='ArrowUp'&&TM&&TM.hist.length){e.preventDefault();TM.hi=Math.max(0,TM.hi-1);e.target.value=TM.hist[TM.hi]||''}else if(e.key==='ArrowDown'&&TM){e.preventDefault();TM.hi=Math.min(TM.hist.length,TM.hi+1);e.target.value=TM.hist[TM.hi]||''}}});
 function tmHint(){
-  var T=TM,i,st=T.def.passos||[];
-  for(i=0;i<st.length;i++)if(!T.done[i]){T.msg=st[i].dica||'Tente o comando help.';break}
-  tmRefresh();
+  var T=TM,i=tmCur();if(i<0)return;
+  var c=tmCost(i);if(c<0)return;
+  if(S.gems<c){T.msg='Você precisa de '+c+' chips para esta dica. Ganhe mais resolvendo lições!';tmRefresh();sfx('bad');return}
+  if(c){S.gems-=c;save();$('#topin').innerHTML=topHTML()}
+  T.hl[i]=(T.hl[i]||0)+1;T.msg=T.hl[i]===1?'Olha a dica ali em cima!':'Pronto: o comando está no passo. Toque para colocar no terminal.';sfx('ping');tmRefresh();
 }
+
 
 /* ---------- eventos ---------- */
 document.addEventListener('click',function(e){
@@ -11749,6 +11995,8 @@ document.addEventListener('click',function(e){
   else if(a==='cexplain'){caseExplain()}
   else if(a==='curinfo'){showCursoInfo(t.dataset.id)}
   else if(a==='trun'){tmSubmit()}
+  else if(a==='tguia'){if(C&&C.term)showGuia(false)}
+  else if(a==='tfill'){var tf=$('#tin'),ci=tmCur();if(tf&&ci>=0){tf.value=TM.def.passos[ci].resposta;tf.focus()}}
   else if(a==='tdica'){if(TM&&C&&C.term)tmHint()}
   else if(a==='tkey'){var ti=$('#tin');if(ti){ti.value+=t.dataset.k;ti.focus()}}
   else if(a==='tup'){var tu=$('#tin');if(tu&&TM&&TM.hist.length){TM.hi=Math.max(0,TM.hi-1);tu.value=TM.hist[TM.hi]||'';tu.focus()}}

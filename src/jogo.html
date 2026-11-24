@@ -821,6 +821,15 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .cflag svg{width:24px;height:24px}.cflag b{font-weight:900;letter-spacing:.02em}
 .cflag.cf-linux{background:#0d0620;color:#7dff2b;border:2px solid #18ddfb;font-family:ui-monospace,Menlo,monospace}.cflag.cf-linux b:before{content:"$ ";color:#18ddfb}
 .world.w-linux{box-shadow:0 8px 22px rgba(24,221,251,.25)}
+
+.tdots{display:flex;gap:6px;margin:0 0 10px}.tdots i{flex:1;height:8px;border-radius:5px;background:var(--line)}.tdots i.ok{background:var(--ok,#3fbf5f)}.tdots i.now{background:var(--cyan);box-shadow:0 0 8px rgba(24,221,251,.6)}
+.tcur{background:var(--surface);border:2px solid var(--cyan);border-radius:16px;padding:12px 14px;margin-bottom:12px}.tcur small{display:block;color:var(--muted);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.06em}.tcur b{display:block;font-size:17px;margin-top:2px}
+.tcur.ok{border-color:var(--ok,#3fbf5f)}.tfirst{margin:8px 0 0;font-size:13px;color:var(--muted);font-weight:700}
+.thint{display:flex;gap:8px;align-items:center;margin-top:10px;background:color-mix(in srgb,var(--yellow,#ffd83d) 25%,var(--surface));border-radius:12px;padding:8px 10px;font-weight:700;font-size:14px}.thint svg{width:20px;height:20px;flex:none}
+.thint.cmd{flex-wrap:wrap;background:#0d0620;color:#7dff2b}.thint code{font:700 14px ui-monospace,Menlo,monospace;word-break:break-all}.thint button{margin-left:auto;border:0;border-radius:10px;background:var(--cyan);color:#0d0620;font:800 12px inherit;padding:8px 10px;min-height:36px}
+.gsteps{display:flex;gap:6px;margin:10px 0 14px;flex-wrap:wrap}.gsteps span{display:flex;align-items:center;gap:6px;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:4px 10px 4px 4px;font-weight:800;font-size:13px}.gsteps i{width:22px;height:22px;border-radius:50%;background:#7b3ff2;color:#fff;display:grid;place-items:center;font-style:normal;font-size:11px}
+.glist{display:flex;flex-direction:column;gap:6px}.glist>div{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:8px 12px}.glist code{font:800 14px ui-monospace,Menlo,monospace;color:#7b3ff2}.glist span{font-size:13px;font-weight:700}
+.trow .btn svg{width:16px;height:16px;vertical-align:-3px}.trow>span{flex:1;display:flex}.trow>span .btn{flex:1}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -2395,7 +2404,7 @@ function tmTok(s){
   flush();return r;
 }
 function tmInit(def){
-  var sc=def.cenario||{},u=sc.usuario||'aluno',T={user:u,host:sc.maquina||'servidor',home:'/home/'+u,fs:{},cwd:'',hist:[],out:[],ran:[],erros:0,killed:{},inst:{},exec:{},done:{},def:def,hi:-1};
+  var sc=def.cenario||{},u=sc.usuario||'aluno',T={user:u,host:sc.maquina||'servidor',home:'/home/'+u,fs:{},cwd:'',hist:[],out:[],ran:[],erros:0,killed:{},inst:{},exec:{},done:{},hl:{},def:def,hi:-1};
   function mk(p,dir,t){
     var par=tmDir(p);if(par!==p&&!T.fs[par])mk(par,true);
     if(T.fs[p])return T.fs[p];
@@ -2632,32 +2641,52 @@ function startTerm(o){
   TM=tmInit(def);
   C={id:o.id,def:def,fault:{id:'t',cause:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',need:[],clues:{}},kind:o.kind,key:o.key,replay:!!o.replay,insp:TM.ran,wrongSet:[],wrong:0,stage:'term',guided:!(rec&&rec.n>0)&&!o.replay,term:true};
   $('#lesson').hidden=false;document.body.classList.add('lock');drawTerm();
-  setTimeout(function(){var i=$('#tin');if(i)i.focus()},200);
+  if(C.guided)showGuia(true);else setTimeout(function(){var i=$('#tin');if(i)i.focus()},200);
 }
-function tmSteps(){
-  var T=TM,h='';
-  (T.def.passos||[]).forEach(function(s,i){
-    var d=T.done[i];h+='<div class="tstep'+(d?' ok':'')+'"><i>'+(d?IC.check:(i+1))+'</i><span>'+esc(s.texto)+'</span></div>'});
-  return h;
+function tmCur(){var st=TM.def.passos||[],i;for(i=0;i<st.length;i++)if(!TM.done[i])return i;return -1}
+function tmCost(i){var l=TM.hl[i]||0,r=TM.def.passos[i].resposta;if(l<1)return C.guided?0:5;if(l<2&&r)return 15;return -1}
+function tmDots(){return (TM.def.passos||[]).map(function(x,i){return'<i class="'+(TM.done[i]?'ok':(i===tmCur()?'now':''))+'"></i>'}).join('')}
+function tmStep(){
+  var T=TM,i=tmCur(),st=T.def.passos||[];
+  if(i<0)return'<div class="tcur ok"><small>Tudo pronto</small><b>Todos os passos concluídos!</b></div>';
+  var h='<div class="tcur"><small>Passo '+(i+1)+' de '+st.length+'</small><b>'+esc(st[i].texto)+'</b>',l=T.hl[i]||0;
+  if(l>=1)h+='<div class="thint"><span>'+IC.search+'</span>'+esc(st[i].dica||'Tente o comando help.')+'</div>';
+  if(l>=2)h+='<div class="thint cmd"><code>'+esc(st[i].resposta)+'</code><button data-act="tfill">Colocar no terminal</button></div>';
+  if(!l&&!T.ran.length)h+='<p class="tfirst">Digite o comando no terminal abaixo e toque em Enviar. Sem ideia? Toque em Guia ou Dica.</p>';
+  return h+'</div>';
 }
 function tmOut(){
   return TM.out.map(function(l){return'<div class="tml '+l.k+'">'+esc(l.t)+'</div>'}).join('');
+}
+function tmDicaBtn(){
+  var i=tmCur(),c=i<0?-1:tmCost(i);
+  if(c<0)return'<button class="btn ghost" data-act="tdica" disabled>Sem dicas</button>';
+  return'<button class="btn ghost" data-act="tdica">Dica'+(c?' · '+IC.gem+c:' grátis')+'</button>';
 }
 function drawTerm(){
   var c=C,d=c.def,T=TM,
   h='<div class="lw"><div class="lhead"><button class="xbtn" data-act="cclose" aria-label="Sair do chamado">'+IC.x+'</button>'+
    '<div class="ctitle"><small>'+(c.kind==='daily'?'Chamado do dia':'Chamado')+'</small><b>'+esc(d.title)+'</b></div>'+starRow(Math.max(1,3-c.wrong))+'</div><div class="lbody">'+
+   '<div class="tdots" id="tdots">'+tmDots()+'</div>'+
    '<div class="say"><span class="sp">'+pingo('happy','pingo-s')+'</span><div class="bub"><p id="tmsg">'+esc(T.msg)+'</p></div></div>'+
-   '<div class="tlabel">O que fazer</div><div class="tsteps" id="tsteps">'+tmSteps()+'</div>'+
+   '<div id="tstep">'+tmStep()+'</div>'+
    '<div class="term" id="term"><div class="tmx" id="tmx">'+tmOut()+'</div><label class="tprompt"><span id="tps">'+esc(tmPrompt())+'</span><input id="tin" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" aria-label="Digite um comando"></label></div>'+
    '<div class="tkeys">'+['|','>','>>','~','/','-','..'].map(function(k){return'<button data-act="tkey" data-k="'+k+'">'+k+'</button>'}).join('')+'<button data-act="tup" aria-label="Comando anterior">↑</button></div>'+
-   '</div><div class="lfoot"><div class="trow"><button class="btn ghost" data-act="tdica">Dica</button><button class="btn prim" data-act="trun">Enviar</button></div></div></div>';
+   '</div><div class="lfoot"><div class="trow"><button class="btn ghost" data-act="tguia">Guia</button><span id="tdica">'+tmDicaBtn()+'</span><button class="btn prim" data-act="trun">Enviar</button></div></div></div>';
   $('#lesson').innerHTML=h;
   var el=$('#tmx');if(el)el.scrollTop=el.scrollHeight;
 }
 function tmRefresh(){
-  var a=$('#tsteps'),b=$('#tmx'),c=$('#tps'),m=$('#tmsg');
-  if(a)a.innerHTML=tmSteps();if(b){b.innerHTML=tmOut();b.scrollTop=b.scrollHeight}if(c)c.textContent=tmPrompt();if(m)m.textContent=TM.msg;
+  var a=$('#tdots'),s=$('#tstep'),b=$('#tmx'),c=$('#tps'),m=$('#tmsg'),d=$('#tdica');
+  if(a)a.innerHTML=tmDots();if(s)s.innerHTML=tmStep();if(b){b.innerHTML=tmOut();b.scrollTop=b.scrollHeight}if(c)c.textContent=tmPrompt();if(m)m.textContent=TM.msg;if(d)d.innerHTML=tmDicaBtn();
+}
+function showGuia(first){
+  var d=C.def,h='<div class="sheet tall" role="dialog" aria-label="Guia do chamado"><div class="cqhead">'+pingo('happy','cqping')+'<div class="cqbub">'+(first?'Antes de começar, veja os comandos deste chamado!':'Guia rápido dos comandos')+'</div></div>'+
+   '<div class="gsteps"><span><i>1</i>Leia o passo</span><span><i>2</i>Digite o comando</span><span><i>3</i>Toque em Enviar</span></div>'+
+   '<div class="tlabel">Comandos deste chamado</div><div class="glist">'+(d.guia||[]).map(function(g){return'<div><code>'+esc(g.cmd)+'</code><span>'+esc(g.serve)+'</span></div>'}).join('')+'</div>'+
+   '<p class="note" style="margin:10px 0 0">Errou? Sem problema: leia a mensagem em rosa e tente de novo. As dicas custam chips; a primeira vez de cada chamado tem dica grátis.</p>'+
+   '<button class="btn prim" data-act="mclose" style="margin-top:14px">'+(first?'Entendi, vamos lá!':'Fechar')+'</button></div>';
+  $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
 }
 function tmSubmit(){
   var inp=$('#tin');if(!inp||!TM||!C||C.stage!=='term')return;
@@ -2677,10 +2706,13 @@ function tmSubmit(){
 }
 document.addEventListener('keydown',function(e){if(e.target&&e.target.id==='tin'){if(e.key==='Enter'){e.preventDefault();tmSubmit()}else if(e.key==='ArrowUp'&&TM&&TM.hist.length){e.preventDefault();TM.hi=Math.max(0,TM.hi-1);e.target.value=TM.hist[TM.hi]||''}else if(e.key==='ArrowDown'&&TM){e.preventDefault();TM.hi=Math.min(TM.hist.length,TM.hi+1);e.target.value=TM.hist[TM.hi]||''}}});
 function tmHint(){
-  var T=TM,i,st=T.def.passos||[];
-  for(i=0;i<st.length;i++)if(!T.done[i]){T.msg=st[i].dica||'Tente o comando help.';break}
-  tmRefresh();
+  var T=TM,i=tmCur();if(i<0)return;
+  var c=tmCost(i);if(c<0)return;
+  if(S.gems<c){T.msg='Você precisa de '+c+' chips para esta dica. Ganhe mais resolvendo lições!';tmRefresh();sfx('bad');return}
+  if(c){S.gems-=c;save();$('#topin').innerHTML=topHTML()}
+  T.hl[i]=(T.hl[i]||0)+1;T.msg=T.hl[i]===1?'Olha a dica ali em cima!':'Pronto: o comando está no passo. Toque para colocar no terminal.';sfx('ping');tmRefresh();
 }
+
 
 /* ---------- eventos ---------- */
 document.addEventListener('click',function(e){
@@ -2722,6 +2754,8 @@ document.addEventListener('click',function(e){
   else if(a==='cexplain'){caseExplain()}
   else if(a==='curinfo'){showCursoInfo(t.dataset.id)}
   else if(a==='trun'){tmSubmit()}
+  else if(a==='tguia'){if(C&&C.term)showGuia(false)}
+  else if(a==='tfill'){var tf=$('#tin'),ci=tmCur();if(tf&&ci>=0){tf.value=TM.def.passos[ci].resposta;tf.focus()}}
   else if(a==='tdica'){if(TM&&C&&C.term)tmHint()}
   else if(a==='tkey'){var ti=$('#tin');if(ti){ti.value+=t.dataset.k;ti.focus()}}
   else if(a==='tup'){var tu=$('#tin');if(tu&&TM&&TM.hist.length){TM.hi=Math.max(0,TM.hi-1);tu.value=TM.hist[TM.hi]||'';tu.focus()}}

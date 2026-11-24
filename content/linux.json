@@ -3537,7 +3537,8 @@
      "feito": {
       "cmd": "^\\s*whoami"
      },
-     "ok": "Esse é você no sistema."
+     "ok": "Esse é você no sistema.",
+     "resposta": "whoami"
     },
     {
      "texto": "Descubra o nome desta máquina",
@@ -3545,7 +3546,8 @@
      "feito": {
       "cmd": "^\\s*hostname"
      },
-     "ok": "Nome anotado."
+     "ok": "Nome anotado.",
+     "resposta": "hostname"
     },
     {
      "texto": "Descubra em que pasta você está",
@@ -3553,7 +3555,8 @@
      "feito": {
       "cmd": "^\\s*pwd"
      },
-     "ok": "Você está na sua pasta pessoal."
+     "ok": "Você está na sua pasta pessoal.",
+     "resposta": "pwd"
     }
    ],
    "cenario": {
@@ -3562,7 +3565,21 @@
    },
    "conclusao": "Você se reconheceu no servidor com whoami, hostname e pwd",
    "explicacao": "whoami mostra o usuário, hostname mostra o nome da máquina e pwd mostra a pasta atual. São os três primeiros comandos de quem chega a um servidor novo.",
-   "final": "Reconhecimento feito!"
+   "final": "Reconhecimento feito!",
+   "guia": [
+    {
+     "cmd": "whoami",
+     "serve": "mostra o seu nome de usuário"
+    },
+    {
+     "cmd": "hostname",
+     "serve": "mostra o nome da máquina"
+    },
+    {
+     "cmd": "pwd",
+     "serve": "mostra a pasta em que você está"
+    }
+   ]
   },
   {
    "id": "lx_comandos",
@@ -3578,14 +3595,16 @@
      "feito": {
       "cmd": "^\\s*ls\\s+(-\\w*a|.*\\s-\\w*a)"
      },
-     "ok": "Apareceu um arquivo com ponto no começo."
+     "ok": "Apareceu um arquivo com ponto no começo.",
+     "resposta": "ls -a"
     },
     {
      "texto": "Veja os detalhes dos arquivos (tamanho, dono, permissões)",
      "dica": "Use a opção -l.",
      "feito": {
       "cmd": "^\\s*ls\\s+(-\\w*l|.*\\s-\\w*l)"
-     }
+     },
+     "resposta": "ls -l"
     },
     {
      "texto": "Leia o recado escondido",
@@ -3593,7 +3612,8 @@
      "feito": {
       "saida": "Reunião às 15h"
      },
-     "ok": "Recado lido."
+     "ok": "Recado lido.",
+     "resposta": "cat .recado"
     }
    ],
    "fs": {
@@ -3603,7 +3623,25 @@
    },
    "conclusao": "Você achou e leu um arquivo oculto",
    "explicacao": "ls -a mostra arquivos ocultos (os que começam com ponto). ls -l mostra detalhes. cat lê o conteúdo.",
-   "final": "Recado encontrado!"
+   "final": "Recado encontrado!",
+   "guia": [
+    {
+     "cmd": "ls",
+     "serve": "lista os arquivos da pasta"
+    },
+    {
+     "cmd": "ls -a",
+     "serve": "inclui os arquivos ocultos (começam com ponto)"
+    },
+    {
+     "cmd": "ls -l",
+     "serve": "mostra detalhes: dono, tamanho e permissões"
+    },
+    {
+     "cmd": "cat arquivo",
+     "serve": "mostra o conteúdo do arquivo"
+    }
+   ]
   },
   {
    "id": "lx_pastas",
@@ -3619,7 +3657,8 @@
      "feito": {
       "cwd": "/var/log"
      },
-     "ok": "Você chegou na pasta dos logs."
+     "ok": "Você chegou na pasta dos logs.",
+     "resposta": "cd /var/log"
     },
     {
      "texto": "Volte para a sua pasta pessoal",
@@ -3627,7 +3666,8 @@
      "feito": {
       "cwd": "/home/aluno"
      },
-     "ok": "Em casa!"
+     "ok": "Em casa!",
+     "resposta": "cd"
     },
     {
      "texto": "Entre na pasta docs usando caminho relativo",
@@ -3635,7 +3675,8 @@
      "feito": {
       "cwd": "/home/aluno/docs"
      },
-     "ok": "Dentro de docs."
+     "ok": "Dentro de docs.",
+     "resposta": "cd docs"
     }
    ],
    "cenario": {
@@ -3649,7 +3690,25 @@
    },
    "conclusao": "Você navegou com caminhos absolutos e relativos",
    "explicacao": "O caminho absoluto começa em / e vale de qualquer lugar. O relativo parte da pasta atual. cd sem argumento volta para a pasta pessoal.",
-   "final": "De volta ao mapa!"
+   "final": "De volta ao mapa!",
+   "guia": [
+    {
+     "cmd": "cd pasta",
+     "serve": "entra na pasta"
+    },
+    {
+     "cmd": "cd",
+     "serve": "volta para a sua pasta pessoal"
+    },
+    {
+     "cmd": "cd ..",
+     "serve": "sobe uma pasta"
+    },
+    {
+     "cmd": "pwd",
+     "serve": "mostra onde você está"
+    }
+   ]
   },
   {
    "id": "lx_arquivos",
@@ -3664,21 +3723,24 @@
      "dica": "mkdir cria pastas.",
      "feito": {
       "existe": "/home/aluno/projetos"
-     }
+     },
+     "resposta": "mkdir projetos"
     },
     {
      "texto": "Crie o arquivo ideias.txt dentro de projetos",
      "dica": "touch projetos/ideias.txt",
      "feito": {
       "existe": "/home/aluno/projetos/ideias.txt"
-     }
+     },
+     "resposta": "touch projetos/ideias.txt"
     },
     {
      "texto": "Copie relatorio.txt para dentro de projetos",
      "dica": "cp origem destino. A origem continua existindo.",
      "feito": {
       "existe": "/home/aluno/projetos/relatorio.txt"
-     }
+     },
+     "resposta": "cp relatorio.txt projetos/"
     },
     {
      "texto": "Renomeie rascunho.txt para final.txt",
@@ -3686,14 +3748,16 @@
      "feito": {
       "existe": "/home/aluno/final.txt",
       "naoexiste": "/home/aluno/rascunho.txt"
-     }
+     },
+     "resposta": "mv rascunho.txt final.txt"
     },
     {
      "texto": "Apague o arquivo lixo.txt",
      "dica": "rm apaga. Confira o nome antes!",
      "feito": {
       "naoexiste": "/home/aluno/lixo.txt"
-     }
+     },
+     "resposta": "rm lixo.txt"
     }
    ],
    "fs": {
@@ -3703,7 +3767,29 @@
    },
    "conclusao": "Você organizou a pasta com mkdir, touch, cp, mv e rm",
    "explicacao": "mkdir cria pasta, touch cria arquivo vazio, cp copia, mv move ou renomeia e rm apaga. No terminal não há lixeira, então confira antes de apagar.",
-   "final": "Pasta organizada!"
+   "final": "Pasta organizada!",
+   "guia": [
+    {
+     "cmd": "mkdir nome",
+     "serve": "cria uma pasta"
+    },
+    {
+     "cmd": "touch nome",
+     "serve": "cria um arquivo vazio"
+    },
+    {
+     "cmd": "cp origem destino",
+     "serve": "copia (o original fica)"
+    },
+    {
+     "cmd": "mv origem destino",
+     "serve": "move ou renomeia"
+    },
+    {
+     "cmd": "rm nome",
+     "serve": "apaga (não tem lixeira!)"
+    }
+   ]
   },
   {
    "id": "lx_logs",
@@ -3718,14 +3804,16 @@
      "dica": "tail mostra o fim do arquivo. O log está em /var/log/app.log.",
      "feito": {
       "cmd": "^\\s*tail\\s"
-     }
+     },
+     "resposta": "tail /var/log/app.log"
     },
     {
      "texto": "Mostre só as linhas com ERRO",
      "dica": "grep ERRO /var/log/app.log",
      "feito": {
       "cmd": "grep\\s+(-\\w+\\s+)*ERRO"
-     }
+     },
+     "resposta": "grep ERRO /var/log/app.log"
     },
     {
      "texto": "Conte quantas linhas têm ERRO",
@@ -3733,7 +3821,8 @@
      "feito": {
       "cmd": "(grep\\s+ERRO\\s+\\S+\\s*\\|\\s*wc\\s+-l|grep\\s+-c\\s+ERRO|cat\\s+\\S+\\s*\\|\\s*grep\\s+ERRO\\s*\\|\\s*wc\\s+-l)"
      },
-     "ok": "São 3 erros. Já dá para investigar."
+     "ok": "São 3 erros. Já dá para investigar.",
+     "resposta": "grep ERRO /var/log/app.log | wc -l"
     }
    ],
    "fs": {
@@ -3741,7 +3830,25 @@
    },
    "conclusao": "Você filtrou e contou os erros do log",
    "explicacao": "tail mostra o fim, grep filtra linhas e wc -l conta. Juntos, com pipe, respondem «quantos erros houve?» em uma linha.",
-   "final": "3 erros achados!"
+   "final": "3 erros achados!",
+   "guia": [
+    {
+     "cmd": "tail arquivo",
+     "serve": "mostra as últimas linhas"
+    },
+    {
+     "cmd": "grep texto arquivo",
+     "serve": "mostra só as linhas com o texto"
+    },
+    {
+     "cmd": "wc -l",
+     "serve": "conta linhas"
+    },
+    {
+     "cmd": "comando1 | comando2",
+     "serve": "liga a saída de um na entrada do outro"
+    }
+   ]
   },
   {
    "id": "lx_esteira",
@@ -3759,7 +3866,8 @@
        "/home/aluno/pendentes.txt",
        "pendente"
       ]
-     }
+     },
+     "resposta": "grep pendente vendas.txt > pendentes.txt"
     },
     {
      "texto": "Acrescente a linha «fim do relatorio» ao final de pendentes.txt",
@@ -3769,14 +3877,16 @@
        "/home/aluno/pendentes.txt",
        "fim do relatorio"
       ]
-     }
+     },
+     "resposta": "echo fim do relatorio >> pendentes.txt"
     },
     {
      "texto": "Conte quantas linhas o relatório tem",
      "dica": "wc -l pendentes.txt, ou cat pendentes.txt | wc -l",
      "feito": {
       "cmd": "wc\\s+-l"
-     }
+     },
+     "resposta": "wc -l pendentes.txt"
     }
    ],
    "fs": {
@@ -3784,7 +3894,29 @@
    },
    "conclusao": "Você filtrou, gravou e acrescentou com pipes e redirecionamento",
    "explicacao": "> grava a saída num arquivo (substituindo); >> acrescenta ao fim. O pipe | passa a saída de um comando para o próximo.",
-   "final": "Relatório pronto!"
+   "final": "Relatório pronto!",
+   "guia": [
+    {
+     "cmd": "grep texto arquivo",
+     "serve": "filtra linhas"
+    },
+    {
+     "cmd": "comando > arquivo",
+     "serve": "grava a saída no arquivo (substitui)"
+    },
+    {
+     "cmd": "comando >> arquivo",
+     "serve": "acrescenta ao fim do arquivo"
+    },
+    {
+     "cmd": "echo texto",
+     "serve": "escreve um texto"
+    },
+    {
+     "cmd": "wc -l arquivo",
+     "serve": "conta as linhas"
+    }
+   ]
   },
   {
    "id": "lx_portaria",
@@ -3799,7 +3931,8 @@
      "dica": "ls -l mostra as permissões na primeira coluna.",
      "feito": {
       "cmd": "^\\s*ls\\s+(-\\w*l|.*\\s-\\w*l)"
-     }
+     },
+     "resposta": "ls -l"
     },
     {
      "texto": "Dê a permissão de executar ao backup.sh",
@@ -3810,7 +3943,8 @@
        "x"
       ]
      },
-     "ok": "Agora ele tem o x."
+     "ok": "Agora ele tem o x.",
+     "resposta": "chmod +x backup.sh"
     },
     {
      "texto": "Execute o script",
@@ -3818,7 +3952,8 @@
      "feito": {
       "exec": "/home/aluno/backup.sh"
      },
-     "ok": "Backup rodou!"
+     "ok": "Backup rodou!",
+     "resposta": "./backup.sh"
     },
     {
      "texto": "Proteja nota.txt contra alterações (tire a escrita)",
@@ -3828,7 +3963,8 @@
        "/home/aluno/nota.txt",
        "w"
       ]
-     }
+     },
+     "resposta": "chmod -w nota.txt"
     }
    ],
    "fs": {
@@ -3840,7 +3976,25 @@
    },
    "conclusao": "Você liberou a execução e protegeu um arquivo com chmod",
    "explicacao": "Sem a permissão x o script não executa («Permissão negada»). chmod +x libera; chmod -w impede alterações.",
-   "final": "Portaria liberada!"
+   "final": "Portaria liberada!",
+   "guia": [
+    {
+     "cmd": "ls -l",
+     "serve": "mostra as permissões"
+    },
+    {
+     "cmd": "chmod +x arquivo",
+     "serve": "permite executar"
+    },
+    {
+     "cmd": "chmod -w arquivo",
+     "serve": "tira a permissão de escrever"
+    },
+    {
+     "cmd": "./arquivo",
+     "serve": "executa o arquivo da pasta atual"
+    }
+   ]
   },
   {
    "id": "lx_admin",
@@ -3855,7 +4009,8 @@
      "dica": "whoami",
      "feito": {
       "cmd": "^\\s*whoami"
-     }
+     },
+     "resposta": "whoami"
     },
     {
      "texto": "Crie a pasta /etc/pingo.d como administrador",
@@ -3863,7 +4018,8 @@
      "feito": {
       "existe": "/etc/pingo.d"
      },
-     "ok": "Pasta criada com poderes de administrador."
+     "ok": "Pasta criada com poderes de administrador.",
+     "resposta": "sudo mkdir /etc/pingo.d"
     },
     {
      "texto": "Copie pingo.conf para /etc/pingo.d/",
@@ -3871,7 +4027,8 @@
      "feito": {
       "existe": "/etc/pingo.d/pingo.conf"
      },
-     "ok": "Configuração instalada."
+     "ok": "Configuração instalada.",
+     "resposta": "sudo cp pingo.conf /etc/pingo.d/"
     }
    ],
    "fs": {
@@ -3880,7 +4037,25 @@
    },
    "conclusao": "Você usou o sudo só nos comandos que precisavam",
    "explicacao": "Arquivos de sistema pertencem ao root. O sudo dá poder de administrador a um comando só, sem virar root o tempo todo.",
-   "final": "Configuração instalada!"
+   "final": "Configuração instalada!",
+   "guia": [
+    {
+     "cmd": "whoami",
+     "serve": "mostra quem você é"
+    },
+    {
+     "cmd": "sudo comando",
+     "serve": "roda UM comando como administrador"
+    },
+    {
+     "cmd": "mkdir pasta",
+     "serve": "cria pasta"
+    },
+    {
+     "cmd": "cp origem destino",
+     "serve": "copia arquivos"
+    }
+   ]
   },
   {
    "id": "lx_maquinas",
@@ -3895,7 +4070,8 @@
      "dica": "ps",
      "feito": {
       "cmd": "^\\s*(ps|top)\\b"
-     }
+     },
+     "resposta": "ps"
     },
     {
      "texto": "Encerre o processo travado (travado.sh)",
@@ -3903,14 +4079,16 @@
      "feito": {
       "matou": 2201
      },
-     "ok": "Processo encerrado."
+     "ok": "Processo encerrado.",
+     "resposta": "kill 2201"
     },
     {
      "texto": "Atualize a lista de pacotes",
      "dica": "sudo apt update",
      "feito": {
       "cmd": "sudo\\s+apt\\s+update"
-     }
+     },
+     "resposta": "sudo apt update"
     },
     {
      "texto": "Instale o htop",
@@ -3918,7 +4096,8 @@
      "feito": {
       "instalou": "htop"
      },
-     "ok": "htop instalado."
+     "ok": "htop instalado.",
+     "resposta": "sudo apt install htop"
     }
    ],
    "processos": [
@@ -3946,7 +4125,25 @@
    ],
    "conclusao": "Você encerrou um processo e instalou um pacote",
    "explicacao": "ps mostra os processos e seus PID; kill PID encerra. Instalar com apt exige sudo, e «apt update» vem antes para atualizar a lista.",
-   "final": "Servidor aliviado!"
+   "final": "Servidor aliviado!",
+   "guia": [
+    {
+     "cmd": "ps",
+     "serve": "lista os processos e os PIDs"
+    },
+    {
+     "cmd": "kill PID",
+     "serve": "encerra o processo"
+    },
+    {
+     "cmd": "sudo apt update",
+     "serve": "atualiza a lista de pacotes"
+    },
+    {
+     "cmd": "sudo apt install nome",
+     "serve": "instala um programa"
+    }
+   ]
   },
   {
    "id": "lx_torre",
@@ -3961,7 +4158,8 @@
      "dica": "ip a",
      "feito": {
       "cmd": "^\\s*ip\\s+a"
-     }
+     },
+     "resposta": "ip a"
     },
     {
      "texto": "Teste se gateway.local responde",
@@ -3969,7 +4167,8 @@
      "feito": {
       "cmd": "^\\s*ping\\s+(-\\w+\\s+\\d+\\s+)?gateway\\.local"
      },
-     "ok": "O gateway respondeu."
+     "ok": "O gateway respondeu.",
+     "resposta": "ping gateway.local"
     },
     {
      "texto": "Busque o status do serviço em http://servidor.local/status",
@@ -3977,7 +4176,8 @@
      "feito": {
       "saida": "ativo"
      },
-     "ok": "O serviço está ativo."
+     "ok": "O serviço está ativo.",
+     "resposta": "curl http://servidor.local/status"
     }
    ],
    "rede": {
@@ -3992,7 +4192,21 @@
    },
    "conclusao": "Você testou a rede com ip, ping e curl",
    "explicacao": "ip a mostra seu IP, ping testa se o destino responde e curl busca o conteúdo do serviço. Rede ok + serviço ativo = problema não estava na torre.",
-   "final": "Torre no ar!"
+   "final": "Torre no ar!",
+   "guia": [
+    {
+     "cmd": "ip a",
+     "serve": "mostra seu endereço IP"
+    },
+    {
+     "cmd": "ping destino",
+     "serve": "testa se o destino responde"
+    },
+    {
+     "cmd": "curl endereço",
+     "serve": "busca o conteúdo de uma página"
+    }
+   ]
   }
  ],
  "eventos": [],
