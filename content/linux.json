@@ -3716,7 +3716,7 @@
    "title": "Arrumando a bagunça",
    "skill": "Criar, copiar, mover e apagar",
    "skillText": "Criar, copiar, mover e apagar",
-   "intro": "A sua pasta virou uma bagunça. Organize do jeito certo.",
+   "intro": "Sua pasta está uma bagunça: tem relatorio.txt, rascunho.txt e lixo.txt soltos. Organize!",
    "passos": [
     {
      "texto": "Crie a pasta projetos",
@@ -3727,7 +3727,7 @@
      "resposta": "mkdir projetos"
     },
     {
-     "texto": "Crie o arquivo ideias.txt dentro de projetos",
+     "texto": "Dentro de projetos, crie o arquivo ideias.txt",
      "dica": "touch projetos/ideias.txt",
      "feito": {
       "existe": "/home/aluno/projetos/ideias.txt"
@@ -3735,7 +3735,7 @@
      "resposta": "touch projetos/ideias.txt"
     },
     {
-     "texto": "Copie relatorio.txt para dentro de projetos",
+     "texto": "Copie o relatorio.txt (já está na sua pasta) para dentro de projetos",
      "dica": "cp origem destino. A origem continua existindo.",
      "feito": {
       "existe": "/home/aluno/projetos/relatorio.txt"
@@ -3743,7 +3743,7 @@
      "resposta": "cp relatorio.txt projetos/"
     },
     {
-     "texto": "Renomeie rascunho.txt para final.txt",
+     "texto": "Renomeie o rascunho.txt (também já está aí) para final.txt",
      "dica": "mv com um novo nome renomeia.",
      "feito": {
       "existe": "/home/aluno/final.txt",
@@ -3752,7 +3752,7 @@
      "resposta": "mv rascunho.txt final.txt"
     },
     {
-     "texto": "Apague o arquivo lixo.txt",
+     "texto": "Apague o lixo.txt",
      "dica": "rm apaga. Confira o nome antes!",
      "feito": {
       "naoexiste": "/home/aluno/lixo.txt"
@@ -3859,7 +3859,7 @@
    "intro": "Monte uma esteira que separa as vendas pendentes e guarda num relatório.",
    "passos": [
     {
-     "texto": "Filtre as vendas pendentes e grave em pendentes.txt",
+     "texto": "Do vendas.txt (já está na sua pasta), grave só as linhas «pendente» em pendentes.txt",
      "dica": "grep pendente vendas.txt > pendentes.txt",
      "feito": {
       "conteudo": [
@@ -3927,7 +3927,7 @@
    "intro": "O script de backup não roda. Descubra por quê e libere só o que for preciso.",
    "passos": [
     {
-     "texto": "Veja as permissões do backup.sh",
+     "texto": "Veja as permissões dos arquivos da pasta (backup.sh e nota.txt já estão aí)",
      "dica": "ls -l mostra as permissões na primeira coluna.",
      "feito": {
       "cmd": "^\\s*ls\\s+(-\\w*l|.*\\s-\\w*l)"
@@ -4022,7 +4022,7 @@
      "resposta": "sudo mkdir /etc/pingo.d"
     },
     {
-     "texto": "Copie pingo.conf para /etc/pingo.d/",
+     "texto": "Copie o pingo.conf (já está na sua pasta) para /etc/pingo.d/",
      "dica": "sudo cp pingo.conf /etc/pingo.d/",
      "feito": {
       "existe": "/etc/pingo.d/pingo.conf"

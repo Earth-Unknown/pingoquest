@@ -3717,7 +3717,7 @@
    "title": "Arrumando a bagunça",
    "skill": "Criar, copiar, mover e apagar",
    "skillText": "Criar, copiar, mover e apagar",
-   "intro": "A sua pasta virou uma bagunça. Organize do jeito certo.",
+   "intro": "Sua pasta está uma bagunça: tem relatorio.txt, rascunho.txt e lixo.txt soltos. Organize!",
    "passos": [
     {
      "texto": "Crie a pasta projetos",
@@ -3728,7 +3728,7 @@
      "resposta": "mkdir projetos"
     },
     {
-     "texto": "Crie o arquivo ideias.txt dentro de projetos",
+     "texto": "Dentro de projetos, crie o arquivo ideias.txt",
      "dica": "touch projetos/ideias.txt",
      "feito": {
       "existe": "/home/aluno/projetos/ideias.txt"
@@ -3736,7 +3736,7 @@
      "resposta": "touch projetos/ideias.txt"
     },
     {
-     "texto": "Copie relatorio.txt para dentro de projetos",
+     "texto": "Copie o relatorio.txt (já está na sua pasta) para dentro de projetos",
      "dica": "cp origem destino. A origem continua existindo.",
      "feito": {
       "existe": "/home/aluno/projetos/relatorio.txt"
@@ -3744,7 +3744,7 @@
      "resposta": "cp relatorio.txt projetos/"
     },
     {
-     "texto": "Renomeie rascunho.txt para final.txt",
+     "texto": "Renomeie o rascunho.txt (também já está aí) para final.txt",
      "dica": "mv com um novo nome renomeia.",
      "feito": {
       "existe": "/home/aluno/final.txt",
@@ -3753,7 +3753,7 @@
      "resposta": "mv rascunho.txt final.txt"
     },
     {
-     "texto": "Apague o arquivo lixo.txt",
+     "texto": "Apague o lixo.txt",
      "dica": "rm apaga. Confira o nome antes!",
      "feito": {
       "naoexiste": "/home/aluno/lixo.txt"
@@ -3860,7 +3860,7 @@
    "intro": "Monte uma esteira que separa as vendas pendentes e guarda num relatório.",
    "passos": [
     {
-     "texto": "Filtre as vendas pendentes e grave em pendentes.txt",
+     "texto": "Do vendas.txt (já está na sua pasta), grave só as linhas «pendente» em pendentes.txt",
      "dica": "grep pendente vendas.txt > pendentes.txt",
      "feito": {
       "conteudo": [
@@ -3928,7 +3928,7 @@
    "intro": "O script de backup não roda. Descubra por quê e libere só o que for preciso.",
    "passos": [
     {
-     "texto": "Veja as permissões do backup.sh",
+     "texto": "Veja as permissões dos arquivos da pasta (backup.sh e nota.txt já estão aí)",
      "dica": "ls -l mostra as permissões na primeira coluna.",
      "feito": {
       "cmd": "^\\s*ls\\s+(-\\w*l|.*\\s-\\w*l)"
@@ -4023,7 +4023,7 @@
      "resposta": "sudo mkdir /etc/pingo.d"
     },
     {
-     "texto": "Copie pingo.conf para /etc/pingo.d/",
+     "texto": "Copie o pingo.conf (já está na sua pasta) para /etc/pingo.d/",
      "dica": "sudo cp pingo.conf /etc/pingo.d/",
      "feito": {
       "existe": "/etc/pingo.d/pingo.conf"
@@ -10089,6 +10089,22 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .nw .nlabel{background:rgba(255,255,255,.92);border-radius:12px;padding:5px 9px;box-shadow:0 2px 8px rgba(42,10,102,.12)}
 [data-theme="dark"] .nw .nlabel{background:rgba(33,16,82,.9)}
 @media (prefers-reduced-motion:reduce){.node.cur:after{animation:none}}
+
+.tmz .say{margin:0 0 10px;gap:8px}.tmz .sp svg{width:44px;height:44px}.tmz .bub{padding:8px 12px;border-radius:14px;font-size:13.5px}.tmz .bub p{margin:0}
+.tmz .tdots{margin-bottom:8px}.tmz .tdots i{height:6px}
+.tmz .tcur{padding:9px 12px;margin-bottom:8px;border-radius:14px}.tmz .tcur b{font-size:15px}.tmz .tfirst{display:none}
+.tfl{margin-bottom:8px}.tfl small{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:5px}.tfl small svg{width:16px;height:16px}.tfl small b{color:var(--ink)}
+.tfl>div{display:flex;flex-wrap:wrap;gap:6px}.tfl em{font-size:12px;color:var(--muted)}
+.tfi{display:flex;align-items:center;gap:6px;min-height:34px;padding:4px 10px 4px 6px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 12.5px ui-monospace,Menlo,monospace}
+.tfi svg{width:18px;height:18px}.tfi.d{border-color:#c88bff}
+.tmz .tmx{max-height:150px;min-height:80px;font-size:12.5px;padding:8px 10px}.tmz .tprompt{padding:6px 10px}
+.tmz .tkeys{flex-wrap:nowrap;overflow-x:auto;margin:8px 0 0;gap:5px}.tmz .tkeys button{flex:none;min-width:38px;min-height:38px;font-size:14px;border-radius:10px}
+.trow{gap:8px}.trow .btn{min-height:44px;padding:0 8px;font-size:13px;white-space:nowrap;border-radius:14px}.trow>span .btn{width:100%}
+.gtiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gt{border-radius:16px;padding:10px 10px 12px;border:2px solid var(--line);display:flex;flex-direction:column;gap:6px;min-height:84px;background:var(--surface)}
+.gt code{font:800 13px ui-monospace,Menlo,monospace;color:#fff;border-radius:8px;padding:4px 8px;align-self:flex-start;word-break:break-all}
+.gt span{font-size:12.5px;font-weight:700;line-height:1.25}
+.gt.g0 code{background:#7b3ff2}.gt.g1 code{background:#0fa8d4}.gt.g2 code{background:#d6338a}.gt.g3 code{background:#238a38}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -11942,6 +11958,13 @@ function tmStep(){
 function tmOut(){
   return TM.out.map(function(l){return'<div class="tml '+l.k+'">'+esc(l.t)+'</div>'}).join('');
 }
+function tmFiles(){
+  var T=TM,pre=T.cwd==='/'?'/':T.cwd+'/',items=[];
+  Object.keys(T.fs).forEach(function(k){if(k!==T.cwd&&k.indexOf(pre)===0&&k.slice(pre.length).indexOf('/')<0){var b=k.slice(pre.length);if(b.charAt(0)!=='.')items.push({n:b,d:T.fs[k].d})}});
+  items.sort(function(a,b){return (b.d-a.d)||(a.n<b.n?-1:1)});
+  var path=T.cwd===T.home?'~ (sua pasta)':T.cwd;
+  return '<div class="tfl"><small>'+IC.map+'Você está em <b>'+esc(path)+'</b></small><div>'+(items.length?items.map(function(f){return'<button class="tfi'+(f.d?' d':'')+'" data-act="tname" data-n="'+esc(f.n)+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+(f.d?'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="#7b3ff2"/>':'<path d="M6 3h8l5 5v13H6z" fill="#fff" stroke="#7b3ff2" stroke-width="2"/>')+'</svg>'+esc(f.n)+'</button>'}).join(''):'<em>pasta vazia</em>')+'</div></div>';
+}
 function tmDicaBtn(){
   var i=tmCur(),c=i<0?-1:tmCost(i);
   if(c<0)return'<button class="btn ghost" data-act="tdica" disabled>Sem dicas</button>';
@@ -11950,10 +11973,10 @@ function tmDicaBtn(){
 function drawTerm(){
   var c=C,d=c.def,T=TM,
   h='<div class="lw"><div class="lhead"><button class="xbtn" data-act="cclose" aria-label="Sair do chamado">'+IC.x+'</button>'+
-   '<div class="ctitle"><small>'+(c.kind==='daily'?'Chamado do dia':'Chamado')+'</small><b>'+esc(d.title)+'</b></div>'+starRow(Math.max(1,3-c.wrong))+'</div><div class="lbody">'+
+   '<div class="ctitle"><small>'+(c.kind==='daily'?'Chamado do dia':'Chamado')+'</small><b>'+esc(d.title)+'</b></div>'+starRow(Math.max(1,3-c.wrong))+'</div><div class="lbody tmz">'+
    '<div class="tdots" id="tdots">'+tmDots()+'</div>'+
    '<div class="say"><span class="sp">'+pingo('happy','pingo-s')+'</span><div class="bub"><p id="tmsg">'+esc(T.msg)+'</p></div></div>'+
-   '<div id="tstep">'+tmStep()+'</div>'+
+   '<div id="tstep">'+tmStep()+'</div><div id="tfiles">'+tmFiles()+'</div>'+
    '<div class="term" id="term"><div class="tmx" id="tmx">'+tmOut()+'</div><label class="tprompt"><span id="tps">'+esc(tmPrompt())+'</span><input id="tin" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" aria-label="Digite um comando"></label></div>'+
    '<div class="tkeys">'+['|','>','>>','~','/','-','..'].map(function(k){return'<button data-act="tkey" data-k="'+k+'">'+k+'</button>'}).join('')+'<button data-act="tup" aria-label="Comando anterior">↑</button></div>'+
    '</div><div class="lfoot"><div class="trow"><button class="btn ghost" data-act="tguia">Guia</button><span id="tdica">'+tmDicaBtn()+'</span><button class="btn prim" data-act="trun">Enviar</button></div></div></div>';
@@ -11961,14 +11984,14 @@ function drawTerm(){
   var el=$('#tmx');if(el)el.scrollTop=el.scrollHeight;
 }
 function tmRefresh(){
-  var a=$('#tdots'),s=$('#tstep'),b=$('#tmx'),c=$('#tps'),m=$('#tmsg'),d=$('#tdica');
+  var tf=$('#tfiles');if(tf)tf.innerHTML=tmFiles();var a=$('#tdots'),s=$('#tstep'),b=$('#tmx'),c=$('#tps'),m=$('#tmsg'),d=$('#tdica');
   if(a)a.innerHTML=tmDots();if(s)s.innerHTML=tmStep();if(b){b.innerHTML=tmOut();b.scrollTop=b.scrollHeight}if(c)c.textContent=tmPrompt();if(m)m.textContent=TM.msg;if(d)d.innerHTML=tmDicaBtn();
 }
 function showGuia(first){
   var d=C.def,h='<div class="sheet tall" role="dialog" aria-label="Guia do chamado"><div class="cqhead">'+pingo('happy','cqping')+'<div class="cqbub">'+(first?'Antes de começar, veja os comandos deste chamado!':'Guia rápido dos comandos')+'</div></div>'+
    '<div class="gsteps"><span><i>1</i>Leia o passo</span><span><i>2</i>Digite o comando</span><span><i>3</i>Toque em Enviar</span></div>'+
-   '<div class="tlabel">Comandos deste chamado</div><div class="glist">'+(d.guia||[]).map(function(g){return'<div><code>'+esc(g.cmd)+'</code><span>'+esc(g.serve)+'</span></div>'}).join('')+'</div>'+
-   '<p class="note" style="margin:10px 0 0">Errou? Sem problema: leia a mensagem em rosa e tente de novo. As dicas custam chips; a primeira vez de cada chamado tem dica grátis.</p>'+
+   '<div class="tlabel">Comandos deste chamado</div><div class="gtiles">'+(d.guia||[]).map(function(g,i){return'<div class="gt g'+(i%4)+'"><code>'+esc(g.cmd)+'</code><span>'+esc(g.serve)+'</span></div>'}).join('')+'</div>'+
+   '<p class="note" style="margin:10px 0 0">Dicas custam chips; a 1ª dica de cada chamado é grátis.</p>'+
    '<button class="btn prim" data-act="mclose" style="margin-top:14px">'+(first?'Entendi, vamos lá!':'Fechar')+'</button></div>';
   $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
 }
@@ -12039,6 +12062,7 @@ document.addEventListener('click',function(e){
   else if(a==='cexplain'){caseExplain()}
   else if(a==='curinfo'){showCursoInfo(t.dataset.id)}
   else if(a==='trun'){tmSubmit()}
+  else if(a==='tname'){var tn=$('#tin');if(tn){tn.value=(tn.value&&!/\s$/.test(tn.value)?tn.value+' ':tn.value)+t.dataset.n;tn.focus()}}
   else if(a==='tguia'){if(C&&C.term)showGuia(false)}
   else if(a==='tfill'){var tf=$('#tin'),ci=tmCur();if(tf&&ci>=0){tf.value=TM.def.passos[ci].resposta;tf.focus()}}
   else if(a==='tdica'){if(TM&&C&&C.term)tmHint()}
