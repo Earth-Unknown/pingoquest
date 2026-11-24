@@ -2740,10 +2740,11 @@ function tmSubmit(){
   var r=tmRun(line);
   if(r.err){T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&C.wrong<2)C.wrong++;sfx('bad');T.msg=T.erros>=2?'Calma, errar faz parte. Digite help para ver os comandos ou toque em Dica.':'Esse comando não deu certo. Leia a mensagem com calma.'}
   else{T.ran.push(line);if(r.out)T.out.push({k:'o',t:r.out});sfx('ping')}
-  var all=true;
+  var all=true,prog=false,ci=tmCur();
   (T.def.passos||[]).forEach(function(s,i){
-    if(!T.done[i]){var ch=s.feito;if(!Array.isArray(ch))ch=[ch];if(ch.every(tmCheck)){T.done[i]=1;T.msg=s.ok||'Boa! Passo concluído.';sfx('plim1')}}
+    if(!T.done[i]){var ch=s.feito;if(!Array.isArray(ch))ch=[ch];if(ch.every(tmCheck)){T.done[i]=1;prog=true;T.msg=s.ok||'Boa! Passo concluído.';sfx('plim1')}}
     if(!T.done[i])all=false});
+  if(!r.err&&!prog&&!all&&ci>=0)T.msg='Esse comando funcionou, mas ainda não cumpre o passo. Releia: «'+T.def.passos[ci].texto+'». Confira os nomes (maiúsculas contam) e a pasta em que você está.';
   tmRefresh();
   if(all){C.stage='fim';inp.disabled=true;T.msg=T.def.final||'Chamado resolvido!';var m=$('#tmsg');if(m)m.textContent=T.msg;setTimeout(function(){if(C&&C.stage==='fim')caseFinish()},1100)}
 }
