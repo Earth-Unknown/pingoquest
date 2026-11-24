@@ -61,7 +61,7 @@ export function Profile({S,refresh}:{S:any;refresh:()=>void}){
     <button className="btn ghost" style={{marginBottom:10}} onClick={toggleTheme}>Tema: {theme==='dark'?'escuro (roxo)':'claro'}</button>
     <button className="btn ghost" style={{marginBottom:10}} onClick={()=>{const v=!snd;setSound(v);setSnd(v);if(v)sfx('ok')}}>Sons do Pingo: {snd?'ligados':'desligados'}</button>
     <button className="btn ghost" onClick={reset}>{sure?'Toque de novo para confirmar':'Zerar progresso'}</button>
-    <p className="note" style={{marginTop:12}}>O progresso fica salvo neste navegador.</p>
+    <p className="note" style={{marginTop:12}}>O progresso fica salvo neste navegador. Algo não funcionou direito? O <a href="jogo-antigo/" style={{color:'var(--primary-deep)',fontWeight:800}}>jogo antigo</a> continua disponível e usa o mesmo progresso.</p>
 
     {sum&&<Sumario S={S} id={sum} onClose={()=>setSum(null)}/>}
     {info&&<CursoInfo S={S} id={info} onClose={()=>setInfo(null)} onPick={id=>{act(s=>trocarCurso(s,id));setInfo(null);window.scrollTo(0,0)}} onSum={id=>{setInfo(null);setSum(id)}}/>}
