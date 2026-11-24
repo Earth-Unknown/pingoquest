@@ -4210,5 +4210,34 @@
   }
  ],
  "eventos": [],
- "artes": {}
+ "artes": {},
+ "nivelamento": [
+  {
+   "pergunta": "Para que serve o terminal?",
+   "certa": "Para digitar comandos e o computador executar",
+   "erradas": [
+    "Para desenhar imagens",
+    "Para esfriar o computador"
+   ],
+   "explicacao": "No terminal você escreve comandos e o sistema obedece."
+  },
+  {
+   "pergunta": "Qual comando mostra em que pasta você está?",
+   "certa": "pwd",
+   "erradas": [
+    "mkdir",
+    "rm"
+   ],
+   "explicacao": "pwd mostra a pasta atual."
+  },
+  {
+   "pergunta": "O que o comando rm faz?",
+   "certa": "Apaga arquivos",
+   "erradas": [
+    "Renomeia arquivos",
+    "Copia arquivos"
+   ],
+   "explicacao": "rm remove, e no terminal não existe lixeira."
+  }
+ ]
 }

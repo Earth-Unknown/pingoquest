@@ -892,6 +892,11 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .tmz>*{flex:none}.tmz .term{flex:1 1 auto;height:auto;min-height:84px}.tmz .tmx{font-size:13px}
 
 .tmz .tprompt{flex-wrap:wrap;row-gap:2px}.tmz .tprompt span{max-width:none;overflow:visible}.tmz .tprompt input{flex:1 1 90px}
+
+.cplist{display:flex;flex-direction:column;gap:10px;margin-top:6px;text-align:left}
+.cpc{display:flex;align-items:center;gap:12px;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:18px;padding:10px 12px;font:inherit;text-align:left;cursor:pointer;min-height:76px}
+.cpc:active{transform:scale(.98)}.cpc.soon{opacity:.55}.cpc .cqic.big{width:56px;height:56px}.cpc .cqic.big svg{width:38px;height:38px}
+.cpt{display:flex;flex-direction:column;gap:1px;min-width:0}.cpt b{font-size:17px}.cpt small{font-size:12.5px;color:var(--muted);font-weight:700}.cpt em{font-style:normal;font-size:12px;font-weight:800;color:var(--primary,#7b3ff2);margin-top:2px}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -967,7 +972,7 @@ function lerCurso(c){
   var CASES={},CASE_IDS=[];(c.casos||[]).forEach(function(k){CASES[k.id]=k;CASE_IDS.push(k.id)});
   GAMES.forEach(function(g){if(g.caso&&!CASES[g.caso])delete g.caso});
   return{GAMES:GAMES,CASES:CASES,CASE_IDS:CASE_IDS,CUR:CUR,EXTRA:EXTRA,EVENTS:c.eventos||[],EVQ:EVQ,ART:c.artes||{},
-    WORLD:{n:mundo.numero||1,name:mundo.nome,sub:mundo.subtitulo,places:places},ERROS:erros,NOME:c.nome};
+    WORLD:{n:mundo.numero||1,name:mundo.nome,sub:mundo.subtitulo,places:places},ERROS:erros,NOME:c.nome,NIV:c.nivelamento||[]};
 }
 function hashTxt(t){var h=7;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))%1000000007;return t.length+'-'+h}
 function cursoUrl(id){return 'content/'+id+'.json'}
@@ -1710,8 +1715,9 @@ function placeIcon(i){return '<svg viewBox="0 0 40 40" aria-hidden="true">'+(PLA
 
 /* ---------- cursos: cada curso tem trilha e progresso próprios; avatar, amigos, energia e chips são de todos ---------- */
 var COURSES=[
- {id:'redes',ic:'router',sub:'Do básico à rede da sua casa'},
- {id:'linux',ic:'term',nome:'Terminal Linux',sub:'Comandos, arquivos e permissões'}];
+ {id:'redes',ic:'router',sub:'Do básico à rede da sua casa',intro:'Aqui você aprende Redes de Computadores resolvendo casos de verdade, do zero ao avançado, um passo de cada vez.'},
+ {id:'linux',ic:'term',nome:'Terminal Linux',sub:'Comandos, arquivos e permissões',intro:'Aqui você aprende o terminal do Linux: primeiro conversando com o Pingo, depois digitando comandos de verdade nos chamados.'}];
+S.onbC=S.onbC||{};if(S.onb&&!S.onbC._m){S.onbC[CURSO]=true;S.onbC._m=1}
 var COURSE_KEYS=['done','know','xch','casos','bosses','xseen'];
 var COURSE_DEF=function(){return{done:{},know:{},xch:{},casos:{},bosses:0}};
 function courseReady(id){return !!document.getElementById('curso-'+id)}
@@ -2865,9 +2871,11 @@ document.addEventListener('click',function(e){
   else if(a==='obpick'){obPick(+t.dataset.i)}
   else if(a==='obnext'){OB.i++;OB.i<NIV.length?obAsk(OB.i):obResult()}
   else if(a==='obskip'){for(var g3=0;g3<GAMES.length;g3++)for(var k3=0;k3<4;k3++)S.done[g3+'-'+k3]=true;backfillKnow();S.level='avancado';save();obPlan()}
-  else if(a==='obstart'){S.level=OB.score>=2?'alguma':'zero';save();obPlan()}
+  else if(a==='obstart'){S.level=OB.score>=2?'alguma':'zero';save();if(S.plan)obDone(false);else obPlan()}
+  else if(a==='cpicker'){showCursoPicker()}
+  else if(a==='cpickc'){var cid=t.dataset.id;S.picked=true;save();if(cid===CURSO)showWelcome();else trocarCurso(cid)}
   else if(a==='obplan'){OB.plan=+t.dataset.n;obPlan()}
-  else if(a==='obfinish'){if(OB&&OB.plan){S.plan=OB.plan;S.onb=true;S.gems+=20;save();closeWelcome();render();window.scrollTo(0,0);sfx('win');confetti()}}
+  else if(a==='obfinish'){if(OB&&OB.plan){S.plan=OB.plan;obDone(!S.onb)}}
   else if(a==='claim'){
     var i=+t.dataset.i,ms=todays(),d=day();
     if(ms[i]&&!d.claimed[i]&&ms[i].p(d)>=ms[i].g){d.claimed[i]=true;S.gems+=ms[i].gem;save();render()}
@@ -2971,28 +2979,41 @@ render();
 
 /* ---------- boas-vindas do Pingo ---------- */
 function closeWelcome(){$('#welcome').hidden=true;document.body.classList.remove('lock')}
+function curMeta(){return COURSES.filter(function(x){return x.id===CURSO})[0]||COURSES[0]}
 function showWelcome(){
-  var back=S.xp>0||doneCount()>0,st=streakNow();
-  var title=back?'Que bom te ver de novo!':'Oi! Eu sou o Pingo';
-  var text=back
-    ? 'Você já concluiu '+doneCount()+' de '+total()+' fases'+(st>0?' e está com '+st+(st===1?' dia':' dias')+' de brilho':'')+'. Bora continuar?'
-    : 'Bem-vindo ao Pingo Quest! Aqui você aprende Redes de Computadores resolvendo casos de verdade, do zero ao avançado, um passo de cada vez.';
+  var need=!S.onbC[CURSO],st=streakNow(),first=!S.onb;
+  var title=need?(first?'Oi! Eu sou o Pingo':'Novo curso: '+DATA.NOME):'Que bom te ver de novo!';
+  var text=need?(first?'Bem-vindo ao Pingo Quest! ':'')+curMeta().intro
+    : 'Você concluiu '+doneCount()+' de '+total()+' fases em '+DATA.NOME+(st>0?' e está com '+st+(st===1?' dia':' dias')+' de brilho':'')+'. Bora continuar?';
   $('#welcome').innerHTML='<div class="wcard" role="dialog" aria-modal="true" aria-label="Boas-vindas">'+pingo('cheer','pingo-w')+
-    '<h2>'+title+'</h2><p>'+text+'</p>'+
-    '<div class="wpills"><span class="wpill"><span style="display:contents">'+IC.search+'</span>Resolva casos</span>'+
+    '<h2>'+esc(title)+'</h2><p>'+esc(text)+'</p>'+
+    '<div class="wpills"><span class="wpill"><span style="display:contents">'+IC.search+'</span>'+(CURSO==='linux'?'Chamados no terminal':'Resolva casos')+'</span>'+
     '<span class="wpill"><span style="color:#ff8a1f;display:contents">'+IC.brilho+'</span>Brilho diário</span>'+
     '<span class="wpill"><span style="color:var(--bad);display:contents">'+IC.heart+'</span>5 vidas</span></div>'+
-    '<button class="btn" data-act="'+(back?'wclose':'obgo')+'" id="wgo">'+(back?'Continuar':'Vamos começar')+'</button></div>';
+    '<button class="btn" data-act="'+(need?'obgo':'wclose')+'" id="wgo">'+(need?'Vamos começar':'Continuar')+'</button>'+
+    (need?'':'<button class="btn ghost" data-act="cpicker" style="margin-top:8px">Escolher outro curso</button>')+'</div>';
   $('#welcome').hidden=false;document.body.classList.add('lock');
   var b=document.getElementById('wgo');if(b&&b.focus){try{b.focus({preventScroll:true})}catch(e){}}
 }
+function showCursoPicker(){
+  var h='<div class="wcard cpick" role="dialog" aria-modal="true" aria-label="Escolha seu curso">'+pingo('cheer','pingo-w')+'<h2>O que você quer aprender?</h2><p>Escolha um curso. Você pode trocar quando quiser, no Perfil.</p><div class="cplist">';
+  COURSES.forEach(function(c){
+    var ok=courseReady(c.id),on=c.id===CURSO,nm=courseName(c),j=null,np=0,nc=0;
+    if(ok){try{j=on?null:JSON.parse(document.getElementById('curso-'+c.id).textContent)}catch(e){}}
+    if(ok){var src=j||{mundos:[{paradas:GAMES}],casos:CASE_IDS};np=on?GAMES.length:(j&&j.mundos?j.mundos.reduce(function(n,m){return n+(m.paradas||[]).length},0):0);nc=on?CASE_IDS.length:(j&&j.casos?j.casos.length:0)}
+    h+='<button class="cpc'+(ok?'':' soon')+'" data-act="cpickc" data-id="'+c.id+'"'+(ok?'':' disabled')+'><span class="cqic big">'+courseIcon(c)+'</span><span class="cpt"><b>'+esc(nm)+'</b><small>'+esc(c.sub)+'</small>'+(ok?'<em>'+np+' paradas · '+nc+' chamados</em>':'<em>Em breve</em>')+'</span></button>';
+  });
+  h+='</div></div>';
+  $('#welcome').innerHTML=h;$('#welcome').hidden=false;document.body.classList.add('lock');
+}
 
 /* ---------- onboarding: nivelamento e plano ---------- */
-var NIV=[
+var NIV_DEF=[
  {q:"O que o roteador faz?",o:["Liga a sua rede à internet","Guarda os seus arquivos","Imprime documentos"],e:"O roteador é a porta da sua rede para a internet."},
  {q:"Para que serve o DNS?",o:["Traduz o nome do site em número IP","Aumenta a velocidade do Wi-Fi","Protege o celular de vírus"],e:"O DNS traduz nomes de sites em endereços IP."},
  {q:"Em qual camada do modelo OSI trabalham os endereços IP?",o:["Rede","Física","Aplicação"],e:"Os endereços IP vivem na camada de Rede, a terceira do modelo OSI."}
 ];
+var NIV=(DATA.NIV&&DATA.NIV.length?DATA.NIV.map(function(n){return{q:n.pergunta,o:[n.certa].concat(n.erradas||[]),e:n.explicacao||''}}):NIV_DEF);
 var OB=null;
 function obCard(inner){
   var again=!$('#welcome').hidden&&$('#welcome').querySelector('.wcard');
@@ -3022,15 +3043,14 @@ function obDrawAsk(){
 function obPick(k){if(OB.sel!==null)return;OB.sel=k;if(OB.opts[k].c)OB.score++;obDrawAsk()}
 function obResult(){
   var sc=OB.score,msg,h;
-  if(sc>=3)msg='Uau, você já manja! Posso te levar direto ao intermediário, ou você começa do início para revisar.';
+  if(sc>=3)msg='Uau, você já manja! Como ainda não temos o nível intermediário, vamos começar do início: dá para passar rápido e revisar.';
   else if(sc===2)msg='Você já sabe bastante! A trilha inicial vai ser tranquila e dá para revisar rapidinho.';
-  else if(sc===1)msg='Você já ouviu falar de algumas coisas. Vamos começar pelo início: passa rápido e eu explico cada termo antes de perguntar.';
+  else if(sc===1)msg='Você já ouviu falar de algumas coisas. Vamos começar pelo início: eu explico cada termo antes de perguntar.';
   else msg='Sem problema nenhum! Vamos do zero, um passo de cada vez. Eu explico cada termo antes de perguntar.';
-  h='<div class="wstep">Seu ponto de partida</div>'+pingo('cheer','pingo-w')+'<h2>'+sc+' de '+NIV.length+' certas</h2><p>'+msg+'</p><div style="height:18px"></div>';
-  if(sc>=3)h+='<button class="btn" data-act="obskip">Pular o iniciante</button><button class="btn ghost" data-act="obstart">Começar do início</button>';
-  else h+='<button class="btn" data-act="obstart">Continuar</button>';
+  h='<div class="wstep">Seu ponto de partida</div>'+pingo('cheer','pingo-w')+'<h2>'+sc+' de '+NIV.length+' certas</h2><p>'+msg+'</p><div style="height:18px"></div><button class="btn" data-act="obstart">Começar do início</button>';
   obCard(h);
 }
+function obDone(bonus){S.onbC[CURSO]=true;S.onb=true;if(bonus)S.gems+=20;save();closeWelcome();render();window.scrollTo(0,0);sfx('win');confetti()}
 function obPlan(){
   var P=[[3,'Leve','3 dias por semana, no seu ritmo'],[5,'Constante','5 dias por semana'],[7,'Intenso','Todos os dias da semana']];
   var h='<div class="wstep">Seu plano de estudo</div>'+pingo('happy','pingo-w')+'<h2>Quantos dias por semana?</h2><p>Dias de descanso não quebram nada. Você escolhe o ritmo que cabe na sua vida.</p><div class="planrow">';
@@ -3553,6 +3573,6 @@ function duelAccept(){var d=D.pend;duelBegin(d.g,d.s,d.l,'amigo',{name:d.f||'Ami
 function duelToast(t){var e=$('#lesson .frmsg');if(e){e.hidden=false;e.textContent=t}}
 
 var DUEL_PEND=null;try{var dm=location.hash.match(/duelo=([A-Za-z0-9_-]+)/);if(dm)DUEL_PEND=b64d(dm[1])}catch(e){}
-if(DUEL_PEND&&DUEL_PEND.g!=null)duelIntro(DUEL_PEND);else showWelcome();
+if(DUEL_PEND&&DUEL_PEND.g!=null)duelIntro(DUEL_PEND);else if(!S.picked&&!S.onb)showCursoPicker();else showWelcome();
 try{var mh=location.hash.match(/convite=([A-Z0-9]{4,8})/);if(mh&&S.onb)showAmigos(mh[1])}catch(e){}
 </script>

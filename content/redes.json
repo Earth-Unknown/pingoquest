@@ -5022,5 +5022,34 @@
  ],
  "artes": {
   "roteador": "<rect width=\"90\" height=\"90\" fill=\"#d7f3fc\"/><path d=\"M24 44 18 12M66 44l6-32\" stroke=\"#2b3a6b\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"18\" cy=\"11\" r=\"4\" fill=\"#ffc43d\"/><circle cx=\"72\" cy=\"11\" r=\"4\" fill=\"#ffc43d\"/><path d=\"M34 30a16 16 0 0 1 22 0M38 35a10 10 0 0 1 14 0\" fill=\"none\" stroke=\"#19b5e8\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"45\" cy=\"39\" r=\"2.4\" fill=\"#19b5e8\"/><rect x=\"8\" y=\"44\" width=\"74\" height=\"30\" rx=\"9\" fill=\"#2b3a6b\"/><circle cx=\"22\" cy=\"59\" r=\"3.2\" fill=\"#2fbf6b\"/><circle cx=\"32\" cy=\"59\" r=\"3.2\" fill=\"#ffc43d\"/><circle cx=\"42\" cy=\"59\" r=\"3.2\" fill=\"#19b5e8\"/><rect x=\"54\" y=\"53\" width=\"8\" height=\"12\" rx=\"2\" fill=\"#e8ecff\"/><rect x=\"65\" y=\"53\" width=\"8\" height=\"12\" rx=\"2\" fill=\"#e8ecff\"/><rect x=\"16\" y=\"74\" width=\"12\" height=\"5\" rx=\"2\" fill=\"#1b2140\"/><rect x=\"62\" y=\"74\" width=\"12\" height=\"5\" rx=\"2\" fill=\"#1b2140\"/>"
- }
+ },
+ "nivelamento": [
+  {
+   "pergunta": "O que o roteador faz?",
+   "certa": "Liga a sua rede à internet",
+   "erradas": [
+    "Guarda os seus arquivos",
+    "Imprime documentos"
+   ],
+   "explicacao": "O roteador é a porta da sua rede para a internet."
+  },
+  {
+   "pergunta": "Para que serve o DNS?",
+   "certa": "Traduz o nome do site em número IP",
+   "erradas": [
+    "Aumenta a velocidade do Wi-Fi",
+    "Protege o celular de vírus"
+   ],
+   "explicacao": "O DNS traduz nomes de sites em endereços IP."
+  },
+  {
+   "pergunta": "Em qual camada do modelo OSI trabalham os endereços IP?",
+   "certa": "Rede",
+   "erradas": [
+    "Física",
+    "Aplicação"
+   ],
+   "explicacao": "Os endereços IP vivem na camada de Rede, a terceira do modelo OSI."
+  }
+ ]
 }
