@@ -8,9 +8,12 @@ set -e
 cd "$(dirname "$0")"
 {
   printf '%s\n' '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>'
-  printf '%s' '<script type="application/json" id="curso-redes">'
-  sed 's#</#<\\/#g' content/redes.json
-  printf '%s\n' '</script>'
+  for f in content/*.json; do
+    id=$(basename "$f" .json)
+    printf '%s' "<script type=\"application/json\" id=\"curso-$id\">"
+    sed 's#</#<\\/#g' "$f"
+    printf '%s\n' '</script>'
+  done
   cat src/jogo.html
   printf '\n%s\n' '</body></html>'
 } > index.html

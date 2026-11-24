@@ -1,0 +1,21 @@
+// Troca de curso: progresso separado por curso, o resto (energia, avatar) compartilhado.
+const {chromium}=require('playwright');const fs=require('fs');
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:800}});
+const errs=[];p.on('pageerror',e=>errs.push(e.message));
+let h=fs.readFileSync(__dirname+'/../index.html','utf8');
+const m=h.match(/<script type="application\/json" id="curso-redes">([\s\S]*?)<\/script>/);
+const j=JSON.parse(m[1].replace(/<\\\//g,'</'));j.id='linux';j.nome='Terminal Linux';j.mundos[0].paradas=j.mundos[0].paradas.slice(0,2);j.bate_bola=[];j.eventos=[];j.casos=[];j.mundos[0].paradas.forEach(x=>delete x.chamado);
+h=h.replace('<script type="application/json" id="curso-redes">','<script type="application/json" id="curso-linux">'+JSON.stringify(j).replace(/<\//g,'<\\/')+'</script><script type="application/json" id="curso-redes">');
+fs.writeFileSync('/tmp/pq-cursos.html',h);
+await p.goto('file:///tmp/pq-cursos.html');
+await p.evaluate(()=>{localStorage.clear()});await p.reload();
+await p.evaluate(()=>{S.onb=true;S.done={'0-0':1};S.gems=77;save()});await p.reload();
+await p.evaluate(()=>{document.getElementById('welcome').hidden=true;tab='path';render()});
+await p.click('.cqchip');await p.click('[data-act=curso][data-id=linux]');await p.waitForTimeout(400);
+const a=await p.evaluate(()=>({c:CURSO,done:Object.keys(S.done).length,n:GAMES.length,gems:S.gems}));
+await p.evaluate(()=>{S.done['0-0']=1;S.done['0-1']=1;save()});
+await p.evaluate(()=>{document.getElementById('welcome').hidden=true});
+await p.click('.cqchip');await p.click('[data-act=curso][data-id=redes]');await p.waitForTimeout(400);
+const c=await p.evaluate(()=>({c:CURSO,done:Object.keys(S.done).length,gems:S.gems}));
+const ok=a.c==='linux'&&a.done===0&&a.n===2&&a.gems===77&&c.c==='redes'&&c.done===1&&c.gems===77;
+console.log(ok?'cursos OK':'cursos FALHOU',JSON.stringify([a,c]),errs);await b.close()})();

@@ -774,6 +774,18 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .nw .nlabel.L{left:calc(50% + 50px)}.nw .nlabel.R{right:calc(50% + 50px);text-align:right;left:auto}
 .nlabel b{display:block;font-size:14px;color:var(--ink);line-height:1.15}.nlabel small{display:block;font-size:12px;font-weight:700;color:var(--muted);line-height:1.2;margin-top:1px}
 .node.lock+.nlabel b{color:var(--muted)}
+
+.cqchip{position:absolute;top:12px;right:12px;z-index:3;display:flex;align-items:center;gap:4px;border:0;border-radius:14px;padding:7px 11px;background:rgba(255,255,255,.92);color:#5a22c4;font:inherit;font-weight:900;font-size:12px;cursor:pointer}
+.cqhead{display:flex;align-items:center;gap:10px;margin-bottom:14px}.cqping{width:78px;flex:none}
+.cqbub{position:relative;background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px 14px;font-weight:800;font-size:16px;line-height:1.25}
+.cqbub:before{content:"";position:absolute;left:-9px;top:22px;border:8px solid transparent;border-right-color:var(--line);border-left:0}
+.cqlist{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.cqcard{display:flex;align-items:center;gap:12px;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 4px 0 var(--line);cursor:pointer}
+.cqcard.on{border-color:#7b3ff2;box-shadow:0 4px 0 #7b3ff2}.cqcard.soon{opacity:.55;cursor:default;box-shadow:none}
+.cqic{flex:none;width:52px;height:52px;border-radius:14px;background:#f1e9ff;display:grid;place-items:center}.cqic svg{width:34px;height:34px}
+.cqtx{flex:1;min-width:0}.cqtx b{display:block;font-size:16px}.cqtx small{display:block;color:var(--muted);font-weight:700;font-size:12.5px;margin-top:1px}
+.cqbar{display:block;height:7px;border-radius:4px;background:var(--line);margin-top:7px;overflow:hidden}.cqbar i{display:block;height:100%;background:#7b3ff2;border-radius:4px}
+.cqcard em{font-style:normal;font-weight:900;font-size:12px;color:var(--primary)}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -851,7 +863,7 @@ function lerCurso(c){
     WORLD:{n:mundo.numero||1,name:mundo.nome,sub:mundo.subtitulo,places:places},ERROS:erros,NOME:c.nome};
 }
 function hashTxt(t){var h=7;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))%1000000007;return t.length+'-'+h}
-var CURSO_URL={redes:'content/redes.json'};
+function cursoUrl(id){return 'content/'+id+'.json'}
 function carregarCurso(id){
   var el=document.getElementById('curso-'+id),raw=el.textContent,base=hashTxt(raw),usado=raw,d=null;
   /* versão baixada da internet numa visita anterior (só vale se o conteúdo embutido não mudou desde então) */
@@ -865,7 +877,7 @@ function carregarCurso(id){
 /* Atualização sem mexer no código: se o arquivo content/redes.json do site mudou, guarda e aplica na próxima abertura */
 function atualizarCurso(d){
   if(!window.fetch||!/^https?:/.test(location.protocol))return;
-  fetch(CURSO_URL[d.ID]+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null}).then(function(t){
+  fetch(cursoUrl(d.ID)+'?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null}).then(function(t){
     if(!t)return;var novo;try{novo=lerCurso(JSON.parse(t))}catch(e){console.warn('content/'+d.ID+'.json do site está inválido; mantendo o anterior');return}
     if(!novo.GAMES.length)return;
     var norm=JSON.stringify(JSON.parse(t));
@@ -874,7 +886,9 @@ function atualizarCurso(d){
     try{if(!sessionStorage.getItem('pq-recarregou')&&!L){sessionStorage.setItem('pq-recarregou','1');location.reload()}}catch(e){}
   }).catch(function(){});
 }
-var DATA=carregarCurso('redes');
+var CURSO='redes';
+try{var _s=JSON.parse(localStorage.getItem('pingoquest-v3')||'null');if(_s&&_s.curso&&document.getElementById('curso-'+_s.curso))CURSO=_s.curso}catch(e){}
+var DATA=carregarCurso(CURSO);
 var GAMES=DATA.GAMES,CASES=DATA.CASES,CASE_IDS=DATA.CASE_IDS,CUR=DATA.CUR,EXTRA=DATA.EXTRA,EVENTS=DATA.EVENTS,EVQ=DATA.EVQ,ART=DATA.ART,WORLD=DATA.WORLD;
 window.addEventListener('load',function(){setTimeout(function(){atualizarCurso(DATA)},1500)});
 
@@ -1123,7 +1137,7 @@ window.AVT={slots:AV_SLOTS,has:avHas,cfg:avCfg,equip:avEquip,sync:avSync};
 
 /* ---------- estado ---------- */
 var KEY='pingoquest-v3';
-function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},conq:{},perfectN:0,maxDay:'',devStart:'',nick:'',code:'',fr:[],wk:null,gifts:{sent:[],inbox:[]}}}
+function blank(){return{xp:0,gems:50,hearts:5,streak:0,last:'',done:{},ok:0,total:0,bosses:0,miss:{},day:null,casos:{},week:null,badges:[],onb:false,plan:0,level:'',hist:{},best:0,lupa:false,know:{},xch:{},ev:{},ledger:{},inv:{items:[],coll:{}},av:{},conq:{},perfectN:0,maxDay:'',devStart:'',nick:'',code:'',fr:[],wk:null,gifts:{sent:[],inbox:[]},curso:'',cursos:{}}}
 function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&typeof s==='object')return Object.assign(blank(),s)}catch(e){}return blank()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -1587,6 +1601,41 @@ var PLACE_IC=[
  '<path d="M20 4l14 6v10q0 12-14 17Q6 32 6 20V10z" fill="#fff"/><path d="M13 20l5 5 9-10" stroke="#7b3ff2" stroke-width="3.500" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'];
 function placeIcon(i){return '<svg viewBox="0 0 40 40" aria-hidden="true">'+(PLACE_IC[i]||PLACE_IC[0])+'</svg>'}
 
+/* ---------- cursos: cada curso tem trilha e progresso próprios; avatar, amigos, energia e chips são de todos ---------- */
+var COURSES=[
+ {id:'redes',ic:'router',sub:'Do básico à rede da sua casa'},
+ {id:'linux',ic:'term',nome:'Terminal Linux',sub:'Comandos, arquivos e permissões'}];
+var COURSE_KEYS=['done','know','xch','casos','bosses','xseen'];
+var COURSE_DEF=function(){return{done:{},know:{},xch:{},casos:{},bosses:0}};
+function courseReady(id){return !!document.getElementById('curso-'+id)}
+function courseName(c){if(c.id===CURSO)return DATA.NOME;if(courseReady(c.id)){try{return JSON.parse(document.getElementById('curso-'+c.id).textContent).nome}catch(e){}}return c.nome||c.id}
+function coursePct(c){
+  if(!courseReady(c.id))return 0;
+  var done,tot;
+  if(c.id===CURSO){done=Object.keys(S.done||{}).length;tot=GAMES.length*4}
+  else{var st=(S.cursos&&S.cursos[c.id])||{};done=Object.keys(st.done||{}).length;
+    try{var j=JSON.parse(document.getElementById('curso-'+c.id).textContent);tot=j.mundos.reduce(function(n,m){return n+m.paradas.length*4},0)}catch(e){tot=1}}
+  return tot?Math.min(100,Math.round(done/tot*100)):0;
+}
+function trocarCurso(id){
+  if(id===CURSO||!courseReady(id))return;
+  S.cursos=S.cursos||{};var cur={};COURSE_KEYS.forEach(function(k){cur[k]=S[k]});S.cursos[CURSO]=cur;
+  var nx=S.cursos[id]||COURSE_DEF();COURSE_KEYS.forEach(function(k){S[k]=nx[k]!==undefined?nx[k]:COURSE_DEF()[k]});
+  S.curso=id;save();location.reload();
+}
+var IC_TERM='<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="7" width="32" height="26" rx="7" fill="#2a1668"/><path d="M11 16l6 5-6 5" fill="none" stroke="#19e0ff" stroke-width="3.500" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 27h9" stroke="#ffd83d" stroke-width="3.500" stroke-linecap="round"/></svg>';
+function courseIcon(c){return c.ic==='term'?IC_TERM:'<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="21" width="30" height="13" rx="6" fill="#7b3ff2"/><circle cx="12" cy="27.500" r="2" fill="#fff"/><circle cx="19" cy="27.500" r="2" fill="#8ff0a8"/><line x1="11" y1="21" x2="8" y2="9" stroke="#7b3ff2" stroke-width="3" stroke-linecap="round"/><line x1="29" y1="21" x2="32" y2="9" stroke="#7b3ff2" stroke-width="3" stroke-linecap="round"/><path d="M14 8q6-6 12 0" stroke="#ffb700" stroke-width="3" fill="none" stroke-linecap="round"/></svg>'}
+function showCursos(){
+  var h='<div class="sheet tall" role="dialog" aria-label="Escolher curso"><div class="cqhead">'+pingo('happy','cqping')+'<div class="cqbub">O que você quer aprender?</div></div><div class="cqlist">';
+  COURSES.forEach(function(c){
+    var ready=courseReady(c.id),on=c.id===CURSO,pct=coursePct(c);
+    h+='<button class="cqcard'+(on?' on':'')+(ready?'':' soon')+'" '+(ready?'data-act="curso" data-id="'+c.id+'"':'disabled')+'><span class="cqic">'+courseIcon(c)+'</span><span class="cqtx"><b>'+esc(courseName(c))+'</b><small>'+esc(ready?c.sub:'Em breve')+'</small>'+
+      (ready?'<span class="cqbar"><i style="width:'+pct+'%"></i></span>':'')+'</span><em>'+(on?'Estudando':(ready?pct+'%':'')) +'</em></button>';
+  });
+  h+='</div><button class="btn ghost" data-act="mclose">Fechar</button></div>';
+  $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
+}
+
 function worldScene(){
   var h='<svg viewBox="0 0 390 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="wsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a0a66"/><stop offset=".6" stop-color="#6d3be0"/><stop offset="1" stop-color="#c88bff"/></linearGradient><linearGradient id="wgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7f0cf"/><stop offset="1" stop-color="#7cd6a6"/></linearGradient></defs><rect width="390" height="170" fill="url(#wsky)"/>';
   [[30,22,1.5],[90,50,1.2],[160,16,1.6],[250,30,1.3],[330,18,1.8],[360,70,1.2],[60,80,1.4]].forEach(function(a){h+='<circle cx="'+a[0]+'" cy="'+a[1]+'" r="'+a[2]+'" fill="#fff" opacity=".7"/>'});
@@ -1601,7 +1650,7 @@ function worldScene(){
 function worldBanner(){
   var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
   var t=GAMES.length*4,pct=Math.round(n/t*100);
-  return '<div class="world">'+worldScene()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
+  return '<div class="world">'+worldScene()+'<button class="cqchip" data-act="cursos" aria-label="Trocar de curso"><span>'+esc(DATA.NOME.split(' ')[0])+'</span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>'+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
 }
 
 function showMundo(){
@@ -2309,6 +2358,8 @@ document.addEventListener('click',function(e){
     $('#modal').hidden=false;
   }
   else if(a==='mundo'){showMundo()}
+  else if(a==='cursos'){showCursos()}
+  else if(a==='curso'){trocarCurso(t.dataset.id)}
   else if(a==='stop'){showStop(+t.dataset.g)}
   else if(a==='mclose'){$('#modal').hidden=true}
   else if(a==='chestopen'){openChest()}
