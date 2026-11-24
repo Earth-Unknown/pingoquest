@@ -3235,6 +3235,1042 @@
       }
      ],
      "chamado": "lx_torre"
+    },
+    {
+     "lugar": "Oficina de Scripts",
+     "titulo": "Seu primeiro script",
+     "dicas": [
+      "Script é um arquivo com comandos.",
+      "A 1ª linha é #!/bin/bash.",
+      "chmod +x e depois ./nome.sh."
+     ],
+     "fases": [
+      {
+       "nome": "Criar e executar",
+       "conceitos": [
+        {
+         "id": "linux.script",
+         "nome": "Criar e executar scripts",
+         "antes": [
+          "linux.ping"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Seu primeiro script",
+         "texto": "Um script é um arquivo de texto com comandos que o Linux executa em sequência. A primeira linha, #!/bin/bash, diz qual programa vai interpretá-lo. Para criar sem editor: echo \"texto\" > arquivo grava a primeira linha, e >> acrescenta outra. Depois dê permissão com chmod +x e rode com ./nome.sh.",
+         "termos": [
+          {
+           "termo": "Script",
+           "definicao": "Arquivo com comandos em sequência"
+          },
+          {
+           "termo": "#!/bin/bash",
+           "definicao": "Diz quem interpreta o script"
+          },
+          {
+           "termo": "./",
+           "definicao": "Executa um arquivo da pasta atual"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é um script?",
+         "certa": "Um arquivo de texto com comandos para executar em sequência",
+         "erradas": [
+          "Um tipo de cabo",
+          "Uma senha do sistema",
+          "Uma pasta oculta"
+         ],
+         "explicacao": "Comandos guardados num arquivo.",
+         "conceito": "linux.script",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "A linha #!/bin/bash no começo indica qual programa interpreta o script.",
+         "resposta": true,
+         "explicacao": "É o «shebang».",
+         "conceito": "linux.script",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando executa o script ola.sh da pasta atual?",
+         "certa": "./ola.sh",
+         "erradas": [
+          "ola.sh run",
+          "cat ola.sh",
+          "cd ola.sh"
+         ],
+         "explicacao": "O ./ diz «nesta pasta».",
+         "conceito": "linux.script",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Rodei ./ola.sh e deu «Permissão negada». O que falta?",
+         "certa": "chmod +x ola.sh",
+         "erradas": [
+          "rm ola.sh",
+          "sudo apt install ola",
+          "cd /"
+         ],
+         "explicacao": "Falta a permissão de execução.",
+         "conceito": "linux.script",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada item ao que faz",
+         "pares": [
+          {
+           "esquerda": "#!/bin/bash",
+           "direita": "Diz quem interpreta o script"
+          },
+          {
+           "esquerda": ">",
+           "direita": "Grava a primeira linha (substitui)"
+          },
+          {
+           "esquerda": ">>",
+           "direita": "Acrescenta uma linha"
+          },
+          {
+           "esquerda": "chmod +x",
+           "direita": "Libera a execução"
+          }
+         ],
+         "explicacao": "Cada peça do script.",
+         "conceito": "linux.script",
+         "dificuldade": 1
+        }
+       ]
+      },
+      {
+       "nome": "Variáveis",
+       "conceitos": [
+        {
+         "id": "linux.var",
+         "nome": "Variáveis e argumentos",
+         "antes": [
+          "linux.script"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Variáveis",
+         "texto": "Uma variável guarda um valor: nome=\"Pingo\" (sem espaços em volta do =). Para usar, ponha $ na frente: echo $nome. O sistema já tem algumas, como $USER (seu usuário) e $HOME (sua pasta). Em scripts, $1 é o primeiro argumento da chamada: ./saudar.sh Ana faz $1 valer Ana.",
+         "termos": [
+          {
+           "termo": "Variável",
+           "definicao": "Nome que guarda um valor"
+          },
+          {
+           "termo": "$USER",
+           "definicao": "Seu nome de usuário"
+          },
+          {
+           "termo": "$1",
+           "definicao": "Primeiro argumento do script"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como mostrar o valor da variável nome?",
+         "certa": "echo $nome",
+         "erradas": [
+          "echo nome",
+          "echo $ nome",
+          "print nome"
+         ],
+         "explicacao": "O $ lê o valor.",
+         "conceito": "linux.var",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Em nome=\"Pingo\", não pode haver espaços em volta do sinal de =.",
+         "resposta": true,
+         "explicacao": "Com espaço, o Linux acha que nome é um comando.",
+         "conceito": "linux.var",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que a variável $HOME guarda?",
+         "certa": "O caminho da sua pasta pessoal",
+         "erradas": [
+          "A hora atual",
+          "O nome da máquina",
+          "A sua senha"
+         ],
+         "explicacao": "É o seu «lar».",
+         "conceito": "linux.var",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Em ./saudar.sh Ana, quanto vale $1 dentro do script?",
+         "certa": "Ana",
+         "erradas": [
+          "saudar.sh",
+          "$1",
+          "Nada"
+         ],
+         "explicacao": "$1 é o primeiro argumento.",
+         "conceito": "linux.var",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Variável ou comando?",
+         "categorias": [
+          "Variável",
+          "Comando"
+         ],
+         "itens": [
+          {
+           "texto": "$USER",
+           "categoria": "Variável"
+          },
+          {
+           "texto": "$HOME",
+           "categoria": "Variável"
+          },
+          {
+           "texto": "echo",
+           "categoria": "Comando"
+          },
+          {
+           "texto": "chmod",
+           "categoria": "Comando"
+          }
+         ],
+         "explicacao": "Variáveis começam com $.",
+         "conceito": "linux.var",
+         "dificuldade": 1
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual linha vai no começo de um script de bash?",
+       "certa": "#!/bin/bash",
+       "erradas": [
+        "#bash!",
+        "//bin/bash",
+        "$bash"
+       ],
+       "explicacao": "O shebang.",
+       "conceito": "linux.script",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "$USER guarda o nome do usuário atual.",
+       "resposta": true,
+       "explicacao": "Útil em scripts.",
+       "conceito": "linux.var",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual operador acrescenta uma linha sem apagar o arquivo?",
+       "certa": ">>",
+       "erradas": [
+        ">",
+        "|",
+        "&"
+       ],
+       "explicacao": ">> acrescenta.",
+       "conceito": "linux.script",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_script"
+    },
+    {
+     "lugar": "Relógio de Tarefas",
+     "titulo": "Agendar com cron",
+     "dicas": [
+      "cron roda tarefas sozinho.",
+      "5 campos: minuto hora dia mês semana.",
+      "crontab arquivo instala a agenda."
+     ],
+     "fases": [
+      {
+       "nome": "Regra do cron",
+       "conceitos": [
+        {
+         "id": "linux.cron",
+         "nome": "Ler e escrever regras do cron",
+         "antes": [
+          "linux.var"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Regras do cron",
+         "texto": "O cron roda tarefas sozinho, no horário marcado. Cada regra tem 5 campos de tempo e depois o comando: minuto, hora, dia do mês, mês e dia da semana. O * quer dizer «qualquer». Então 0 3 * * * roda todo dia às 3h; 0 8 * * 1 roda toda segunda às 8h.",
+         "termos": [
+          {
+           "termo": "cron",
+           "definicao": "Agendador de tarefas do Linux"
+          },
+          {
+           "termo": "*",
+           "definicao": "Qualquer valor naquele campo"
+          },
+          {
+           "termo": "0 3 * * *",
+           "definicao": "Todo dia às 3h"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que significa 0 3 * * * seguido de um comando?",
+         "certa": "Rodar todo dia às 3h da manhã",
+         "erradas": [
+          "Rodar a cada 3 minutos",
+          "Rodar só em março",
+          "Rodar 3 vezes por dia"
+         ],
+         "explicacao": "Minuto 0, hora 3, todo dia.",
+         "conceito": "linux.cron",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "No cron, o * em um campo significa «qualquer valor».",
+         "resposta": true,
+         "explicacao": "Vale para todos os valores.",
+         "conceito": "linux.cron",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual regra roda um script toda segunda-feira às 8h?",
+         "certa": "0 8 * * 1",
+         "erradas": [
+          "8 0 * * 1",
+          "0 8 1 * *",
+          "1 8 * * 0"
+         ],
+         "explicacao": "Minuto 0, hora 8, dia da semana 1.",
+         "conceito": "linux.cron",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada regra ao horário",
+         "pares": [
+          {
+           "esquerda": "0 3 * * *",
+           "direita": "Todo dia às 3h"
+          },
+          {
+           "esquerda": "0 8 * * 1",
+           "direita": "Toda segunda às 8h"
+          },
+          {
+           "esquerda": "30 22 * * *",
+           "direita": "Todo dia às 22h30"
+          },
+          {
+           "esquerda": "0 0 1 * *",
+           "direita": "Todo dia 1º, à meia-noite"
+          }
+         ],
+         "explicacao": "Leia campo por campo.",
+         "conceito": "linux.cron",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é a ordem dos campos do cron?",
+         "certa": "minuto, hora, dia do mês, mês, dia da semana",
+         "erradas": [
+          "hora, minuto, ano, mês, dia",
+          "dia, mês, ano, hora, minuto",
+          "segundo, minuto, hora, dia, ano"
+         ],
+         "explicacao": "Do menor para o maior.",
+         "conceito": "linux.cron",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Instalar a agenda",
+       "conceitos": [
+        {
+         "id": "linux.crontab",
+         "nome": "Instalar a agenda com crontab",
+         "antes": [
+          "linux.cron"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "crontab",
+         "texto": "As regras ficam num arquivo de texto. O comando crontab arquivo instala essas regras como a sua agenda, e crontab -l mostra a agenda instalada. crontab -e abre o editor para mudar na hora. Use caminhos completos nos comandos, porque o cron não sabe em que pasta você está.",
+         "termos": [
+          {
+           "termo": "crontab",
+           "definicao": "Instala e gerencia a sua agenda"
+          },
+          {
+           "termo": "crontab -l",
+           "definicao": "Mostra a agenda instalada"
+          },
+          {
+           "termo": "Caminho completo",
+           "definicao": "Começa em / e vale de qualquer lugar"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando mostra a sua agenda do cron?",
+         "certa": "crontab -l",
+         "erradas": [
+          "crontab -e",
+          "cron show",
+          "ls cron"
+         ],
+         "explicacao": "-l de list.",
+         "conceito": "linux.crontab",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Escrever a regra num arquivo não basta: é preciso instalá-lo com crontab arquivo.",
+         "resposta": true,
+         "explicacao": "Instalar ativa a agenda.",
+         "conceito": "linux.crontab",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que usar o caminho completo (/home/aluno/backup.sh) na regra?",
+         "certa": "O cron não sabe em que pasta você está",
+         "erradas": [
+          "Fica mais bonito",
+          "Gasta menos memória",
+          "O Linux exige letras maiúsculas"
+         ],
+         "explicacao": "Sem pasta atual, só o caminho completo funciona.",
+         "conceito": "linux.crontab",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando instala as regras do arquivo agenda.txt?",
+         "certa": "crontab agenda.txt",
+         "erradas": [
+          "cat agenda.txt",
+          "cp agenda.txt cron",
+          "chmod +x agenda.txt"
+         ],
+         "explicacao": "crontab + arquivo.",
+         "conceito": "linux.crontab",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "O que cada comando faz?",
+         "categorias": [
+          "Instala a agenda",
+          "Mostra a agenda"
+         ],
+         "itens": [
+          {
+           "texto": "crontab agenda.txt",
+           "categoria": "Instala a agenda"
+          },
+          {
+           "texto": "crontab -l",
+           "categoria": "Mostra a agenda"
+          },
+          {
+           "texto": "crontab regras.txt",
+           "categoria": "Instala a agenda"
+          }
+         ],
+         "explicacao": "Arquivo instala; -l mostra.",
+         "conceito": "linux.crontab",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual regra roda todo dia às 22h30?",
+       "certa": "30 22 * * *",
+       "erradas": [
+        "22 30 * * *",
+        "0 22 30 * *",
+        "* * 22 30 *"
+       ],
+       "explicacao": "Minuto 30, hora 22.",
+       "conceito": "linux.cron",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "O comando crontab -l mostra a agenda instalada.",
+       "resposta": true,
+       "explicacao": "List.",
+       "conceito": "linux.crontab",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Quantos campos de tempo tem uma regra do cron?",
+       "certa": "5",
+       "erradas": [
+        "3",
+        "7",
+        "2"
+       ],
+       "explicacao": "Minuto, hora, dia, mês, semana.",
+       "conceito": "linux.cron",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_agenda"
+    },
+    {
+     "lugar": "Caçador de Arquivos",
+     "titulo": "Buscar e medir",
+     "dicas": [
+      "find procura por nome.",
+      "O * vale por «qualquer coisa».",
+      "df -h mostra o espaço dos discos."
+     ],
+     "fases": [
+      {
+       "nome": "Procurar com find",
+       "conceitos": [
+        {
+         "id": "linux.find",
+         "nome": "Procurar arquivos com find",
+         "antes": [
+          "linux.crontab"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "find",
+         "texto": "find procura arquivos por nome, a partir de uma pasta: find /var -name \"*.log\" acha todos os .log dentro de /var. O * vale por «qualquer coisa», então *.log é «qualquer nome que termine em .log». Use find . para procurar a partir da pasta atual. Dá para ligar com pipe: find ... | wc -l conta os resultados.",
+         "termos": [
+          {
+           "termo": "find",
+           "definicao": "Procura arquivos"
+          },
+          {
+           "termo": "-name",
+           "definicao": "Filtra pelo nome"
+          },
+          {
+           "termo": "*",
+           "definicao": "Qualquer coisa"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando acha todos os arquivos .log dentro de /var?",
+         "certa": "find /var -name \"*.log\"",
+         "erradas": [
+          "ls /var *.log",
+          "grep /var .log",
+          "cat /var/*.log"
+         ],
+         "explicacao": "find + pasta + -name.",
+         "conceito": "linux.find",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "find . procura a partir da pasta onde você está.",
+         "resposta": true,
+         "explicacao": "O ponto é a pasta atual.",
+         "conceito": "linux.find",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o * significa em \"*.log\"?",
+         "certa": "Qualquer coisa antes do .log",
+         "erradas": [
+          "Só números",
+          "Nada: é um erro",
+          "Só uma letra"
+         ],
+         "explicacao": "Curinga.",
+         "conceito": "linux.find",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como contar quantos .log existem em /var?",
+         "certa": "find /var -name \"*.log\" | wc -l",
+         "erradas": [
+          "wc -l /var",
+          "find /var | cat",
+          "ls /var > wc"
+         ],
+         "explicacao": "Pipe liga o find ao wc.",
+         "conceito": "linux.find",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada item ao que faz",
+         "pares": [
+          {
+           "esquerda": "find . -name notas.txt",
+           "direita": "Procura notas.txt a partir daqui"
+          },
+          {
+           "esquerda": "find / -name \"*.conf\"",
+           "direita": "Procura todos os .conf do sistema"
+          },
+          {
+           "esquerda": "-name",
+           "direita": "Filtra pelo nome"
+          },
+          {
+           "esquerda": "| wc -l",
+           "direita": "Conta os resultados"
+          }
+         ],
+         "explicacao": "Combine as peças.",
+         "conceito": "linux.find",
+         "dificuldade": 1
+        }
+       ]
+      },
+      {
+       "nome": "Espaço em disco",
+       "conceitos": [
+        {
+         "id": "linux.disco",
+         "nome": "Espaço em disco com df e du",
+         "antes": [
+          "linux.find"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Espaço em disco",
+         "texto": "df -h mostra o espaço de cada disco: tamanho, usado, disponível e a porcentagem de uso. O -h quer dizer «human», legível, com G e M. Já du -sh pasta mostra quanto uma pasta ocupa. Disco acima de 90% é alerta: o sistema pode parar de gravar logs.",
+         "termos": [
+          {
+           "termo": "df",
+           "definicao": "Espaço dos discos"
+          },
+          {
+           "termo": "du",
+           "definicao": "Espaço de uma pasta"
+          },
+          {
+           "termo": "-h",
+           "definicao": "Valores legíveis (G, M)"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando mostra o espaço livre dos discos?",
+         "certa": "df -h",
+         "erradas": [
+          "ps -h",
+          "kill -h",
+          "whoami -h"
+         ],
+         "explicacao": "df = disk free.",
+         "conceito": "linux.disco",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O -h do df -h mostra valores em formato legível, como G e M.",
+         "resposta": true,
+         "explicacao": "h de human.",
+         "conceito": "linux.disco",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando mostra quanto uma pasta ocupa?",
+         "certa": "du -sh pasta",
+         "erradas": [
+          "df -h pasta",
+          "cat pasta",
+          "cd pasta"
+         ],
+         "explicacao": "du = disk usage.",
+         "conceito": "linux.disco",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O disco está com 95% de uso. O que isso indica?",
+         "certa": "Está quase cheio: hora de limpar",
+         "erradas": [
+          "Está ótimo",
+          "Falta instalar o Linux",
+          "A internet caiu"
+         ],
+         "explicacao": "Perto do limite.",
+         "conceito": "linux.disco",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Qual comando responde cada pergunta?",
+         "categorias": [
+          "df -h",
+          "du -sh pasta"
+         ],
+         "itens": [
+          {
+           "texto": "Quanto espaço livre tem o disco?",
+           "categoria": "df -h"
+          },
+          {
+           "texto": "Quanto essa pasta ocupa?",
+           "categoria": "du -sh pasta"
+          },
+          {
+           "texto": "Qual disco está mais cheio?",
+           "categoria": "df -h"
+          }
+         ],
+         "explicacao": "Disco inteiro: df. Pasta: du.",
+         "conceito": "linux.disco",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual comando procura notas.txt a partir da pasta atual?",
+       "certa": "find . -name notas.txt",
+       "erradas": [
+        "ls notas.txt",
+        "cat find",
+        "find notas.txt ."
+       ],
+       "explicacao": "find + . + -name.",
+       "conceito": "linux.find",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "O du mostra o tamanho de pastas.",
+       "resposta": true,
+       "explicacao": "Disk usage.",
+       "conceito": "linux.disco",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O que quer dizer o -h em df -h?",
+       "certa": "Formato legível para humanos",
+       "erradas": [
+        "Esconder arquivos",
+        "Ajuda do sistema",
+        "Histórico"
+       ],
+       "explicacao": "Human.",
+       "conceito": "linux.disco",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_busca"
+    },
+    {
+     "lugar": "Portal Remoto",
+     "titulo": "Acesso remoto (SSH)",
+     "dicas": [
+      "ssh usuario@servidor entra em outro PC.",
+      "Porta padrão: 22.",
+      "scp copia arquivos pela rede."
+     ],
+     "fases": [
+      {
+       "nome": "Conectar com ssh",
+       "conceitos": [
+        {
+         "id": "linux.ssh",
+         "nome": "Conectar com ssh",
+         "antes": [
+          "linux.disco"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "ssh",
+         "texto": "O ssh acessa outro computador pela rede de forma segura, direto do terminal: ssh usuario@servidor. A conexão é criptografada e usa a porta 22. Se o nome não existir, dá erro de nome; se o usuário não tiver acesso, dá «Permissão negada». Antes de conectar, vale um ping para ver se o servidor responde.",
+         "termos": [
+          {
+           "termo": "ssh",
+           "definicao": "Acesso remoto seguro"
+          },
+          {
+           "termo": "Porta 22",
+           "definicao": "Porta padrão do ssh"
+          },
+          {
+           "termo": "Criptografia",
+           "definicao": "Dados embaralhados no caminho"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando conecta ao servidor.local como admin?",
+         "certa": "ssh admin@servidor.local",
+         "erradas": [
+          "ping admin@servidor.local",
+          "cd servidor.local",
+          "curl admin servidor.local"
+         ],
+         "explicacao": "ssh usuario@servidor.",
+         "conceito": "linux.ssh",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O ssh usa uma conexão criptografada, por isso é seguro para administrar servidores.",
+         "resposta": true,
+         "explicacao": "Os dados vão embaralhados.",
+         "conceito": "linux.ssh",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é a porta padrão do ssh?",
+         "certa": "22",
+         "erradas": [
+          "80",
+          "443",
+          "8080"
+         ],
+         "explicacao": "22.",
+         "conceito": "linux.ssh",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O ssh respondeu «Permissão negada». Qual é a pista?",
+         "certa": "O usuário não tem acesso a esse servidor",
+         "erradas": [
+          "O cabo quebrou",
+          "O servidor foi desligado",
+          "O terminal travou"
+         ],
+         "explicacao": "O servidor respondeu, mas recusou.",
+         "conceito": "linux.ssh",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada item ao que faz",
+         "pares": [
+          {
+           "esquerda": "ssh",
+           "direita": "Entra em outro computador"
+          },
+          {
+           "esquerda": "ping",
+           "direita": "Testa se o servidor responde"
+          },
+          {
+           "esquerda": "Porta 22",
+           "direita": "Porta padrão do ssh"
+          },
+          {
+           "esquerda": "usuario@servidor",
+           "direita": "Formato do destino"
+          }
+         ],
+         "explicacao": "Cada peça da conexão.",
+         "conceito": "linux.ssh",
+         "dificuldade": 1
+        }
+       ]
+      },
+      {
+       "nome": "Chaves e scp",
+       "conceitos": [
+        {
+         "id": "linux.chaves",
+         "nome": "Chaves e cópia com scp",
+         "antes": [
+          "linux.ssh"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Chaves e cópia",
+         "texto": "Em vez de senha, o ssh usa um par de chaves: a privada fica só com você e a pública vai para o servidor. ssh-keygen cria o par. Para copiar um arquivo para o servidor use scp arquivo usuario@servidor:/pasta/. Nunca envie a chave privada para ninguém.",
+         "termos": [
+          {
+           "termo": "Chave privada",
+           "definicao": "Fica só com você"
+          },
+          {
+           "termo": "Chave pública",
+           "definicao": "Pode ir para o servidor"
+          },
+          {
+           "termo": "scp",
+           "definicao": "Copia arquivos pela rede"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando cria um par de chaves?",
+         "certa": "ssh-keygen",
+         "erradas": [
+          "ssh-key",
+          "ssh new",
+          "keygen ssh"
+         ],
+         "explicacao": "keygen = gerador de chaves.",
+         "conceito": "linux.chaves",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "A chave privada deve ficar só com você.",
+         "resposta": true,
+         "explicacao": "Quem tem a privada entra como você.",
+         "conceito": "linux.chaves",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando copia relatorio.txt para admin@servidor.local?",
+         "certa": "scp relatorio.txt admin@servidor.local:/tmp/",
+         "erradas": [
+          "cp relatorio.txt admin@servidor.local",
+          "ssh relatorio.txt",
+          "mv admin@servidor.local relatorio.txt"
+         ],
+         "explicacao": "scp arquivo destino.",
+         "conceito": "linux.chaves",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual chave você envia ao servidor?",
+         "certa": "A chave pública",
+         "erradas": [
+          "A chave privada",
+          "As duas",
+          "Nenhuma: só a senha"
+         ],
+         "explicacao": "A pública.",
+         "conceito": "linux.chaves",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada item ao que faz",
+         "pares": [
+          {
+           "esquerda": "ssh-keygen",
+           "direita": "Cria o par de chaves"
+          },
+          {
+           "esquerda": "scp",
+           "direita": "Copia arquivo pela rede"
+          },
+          {
+           "esquerda": "Chave pública",
+           "direita": "Vai para o servidor"
+          },
+          {
+           "esquerda": "Chave privada",
+           "direita": "Fica só com você"
+          }
+         ],
+         "explicacao": "Quem vai para onde.",
+         "conceito": "linux.chaves",
+         "dificuldade": 1
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "O que o ssh faz?",
+       "certa": "Entra em outro computador com segurança",
+       "erradas": [
+        "Apaga arquivos",
+        "Mede o disco",
+        "Cria usuários"
+       ],
+       "explicacao": "Acesso remoto.",
+       "conceito": "linux.ssh",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "O scp copia arquivos entre computadores pela rede.",
+       "resposta": true,
+       "explicacao": "Secure copy.",
+       "conceito": "linux.chaves",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Antes de conectar, o que ajuda a ver se o servidor responde?",
+       "certa": "ping",
+       "erradas": [
+        "chmod",
+        "mkdir",
+        "crontab"
+       ],
+       "explicacao": "Teste de rede.",
+       "conceito": "linux.ssh",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_remoto"
     }
    ]
   }
@@ -3766,6 +4802,102 @@
    ],
    "explicacao": "Resposta: sudo apt remove.",
    "conceito": "linux.remover",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando executa o script ola.sh?",
+   "certa": "./ola.sh",
+   "erradas": [
+    "ola.sh run",
+    "cd ola.sh"
+   ],
+   "explicacao": "Resposta: ./ola.sh.",
+   "conceito": "linux.script",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como mostrar a variável nome?",
+   "certa": "echo $nome",
+   "erradas": [
+    "echo nome",
+    "print nome"
+   ],
+   "explicacao": "Resposta: echo $nome.",
+   "conceito": "linux.var",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que significa 0 3 * * *?",
+   "certa": "Todo dia às 3h",
+   "erradas": [
+    "A cada 3 minutos",
+    "Só em março"
+   ],
+   "explicacao": "Resposta: Todo dia às 3h.",
+   "conceito": "linux.cron",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando mostra a agenda do cron?",
+   "certa": "crontab -l",
+   "erradas": [
+    "crontab -e",
+    "cron show"
+   ],
+   "explicacao": "Resposta: crontab -l.",
+   "conceito": "linux.crontab",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando procura arquivos por nome?",
+   "certa": "find",
+   "erradas": [
+    "cat",
+    "cd"
+   ],
+   "explicacao": "Resposta: find.",
+   "conceito": "linux.find",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando mostra o espaço dos discos?",
+   "certa": "df -h",
+   "erradas": [
+    "ps -h",
+    "kill -h"
+   ],
+   "explicacao": "Resposta: df -h.",
+   "conceito": "linux.disco",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando acessa outro computador?",
+   "certa": "ssh",
+   "erradas": [
+    "scp",
+    "ping"
+   ],
+   "explicacao": "Resposta: ssh.",
+   "conceito": "linux.ssh",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando copia um arquivo pela rede?",
+   "certa": "scp",
+   "erradas": [
+    "ssh",
+    "cp"
+   ],
+   "explicacao": "Resposta: scp.",
+   "conceito": "linux.chaves",
    "dificuldade": 1
   },
   {
@@ -4585,10 +5717,344 @@
      "serve": "busca o conteúdo de uma página"
     }
    ]
+  },
+  {
+   "id": "lx_script",
+   "tipo": "terminal",
+   "title": "Script de boas-vindas",
+   "skill": "Seu primeiro script",
+   "skillText": "Seu primeiro script",
+   "intro": "O servidor precisa de um script de boas-vindas. Crie, libere e rode.",
+   "passos": [
+    {
+     "texto": "Crie o arquivo ola.sh com a primeira linha #!/bin/bash",
+     "dica": "Use echo com aspas e o sinal >: echo \"#!/bin/bash\" > ola.sh",
+     "feito": {
+      "conteudo": [
+       "/home/aluno/ola.sh",
+       "#!/bin/bash"
+      ]
+     },
+     "ok": "Primeira linha gravada.",
+     "resposta": "echo \"#!/bin/bash\" > ola.sh"
+    },
+    {
+     "texto": "Acrescente a linha: echo Ola Pingo",
+     "dica": "Use >> para acrescentar sem apagar: echo \"echo Ola Pingo\" >> ola.sh",
+     "feito": {
+      "conteudo": [
+       "/home/aluno/ola.sh",
+       "echo Ola Pingo"
+      ]
+     },
+     "resposta": "echo \"echo Ola Pingo\" >> ola.sh"
+    },
+    {
+     "texto": "Dê permissão de execução ao ola.sh",
+     "dica": "chmod +x ola.sh",
+     "feito": {
+      "perm": [
+       "/home/aluno/ola.sh",
+       "x"
+      ]
+     },
+     "resposta": "chmod +x ola.sh"
+    },
+    {
+     "texto": "Execute o script",
+     "dica": "./ola.sh",
+     "feito": {
+      "exec": "/home/aluno/ola.sh"
+     },
+     "ok": "O script rodou!",
+     "resposta": "./ola.sh"
+    }
+   ],
+   "exec": {
+    "/home/aluno/ola.sh": "Ola Pingo"
+   },
+   "conclusao": "Você criou, liberou e executou um script",
+   "explicacao": "echo > cria a primeira linha, echo >> acrescenta outras, chmod +x libera a execução e ./ola.sh roda o script.",
+   "final": "Script no ar!",
+   "guia": [
+    {
+     "cmd": "echo \"texto\" > arq",
+     "serve": "grava a primeira linha"
+    },
+    {
+     "cmd": "echo \"texto\" >> arq",
+     "serve": "acrescenta uma linha"
+    },
+    {
+     "cmd": "chmod +x arq",
+     "serve": "libera a execução"
+    },
+    {
+     "cmd": "./arq",
+     "serve": "executa o script"
+    }
+   ]
+  },
+  {
+   "id": "lx_agenda",
+   "tipo": "terminal",
+   "title": "Backup automático",
+   "skill": "Agendar com cron",
+   "skillText": "Agendar com cron",
+   "intro": "O backup precisa rodar sozinho. Escreva as regras do cron e instale a agenda.",
+   "passos": [
+    {
+     "texto": "Crie agenda.txt com a regra: todo dia às 3h, rodando /home/aluno/backup.sh",
+     "dica": "echo \"0 3 * * * /home/aluno/backup.sh\" > agenda.txt",
+     "feito": {
+      "conteudo": [
+       "/home/aluno/agenda.txt",
+       "0 3 * * *"
+      ]
+     },
+     "ok": "Primeira regra gravada.",
+     "resposta": "echo \"0 3 * * * /home/aluno/backup.sh\" > agenda.txt"
+    },
+    {
+     "texto": "Acrescente a regra: toda segunda às 8h, o mesmo script",
+     "dica": "Use >>: echo \"0 8 * * 1 /home/aluno/backup.sh\" >> agenda.txt",
+     "feito": {
+      "conteudo": [
+       "/home/aluno/agenda.txt",
+       "0 8 * * 1"
+      ]
+     },
+     "resposta": "echo \"0 8 * * 1 /home/aluno/backup.sh\" >> agenda.txt"
+    },
+    {
+     "texto": "Instale a agenda com o crontab",
+     "dica": "crontab agenda.txt",
+     "feito": {
+      "cmd": "^\\s*crontab\\s+agenda\\.txt"
+     },
+     "ok": "Agenda instalada.",
+     "resposta": "crontab agenda.txt"
+    },
+    {
+     "texto": "Confirme listando a agenda instalada",
+     "dica": "crontab -l",
+     "feito": {
+      "saida": "0 8 \\* \\* 1"
+     },
+     "ok": "A agenda está valendo.",
+     "resposta": "crontab -l"
+    }
+   ],
+   "fs": {
+    "/home/aluno/backup.sh": "#!/bin/bash\ncp -r docs backup/"
+   },
+   "conclusao": "Você escreveu e instalou regras de agendamento",
+   "explicacao": "Cada regra tem 5 campos de tempo e o comando. crontab arquivo instala a agenda e crontab -l confirma.",
+   "final": "Backup agendado!",
+   "guia": [
+    {
+     "cmd": "echo \"regra\" > arq",
+     "serve": "grava a primeira regra"
+    },
+    {
+     "cmd": "echo \"regra\" >> arq",
+     "serve": "acrescenta outra regra"
+    },
+    {
+     "cmd": "crontab arq",
+     "serve": "instala a agenda"
+    },
+    {
+     "cmd": "crontab -l",
+     "serve": "mostra a agenda"
+    }
+   ]
+  },
+  {
+   "id": "lx_busca",
+   "tipo": "terminal",
+   "title": "Caça ao arquivo",
+   "skill": "Buscar e medir",
+   "skillText": "Buscar e medir",
+   "intro": "Alguém perdeu um arquivo e o servidor está sem espaço. Ache o arquivo e veja o disco.",
+   "passos": [
+    {
+     "texto": "Ache todos os arquivos .log dentro de /var",
+     "dica": "find /var -name \"*.log\"",
+     "feito": {
+      "cmd": "^\\s*find\\s+/var\\s+-name\\s+\\S*\\.log"
+     },
+     "resposta": "find /var -name \"*.log\""
+    },
+    {
+     "texto": "Ache o arquivo notas.txt a partir da sua pasta",
+     "dica": "find . -name notas.txt",
+     "feito": {
+      "saida": "notas\\.txt"
+     },
+     "ok": "Achou o notas.txt.",
+     "resposta": "find . -name notas.txt"
+    },
+    {
+     "texto": "Conte quantos .log existem em /var (use um pipe)",
+     "dica": "find /var -name \"*.log\" | wc -l",
+     "feito": {
+      "cmd": "^\\s*find\\s+.*\\|\\s*wc\\s+-l"
+     },
+     "ok": "São 3 logs.",
+     "resposta": "find /var -name \"*.log\" | wc -l"
+    },
+    {
+     "texto": "Veja o espaço livre dos discos",
+     "dica": "df -h",
+     "feito": {
+      "cmd": "^\\s*df\\s+-\\w*h"
+     },
+     "ok": "O disco principal está em 62%.",
+     "resposta": "df -h"
+    }
+   ],
+   "fs": {
+    "/var/log/app.log": "INFO ok",
+    "/var/log/sistema.log": "INFO boot",
+    "/var/log/rede.log": "INFO link",
+    "/home/aluno/docs/notas.txt": "reunião às 15h",
+    "/home/aluno/projetos/site/index.html": "<h1>oi<\/h1>"
+   },
+   "conclusao": "Você achou arquivos com find e conferiu o disco com df",
+   "explicacao": "find procura por nome a partir de uma pasta, o pipe com wc -l conta os resultados e df -h mostra o espaço dos discos.",
+   "final": "Arquivo encontrado!",
+   "guia": [
+    {
+     "cmd": "find pasta -name \"*.log\"",
+     "serve": "procura por nome"
+    },
+    {
+     "cmd": "find . -name arq",
+     "serve": "procura a partir daqui"
+    },
+    {
+     "cmd": "comando | wc -l",
+     "serve": "conta os resultados"
+    },
+    {
+     "cmd": "df -h",
+     "serve": "mostra o espaço dos discos"
+    }
+   ]
+  },
+  {
+   "id": "lx_remoto",
+   "tipo": "terminal",
+   "title": "Acesso ao servidor",
+   "skill": "Acesso remoto (SSH)",
+   "skillText": "Acesso remoto (SSH)",
+   "intro": "Você precisa mandar um relatório para o servidor da matriz, sem sair do terminal.",
+   "passos": [
+    {
+     "texto": "Veja se o servidor.local responde",
+     "dica": "ping servidor.local",
+     "feito": {
+      "cmd": "^\\s*ping\\s+(-\\w+\\s+\\d+\\s+)?servidor\\.local"
+     },
+     "resposta": "ping servidor.local"
+    },
+    {
+     "texto": "Gere o seu par de chaves",
+     "dica": "ssh-keygen",
+     "feito": {
+      "cmd": "^\\s*ssh-keygen"
+     },
+     "ok": "Par de chaves criado.",
+     "resposta": "ssh-keygen"
+    },
+    {
+     "texto": "Conecte-se ao servidor.local como admin",
+     "dica": "ssh admin@servidor.local",
+     "feito": {
+      "ssh": "servidor.local"
+     },
+     "ok": "Conectado!",
+     "resposta": "ssh admin@servidor.local"
+    },
+    {
+     "texto": "Envie o relatorio.txt para a pasta /tmp/ do servidor",
+     "dica": "scp relatorio.txt admin@servidor.local:/tmp/",
+     "feito": {
+      "scp": "servidor.local"
+     },
+     "ok": "Arquivo enviado.",
+     "resposta": "scp relatorio.txt admin@servidor.local:/tmp/"
+    }
+   ],
+   "rede": {
+    "ip": "192.168.0.15",
+    "hosts": {
+     "servidor.local": "3.1"
+    }
+   },
+   "ssh": {
+    "servidor.local": [
+     "admin"
+    ]
+   },
+   "fs": {
+    "/home/aluno/relatorio.txt": "vendas do mês: 128"
+   },
+   "conclusao": "Você testou, conectou e enviou um arquivo pelo ssh",
+   "explicacao": "ping testa o servidor, ssh-keygen cria as chaves, ssh entra no servidor e scp copia arquivos pela rede.",
+   "final": "Relatório enviado!",
+   "guia": [
+    {
+     "cmd": "ping destino",
+     "serve": "testa se responde"
+    },
+    {
+     "cmd": "ssh-keygen",
+     "serve": "cria o par de chaves"
+    },
+    {
+     "cmd": "ssh usuario@servidor",
+     "serve": "entra no servidor"
+    },
+    {
+     "cmd": "scp arq usuario@servidor:/pasta/",
+     "serve": "copia o arquivo"
+    }
+   ]
   }
  ],
  "eventos": [],
- "artes": {}
+ "artes": {},
+ "nivelamento": [
+  {
+   "pergunta": "Para que serve o terminal?",
+   "certa": "Para digitar comandos e o computador executar",
+   "erradas": [
+    "Para desenhar imagens",
+    "Para esfriar o computador"
+   ],
+   "explicacao": "No terminal você escreve comandos e o sistema obedece."
+  },
+  {
+   "pergunta": "Qual comando mostra em que pasta você está?",
+   "certa": "pwd",
+   "erradas": [
+    "mkdir",
+    "rm"
+   ],
+   "explicacao": "pwd mostra a pasta atual."
+  },
+  {
+   "pergunta": "O que o comando rm faz?",
+   "certa": "Apaga arquivos",
+   "erradas": [
+    "Renomeia arquivos",
+    "Copia arquivos"
+   ],
+   "explicacao": "rm remove, e no terminal não existe lixeira."
+  }
+ ]
 }</script>
 <script type="application/json" id="curso-redes">{
  "formato": 1,
@@ -11558,8 +13024,8 @@ function pathHTML(){
     }
     h+='</div></section>';
   });
-  h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>Mundo 2</h2>'+
-    '<div class="nspingo">'+pingo('wink','pingo-s')+'</div><p>Cidade IP: o próximo mundo chega em breve. Termine a Vila Roteador para ficar pronto.</p>'+
+  h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>'+(CURSO==='linux'?'Em breve':'Mundo 2')+'</h2>'+
+    '<div class="nspingo">'+pingo('wink','pingo-s')+'</div><p>'+(CURSO==='linux'?'Mais paradas de Linux chegam em breve. Termine todas as de agora para ficar pronto.':'Cidade IP: o próximo mundo chega em breve. Termine a Vila Roteador para ficar pronto.')+'</p>'+
     '<button class="btn ghost" disabled>Em breve</button></section>';
   return h;
 }
@@ -12313,7 +13779,7 @@ function tmCmd(name,args,inp,ctx){
   case 'clear':T.out=[];return{out:''};
   case 'history':return{out:T.hist.map(function(h,i){return(i+1)+'  '+h}).join('\n')};
   case 'echo':return{out:r.join(' ')};
-  case 'help':case 'ajuda':return{out:'Comandos: pwd ls cd mkdir touch cp mv rm cat head tail grep wc sort uniq echo chmod whoami id hostname ps kill ip ping curl apt sudo clear history\nUse | para ligar comandos e > ou >> para gravar em arquivo.'};
+  case 'help':case 'ajuda':return{out:'Comandos: pwd ls cd mkdir touch cp mv rm cat head tail grep wc sort uniq echo chmod whoami id hostname ps kill ip ping curl apt find df ssh scp crontab sudo clear history\nUse | para ligar comandos e > ou >> para gravar em arquivo.'};
   case 'ls':{
     var ts=r.length?r:['.'],out=[];
     for(i=0;i<ts.length;i++){p=tmAbs(ts[i]);n=fs[p];
@@ -12446,6 +13912,43 @@ function tmCmd(name,args,inp,ctx){
     var host=u.replace(/^https?:\/\//,'').split('/')[0];
     if(rd3.hosts&&rd3.hosts[host])return tmErr('curl: (22) A página retornou erro 404');
     return tmErr('curl: (6) Não foi possível resolver o host: '+host);}
+  case 'find':{
+    var fa=args.slice(),fp=[],fn=null,ft=null,j=0;
+    while(j<fa.length){if(fa[j]==='-name'){fn=fa[j+1];j+=2}else if(fa[j]==='-type'){ft=fa[j+1];j+=2}else{fp.push(fa[j]);j++}}
+    if(!fp.length)fp=['.'];
+    var rx=fn?new RegExp('^'+fn.replace(/[.+^${}()|[\]\\]/g,'\\$&').replace(/\*/g,'.*').replace(/\?/g,'.')+'$'):null,fo=[];
+    for(j=0;j<fp.length;j++){
+      var base=tmAbs(fp[j]),bn=fs[base];if(!bn)return tmErr('find: «'+fp[j]+'»: Arquivo ou diretório inexistente');
+      Object.keys(fs).sort().forEach(function(k){
+        if(k!==base&&k.indexOf(base==='/'?'/':base+'/')!==0)return;
+        var nd=fs[k],nm=k.split('/').pop();
+        if(ft==='f'&&nd.d)return;if(ft==='d'&&!nd.d)return;
+        if(rx&&!rx.test(nm))return;
+        var shown=fp[j].charAt(0)==='/'?k:(k===base?fp[j]:(fp[j]==='.'?'.':fp[j].replace(/\/+$/,''))+k.slice(base.length));
+        fo.push(shown);
+      });
+    }
+    return{out:fo.join('\n')};}
+  case 'df':return{out:T.def.disco||'Sist. Arq.  Tam.  Usado  Disp.  Uso%  Montado em\n/dev/sda1    20G   12G    7,4G   62%   /\ntmpfs        2,0G  0      2,0G   0%    /tmp'};
+  case 'date':return{out:'ter nov 24 09:30:00 -03 2026'};
+  case 'ssh-keygen':T.keygen=1;return{out:'Par de chaves criado em ~/.ssh:\n  id_ed25519      (chave privada: nunca compartilhe)\n  id_ed25519.pub  (chave pública: pode enviar ao servidor)'};
+  case 'ssh':case 'scp':{
+    var sa=r,hs=T.def.ssh||{},tg=null,j2;
+    for(j2=0;j2<sa.length;j2++)if(sa[j2].indexOf('@')>0)tg=sa[j2];
+    if(!tg)return tmErr(name+': informe usuario@servidor');
+    var up=tg.split(':')[0].split('@'),us=up[0],hh=up[1];
+    if(!hs[hh])return tmErr(name+': não foi possível resolver o nome '+hh);
+    if(hs[hh].indexOf(us)<0)return tmErr(us+'@'+hh+': Permissão negada (publickey).');
+    if(name==='scp'){
+      var sf=sa.filter(function(x){return x.indexOf('@')<0})[0];
+      if(!sf||!fs[tmAbs(sf)])return tmErr('scp: '+(sf||'arquivo')+': Arquivo ou diretório inexistente');
+      T.scp=(T.scp||{});T.scp[hh]=1;return{out:sf+'    100%   1 KB   enviado para '+hh};}
+    T.ssh=(T.ssh||{});T.ssh[hh]=1;return{out:'Conectado a '+hh+' como '+us+'. (sessão de treino: você continua no seu terminal)'};}
+  case 'crontab':{
+    if(f.l){return T.cron?{out:T.cron}:tmErr('crontab: nenhuma agenda para '+T.user)}
+    if(!r.length)return tmErr('crontab: informe o arquivo com as regras');
+    var cn=fs[tmAbs(r[0])];if(!cn||cn.d)return tmErr('crontab: '+r[0]+': Arquivo ou diretório inexistente');
+    T.cron=cn.t;return{out:'Agenda instalada.'};}
   case 'apt':{
     var ar=r.filter(function(x){return x.charAt(0)!=='-'}),sub=ar[0],pk=(T.def.pacotes||[]),ds=T.def.pacdesc||{};
     if(sub==='search'){
@@ -12516,6 +14019,8 @@ function tmCheck(c){
     else if(k==='matou'){if(!T.killed[v])return false}
     else if(k==='instalou'){if(!T.inst[v])return false}
     else if(k==='removeu'){if(!T.rem[v])return false}
+    else if(k==='ssh'){if(!(T.ssh&&T.ssh[v]))return false}
+    else if(k==='scp'){if(!(T.scp&&T.scp[v]))return false}
     else if(k==='exec'){if(!T.exec[v])return false}
   }
   return true;

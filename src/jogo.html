@@ -1911,8 +1911,8 @@ function pathHTML(){
     }
     h+='</div></section>';
   });
-  h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>Mundo 2</h2>'+
-    '<div class="nspingo">'+pingo('wink','pingo-s')+'</div><p>Cidade IP: o próximo mundo chega em breve. Termine a Vila Roteador para ficar pronto.</p>'+
+  h+='<section class="nextsec"><span class="nschip">A seguir</span><h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>'+(CURSO==='linux'?'Em breve':'Mundo 2')+'</h2>'+
+    '<div class="nspingo">'+pingo('wink','pingo-s')+'</div><p>'+(CURSO==='linux'?'Mais paradas de Linux chegam em breve. Termine todas as de agora para ficar pronto.':'Cidade IP: o próximo mundo chega em breve. Termine a Vila Roteador para ficar pronto.')+'</p>'+
     '<button class="btn ghost" disabled>Em breve</button></section>';
   return h;
 }
@@ -2666,7 +2666,7 @@ function tmCmd(name,args,inp,ctx){
   case 'clear':T.out=[];return{out:''};
   case 'history':return{out:T.hist.map(function(h,i){return(i+1)+'  '+h}).join('\n')};
   case 'echo':return{out:r.join(' ')};
-  case 'help':case 'ajuda':return{out:'Comandos: pwd ls cd mkdir touch cp mv rm cat head tail grep wc sort uniq echo chmod whoami id hostname ps kill ip ping curl apt sudo clear history\nUse | para ligar comandos e > ou >> para gravar em arquivo.'};
+  case 'help':case 'ajuda':return{out:'Comandos: pwd ls cd mkdir touch cp mv rm cat head tail grep wc sort uniq echo chmod whoami id hostname ps kill ip ping curl apt find df ssh scp crontab sudo clear history\nUse | para ligar comandos e > ou >> para gravar em arquivo.'};
   case 'ls':{
     var ts=r.length?r:['.'],out=[];
     for(i=0;i<ts.length;i++){p=tmAbs(ts[i]);n=fs[p];
@@ -2799,6 +2799,43 @@ function tmCmd(name,args,inp,ctx){
     var host=u.replace(/^https?:\/\//,'').split('/')[0];
     if(rd3.hosts&&rd3.hosts[host])return tmErr('curl: (22) A página retornou erro 404');
     return tmErr('curl: (6) Não foi possível resolver o host: '+host);}
+  case 'find':{
+    var fa=args.slice(),fp=[],fn=null,ft=null,j=0;
+    while(j<fa.length){if(fa[j]==='-name'){fn=fa[j+1];j+=2}else if(fa[j]==='-type'){ft=fa[j+1];j+=2}else{fp.push(fa[j]);j++}}
+    if(!fp.length)fp=['.'];
+    var rx=fn?new RegExp('^'+fn.replace(/[.+^${}()|[\]\\]/g,'\\$&').replace(/\*/g,'.*').replace(/\?/g,'.')+'$'):null,fo=[];
+    for(j=0;j<fp.length;j++){
+      var base=tmAbs(fp[j]),bn=fs[base];if(!bn)return tmErr('find: «'+fp[j]+'»: Arquivo ou diretório inexistente');
+      Object.keys(fs).sort().forEach(function(k){
+        if(k!==base&&k.indexOf(base==='/'?'/':base+'/')!==0)return;
+        var nd=fs[k],nm=k.split('/').pop();
+        if(ft==='f'&&nd.d)return;if(ft==='d'&&!nd.d)return;
+        if(rx&&!rx.test(nm))return;
+        var shown=fp[j].charAt(0)==='/'?k:(k===base?fp[j]:(fp[j]==='.'?'.':fp[j].replace(/\/+$/,''))+k.slice(base.length));
+        fo.push(shown);
+      });
+    }
+    return{out:fo.join('\n')};}
+  case 'df':return{out:T.def.disco||'Sist. Arq.  Tam.  Usado  Disp.  Uso%  Montado em\n/dev/sda1    20G   12G    7,4G   62%   /\ntmpfs        2,0G  0      2,0G   0%    /tmp'};
+  case 'date':return{out:'ter nov 24 09:30:00 -03 2026'};
+  case 'ssh-keygen':T.keygen=1;return{out:'Par de chaves criado em ~/.ssh:\n  id_ed25519      (chave privada: nunca compartilhe)\n  id_ed25519.pub  (chave pública: pode enviar ao servidor)'};
+  case 'ssh':case 'scp':{
+    var sa=r,hs=T.def.ssh||{},tg=null,j2;
+    for(j2=0;j2<sa.length;j2++)if(sa[j2].indexOf('@')>0)tg=sa[j2];
+    if(!tg)return tmErr(name+': informe usuario@servidor');
+    var up=tg.split(':')[0].split('@'),us=up[0],hh=up[1];
+    if(!hs[hh])return tmErr(name+': não foi possível resolver o nome '+hh);
+    if(hs[hh].indexOf(us)<0)return tmErr(us+'@'+hh+': Permissão negada (publickey).');
+    if(name==='scp'){
+      var sf=sa.filter(function(x){return x.indexOf('@')<0})[0];
+      if(!sf||!fs[tmAbs(sf)])return tmErr('scp: '+(sf||'arquivo')+': Arquivo ou diretório inexistente');
+      T.scp=(T.scp||{});T.scp[hh]=1;return{out:sf+'    100%   1 KB   enviado para '+hh};}
+    T.ssh=(T.ssh||{});T.ssh[hh]=1;return{out:'Conectado a '+hh+' como '+us+'. (sessão de treino: você continua no seu terminal)'};}
+  case 'crontab':{
+    if(f.l){return T.cron?{out:T.cron}:tmErr('crontab: nenhuma agenda para '+T.user)}
+    if(!r.length)return tmErr('crontab: informe o arquivo com as regras');
+    var cn=fs[tmAbs(r[0])];if(!cn||cn.d)return tmErr('crontab: '+r[0]+': Arquivo ou diretório inexistente');
+    T.cron=cn.t;return{out:'Agenda instalada.'};}
   case 'apt':{
     var ar=r.filter(function(x){return x.charAt(0)!=='-'}),sub=ar[0],pk=(T.def.pacotes||[]),ds=T.def.pacdesc||{};
     if(sub==='search'){
@@ -2869,6 +2906,8 @@ function tmCheck(c){
     else if(k==='matou'){if(!T.killed[v])return false}
     else if(k==='instalou'){if(!T.inst[v])return false}
     else if(k==='removeu'){if(!T.rem[v])return false}
+    else if(k==='ssh'){if(!(T.ssh&&T.ssh[v]))return false}
+    else if(k==='scp'){if(!(T.scp&&T.scp[v]))return false}
     else if(k==='exec'){if(!T.exec[v])return false}
   }
   return true;

@@ -14,5 +14,5 @@ await p.evaluate(()=>{S.done['0-0']=1;S.done['0-1']=1;save()});
 await p.evaluate(()=>{document.getElementById('welcome').hidden=true});
 await p.evaluate(()=>{tab='profile';render()});await p.click('.ccard[data-id=redes]');await p.click('[data-act=curso][data-id=redes]');await p.waitForTimeout(400);
 const c=await p.evaluate(()=>({c:CURSO,done:Object.keys(S.done).length,gems:S.gems}));
-const ok=a.c==='linux'&&a.done===0&&a.n===11&&a.gems===77&&c.c==='redes'&&c.done===1&&c.gems===77;
+const ok=a.c==='linux'&&a.done===0&&a.n===15&&a.gems===77&&c.c==='redes'&&c.done===1&&c.gems===77;
 console.log(ok?'cursos OK':'cursos FALHOU',JSON.stringify([a,c]),errs);await b.close()})();

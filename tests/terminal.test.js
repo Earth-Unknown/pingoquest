@@ -11,6 +11,10 @@ const SOL={
  lx_admin:['whoami','mkdir /etc/pingo.d','sudo mkdir /etc/pingo.d','sudo cp pingo.conf /etc/pingo.d/'],
  lx_maquinas:['ps','kill 2201','sudo apt update','apt install htop','sudo apt install htop'],
  lx_loja:['sudo apt update','apt search tree','apt install tree','sudo apt install tree','sudo apt remove cowsay'],
+ lx_script:['echo "#!/bin/bash" > ola.sh','echo "echo Ola Pingo" >> ola.sh','chmod +x ola.sh','./ola.sh'],
+ lx_agenda:['echo "0 3 * * * /home/aluno/backup.sh" > agenda.txt','echo "0 8 * * 1 /home/aluno/backup.sh" >> agenda.txt','crontab agenda.txt','crontab -l'],
+ lx_busca:['find /var -name "*.log"','find . -name notas.txt','find /var -name "*.log" | wc -l','df -h'],
+ lx_remoto:['ping servidor.local','ssh-keygen','ssh admin@servidor.local','scp relatorio.txt admin@servidor.local:/tmp/'],
  lx_torre:['ip a','ping gateway.local','curl http://servidor.local/status']
 };
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:800}});
