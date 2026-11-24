@@ -12203,6 +12203,10 @@ function lerCurso(c){
       });
       g.phases.push(ph);
     });
+    /* paradas com só 2 fases ganham a lição 3 como revisão das perguntas da parada (a trilha sempre tem 3 lições + prova/caso) */
+    if(g.phases.length===2){var rv=[].concat.apply([],g.phases).filter(function(x){return x.t!=='learn'}),pick=[],nn=Math.min(6,rv.length);
+      for(var ri=0;ri<nn;ri++){var cand=rv[Math.floor(ri*rv.length/nn)];if(pick.indexOf(cand)<0)pick.push(cand)}
+      g.names.push('Revisão da parada');g.phases.push(pick);g.rev=true}
     GAMES.push(g);
     var ex=[];(p.extras||[]).forEach(function(it,ii){var q=conv(it,onde+', extra '+(ii+1),{dif:3});if(q){q.rs='aprovado';q.lk='x'+gi;q.x=1;ex.push(q)}});
     EXTRA[gi]=ex;
@@ -12803,7 +12807,7 @@ function touchStreak(){
 }
 function $(s){return document.querySelector(s)}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
-function allQs(){var r=[];GAMES.forEach(function(g){g.phases.forEach(function(p){r=r.concat(p.filter(function(q){return q.t!=='learn'}))})});return r}
+function allQs(){var r=[];GAMES.forEach(function(g){g.phases.forEach(function(p){r=r.concat(p.filter(function(q){return q.t!=='learn'&&r.indexOf(q)<0}))})});return r}
 var QIDX={};allQs().forEach(function(q){QIDX[q.q]=q});Object.keys(EXTRA).forEach(function(g){EXTRA[g].forEach(function(q){QIDX[q.q]=q})});
 EVQ.forEach(function(q){QIDX[q.q]=q});
 function total(){return GAMES.length*4}
@@ -14239,7 +14243,7 @@ document.addEventListener('click',function(e){
     var g=+t.dataset.g,k=+t.dataset.k;if(!isUnlocked(g,k))return;
     openNode=null;$('#modal').hidden=true;
     if(k===3&&GAMES[g].caso){startCase({id:GAMES[g].caso,kind:'node',key:g+'-'+k});return}
-    var qs=k===3?shuffle([].concat.apply([],GAMES[g].phases).filter(function(x){return x.t!=='learn'})).slice(0,6):GAMES[g].phases[k];
+    var qs=k===3?shuffle([].concat.apply([],GAMES[g].phases).filter(function(x,i,ar){return x.t!=='learn'&&ar.indexOf(x)===i})).slice(0,6):GAMES[g].phases[k];
     startLesson({kind:k===3?'boss':'phase',key:g+'-'+k,qs:qs});
   }
   else if(a==='mp'){mpTap(t.dataset.side,+t.dataset.id)}
