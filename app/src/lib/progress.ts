@@ -105,3 +105,15 @@ export function attention(S:any){
   if(chestReady(d))n++
   return n
 }
+
+/* ---------- troca de curso: cada curso guarda o próprio progresso; energia, chips e avatar são de todos ---------- */
+const COURSE_KEYS=['done','know','xch','casos','bosses','xseen']
+const courseDef=():any=>({done:{},know:{},xch:{},casos:{},bosses:0})
+export function trocarCurso(S:any,id:string){
+  const atual=S.curso||'redes';if(id===atual||!CURSOS.some(c=>c.id===id))return
+  S.cursos=S.cursos||{}
+  const cur:any={};COURSE_KEYS.forEach(k=>{cur[k]=S[k]});S.cursos[atual]=cur
+  const nx=S.cursos[id]||courseDef()
+  COURSE_KEYS.forEach(k=>{S[k]=nx[k]!==undefined?nx[k]:courseDef()[k]})
+  S.curso=id
+}

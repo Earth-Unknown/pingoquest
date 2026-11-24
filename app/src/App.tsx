@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { load } from './lib/store'
 import { patchSave } from './lib/save'
-import { streakNow, attention, missKeys, cqSync } from './lib/progress'
+import { streakNow, attention, missKeys, cqSync, gamesOf } from './lib/progress'
+import { sync as avSync } from './lib/avatar'
 import { Profile } from './Profile'
 import { Trail } from './Trail'
 import { Missions } from './Missions'
@@ -20,7 +21,10 @@ export default function App(){
   const [tab,setTab]=useState<Tab>('path')
   const refresh=()=>setV(x=>x+1)
   let S=load()
-  if(cqSync({...S,conq:{...(S.conq||{})}}))S=patchSave(cqSync) // grava conquistas novas
+  const provas=gamesOf(S.curso||'redes').filter(g=>!g.caso).length
+  const probe=JSON.parse(JSON.stringify(S))
+  const a=cqSync(probe),b=avSync(probe,provas)
+  if(a||b)S=patchSave(s=>{cqSync(s);avSync(s,provas)}) // grava conquistas e itens novos
   useEffect(()=>{let t='light';try{t=localStorage.getItem('pingoquest-theme')==='dark'?'dark':'light'}catch{}
     document.documentElement.setAttribute('data-theme',t)},[])
   const dots:Partial<Record<Tab,number>>={missions:attention(S),review:missKeys(S).length}
@@ -35,7 +39,7 @@ export default function App(){
       {tab==='missions'&&<Missions S={S} refresh={refresh}/>}
       {tab==='review'&&<Review S={S} refresh={refresh}/>}
       {tab==='conq'&&<Conquests S={S}/>}
-      {tab==='profile'&&<Profile S={S}/>}
+      {tab==='profile'&&<Profile S={S} refresh={refresh}/>}
     </main>
     <nav id="nav" aria-label="Navegação"><div className="wrap" id="navin">
       {TABS.map(([k,n])=><button key={k} className="nbtn" aria-current={tab===k?'page':undefined} onClick={()=>{setTab(k);window.scrollTo(0,0)}}>
