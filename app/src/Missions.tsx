@@ -2,6 +2,8 @@ import art from './legacy/art.json'
 import { useState } from 'react'
 import { patchSave } from './lib/save'
 import { Case } from './Case'
+import { DuelCard } from './Duel'
+import { pendingDuel } from './lib/duel'
 import { cursoAtivo } from './lib/progress'
 import { dailyCase, weekOf, claimWeek, WGOAL } from './lib/cases'
 import { dayOf, todays, GOAL, CHEST_GEMS, chestReady, claim, openChest } from './lib/progress'
@@ -17,7 +19,8 @@ export function Missions({S,refresh}:{S:any;refresh:()=>void}){
   const L7=['S','T','Q','Q','S','S','D'],td=(new Date().getDay()+6)%7
   const act=(fn:(s:any)=>void)=>{patchSave(fn);refresh()}
   return <div className="screen">
-    <div className="sect">Missões</div>
+    <DuelCard S={S} refresh={refresh} startPending={!!pendingDuel()}/>
+    <div className="sect" style={{marginTop:20}}>Missões</div>
     <p className="note" style={{margin:'0 0 14px'}}>Metas do dia para resolver com o Pingo. As metas rápidas dão chips extras.</p>
     <div className="card"><h3>Meta diária</h3>
       <div className="bar gold" role="progressbar" aria-valuenow={xp} aria-valuemax={GOAL}><i style={{width:xp/GOAL*100+'%'}}/><span>{xp} / {GOAL} energia</span></div></div>
@@ -42,7 +45,6 @@ export function Missions({S,refresh}:{S:any;refresh:()=>void}){
       <div className="bar gold" role="progressbar" aria-valuenow={wn} aria-valuemax={WGOAL}><i style={{width:wn/WGOAL*100+'%'}}/><span>{wn} / {WGOAL} chamados</span></div>
       {w.claimed?<p className="note" style={{margin:'12px 0 0'}}>Selo de Técnico da Semana conquistado.</p>
       :wn>=WGOAL&&<button className="btn blue" style={{marginTop:14}} onClick={()=>act(claimWeek)}>Pegar o selo · +60</button>}</div>
-    <div className="card"><p className="note" style={{margin:0}}>O duelo ainda roda só no jogo completo.</p></div>
     {call&&def&&<Case S={S} def={def} kind="daily" onClose={()=>{setCall(false);refresh()}}/>}
   </div>
 }

@@ -3,6 +3,7 @@ import { load } from './lib/store'
 import { patchSave } from './lib/save'
 import { streakNow, attention, missKeys, cqSync, gamesOf } from './lib/progress'
 import { sync as avSync } from './lib/avatar'
+import { pendingDuel } from './lib/duel'
 import { Profile } from './Profile'
 import { Trail } from './Trail'
 import { Missions } from './Missions'
@@ -18,7 +19,7 @@ const Svg=({h}:{h:string})=><span style={{display:'contents'}} dangerouslySetInn
 
 export default function App(){
   const [v,setV]=useState(0)
-  const [tab,setTab]=useState<Tab>('path')
+  const [tab,setTab]=useState<Tab>(()=>pendingDuel()?'missions':'path')
   const [evOpen,setEvOpen]=useState<string|null>(null) // fica aqui para sobreviver ao refresh da tela
   const refresh=()=>setV(x=>x+1)
   let S=load()
