@@ -7,7 +7,7 @@ import { parseCurso, lessonQs } from './lib/curso'
 import { Lesson } from './Lesson'
 import { Case } from './Case'
 import { Walker, type Walk } from './Walker'
-import { EventBanners, EventPage, EventFab } from './Events'
+import { EventPage, EventFab } from './Events'
 
 const A:any=art
 const OFF=[-54,42,-34,54]
@@ -31,6 +31,7 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
   const isUn=(g:number,k:number)=>{const p=k>0?g+'-'+(k-1):(g>0?(g-1)+'-3':null);return !p||!!done[p]}
   const [open,setOpen]=useState<number|null>(null)
   const [play,setPlay]=useState<{g:number;k:number}|null>(null)
+  const [tips,setTips]=useState<number|null>(null)
   const [kase,setKase]=useState<{g:number;id:string}|null>(null)
   const games=useMemo(()=>parseCurso(cur.json),[cur])
   const casoTitulo=(id:string)=>(cur.json.casos||[]).find((c:any)=>c.id===id)?.title||''
@@ -69,7 +70,6 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
     return()=>{clearTimeout(t);window.removeEventListener('resize',draw)}
   })
   return <div className="screen" ref={root} style={{position:'relative'}}>
-    <EventBanners S={S} json={cur.json} onOpen={setEvOpen}/>
     <div className={'world w-'+ativo}>
       <div className="wstage"><Html h={ativo==='linux'?A.linuxScene:A.worldScene}/><div className="hping"><Pingo S={S} cls="wps"/></div></div>
       <span className={'cflag cf-'+ativo}><Html h={courseIcon(ativo)}/><b>{cur.nome}</b></span>
@@ -77,12 +77,13 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
     </div>
     {par.map((p,gi)=><section key={gi} className={'unit u'+(gi%5)}>
       <div className="uhead"><span className="lm"><Html h={placeIcon(gi)}/></span>
-        <div><div className="tag">Parada {gi+1}</div><h2>{p.lugar||p.titulo}</h2><div className="lsub">{p.titulo}</div></div></div>
+        <div><div className="tag">Parada {gi+1}</div><h2>{p.lugar||p.titulo}</h2><div className="lsub">{p.titulo}</div></div>
+        {(p.dicas||[]).length>0&&<button className="tipbtn" onClick={()=>setTips(gi)}>Dicas</button>}</div>
       <div className="nodes">{[0,1,2,3].map(k=>{
         const key=gi+'-'+k,d=!!done[key],un=isUn(gi,k),isCur=un&&!d&&!curFound
         if(isCur){curFound=true;curKey=ativo+':'+key}
         const x=OFF[k],nm=k===3?(p.chamado?casoTitulo(p.chamado):''):(p.fases?.[k]?.nome||'')
-        const label=k===3?(p.chamado?'Caso':'Prova final'):'Fase '+(k+1)
+        const label=k===3?(p.chamado?'Caso':'Prova final'):'Lição '+(k+1)
         const cls=(d?'done':(un?'cur':'lock'))+(k===3?' bossn':'')
         return <div className="nw" key={k} style={{'--x':x+'px'} as any}>
           {isCur&&<><div className="bubble" style={arriving(ativo+':'+key)?{visibility:'hidden'}:undefined}>Começar</div><span style={{display:'contents',visibility:arriving(ativo+':'+key)?'hidden':'visible'}}><Pingo S={S} cls={'pingo '+(x>0?'r':'l')}/></span></>}
@@ -91,6 +92,9 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
           <div className={'nlabel '+(x>0?'R':'L')}><b>{label}</b>{nm&&<small>{nm}</small>}</div>
         </div>})}</div>
     </section>)}
+    {tips!==null&&<div id="modal" onClick={()=>setTips(null)}><div className="sheet" ref={popIn} role="dialog" aria-label="Dicas" onClick={e=>e.stopPropagation()}>
+      <h2>Dicas: {par[tips].titulo}</h2><ul>{(par[tips].dicas||[]).map((d:string,i:number)=><li key={i}>{d}</li>)}</ul>
+      <button className="btn prim" onClick={()=>setTips(null)}>Entendi</button></div></div>}
     {open!==null&&<div id="modal" onClick={()=>setOpen(null)}><div className="sheet tall" ref={popIn} role="dialog" onClick={e=>e.stopPropagation()}>
       <div className="shead"><span className="lm"><Html h={placeIcon(open)}/></span><div><div className="tag">Parada {open+1}</div><h2>{par[open].lugar||par[open].titulo}</h2><div className="lsub">{par[open].titulo}</div></div></div>
       <div className="srows">{[0,1,2,3].map(k=>{const key=open+'-'+k,d=!!done[key],un=isUn(open,k),p=par[open]
