@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import art from './legacy/art.json'
 import { Pingo } from './Pingo'
 import type { EvRes } from './lib/events'
+import { sfx } from './lib/sound'
+import { confetti, enter, popIn, ResultTiles, StarsAnim } from './Fx'
 import { pickFault, finishCase, countInspect, spend, hasLupa } from './lib/cases'
 import { shuffle } from './lib/curso'
 import { today } from './lib/progress'
@@ -19,20 +21,17 @@ export function Case(p:CaseProps){
 type Res={ev?:EvRes;stars:number;xp:number;gems:number;what:string;fix:string;why:string;proof:{n:string;t:string}[];n:number}
 function Result({S,p,res,again,term}:{S:any;p:CaseProps;res:Res;again?:()=>void;term?:boolean}){
   const [exp,setExp]=useState(false)
-  return <div id="lesson"><div className="lw"><div className="lbody lscroll"><div className="center">
+  return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood="cheer"/><h1>{res.ev?res.ev.title:term?'Chamado resolvido!':'Caso resolvido!'}</h1>
-    <span className="stars anim" role="img" aria-label={res.stars+' de 3 estrelas'}>{[0,1,2].map(i=><span key={i} className={i<res.stars?'on':''} style={{animationDelay:(0.45+i*0.4)+'s'}}>★</span>)}</span>
+    <StarsAnim n={res.stars}/>
     <div className="cfound"><small>{term?'O que você fez':'Causa encontrada'}</small><b>{res.what}</b></div>
-    <div className="res2">
-      <div className="rt" style={{'--rc':'#ffb800'} as any}><small>Energia</small><span><Html h={A.IC.bolt}/><b>{res.xp}</b></span></div>
-      <div className="rt" style={{'--rc':'#18b9e8'} as any}><small>Chips</small><span><Html h={A.IC.gem}/><b>+{res.gems}</b></span></div>
-      {res.ev?.got?<div className="rt" style={{'--rc':'#3fbf5f'} as any}><small>Peças</small><span><Html h={A.IC.puzzle}/><b>+{res.ev.got.pieces}</b></span></div>
-      :<div className="rt" style={{'--rc':'#3fbf5f'} as any}><small>{term?'Comandos':'Pistas'}</small><span><Html h={A.IC.search}/><b>{res.n}</b></span></div>}</div>
+    <ResultTiles tiles={[{c:'#ffb800',l:'Energia',to:res.xp,icon:A.IC.bolt},{c:'#18b9e8',l:'Chips',to:res.gems,prefix:'+',icon:A.IC.gem},
+      res.ev?.got?{c:'#3fbf5f',l:'Peças',to:res.ev.got.pieces,prefix:'+',icon:A.IC.puzzle}:{c:'#3fbf5f',l:term?'Comandos':'Pistas',to:res.n,icon:A.IC.search}]}/>
     <button className="btn ghost cexp" onClick={()=>setExp(true)}>Ver explicação</button>
   </div></div><div className="lfoot"><div className="stack" style={{margin:0}}>
     {again&&<button className="btn ghost" onClick={again}>Jogar outro cenário</button>}
     <button className="btn" onClick={p.onClose}>Continuar</button></div></div></div>
-    {exp&&<div id="modal" onClick={()=>setExp(false)}><div className="sheet tall" role="dialog" aria-label="Explicação do caso" onClick={e=>e.stopPropagation()}>
+    {exp&&<div id="modal" onClick={()=>setExp(false)}><div className="sheet tall" ref={popIn} role="dialog" aria-label="Explicação do caso" onClick={e=>e.stopPropagation()}>
       <h2 style={{margin:'0 0 8px'}}>Entenda o caso</h2>
       <p style={{margin:'0 0 8px'}}><b>{term?'Resumo':'Causa'}:</b> {res.what}.</p>
       {res.fix&&<p style={{margin:'0 0 8px'}}>{res.fix}</p>}{res.why&&<p className="note" style={{margin:'0 0 12px'}}>{res.why}</p>}
@@ -65,7 +64,7 @@ function Investigate(p:CaseProps){
   const look=(id:string)=>{
     if(stage!=='inv')return
     if(!insp.includes(id)){setInsp([...insp,id]);countInspect()}
-    setLast(id);setMsg('Anotei a pista no caderno. O que mais vale conferir?')
+    setLast(id);sfx('ping');setMsg('Anotei a pista no caderno. O que mais vale conferir?')
   }
   const pick=(id:string)=>{
     if(stage!=='guess'||wrongSet.includes(id))return
@@ -73,8 +72,9 @@ function Investigate(p:CaseProps){
       const ev=p.kind==='event'?p.onEvent!(Math.max(1,3-wrong)):undefined
       const r=ev?{stars:Math.max(1,3-wrong),xp:ev.xp,gems:ev.got?.gems||0}:finishCase({kind:p.kind as 'node'|'daily',key:p.keyId,replay,wrong,id:def.id,insp:insp.length})
       setRes({ev,...r,what:fault.cause,fix:fault.fix,why:fault.why,n:insp.length,proof:fault.need.map((n:string)=>({n:dev(n).name,t:fault.clues[n]}))})
-      setStage('done');return
+      setStage('done');sfx('win');confetti();return
     }
+    sfx('bad')
     setWrongSet([...wrongSet,id])
     const nd=nextNeed()
     setMsg('Hmm, não parece ser essa a causa.'+(nd?' Que tal verificar o '+dev(nd).name+' antes?':' Releia as pistas com calma.'))
@@ -85,7 +85,7 @@ function Investigate(p:CaseProps){
     opts.current=shuffle<any>(def.faults.map((f:any)=>({id:f.id,t:f.cause})));setMsg(def.intro);setRound(r=>r+1)
   }
   if(stage==='done'&&res)return <Result key={round} S={S} p={p} res={res} again={p.kind==='node'?again:undefined}/>
-  return <div id="lesson"><div className="lw"><div className="lhead"><button className="xbtn" onClick={p.onClose} aria-label="Sair do caso">✕</button>
+  return <div id="lesson" ref={enter}><div className="lw"><div className="lhead"><button className="xbtn" onClick={p.onClose} aria-label="Sair do caso">✕</button>
     <div className="ctitle"><small>{p.kind==='daily'?'Chamado do dia':'Caso'}</small><b>{def.title}</b></div><Stars n={Math.max(1,3-wrong)}/></div>
     <div className="lbody">
       <div className="say"><span className="sp"><Pingo S={S} cls="pingo-s"/></span><div className="bub"><p>{msg}</p></div></div>
@@ -110,7 +110,7 @@ function Investigate(p:CaseProps){
 
 /* ---------- chamados de terminal (Linux) ---------- */
 function Guia({def,first,onClose,S}:{def:any;first:boolean;onClose:()=>void;S:any}){
-  return <div id="modal" onClick={onClose}><div className="sheet tall" role="dialog" aria-label="Guia do chamado" onClick={e=>e.stopPropagation()}>
+  return <div id="modal" onClick={onClose}><div className="sheet tall" ref={popIn} role="dialog" aria-label="Guia do chamado" onClick={e=>e.stopPropagation()}>
     <div className="cqhead"><Pingo S={S} cls="cqping"/><div className="cqbub">{first?'Antes de começar, veja os comandos deste chamado!':'Guia rápido dos comandos'}</div></div>
     <p className="gintro">{def.intro||''}</p>
     <div className="gsteps"><span><i>1</i>Leia o passo</span><span><i>2</i>Digite o comando</span><span><i>3</i>Toque em Enviar</span></div>
@@ -145,15 +145,15 @@ function Terminal(p:CaseProps){
     let lost:string|null=null
     if(r.err&&/inexistente/.test(r.err)){tmTok(ln).forEach((x:any)=>{if(lost||typeof x!=='string'||x.charAt(0)==='-')return;const ab=tmAbs(x);if(T.fs[ab])return;const bn=tmBase(ab);Object.keys(T.fs).forEach(k=>{if(!lost&&tmBase(k)===bn&&k!==ab&&k.indexOf('/'+bn)>0)lost=k})})}
     if(r.err){
-      T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&st.current.wrong<2)st.current.wrong++
+      sfx('bad');T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&st.current.wrong<2)st.current.wrong++
       const lk:any=lost
       T.msg=lk?(lk.indexOf(T.cwd+'/')===0?'Não achei aqui. Ele está em «'+lk.slice(T.cwd.length+1)+'».':'Não achei aqui. Ele está em '+tmDir(lk).replace(T.home,'~')+'. Vá até lá com cd.')
         :(T.erros>=2?'Calma, errar faz parte. Digite help para ver os comandos ou toque em Dica.':'Esse comando não funcionou. Confira como ele se escreve.')
-    }else{T.ran.push(ln);if(r.out)T.out.push({k:'o',t:r.out})}
+    }else{sfx('ping');T.ran.push(ln);if(r.out)T.out.push({k:'o',t:r.out})}
     let all=true,prog=false
     const ci=tmCur()
     ;(T.def.passos||[]).forEach((s:any,i:number)=>{
-      if(!T.done[i]){let ch=s.feito;if(!Array.isArray(ch))ch=[ch];if(ch.every(tmCheck)){T.done[i]=1;prog=true;T.msg=s.ok||'Boa! Passo concluído.'}}
+      if(!T.done[i]){let ch=s.feito;if(!Array.isArray(ch))ch=[ch];if(ch.every(tmCheck)){T.done[i]=1;prog=true;T.msg=s.ok||'Boa! Passo concluído.';sfx('plim1')}}
       if(!T.done[i])all=false})
     if(!r.err&&!prog&&!all&&ci>=0)T.msg='Funcionou, mas ainda não cumpre o passo. Releia o passo e confira os nomes.'
     if(all){
@@ -162,6 +162,7 @@ function Terminal(p:CaseProps){
         const stars=Math.max(1,3-st.current.wrong)
         const ev=p.kind==='event'?p.onEvent!(stars):undefined
         const e=ev?{stars,xp:ev.xp,gems:ev.got?.gems||0}:finishCase({kind:p.kind as 'node'|'daily',key:p.keyId,replay:p.replay,wrong:st.current.wrong,id:def.id,insp:T.ran.length})
+        sfx('win');confetti()
         setRes({ev,...e,what:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',n:T.ran.length,proof:[]})
       },1100)
     }
@@ -181,7 +182,7 @@ function Terminal(p:CaseProps){
   items.sort((a,b)=>(+b.d-+a.d)||(a.n<b.n?-1:1))
   const path=T.cwd===T.home?'~ (sua pasta)':T.cwd
   const go=(cmd:string)=>{T.out.push({k:'p',t:tmPrompt()+cmd});T.hist.push(cmd);T.hi=T.hist.length;setLine(cmd);setTimeout(()=>inRef.current?.focus(),0)}
-  return <div id="lesson"><div className="lw"><div className="lhead"><button className="xbtn" onClick={p.onClose} aria-label="Sair do chamado">✕</button>
+  return <div id="lesson" ref={enter}><div className="lw"><div className="lhead"><button className="xbtn" onClick={p.onClose} aria-label="Sair do chamado">✕</button>
     <div className="ctitle"><small>{p.kind==='daily'?'Chamado do dia':'Chamado'}</small><b>{def.title}</b></div><Stars n={Math.max(1,3-st.current.wrong)}/></div>
     <div className="lbody tmz">
       <div className="tdots">{steps.map((_:any,n:number)=><i key={n} className={T.done[n]?'ok':(n===i?'now':'')}/>)}</div>

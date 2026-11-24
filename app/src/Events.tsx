@@ -2,6 +2,7 @@ import { useState } from 'react'
 import art from './legacy/art.json'
 import { Lesson } from './Lesson'
 import { Case } from './Case'
+import { enter } from './Fx'
 import { patchSave } from './lib/save'
 import { evInfo, evList, evPool, evPick, evUse, evChamado, evSettle, fmtD, addDays, type EvRes } from './lib/events'
 import type { Q } from './lib/curso'
@@ -65,7 +66,7 @@ export function EventPage({S,json,id,onClose,refresh}:{S:any;json:any;id:string;
     let r!:EvRes;patchSave(s=>{r=evSettle(s,ev,chamado.st,true,'Chamado resolvido!',stars)});return r
   }
 
-  return <div id="evpage"><div className="evw">
+  return <div id="evpage" ref={enter}><div className="evw">
     <div className="evtop"><button className="evback" onClick={()=>{onClose();refresh()}} aria-label="Voltar">‹</button><span className="evchip">{ev.tag}</span></div>
     <div className="evhero"><h1>{ev.name}</h1><p>{ev.blurb}</p>
       <span className="evtimer">{i.phase==='soon'?'Abre em '+fmtD(i.w.start):(i.left<=1?'Termina hoje':'Termina em '+i.left+' dias · '+fmtD(i.w.end))}</span></div>

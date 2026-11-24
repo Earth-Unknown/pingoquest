@@ -1,4 +1,5 @@
 import art from './legacy/art.json'
+import { popIn } from './Fx'
 import { Pingo } from './Pingo'
 import { patchSave } from './lib/save'
 import { streakNow, today, ds } from './lib/progress'
@@ -15,7 +16,7 @@ export function Streak({S,onClose,refresh}:{S:any;onClose:()=>void;refresh:()=>v
   const wd=Array.from({length:7},(_,i)=>{const d=new Date(d0);d.setDate(d0.getDate()+i);return ds(d)})
   const cnt=wd.filter(x=>hist[x]).length,gp=Math.min(cnt,plan),gap=plan>=7?0:(plan>=5?1:2)
   const now=new Date(),y=now.getFullYear(),m=now.getMonth(),off=(new Date(y,m,1).getDay()+6)%7,nd=new Date(y,m+1,0).getDate()
-  return <div id="modal" onClick={onClose}><div className="sheet tall" role="dialog" aria-label="Meu brilho" onClick={e=>e.stopPropagation()}>
+  return <div id="modal" onClick={onClose}><div className="sheet tall" ref={popIn} role="dialog" aria-label="Meu brilho" onClick={e=>e.stopPropagation()}>
     <div className="stk"><span className="stkp"><Pingo S={S} mood={st>0?'cheer':'happy'} cls="pingo-s"/></span>
       <div><div className="big"><span style={{color:'#ff8a1f',display:'contents'}}><Html h={A.IC.brilho}/></span>{st}</div>
         <small>{st===1?'dia seguido':'dias seguidos'}{S.best>st?' · recorde '+S.best:''}</small></div></div>

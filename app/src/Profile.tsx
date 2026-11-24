@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import art from './legacy/art.json'
+import { popIn } from './Fx'
 import { Pingo } from './Pingo'
 import { CURSOS, pct, done, totalFases } from './lib/cursos'
 import { patchSave } from './lib/save'
+import { soundOn, setSound, sfx } from './lib/sound'
 import { KEY } from './lib/store'
 import { avCfg } from './lib/pingo'
 import { SLOTS, has, equip, icon } from './lib/avatar'
@@ -21,6 +23,7 @@ export function Profile({S,refresh}:{S:any;refresh:()=>void}){
   const [nick,setNick]=useState<string|null>(null)
   const [cap,setCap]=useState('Toque num item para vestir. Itens com cadeado mostram como ganhar.')
   const [sure,setSure]=useState(false)
+  const [snd,setSnd]=useState(soundOn())
   const [theme,setTheme]=useState(themeNow())
   const total=S.total||0,acc=total?Math.round((S.ok||0)/total*100):0
   const provas=gamesOf(ativo).filter(g=>!g.caso).length
@@ -56,12 +59,13 @@ export function Profile({S,refresh}:{S:any;refresh:()=>void}){
 
     <div className="sect">Ajustes</div>
     <button className="btn ghost" style={{marginBottom:10}} onClick={toggleTheme}>Tema: {theme==='dark'?'escuro (roxo)':'claro'}</button>
+    <button className="btn ghost" style={{marginBottom:10}} onClick={()=>{const v=!snd;setSound(v);setSnd(v);if(v)sfx('ok')}}>Sons do Pingo: {snd?'ligados':'desligados'}</button>
     <button className="btn ghost" onClick={reset}>{sure?'Toque de novo para confirmar':'Zerar progresso'}</button>
     <p className="note" style={{marginTop:12}}>O progresso fica salvo neste navegador.</p>
 
     {sum&&<Sumario S={S} id={sum} onClose={()=>setSum(null)}/>}
     {info&&<CursoInfo S={S} id={info} onClose={()=>setInfo(null)} onPick={id=>{act(s=>trocarCurso(s,id));setInfo(null);window.scrollTo(0,0)}} onSum={id=>{setInfo(null);setSum(id)}}/>}
-    {nick!==null&&<div id="modal" onClick={()=>setNick(null)}><div className="sheet" role="dialog" aria-label="Apelido" onClick={e=>e.stopPropagation()}>
+    {nick!==null&&<div id="modal" onClick={()=>setNick(null)}><div className="sheet" ref={popIn} role="dialog" aria-label="Apelido" onClick={e=>e.stopPropagation()}>
       <h2>Seu apelido</h2><p className="note" style={{margin:'0 0 10px'}}>Até 14 letras. Aparece no seu perfil.</p>
       <input className="nickin" value={nick} maxLength={14} autoFocus onChange={e=>setNick(e.target.value)} style={{width:'100%',boxSizing:'border-box',font:'inherit',fontWeight:800,padding:'12px',borderRadius:12,border:'2px solid var(--line)',marginBottom:12}}/>
       <button className="btn prim" onClick={()=>{const v=nick.trim().slice(0,14);act(s=>{s.nick=v});setNick(null)}}>Salvar</button>
@@ -74,7 +78,7 @@ function CursoInfo({S,id,onClose,onPick,onSum}:{S:any;id:string;onClose:()=>void
   const par:any[]=c.json.mundos?.[0]?.paradas||[],casos:any[]=c.json.casos||[]
   const term=casos.some(k=>k.tipo==='terminal')
   const perg=par.reduce((n,q)=>n+(q.fases||[]).reduce((m:number,f:any)=>m+(f.itens||[]).filter((x:any)=>x.tipo!=='aprender').length,0),0)
-  return <div id="modal" onClick={onClose}><div className="sheet tall cinfo" role="dialog" aria-label="Sobre o curso" onClick={e=>e.stopPropagation()}>
+  return <div id="modal" onClick={onClose}><div className="sheet tall cinfo" ref={popIn} role="dialog" aria-label="Sobre o curso" onClick={e=>e.stopPropagation()}>
     <div className="cihero"><Html cls="cqic big" h={courseIcon(id)}/><div><h2>{c.nome}</h2><p>{c.sub}</p></div></div>
     <div className="cistats"><div><b>{par.length}</b><span>paradas</span></div><div><b>{casos.length}</b><span>chamados</span></div><div><b>{perg}</b><span>perguntas</span></div></div>
     <div className="tlabel">O que você vai aprender</div>
@@ -90,7 +94,7 @@ function Sumario({S,id,onClose}:{S:any;id:string;onClose:()=>void}){
   const [open,setOpen]=useState<number|null>(null)
   const d=on?S.done||{}:S.cursos?.[id]?.done||{}
   const par:any[]=c.json.mundos?.[0]?.paradas||[]
-  return <div id="modal" onClick={onClose}><div className="sheet tall sumario" role="dialog" aria-label="Sumário do curso" onClick={e=>e.stopPropagation()}>
+  return <div id="modal" onClick={onClose}><div className="sheet tall sumario" ref={popIn} role="dialog" aria-label="Sumário do curso" onClick={e=>e.stopPropagation()}>
     <h2>Sumário</h2><p className="note" style={{margin:'0 0 10px'}}>{c.nome} · toque numa parada para ver o que ela ensina</p>
     {par.map((q,i)=>{const dn=[0,1,2,3].filter(k=>d[i+'-'+k]).length
       const caso=(c.json.casos||[]).find((k:any)=>k.id===q.chamado)

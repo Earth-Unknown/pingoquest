@@ -6,6 +6,8 @@ import { sync as avSync } from './lib/avatar'
 import { pendingDuel } from './lib/duel'
 import { Welcome } from './Welcome'
 import { Streak } from './Streak'
+import { MotionConfig, motion, FxLayer } from './Fx'
+import { armClickSounds } from './lib/sound'
 import { Profile } from './Profile'
 import { Trail } from './Trail'
 import { Missions } from './Missions'
@@ -32,27 +34,29 @@ export default function App(){
   const probe=JSON.parse(JSON.stringify(S))
   const a=cqSync(probe),b=avSync(probe,provas)
   if(a||b)S=patchSave(s=>{cqSync(s);avSync(s,provas)}) // grava conquistas e itens novos
+  useEffect(()=>{armClickSounds()},[])
   useEffect(()=>{let t='light';try{t=localStorage.getItem('pingoquest-theme')==='dark'?'dark':'light'}catch{}
     document.documentElement.setAttribute('data-theme',t)},[])
   const dots:Partial<Record<Tab,number>>={missions:attention(S),review:missKeys(S).length}
-  return <>
+  return <MotionConfig reducedMotion="user">
+    <FxLayer/>
     <div id="top"><div className="wrap" id="topin">
       <button className="stat s-streak" onClick={()=>setStreak(true)} title="Ver meu brilho" aria-label="Ver meu brilho"><Svg h={A.IC.brilho}/><span>{streakNow(S)}</span></button>
       <div className="stat s-gems"><Svg h={A.IC.gem}/><span>{S.gems??50}</span></div>
       <div className="stat s-heart"><Svg h={A.IC.heart}/><span>{S.hearts??5}</span></div>
     </div></div>
-    <main className="wrap" id="main" key={v}>
+    <motion.main className="wrap" id="main" key={tab+':'+v} initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:.22,ease:'easeOut'}}>
       {tab==='path'&&<Trail S={S} refresh={refresh} evOpen={evOpen} setEvOpen={setEvOpen}/>}
       {tab==='missions'&&<Missions S={S} refresh={refresh}/>}
       {tab==='review'&&<Review S={S} refresh={refresh}/>}
       {tab==='conq'&&<Conquests S={S}/>}
       {tab==='profile'&&<Profile S={S} refresh={refresh}/>}
-    </main>
+    </motion.main>
     {streak&&<Streak S={S} onClose={()=>setStreak(false)} refresh={refresh}/>}
     {welcome&&<Welcome S={S} onClose={()=>setWelcome(false)} refresh={refresh}/>}
     <nav id="nav" aria-label="Navegação"><div className="wrap" id="navin">
       {TABS.map(([k,n])=><button key={k} className="nbtn" aria-current={tab===k?'page':undefined} onClick={()=>{setTab(k);window.scrollTo(0,0)}}>
         <Svg h={A.NAV[k]}/>{n}{!!dots[k]&&<span className="dot">{dots[k]}</span>}</button>)}
     </div></nav>
-  </>
+  </MotionConfig>
 }

@@ -4,6 +4,8 @@ import { shuffle, type Q } from './lib/curso'
 import { patchSave } from './lib/save'
 import { day, touchStreak, wkAdd, addMiss, fixMiss, cqSync } from './lib/progress'
 import type { EvRes } from './lib/events'
+import { sfx, buzz } from './lib/sound'
+import { confetti, enter, riseIn, ResultTiles } from './Fx'
 
 type Item=Q&{src:Q;opts?:{t:string;c:boolean}[];left?:{id:number;t:string}[];right?:{id:number;t:string}[];ci?:{id:number;t:string;c:number}[]}
 const prep=(q:Q):Item=>{
@@ -54,7 +56,7 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
     if(q.t==='vf')good=sel===q.a
     if(q.t==='cl')good=q.ci!.every(it=>sel[it.id]===it.c)
     setOk(good);setState('fb');stat(good)
-    if(good)hit(q);else wrong(q,true)
+    if(good){hit(q);sfx(run.current>=3?'combo':'ok')}else{wrong(q,true);sfx('bad');buzz(30)}
   }
   const mpTap=(side:string,id:number)=>{
     if(state!=='ask'||mp.flash)return
@@ -62,10 +64,11 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
     const l=side==='l'?id:mp.sel.id,r=side==='r'?id:mp.sel.id
     if(l===r){
       const done=[...mp.done,l]
-      if(done.length===q.pairs!.length){const good=mp.err===0;setMp({...mp,done,sel:null});setOk(good);setState('fb');stat(good);if(good)hit(q,true);else setMiss(m=>m+1)}
+      if(done.length===q.pairs!.length){const good=mp.err===0;setMp({...mp,done,sel:null});setOk(good);setState('fb');stat(good);if(good){hit(q,true);sfx('ok')}else{setMiss(m=>m+1);sfx('bad')}}
       else setMp({...mp,done,sel:null})
       return
     }
+    sfx('bad');buzz(20)
     if(mp.err===0){wrong(q,false)}
     setMp({...mp,err:mp.err+1,flash:{l,r},sel:null})
     setTimeout(()=>setMp(m=>({...m,flash:null})),650)
@@ -79,11 +82,12 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
   const lnext=()=>{setRight(r=>r+1);const n=i+1;if(n>=queue.length){finish();return}setI(n);reset(queue[n])}
   const finish=()=>{
     if(kind==='event'&&onEvent){
-      const r=onEvent(qb-miss,qb)
+      const r=onEvent(qb-miss,qb);sfx(r.pass?'win':'ok');if(r.pass)confetti()
       setRes({xp:r.xp,gems:r.got?.gems||0,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect:r.pass,ev:r});return
     }
     let first=false,xp=10,gems=0
     const perfect=miss===0&&!free
+    sfx('win');confetti()
     patchSave(s=>{
       const d=day(s)
       if(free)xp=8
@@ -105,26 +109,21 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
     <div className="pbar" role="progressbar" aria-valuenow={pct}><i style={{width:pct+'%'}}/></div>
     <div className="stat s-heart"><span>{free?'Treino':'❤ '+hearts}</span></div></div>
 
-  if(noHearts)return <div id="lesson"><div className="lw"><div className="lbody"><div className="center"><Pingo S={S} mood="sad"/><h1>Acabaram as vidas</h1><p>Volte ao jogo completo para recuperar vidas treinando.</p></div></div><div className="lfoot"><button className="btn" onClick={onClose}>Voltar</button></div></div></div>
-  if(res?.ev)return <div id="lesson"><div className="lw"><div className="lbody lscroll"><div className="center">
+  if(noHearts)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody"><div className="center"><Pingo S={S} mood="sad"/><h1>Acabaram as vidas</h1><p>Volte ao jogo completo para recuperar vidas treinando.</p></div></div><div className="lfoot"><button className="btn" onClick={onClose}>Voltar</button></div></div></div>
+  if(res?.ev)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood={res.ev.pass?'cheer':'happy'}/><h1>{res.ev.title}</h1><p>{res.ev.sub}</p>
-    <div className="res2"><div className="rt" style={{'--rc':'#ffb800'} as any}><small>Energia</small><span><b>{res.xp}</b></span></div>
-      {res.gems>0&&<div className="rt" style={{'--rc':'#18b9e8'} as any}><small>Chips</small><span><b>+{res.gems}</b></span></div>}
-      {res.ev.got?<div className="rt" style={{'--rc':'#3fbf5f'} as any}><small>Peças</small><span><b>+{res.ev.got.pieces}</b></span></div>
-      :<div className="rt" style={{'--rc':'#18b9e8'} as any}><small>Acertos</small><span><b>{res.ev.correct}</b></span></div>}</div>
+    <ResultTiles tiles={[{c:'#ffb800',l:'Energia',to:res.xp},...(res.gems>0?[{c:'#18b9e8',l:'Chips',to:res.gems,prefix:'+'}]:[]),res.ev.got?{c:'#3fbf5f',l:'Peças',to:res.ev.got.pieces,prefix:'+'}:{c:'#18b9e8',l:'Acertos',to:res.ev.correct}]}/>
   </div></div><div className="lfoot">{!res.ev.pass&&onRetry&&<button className="btn xbtn" onClick={onRetry}>Tentar de novo</button>}<button className="btn" onClick={onClose}>Continuar</button></div></div></div>
-  if(res)return <div id="lesson"><div className="lw"><div className="lbody lscroll"><div className="center">
+  if(res)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood="cheer"/><h1>{free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
     <p>{free?'Bom treino!':res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>
-    <div className="res2"><div className="rt" style={{'--rc':'#ffb800'} as any}><small>Energia</small><span><b>{res.xp}</b></span></div>
-      <div className="rt" style={{'--rc':'#18b9e8'} as any}><small>Precisão</small><span><b>{res.acc}%</b></span></div>
-      {res.gems>0&&<div className="rt" style={{'--rc':'#ff4fae'} as any}><small>Chips</small><span><b>+{res.gems}</b></span></div>}</div>
+    <ResultTiles tiles={[{c:'#ffb800',l:'Energia',to:res.xp},{c:'#18b9e8',l:'Precisão',to:res.acc},...(res.gems>0?[{c:'#ff4fae',l:'Chips',to:res.gems,prefix:'+'}]:[])]}/>
   </div></div><div className="lfoot"><button className="btn" onClick={onClose}>Continuar</button></div></div></div>
 
   const asked=state==='ask'
   const ready=q.t==='cl'?sel?.every((x:any)=>x!==null):sel!==null
   const correctText=()=>q.t==='mc'?q.opts!.find(o=>o.c)!.t:q.t==='vf'?(q.a?'Verdade':'Mito'):q.items!.map(x=>x[0]+' → '+q.cats![x[1]]).join(' · ')
-  return <div id="lesson"><div className="lw">{head}<div className="lbody">
+  return <div id="lesson" ref={enter}><div className="lw">{head}<div className="lbody">
     {q.t==='learn'&&<>
       <div className="eyebrow">Aprenda</div>
       <div className="say"><span className="sp"><Pingo S={S} cls="pingo-s"/></span><div className="bub"><b>{q.title}</b><p>{q.text}</p></div></div>
@@ -151,7 +150,7 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
     {q.t==='learn'?<button className="btn" onClick={lnext}>Entendi</button>
     :asked&&q.t==='mp'?<button className="btn" disabled>Combine os pares</button>
     :asked?<button className="btn" disabled={!ready} onClick={check}>Verificar</button>
-    :<><div className={'fb '+(ok?'ok':'bad')}><span className="fbp"><Pingo S={S} mood={ok?'cheer':'sad'} cls="pingo-fb"/></span>
+    :<><div className={'fb '+(ok?'ok':'bad')} ref={riseIn}><span className="fbp"><Pingo S={S} mood={ok?'cheer':'sad'} cls="pingo-fb"/></span>
         <h3>{ok?'Isso aí!':(q.t==='mp'?'Completou com erros':'Quase!')}</h3>
         {!ok&&q.t!=='mp'&&<p>Resposta certa: <span className="ans">{correctText()}</span></p>}<p>{q.e}</p></div>
       <button className={'btn'+(ok?'':' bad')} onClick={next}>Continuar</button></>}

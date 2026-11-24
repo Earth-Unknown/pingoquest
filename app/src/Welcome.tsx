@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import art from './legacy/art.json'
 import { Pingo } from './Pingo'
+import { sfx } from './lib/sound'
+import { confetti } from './Fx'
 import { CURSOS, done, totalFases } from './lib/cursos'
 import { patchSave } from './lib/save'
 import { streakNow, trocarCurso, cursoAtivo } from './lib/progress'
@@ -31,7 +33,7 @@ export function Welcome({S,onClose,refresh}:{S:any;onClose:()=>void;refresh:()=>
   const ask=(i:number)=>{setQi(i);setSel(null);setOpts([...shuffle(niv[i].o.map((t,k)=>({t,c:k===0}))),{t:'Ainda não sei',c:false,skip:true}]);setStep('ask')}
   const finish=(p:number)=>{
     patchSave(s=>{s.onbC=s.onbC||{};s.onbC[cur.id]=true;if(!s.onb)s.gems=(s.gems??50)+20;s.onb=true;s.plan=p||s.plan})
-    onClose();refresh();window.scrollTo(0,0)
+    sfx('win');confetti();onClose();refresh();window.scrollTo(0,0)
   }
   const card=(cls:string,body:React.ReactNode)=><div id="welcome"><div className={'wcard '+cls} role="dialog" aria-modal="true">{body}</div></div>
 

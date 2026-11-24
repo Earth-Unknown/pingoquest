@@ -1,5 +1,6 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import art from './legacy/art.json'
+import { popIn } from './Fx'
 import { Pingo } from './Pingo'
 import { CURSOS } from './lib/cursos'
 import { parseCurso, lessonQs } from './lib/curso'
@@ -78,7 +79,7 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
           <div className={'nlabel '+(x>0?'R':'L')}><b>{label}</b>{nm&&<small>{nm}</small>}</div>
         </div>})}</div>
     </section>)}
-    {open!==null&&<div id="modal" onClick={()=>setOpen(null)}><div className="sheet tall" role="dialog" onClick={e=>e.stopPropagation()}>
+    {open!==null&&<div id="modal" onClick={()=>setOpen(null)}><div className="sheet tall" ref={popIn} role="dialog" onClick={e=>e.stopPropagation()}>
       <div className="shead"><span className="lm"><Html h={placeIcon(open)}/></span><div><div className="tag">Parada {open+1}</div><h2>{par[open].lugar||par[open].titulo}</h2><div className="lsub">{par[open].titulo}</div></div></div>
       <div className="srows">{[0,1,2,3].map(k=>{const key=open+'-'+k,d=!!done[key],un=isUn(open,k),p=par[open]
         const title=k===3?(p.chamado?'Caso · '+casoTitulo(p.chamado):'Prova final'):(p.fases?.[k]?.nome||'Fase '+(k+1))

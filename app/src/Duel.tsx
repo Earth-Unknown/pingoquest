@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import art from './legacy/art.json'
 import { Pingo } from './Pingo'
+import { sfx, buzz } from './lib/sound'
+import { confetti, enter, motion } from './Fx'
 import { patchSave } from './lib/save'
 import { gamesOf, cursoAtivo } from './lib/progress'
 import { DU_LV, DU_N, duelQs, duelScore, botRun, b64e, pendingDuel, type DQ } from './lib/duel'
@@ -45,11 +47,12 @@ export function Duel({S,onClose}:{S:any;onClose:()=>void}){
     setI(0);setMe([]);setSel(null);setMsg('');setWheel(false);setView('play')
   }
   const start=()=>{if(theme==='roleta'){setWheel(true);return}begin(theme,(Math.random()*4294967295)>>>0,lv,mode,null)}
-  const pick=(k:number)=>{if(sel!==null||!G)return;setSel(k);setMe([...me,G.qs[i].opts[k].c?1:0])}
+  const pick=(k:number)=>{if(sel!==null||!G)return;const ok=G.qs[i].opts[k].c;setSel(k);setMe([...me,ok?1:0]);sfx(ok?'ok':'bad');buzz(ok?12:30)}
   const next=()=>{if(!G)return;if(i+1>=G.qs.length){finish();return}setI(i+1);setSel(null)}
   const finish=()=>{
     if(G?.opp?.r){const a=duelScore(me),b=duelScore(G.opp.r),res=a>b?'w':(a<b?'l':'d');patchSave(s=>{s.duel=s.duel||{w:0,l:0,d:0};s.duel[res]++})}
     setView('end')
+    if(G?.opp?.r&&duelScore(me)>duelScore(G.opp.r)){sfx('win');confetti()}else sfx('next')
   }
   const link=()=>G?location.href.split('#')[0]+'#duelo='+b64e({g:G.g,s:G.s,n:G.qs.length,l:G.lv,f:S.nick||'Um amigo',r:me}):''
   const share=()=>{
@@ -59,7 +62,7 @@ export function Duel({S,onClose}:{S:any;onClose:()=>void}){
   }
   const copy=()=>{try{navigator.clipboard.writeText(link()).then(()=>setMsg('Link copiado! Cole no WhatsApp.'),()=>setMsg('Selecione e copie o link acima.'))}catch{setMsg('Selecione e copie o link acima.')}}
   const close=()=>{if(pend)history.replaceState(null,'',location.href.split('#')[0]);onClose()}
-  const shell=(title:string,body:React.ReactNode,extra?:React.ReactNode)=><div id="lesson"><div className="duel"><div className="dutop"><button className="dux" onClick={close} aria-label="Fechar">×</button><b>{title}</b><span/></div><div className="dubody">{body}</div>{extra}</div></div>
+  const shell=(title:string,body:React.ReactNode,extra?:React.ReactNode)=><div id="lesson" ref={enter}><div className="duel"><div className="dutop"><button className="dux" onClick={close} aria-label="Fechar">×</button><b>{title}</b><span/></div><div className="dubody">{body}</div>{extra}</div></div>
 
   if(view==='intro'&&pend){const g=games[pend.g]
     if(!g)return shell('Desafio',<><p className="note">Esse desafio é de outro curso. Troque de curso no Perfil e abra o link de novo.</p><button className="btn ghost" onClick={close}>Fechar</button></>)
@@ -84,7 +87,7 @@ export function Duel({S,onClose}:{S:any;onClose:()=>void}){
     const q=G.qs[i],n=G.qs.length,ans=sel!==null,bot=!!G.opp?.bot
     const mine=duelScore(me),his=bot?duelScore(G.opp!.r,me.length):null
     return shell(G.mode==='bot'?'Duelo contra Byte':'Duelo',<>
-      <div className="duhud"><div className="dus me"><small>Você</small><b>{mine}</b></div><div className="dumid">Pergunta {i+1} de {n}</div>
+      <div className="duhud"><div className="dus me"><small>Você</small><motion.b key={mine} initial={{scale:1.6}} animate={{scale:1}} transition={{type:'spring',stiffness:400,damping:14}} style={{display:'inline-block'}}>{mine}</motion.b></div><div className="dumid">Pergunta {i+1} de {n}</div>
         <div className="dus"><small>{bot?'Byte':(G.opp?.name||'Amigo')}</small><b>{bot?his:'?'}</b></div></div>
       <div className="dubar"><i style={{width:i/n*100+'%'}}/></div><h2 className="duq">{q.q}</h2>
       <div className="duopts">{q.opts.map((o,k)=><button key={k} disabled={ans} onClick={()=>pick(k)} className={'duopt'+(ans?(o.c?' ok':sel===k?' bad':' dim'):'')}>{o.t}</button>)}</div>
@@ -115,7 +118,7 @@ export function Duel({S,onClose}:{S:any;onClose:()=>void}){
 }
 
 function Wheel({n,titles,onClose,onPick}:{n:number;titles:string[];onClose:()=>void;onPick:(g:number)=>void}){
-  const gRef=useRef<SVGGElement>(null),busy=useRef(false),alive=useRef(true)
+  const gRef=useRef<SVGGElement>(null),busy=useRef(false),alive=useRef(true),last=useRef(-1)
   const [res,setRes]=useState<number|null>(null),[spun,setSpun]=useState(false)
   useEffect(()=>{alive.current=true;return()=>{alive.current=false}},[])
   const seg=360/n,R=140,C=150
@@ -128,8 +131,9 @@ function Wheel({n,titles,onClose,onPick}:{n:number;titles:string[];onClose:()=>v
       if(t0===null)t0=ts
       const x=Math.min(1,(ts-t0)/dur),th=total*(1-Math.pow(1-x,4))
       gRef.current?.setAttribute('transform','rotate('+th.toFixed(2)+' 150 150)')
+      const idx=Math.floor((((360-(th%360))%360))/seg);if(idx!==last.current){last.current=idx;sfx('tick');buzz(6)}
       if(x<1)requestAnimationFrame(frame)
-      else{setRes(fin);setTimeout(()=>{if(alive.current)onPick(fin)},1800)}
+      else{setRes(fin);sfx('win');confetti();setTimeout(()=>{if(alive.current)onPick(fin)},1800)}
     }
     requestAnimationFrame(frame)
   }

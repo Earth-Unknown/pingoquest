@@ -2,6 +2,8 @@ import art from './legacy/art.json'
 import { useState } from 'react'
 import { patchSave } from './lib/save'
 import { Case } from './Case'
+import { sfx } from './lib/sound'
+import { confetti, motion } from './Fx'
 import { DuelCard } from './Duel'
 import { pendingDuel } from './lib/duel'
 import { cursoAtivo } from './lib/progress'
@@ -32,9 +34,9 @@ export function Missions({S,refresh}:{S:any;refresh:()=>void}){
           :<span className="mpill">+{m.gem}<Html cls="gi" h={A.IC.gem}/></span>}</div>})}
     </div>
     <div className={'card chestcard'+(rdy?' ready':'')+(d.chest?' opened':'')}>
-      <Html cls="cc-svg" h={A.chest}/>
+      <motion.span className="cc-svg" style={{display:'block'}} animate={rdy?{rotate:[0,-4,4,-3,3,0],y:[0,-4,0]}:{}} transition={{duration:1.1,repeat:Infinity,repeatDelay:1.4}} dangerouslySetInnerHTML={{__html:A.chest}}/>
       <div className="cc-t"><h3>Baú do Pingo</h3><p className="note">{d.chest?'Aberto hoje. Volte amanhã para outro!':rdy?'Você completou as 3 metas rápidas! Abra o baú.':`Complete as 3 metas rápidas para abrir o baú (${nd} de 3).`}</p>
-        {rdy&&<button className="btn blue" onClick={()=>act(openChest)}>Abrir baú · +{CHEST_GEMS}</button>}</div>
+        {rdy&&<button className="btn blue" onClick={()=>{sfx('open');confetti(60,50,60);act(openChest)}}>Abrir baú · +{CHEST_GEMS}</button>}</div>
     </div>
     {def&&<div className="card call"><span className="ctag">Chamado do dia</span><h3 style={{marginBottom:6}}>{def.title}</h3>
       <p className="note" style={{margin:'0 0 14px'}}>{def.intro}</p>
@@ -44,7 +46,7 @@ export function Missions({S,refresh}:{S:any;refresh:()=>void}){
       <div className="wdays" aria-label="Dias com chamado atendido">{L7.map((l,i)=><span key={i} className={'wd'+(w.days.includes(i)?' on':'')+(i===td?' now':'')}><i>{w.days.includes(i)&&<Html h={A.IC.check}/>}</i>{l}</span>)}</div>
       <div className="bar gold" role="progressbar" aria-valuenow={wn} aria-valuemax={WGOAL}><i style={{width:wn/WGOAL*100+'%'}}/><span>{wn} / {WGOAL} chamados</span></div>
       {w.claimed?<p className="note" style={{margin:'12px 0 0'}}>Selo de Técnico da Semana conquistado.</p>
-      :wn>=WGOAL&&<button className="btn blue" style={{marginTop:14}} onClick={()=>act(claimWeek)}>Pegar o selo · +60</button>}</div>
+      :wn>=WGOAL&&<button className="btn blue" style={{marginTop:14}} onClick={()=>{sfx('win');confetti();act(claimWeek)}}>Pegar o selo · +60</button>}</div>
     {call&&def&&<Case S={S} def={def} kind="daily" onClose={()=>{setCall(false);refresh()}}/>}
   </div>
 }
