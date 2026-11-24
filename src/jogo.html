@@ -1103,6 +1103,7 @@ var AVD={
  },
  visor:{
   oculos:{vb:'34 36 52 26',s:'<circle cx="46.500" cy="48.500" r="8.800" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><circle cx="73.500" cy="48.500" r="8.800" fill="rgba(255,255,255,.07)" stroke="#fff" stroke-width="2" opacity=".95"/><path d="M55.300 47q4.700-3 9.400 0" fill="none" stroke="#fff" stroke-width="2"/>'},
+  terminal:{vb:'34 36 52 26',s:'<rect x="36" y="40" width="48" height="15" rx="7.500" fill="rgba(13,6,32,.45)" stroke="#7dff2b" stroke-width="1.800"/><path d="M41 44h6" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".6"/>'},
   hud:{vb:'34 36 52 26',s:'<rect x="36" y="40" width="48" height="15" rx="7.500" fill="rgba(25,181,232,.10)" stroke="var(--cyan)" stroke-width="1.800"/><path d="M41 44h6" stroke="#fff" stroke-width="1.600" stroke-linecap="round" opacity=".7"/>'},
   estrelas:{vb:'32 34 56 30',s:'<polygon points="@S1@" fill="rgba(255,79,174,.35)" stroke="#ff4fae" stroke-width="2.500" stroke-linejoin="round"/><polygon points="@S2@" fill="rgba(255,79,174,.35)" stroke="#ff4fae" stroke-width="2.500" stroke-linejoin="round"/><path d="M56 47q4-3 8 0" fill="none" stroke="#ff4fae" stroke-width="2"/>'},
   coracao:{vb:'32 34 56 30',s:'<path d="M46.500 57C38 52 36 47 38.500 43.500C41 40.500 45 41 46.500 44.500C48 41 52 40.500 54.500 43.500C57 47 55 52 46.500 57z" fill="rgba(255,60,90,.35)" stroke="#ff3c5a" stroke-width="2.500" stroke-linejoin="round"/><path d="M73.500 57C65 52 63 47 65.500 43.500C68 40.500 72 41 73.500 44.500C75 41 79 40.500 81.500 43.500C84 47 82 52 73.500 57z" fill="rgba(255,60,90,.35)" stroke="#ff3c5a" stroke-width="2.500" stroke-linejoin="round"/><path d="M56 47q4-3 8 0" fill="none" stroke="#ff3c5a" stroke-width="2"/>'},
@@ -1248,6 +1249,7 @@ var AV_SLOTS=[
  {id:'visor',nome:'Visor',itens:[
   {id:'oculos',nome:'Óculos tech',req:'Conclua 1 fase',ok:function(){return doneCount()>=1}},{id:'estrelas',nome:'Óculos de estrela',req:'Conclua 3 fases',ok:function(){return doneCount()>=3}},
   {id:'coracao',nome:'Óculos de coração',req:'Conclua 5 fases',ok:function(){return doneCount()>=5}},{id:'mascara',nome:'Máscara de herói',req:'Conclua 2 provas finais',ok:function(){return S.bosses>=2}},
+  {id:'terminal',nome:'Visor Terminal',req:'Prêmio do evento Servidor no Ar',ev:1},
   {id:'hud',nome:'Visor HUD',req:'Conclua 4 provas finais',ok:function(){return S.bosses>=4}}]},
  {id:'roupa',nome:'Roupinha',itens:[
   {id:'jaleco',nome:'Jaleco de técnico',free:1},{id:'raio',nome:'Moletom Raio',req:'Conclua 5 fases',ok:function(){return doneCount()>=5}},
@@ -1449,14 +1451,15 @@ function evRender(){
   h+='<div class="evhero"><h1>'+ev.name+'</h1><p>'+ev.blurb+'</p><span class="evtimer">'+(i.phase==='soon'?'Abre em '+fmtD(i.w.start):(i.left<=1?'Termina hoje':'Termina em '+i.left+' dias · '+fmtD(i.w.end)))+'</span></div>';
   h+='<div class="evbox"><div class="evpzrow">'+evPuzzle(ev,i.pieces,fresh)+'<div class="evpzt"><b>Projeto: '+ev.equipName+'</b><small>'+i.pieces+' de 9 peças coletadas</small><div class="evprog"><u style="width:'+Math.round(i.pieces/9*100)+'%"></u></div></div></div>'+
      '<div class="evprize'+(i.completed?' got':'')+'">'+(i.completed?IC.check+' '+ev.equipName+' montado! '+ev.prize.name+' guardada no seu inventário.':'Ao completar: <b>'+ev.prize.name+'</b>, um acessório para o seu robô.')+'</div></div>';
-  if(i.canStart&&evPool(ev).length<ev.qPerStep){
+  var isCh=!!(ev.steps[0]&&ev.steps[0].chamado);
+  if(i.canStart&&!isCh&&evPool(ev).length<ev.qPerStep){
     var fal=ev.qPerStep-evPool(ev).length,fs=Math.max(1,Math.ceil(fal/3));
     h+='<div class="evmsg" style="margin-top:14px"><b>Falta pouco para começar!</b><br>Conclua mais '+fs+(fs===1?' fase':' fases')+' na trilha. O evento só pergunta assuntos que você já estudou ('+evPool(ev).length+' de '+ev.qPerStep+' perguntas liberadas).</div><button class="btn" data-act="evclose">Ir para a trilha</button>';
   }
   h+='<div class="evsteps">';
   ev.steps.forEach(function(st,k){
     var d=P.steps[st.id],cls=d?'done':(i.next&&i.next.id===st.id&&i.canStart?'now':''),stat='';
-    if(d)stat='Concluída em '+fmtD(d.day)+' · '+d.c+' de '+ev.qPerStep+' acertos';
+    if(d)stat='Concluída em '+fmtD(d.day)+(st.chamado?' · '+d.c+' '+(d.c===1?'estrela':'estrelas'):' · '+d.c+' de '+ev.qPerStep+' acertos');
     else if(i.phase==='soon')stat='Abre em '+fmtD(i.w.start);
     else if(i.next&&i.next.id===st.id){stat=i.doneToday?'Volte em outro dia para esta etapa.':(i.late?'Não há mais dias suficientes.':'')}
     else stat='Depois';
@@ -1464,9 +1467,10 @@ function evRender(){
   });
   h+='</div>';
   if(i.canStart){
-    var have=evPool(ev).length;
-    if(have<ev.qPerStep)h+='';
-    else h+='<button class="btn" data-act="evstep" data-id="'+ev.id+'" data-s="'+i.next.id+'">Começar etapa '+(i.done+1)+'</button>';
+    var have=evPool(ev).length,rdy=i.next.chamado?evChamado(i.next):null;
+    if(rdy&&!rdy.ok)h+='<div class="evmsg"><b>Falta destravar o chamado</b><br>Avance na trilha até a parada «'+esc(rdy.nome)+'» para liberar esta etapa.</div>';
+    else if(!i.next.chamado&&have<ev.qPerStep)h+='';
+    else h+='<button class="btn" data-act="evstep" data-id="'+ev.id+'" data-s="'+i.next.id+'">'+(i.next.chamado?'Começar chamado ':'Começar etapa ')+(i.done+1)+'</button>';
   }else if(i.late)h+='<div class="evmsg">Não dá mais tempo de concluir as '+i.total+' etapas, uma por dia. Espere o próximo evento para participar.</div>';
   else if(i.doneToday&&!i.completed)h+='<div class="evmsg">Etapa de hoje concluída! A próxima fica disponível em outro dia.</div>';
   h+='<div class="evbox"><h3>Calendário</h3><div class="evcal">';
@@ -1475,14 +1479,24 @@ function evRender(){
     h+='<span class="'+(doneDays[d]?'ok':'')+(d===i.t?' today':'')+'" title="'+fmtD(d)+'">'+(doneDays[d]?IC.check:'')+d.slice(8,10)+'</span>';
   }
   h+='</div></div>';
-  h+='<div class="evbox"><h3>Como funciona</h3><ul class="evrules"><li>Uma etapa nova por dia. Os dias não precisam ser seguidos.</li><li>Cada etapa tem '+ev.qPerStep+' perguntas, só de assuntos que você já estudou. Acerte pelo menos '+ev.passMin+' para concluir. Se errar mais, você revê as explicações e tenta de novo no mesmo dia.</li><li>Peças e chips de cada etapa são entregues uma vez só.</li><li>Se o evento acabar antes de você concluir, chips e itens já ganhos ficam com você, mas a coleção não pode ser retomada.</li><li>O evento não libera conteúdo novo e não conta para o desafio de 5 acertos da trilha.</li><li>Datas pelo relógio do aparelho (versão de teste).</li></ul></div>';
+  h+='<div class="evbox"><h3>Como funciona</h3><ul class="evrules"><li>Uma etapa nova por dia. Os dias não precisam ser seguidos.</li>'+(isCh?'<li>Cada etapa é um chamado no terminal, de um assunto que você já destravou na trilha. Resolva o chamado para ganhar as peças.</li>':'<li>Cada etapa tem '+ev.qPerStep+' perguntas, só de assuntos que você já estudou. Acerte pelo menos '+ev.passMin+' para concluir. Se errar mais, você revê as explicações e tenta de novo no mesmo dia.</li>')+'<li>Peças e chips de cada etapa são entregues uma vez só.</li><li>Se o evento acabar antes de você concluir, chips e itens já ganhos ficam com você, mas a coleção não pode ser retomada.</li><li>O evento não libera conteúdo novo e não conta para o desafio de 5 acertos da trilha.</li><li>Datas pelo relógio do aparelho (versão de teste).</li></ul></div>';
   h+='</div>';
   $('#evpage').innerHTML=h;
   if(P.fresh){P.fresh=0;save()}
 }
+/* etapa com chamado: só libera depois que a parada daquele chamado foi destravada na trilha */
+function evChamado(st){
+  var gi=-1;GAMES.forEach(function(g,i){if(g.caso===st.chamado)gi=i});
+  if(gi<0)return{ok:false,nome:''};
+  return{ok:isUnlocked(gi,3),nome:WORLD.places[gi]||GAMES[gi].title,gi:gi};
+}
 function evStart(id,sid){
   var ev=evById(id);if(!ev)return;var i=evInfo(ev);
   if(!i.canStart||!i.next||i.next.id!==sid)return;
+  var stp=ev.steps.filter(function(x){return x.id===sid})[0];
+  if(stp&&stp.chamado){var rd=evChamado(stp);if(!rd.ok){evRender();return}
+    var P0=S.ev[ev.id]||(S.ev[ev.id]={steps:{},used:[],pieces:0});save();
+    startCase({id:stp.chamado,kind:'event',key:'ev:'+id+':'+sid,ev:id,step:sid,replay:false});return}
   var qs=evPick(ev);
   if(!Array.isArray(qs)){evRender();return}
   var P=S.ev[ev.id]||(S.ev[ev.id]={steps:{},used:[],pieces:0});
@@ -1491,8 +1505,17 @@ function evStart(id,sid){
 }
 function finishEvent(){
   var ev=evById(L.ev),st=ev.steps.filter(function(x){return x.id===L.step})[0];
-  var P=S.ev[ev.id]||(S.ev[ev.id]={steps:{},used:[],pieces:0}),info=evInfo(ev);
-  var correct=L.qb-L.miss,pass=correct>=ev.passMin,got=null,full=false;
+  var correct=L.qb-L.miss,pass=correct>=ev.passMin;
+  evSettle(ev,st,pass,pass?'Você acertou '+correct+' de '+L.qb+'!':'Você acertou '+correct+' de '+L.qb+'. Precisa de '+ev.passMin+'.',correct,L.qb);
+}
+/* etapa de evento resolvida por um chamado no terminal */
+function evCaseFinish(c){
+  var ev=evById(c.ev),st=ev.steps.filter(function(x){return x.id===c.step})[0],stars=Math.max(1,3-c.wrong);
+  L={kind:'done',case:true};C=c;
+  evSettle(ev,st,true,'Chamado resolvido!',stars,3);
+}
+function evSettle(ev,st,pass,sub,correct,qb){
+  var P=S.ev[ev.id]||(S.ev[ev.id]={steps:{},used:[],pieces:0}),info=evInfo(ev),got=null,full=false;
   if(pass&&info.canStart&&!P.steps[st.id]){
     P.steps[st.id]={day:info.t,c:correct};
     var k='ev:'+ev.id+':'+st.id;
@@ -1504,12 +1527,11 @@ function finishEvent(){
   }
   var xp=(pass&&got)?15:5,dy=day();dy.xp+=xp;S.xp+=xp;wkAdd(xp);touchStreak();save();
   var title=full?ev.equipName+' montado!':(pass?'Etapa concluída!':'Quase lá!');
-  var sub=pass?'Você acertou '+correct+' de '+L.qb+'!':'Você acertou '+correct+' de '+L.qb+'. Precisa de '+ev.passMin+'.';
-  var again=!pass&&evInfo(ev).canStart;
+  var again=!pass&&evInfo(ev).canStart&&!st.chamado;
   var tiles=[{c:'#ffb800',l:'Energia',v:IC.bolt+'<b data-to="'+xp+'">0</b>'}];
   if(got&&got.gems>0)tiles.push({c:'#18b9e8',l:'Chips',v:IC.gem+'<b data-to="'+got.gems+'" data-pre="+">+0</b>'});
   if(got)tiles.push({c:'#3fbf5f',l:'Peças',v:IC.puzzle+'<b data-to="'+got.pieces+'" data-pre="+">+0</b>'});
-  else tiles.push({c:'#18b9e8',l:'Acertos',v:IC.target+'<b data-to="'+correct+'">0</b>'});
+  else tiles.push({c:'#18b9e8',l:st.chamado?'Estrelas':'Acertos',v:IC.target+'<b data-to="'+correct+'">0</b>'});
   var tl=tiles.map(function(t,i){return'<div class="rt" style="--rc:'+t.c+';animation-delay:'+(0.55+i*0.62)+'s"><small>'+t.l+'</small><span>'+t.v+'</span></div>'}).join('');
   $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo(pass?'cheer':'happy','pingo-big')+'<h1>'+title+'</h1><p>'+sub+'</p><div class="res2">'+tl+'</div></div></div>'+
     '<div class="lfoot">'+(again?'<button class="btn xbtn" data-act="evstep" data-id="'+ev.id+'" data-s="'+st.id+'">Tentar de novo</button>':'')+'<button class="btn" data-act="collect">Coletar energia</button></div></div>';
@@ -2570,6 +2592,7 @@ function pickCause(id){
   drawCase();
 }
 function caseFinish(){
+  if(C&&C.kind==='event'){evCaseFinish(C);return}
   var c=C,stars=Math.max(1,3-c.wrong),dy=day(),xp=3,gems=0;
   var rec=S.casos[c.id]||(S.casos[c.id]={n:0,best:0});
   var firstNode=(c.kind==='node'&&!c.replay&&!S.done[c.key]);
@@ -2915,7 +2938,7 @@ function tmCheck(c){
 function startTerm(o){
   var def=CASES[o.id],rec=S.casos[o.id];
   TM=tmInit(def);
-  C={id:o.id,def:def,fault:{id:'t',cause:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',need:[],clues:{}},kind:o.kind,key:o.key,replay:!!o.replay,insp:TM.ran,wrongSet:[],wrong:0,stage:'term',guided:!(rec&&rec.n>0)&&!o.replay,term:true};
+  C={id:o.id,def:def,fault:{id:'t',cause:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',need:[],clues:{}},kind:o.kind,key:o.key,ev:o.ev,step:o.step,replay:!!o.replay,insp:TM.ran,wrongSet:[],wrong:0,stage:'term',guided:!(rec&&rec.n>0)&&!o.replay,term:true};
   $('#lesson').hidden=false;document.body.classList.add('lock');drawTerm();
   if(C.guided)showGuia(true);else setTimeout(function(){var i=$('#tin');if(i)i.focus()},200);
 }

@@ -77,3 +77,13 @@ Um chamado de terminal tem:
 Comandos disponíveis: pwd ls cd mkdir touch cp mv rm cat head tail grep wc sort uniq echo chmod whoami id hostname ps top kill ip ping curl apt sudo clear history help, com pipe (|) e redirecionamento (> e >>).
 
 Depois de editar, rode `node tools/validar-curso.js content/linux.json` e `sh build-site.sh`.
+
+## Eventos com chamados (Linux)
+
+Um evento pode ter etapas que são chamados do terminal em vez de perguntas. No `eventos` do JSON do curso, cada etapa leva um campo `chamado` com o id do caso (ex.: `"chamado": "lx_acesso"`), e o evento usa `qPerStep: 0` e `passMin: 0`.
+
+- A etapa só libera quando a parada daquele chamado já foi destravada na trilha.
+- Uma etapa por dia, 9 peças no total (soma de `pieces`), como nos outros eventos.
+- A arte do quebra-cabeça fica em `artes.<equipment>` (SVG 90x90, só o miolo).
+- O prêmio (`prize.id`) precisa existir como acessório no jogo (ex.: `terminal`, slot Visor).
+- Gerador do Linux: `tools/linux-gen/build.py`. O teste é `tests/evento-linux.test.js`.

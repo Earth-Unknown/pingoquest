@@ -1,5 +1,5 @@
 import json,sys
-sys.path.insert(0,'/tmp/lx')
+import os;sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from h import *
 import p1,p2,p3
 from casos import CASOS
@@ -65,5 +65,14 @@ BB=[
 ('linux.ping','Para que serve o curl?','Buscar uma página ou serviço',['Copiar pastas','Criar grupos']),
 ]
 bb=[{'tipo':'escolha','pergunta':p,'certa':c,'erradas':e,'explicacao':'Resposta: '+c+'.','conceito':k,'dificuldade':1} for k,p,c,e in BB]
-d={'formato':1,'id':'linux','nome':'Terminal Linux','mundos':[{'numero':1,'nome':'Servidor Pingo','subtitulo':'Aprenda a conversar com o terminal','paradas':P}],'bate_bola':bb,'casos':CASOS,'eventos':[],'artes':{},'nivelamento':[{'pergunta':a,'certa':c,'erradas':e,'explicacao':x} for a,c,e,x in [('Para que serve o terminal?','Para digitar comandos e o computador executar',['Para desenhar imagens','Para esfriar o computador'],'No terminal você escreve comandos e o sistema obedece.'),('Qual comando mostra em que pasta você está?','pwd',['mkdir','rm'],'pwd mostra a pasta atual.'),('O que o comando rm faz?','Apaga arquivos',['Renomeia arquivos','Copia arquivos'],'rm remove, e no terminal não existe lixeira.')]]}
+d={'formato':1,'id':'linux','nome':'Terminal Linux','mundos':[{'numero':1,'nome':'Servidor Pingo','subtitulo':'Aprenda a conversar com o terminal','paradas':P}],'bate_bola':bb,'casos':CASOS,'eventos':[{'id':'servidor-no-ar','enabled':True,'name':'Operação Servidor no Ar','tag':'Evento especial','blurb':'Monte um servidor peça por peça. Cada etapa é um chamado no terminal, um por dia.','start':'2026-11-24','end':'2026-12-03','equipment':'servidor','equipName':'Servidor','qPerStep':0,'passMin':0,
+'steps':[{'id':'s%d'%(k+1),'title':t,'desc':d,'pieces':pc,'gems':g,'chamado':ch} for k,(t,d,pc,g,ch) in enumerate([
+ ('Entre no servidor','Descubra quem você é e onde está.',1,10,'lx_acesso'),
+ ('Ache o recado','Liste e leia o que está escondido.',1,10,'lx_comandos'),
+ ('Navegue até os logs','Use caminhos para se mover pelas pastas.',1,10,'lx_pastas'),
+ ('Arrume os arquivos','Crie, copie, mova e apague.',2,15,'lx_arquivos'),
+ ('Investigue o log','Filtre e conte os erros.',1,10,'lx_logs'),
+ ('Monte a esteira','Pipes e redirecionamento.',1,10,'lx_esteira'),
+ ('Libere o servidor','Ajuste as permissões e ligue tudo.',2,25,'lx_portaria')])],
+'prize':{'id':'terminal','name':'Visor Terminal','gems':0}}],'artes':{'servidor':'<rect width="90" height="90" fill="#0b1b3d"/><rect x="14" y="8" width="62" height="74" rx="9" fill="#2a1668" stroke="#7b3ff2" stroke-width="3"/><rect x="20" y="14" width="50" height="16" rx="4" fill="#150638"/><circle cx="27" cy="22" r="3" fill="#7dff2b"/><circle cx="36" cy="22" r="3" fill="#ffd83d"/><rect x="46" y="19" width="18" height="6" rx="2" fill="#18ddfb" opacity=".8"/><rect x="20" y="35" width="50" height="16" rx="4" fill="#150638"/><circle cx="27" cy="43" r="3" fill="#7dff2b"/><rect x="36" y="40" width="28" height="6" rx="2" fill="#c88bff" opacity=".8"/><rect x="20" y="56" width="50" height="20" rx="4" fill="#0d0620" stroke="#18ddfb" stroke-width="2"/><text x="25" y="70" font-size="12" font-weight="900" fill="#7dff2b" font-family="monospace">$ _</text>'},'nivelamento':[{'pergunta':a,'certa':c,'erradas':e,'explicacao':x} for a,c,e,x in [('Para que serve o terminal?','Para digitar comandos e o computador executar',['Para desenhar imagens','Para esfriar o computador'],'No terminal você escreve comandos e o sistema obedece.'),('Qual comando mostra em que pasta você está?','pwd',['mkdir','rm'],'pwd mostra a pasta atual.'),('O que o comando rm faz?','Apaga arquivos',['Renomeia arquivos','Copia arquivos'],'rm remove, e no terminal não existe lixeira.')]]}
 json.dump(d,open('/home/claude/pingoquest/content/linux.json','w'),ensure_ascii=False,indent=1)
