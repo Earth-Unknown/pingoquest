@@ -23,6 +23,13 @@ function ac():AudioContext|null{
 }
 function tone(f:number,t0:number,d:number,type:OscillatorType='sine',vol=.08,f2?:number){
   const c=ac();if(!c)return
+  if(c.state!=='running'){ // navegadores de celular só liberam o áudio depois do toque: espera o contexto acordar
+    void c.resume().then(()=>{if(c.state==='running')play(c,f,t0,d,type,vol,f2)}).catch(()=>{})
+    return
+  }
+  play(c,f,t0,d,type,vol,f2)
+}
+function play(c:AudioContext,f:number,t0:number,d:number,type:OscillatorType,vol:number,f2?:number){
   const o=c.createOscillator(),g=c.createGain(),n=c.currentTime+t0
   o.type=type;o.frequency.setValueAtTime(f,n)
   if(f2)o.frequency.exponentialRampToValueAtTime(f2,n+d)
@@ -62,9 +69,16 @@ const CLS:[string,Sfx][]=[
   ['.btn.prim','next'],['.btn','tap'],['.node','tap'],['.srow','next'],['.xbtn','tap'],['.mbtn','coin'],['.evcard','next'],['#evfab','next'],
 ]
 let armed=false
+/** Destrava o áudio no primeiro toque (exigência dos navegadores de celular) */
+function unlock(){
+  const c=ac();if(!c)return
+  try{const b=c.createBuffer(1,1,22050),s=c.createBufferSource();s.buffer=b;s.connect(c.destination);s.start(0)}catch{}
+  if(c.state==='running'){for(const ev of ['pointerdown','touchend','keydown'])document.removeEventListener(ev,unlock,true)}
+}
 /** Liga o som de toque em todos os botões (uma vez só) */
 export function armClickSounds(){
   if(armed)return;armed=true
+  for(const ev of ['pointerdown','touchend','keydown'])document.addEventListener(ev,unlock,true)
   document.addEventListener('click',e=>{
     const t=e.target as Element|null;if(!t||!t.closest)return
     const b=t.closest('button');if(!b||(b as HTMLButtonElement).disabled)return

@@ -1,0 +1,8 @@
+/* Ajustes do app novo por cima do CSS do jogo */
+/* balão da etapa: mais enxuto, sem tomar a tela */
+.pop{width:min(100%,264px);padding:12px 14px 14px;border-radius:16px}
+.pop::before{width:14px;height:14px;top:-7px}
+.pop h3{font-size:16px;line-height:1.2;margin:0 0 3px}
+.pop p{font-size:13.5px;line-height:1.35;margin:0 0 8px;font-weight:600}
+.pop small{font-size:12px;margin:-3px 0 9px;font-weight:700}
+.popbtn{padding:10px 12px;font-size:13px;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.18)}
