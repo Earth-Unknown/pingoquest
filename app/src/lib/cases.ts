@@ -1,6 +1,6 @@
 // Regras dos casos e chamados (iguais às do src/jogo.html)
 import { patchSave } from './save'
-import { day, today, touchStreak, wkAdd, cqSync } from './progress'
+import { day, dayOf, today, touchStreak, wkAdd, cqSync, attention } from './progress'
 
 export const WGOAL=5
 export function hashStr(t:string){let h=7;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))%1000003;return h}
@@ -48,3 +48,11 @@ export function finishCase(c:CaseEnd){
 export const countInspect=()=>patchSave(S=>{const d=day(S);d.insp=(d.insp||0)+1})
 export const spend=(n:number)=>{let ok=false;patchSave(S=>{if((S.gems??50)>=n){S.gems=(S.gems??50)-n;ok=true}});return ok}
 export const hasLupa=()=>{let l=false;patchSave(S=>{l=!!S.lupa});return l}
+
+/** Quantos itens pedem atenção na aba Missões: metas para resgatar, baú, Chamado do dia e selo da semana */
+export function attentionAll(S:any){
+  const d=dayOf(S);let n=attention(S)
+  if(!d.call)n++
+  const w=weekOf(S);if(w.n>=WGOAL&&!w.claimed)n++
+  return n
+}
