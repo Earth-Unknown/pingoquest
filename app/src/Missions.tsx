@@ -1,5 +1,9 @@
 import art from './legacy/art.json'
+import { useState } from 'react'
 import { patchSave } from './lib/save'
+import { Case } from './Case'
+import { cursoAtivo } from './lib/progress'
+import { dailyCase, weekOf, claimWeek, WGOAL } from './lib/cases'
 import { dayOf, todays, GOAL, CHEST_GEMS, chestReady, claim, openChest } from './lib/progress'
 
 const A:any=art
@@ -8,6 +12,9 @@ const Html=({h,cls}:{h:string;cls?:string})=><span className={cls} style={cls?un
 export function Missions({S,refresh}:{S:any;refresh:()=>void}){
   const d=dayOf(S),ms=todays(),xp=Math.min(d.xp,GOAL)
   const nd=ms.filter(m=>m.p(d)>=m.g).length,rdy=chestReady(d)
+  const [call,setCall]=useState(false)
+  const cur=cursoAtivo(S),def=dailyCase(cur.json),w=weekOf(S),wn=Math.min(w.n,WGOAL)
+  const L7=['S','T','Q','Q','S','S','D'],td=(new Date().getDay()+6)%7
   const act=(fn:(s:any)=>void)=>{patchSave(fn);refresh()}
   return <div className="screen">
     <div className="sect">Missões</div>
@@ -26,7 +33,16 @@ export function Missions({S,refresh}:{S:any;refresh:()=>void}){
       <div className="cc-t"><h3>Baú do Pingo</h3><p className="note">{d.chest?'Aberto hoje. Volte amanhã para outro!':rdy?'Você completou as 3 metas rápidas! Abra o baú.':`Complete as 3 metas rápidas para abrir o baú (${nd} de 3).`}</p>
         {rdy&&<button className="btn blue" onClick={()=>act(openChest)}>Abrir baú · +{CHEST_GEMS}</button>}</div>
     </div>
-    <div className="card"><h3>Chamado do dia e Operação da semana</h3>
-      <p className="note" style={{margin:0}}>Os chamados, a operação semanal e o duelo ainda rodam só no jogo completo.</p></div>
+    {def&&<div className="card call"><span className="ctag">Chamado do dia</span><h3 style={{marginBottom:6}}>{def.title}</h3>
+      <p className="note" style={{margin:'0 0 14px'}}>{def.intro}</p>
+      {d.call?<button className="btn" disabled>Chamado atendido hoje</button>:<button className="btn prim" onClick={()=>setCall(true)}>Atender · +20</button>}</div>}
+    <div className="card"><h3>Operação da semana</h3>
+      <p className="note" style={{margin:'0 0 12px'}}>Atenda {WGOAL} chamados do dia em qualquer dia da semana para ganhar o selo de Técnico da Semana.</p>
+      <div className="wdays" aria-label="Dias com chamado atendido">{L7.map((l,i)=><span key={i} className={'wd'+(w.days.includes(i)?' on':'')+(i===td?' now':'')}><i>{w.days.includes(i)&&<Html h={A.IC.check}/>}</i>{l}</span>)}</div>
+      <div className="bar gold" role="progressbar" aria-valuenow={wn} aria-valuemax={WGOAL}><i style={{width:wn/WGOAL*100+'%'}}/><span>{wn} / {WGOAL} chamados</span></div>
+      {w.claimed?<p className="note" style={{margin:'12px 0 0'}}>Selo de Técnico da Semana conquistado.</p>
+      :wn>=WGOAL&&<button className="btn blue" style={{marginTop:14}} onClick={()=>act(claimWeek)}>Pegar o selo · +60</button>}</div>
+    <div className="card"><p className="note" style={{margin:0}}>O duelo ainda roda só no jogo completo.</p></div>
+    {call&&def&&<Case S={S} def={def} kind="daily" onClose={()=>{setCall(false);refresh()}}/>}
   </div>
 }

@@ -36,7 +36,7 @@ const code3 = [
   slice('var DU_COL=', 'var WHEEL_MINI'),
 ].join('\n')
 vm.runInContext(code3, ctx2)
-const extra = { SKILL_ART: ctx2.SKILL_ART, CQ_ART: ctx2.CQ_ART, chest: vm.runInContext("chestSVG('a')", ctx2),
+const extra = { DV: ctx2.DV, SKILL_ART: ctx2.SKILL_ART, CQ_ART: ctx2.CQ_ART, chest: vm.runInContext("chestSVG('a')", ctx2),
   chestZ: vm.runInContext("chestSVG('z')", ctx2), DU_COL: ctx2.DU_COL, DU: [...Array(10).keys()].map(i => vm.runInContext('duIcon(' + i + ')', ctx2)) }
 const art = { ...extra, NAV: ctx2.NAV, IC: ctx2.IC, PLACE_IC: ctx2.PLACE_IC, IC_TERM: ctx2.IC_TERM, DVI: ctx2.DVI, DVPOOL: ctx2.DVPOOL,
   worldScene: vm.runInContext('worldScene()', ctx2), linuxScene: vm.runInContext('linuxScene()', ctx2) }
