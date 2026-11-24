@@ -4,6 +4,8 @@ import { popIn } from './Fx'
 import { Pingo } from './Pingo'
 import { CURSOS, pct, done, totalFases } from './lib/cursos'
 import { patchSave } from './lib/save'
+import { FriendsCard, FriendsSheet } from './Friends'
+import { inviteFromHash } from './lib/friends'
 import { soundOn, setSound, sfx } from './lib/sound'
 import { KEY } from './lib/store'
 import { avCfg } from './lib/pingo'
@@ -15,12 +17,12 @@ const Html=({h,cls}:{h:string;cls?:string})=><span className={cls} style={cls?un
 const courseIcon=(id:string)=>id==='linux'?A.IC_TERM:'<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="21" width="30" height="13" rx="6" fill="#7b3ff2"/><circle cx="12" cy="27.5" r="2" fill="#fff"/><circle cx="19" cy="27.5" r="2" fill="#fff"/><path d="M13 21 10 9M27 21l3-12" stroke="#7b3ff2" stroke-width="3" stroke-linecap="round"/></svg>'
 const themeNow=()=>{try{return localStorage.getItem('pingoquest-theme')==='dark'?'dark':'light'}catch{return 'light'}}
 
-export function Profile({S,refresh}:{S:any;refresh:()=>void}){
+export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:string|null}){
   const ativo=S.curso||'redes'
   const cur=CURSOS.find(c=>c.id===ativo)||CURSOS[0]
   const [sum,setSum]=useState<string|null>(null)
   const [info,setInfo]=useState<string|null>(null)
-  const [nick,setNick]=useState<string|null>(null)
+  const [friends,setFriends]=useState(!!invite)
   const [cap,setCap]=useState('Toque num item para vestir. Itens com cadeado mostram como ganhar.')
   const [sure,setSure]=useState(false)
   const [snd,setSnd]=useState(soundOn())
@@ -37,7 +39,7 @@ export function Profile({S,refresh}:{S:any;refresh:()=>void}){
   let nOwn=0,nAll=0;SLOTS.forEach(sl=>sl.itens.forEach(it=>{nAll++;if(has(S,sl.id,it))nOwn++}))
   return <div className="screen">
     <div className="ph"><Pingo S={S}/><div><h1>{S.nick||'Meu perfil'}</h1><p>{cur.nome}</p>
-      <button className="nickbtn" onClick={()=>setNick(S.nick||'')}>{S.nick?'Editar apelido':'Escolher apelido'}</button></div></div>
+      <button className="nickbtn" onClick={()=>setFriends(true)}>{S.nick?'Editar apelido':'Escolher apelido'}</button></div></div>
     <div className="mini">{stats.map(([k,v])=><div key={k}><b>{v}</b><span>{k}</span></div>)}</div>
     <div className="sect">Cursos</div>
     <div className="cscroll">{CURSOS.map(c=>{const on=c.id===ativo,p=pct(S,c)
@@ -45,6 +47,8 @@ export function Profile({S,refresh}:{S:any;refresh:()=>void}){
         <Html cls="cqic" h={courseIcon(c.id)}/><b>{c.nome}</b><small>{on?'Estudando':p+'%'}</small>
         <span className="cqbar"><i style={{width:p+'%'}}/></span></button>})}</div>
     <button className="btn ghost sumbtn" onClick={()=>setSum(ativo)}><Html h={A.IC.map}/>Sumário: o que tem em {cur.nome}</button>
+
+    <FriendsCard S={S} onOpen={()=>setFriends(true)}/>
 
     <div className="sect">Meu robô</div>
     <div className="avbox"><Pingo S={S} cls="avbig"/></div>
@@ -65,11 +69,7 @@ export function Profile({S,refresh}:{S:any;refresh:()=>void}){
 
     {sum&&<Sumario S={S} id={sum} onClose={()=>setSum(null)}/>}
     {info&&<CursoInfo S={S} id={info} onClose={()=>setInfo(null)} onPick={id=>{act(s=>trocarCurso(s,id));setInfo(null);window.scrollTo(0,0)}} onSum={id=>{setInfo(null);setSum(id)}}/>}
-    {nick!==null&&<div id="modal" onClick={()=>setNick(null)}><div className="sheet" ref={popIn} role="dialog" aria-label="Apelido" onClick={e=>e.stopPropagation()}>
-      <h2>Seu apelido</h2><p className="note" style={{margin:'0 0 10px'}}>Até 14 letras. Aparece no seu perfil.</p>
-      <input className="nickin" value={nick} maxLength={14} autoFocus onChange={e=>setNick(e.target.value)} style={{width:'100%',boxSizing:'border-box',font:'inherit',fontWeight:800,padding:'12px',borderRadius:12,border:'2px solid var(--line)',marginBottom:12}}/>
-      <button className="btn prim" onClick={()=>{const v=nick.trim().slice(0,14);act(s=>{s.nick=v});setNick(null)}}>Salvar</button>
-      <button className="btn ghost" style={{marginTop:8}} onClick={()=>setNick(null)}>Cancelar</button></div></div>}
+    {friends&&<FriendsSheet inviteCode={invite||inviteFromHash()} onClose={()=>{setFriends(false);refresh()}}/>}
   </div>
 }
 

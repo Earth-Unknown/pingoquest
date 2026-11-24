@@ -5,6 +5,7 @@ import { attentionAll as attention } from './lib/cases'
 import { streakNow, missKeys, cqSync, gamesOf } from './lib/progress'
 import { sync as avSync } from './lib/avatar'
 import { pendingDuel } from './lib/duel'
+import { inviteFromHash } from './lib/friends'
 import { PingoPoke } from './PingoPoke'
 import { Welcome } from './Welcome'
 import { Streak } from './Streak'
@@ -26,7 +27,7 @@ const Svg=({h}:{h:string})=><span style={{display:'contents'}} dangerouslySetInn
 
 export default function App(){
   const [v,setV]=useState(0)
-  const [tab,setTab]=useState<Tab>(()=>pendingDuel()?'missions':'path')
+  const [tab,setTab]=useState<Tab>(()=>pendingDuel()?'missions':(inviteFromHash()&&load().onb?'profile':'path'))
   const [evOpen,setEvOpen]=useState<string|null>(null) // fica aqui para sobreviver ao refresh da tela
   const [welcome,setWelcome]=useState(()=>!pendingDuel())
   const [streak,setStreak]=useState(false)
@@ -54,7 +55,7 @@ export default function App(){
       {tab==='missions'&&<Missions S={S} refresh={refresh}/>}
       {tab==='review'&&<Review S={S} refresh={refresh}/>}
       {tab==='conq'&&<Conquests S={S}/>}
-      {tab==='profile'&&<Profile S={S} refresh={refresh}/>}
+      {tab==='profile'&&<Profile S={S} refresh={refresh} invite={load().onb?inviteFromHash():null}/>}
     </motion.main>
     {streak&&<Streak S={S} onClose={()=>setStreak(false)} refresh={refresh}/>}
     {welcome&&<Welcome S={S} onClose={()=>setWelcome(false)} refresh={refresh}/>}
