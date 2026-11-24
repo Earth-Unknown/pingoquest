@@ -6,6 +6,7 @@ import { CURSOS } from './lib/cursos'
 import { parseCurso, lessonQs } from './lib/curso'
 import { Lesson } from './Lesson'
 import { Case } from './Case'
+import { Walker, type Walk } from './Walker'
 import { EventBanners, EventPage, EventFab } from './Events'
 
 const A:any=art
@@ -20,6 +21,8 @@ function nodeArt(curso:string,gi:number,k:number){
   return '<svg class="dv" viewBox="0 0 46 46" aria-hidden="true">'+A.DVI[nm]+'</svg>'
 }
 
+/** última etapa "atual" vista (curso:parada-fase): se mudou depois de uma lição, o Pingo caminha até a nova */
+let lastCur:string|null=null
 export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpen:string|null;setEvOpen:(id:string|null)=>void}){
   const ativo=S.curso||'redes'
   const cur=CURSOS.find(c=>c.id===ativo)||CURSOS[0]
@@ -32,9 +35,18 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
   const games=useMemo(()=>parseCurso(cur.json),[cur])
   const casoTitulo=(id:string)=>(cur.json.casos||[]).find((c:any)=>c.id===id)?.title||''
   const n=Object.keys(done).length,pct=par.length?Math.round(n/(par.length*4)*100):0
-  let curFound=false
+  let curFound=false,curKey:string|null=null
+  const [walk,setWalk]=useState<Walk|null>(null)
+  const arriving=(k:string)=>!!walk&&walk.to.dataset.k===k // o Pingo parado fica escondido enquanto o outro caminha até lá
   const root=useRef<HTMLDivElement>(null)
   /* cabos ligando as etapas (mesma ideia do jogo) */
+  useLayoutEffect(()=>{
+    const prev=lastCur;lastCur=curKey
+    if(!prev||!curKey||prev===curKey||!root.current)return
+    const a=root.current.querySelector<HTMLElement>(`.node[data-k="${prev}"]`),b=root.current.querySelector<HTMLElement>(`.node[data-k="${curKey}"]`)
+    const pg=b?.parentElement?.querySelector<HTMLElement>('.pingo')
+    if(a&&b&&pg){const r=pg.getBoundingClientRect();setWalk({from:a,to:b,size:r.width,ty:r.top})}
+  },[]) // eslint-disable-line react-hooks/exhaustive-deps
   useLayoutEffect(()=>{
     const draw=()=>{
       const NS='http://www.w3.org/2000/svg'
@@ -56,7 +68,7 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
     window.addEventListener('resize',draw)
     return()=>{clearTimeout(t);window.removeEventListener('resize',draw)}
   })
-  return <div className="screen" ref={root}>
+  return <div className="screen" ref={root} style={{position:'relative'}}>
     <EventBanners S={S} json={cur.json} onOpen={setEvOpen}/>
     <div className={'world w-'+ativo}>
       <div className="wstage"><Html h={ativo==='linux'?A.linuxScene:A.worldScene}/><div className="hping"><Pingo S={S} cls="wps"/></div></div>
@@ -68,13 +80,13 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
         <div><div className="tag">Parada {gi+1}</div><h2>{p.lugar||p.titulo}</h2><div className="lsub">{p.titulo}</div></div></div>
       <div className="nodes">{[0,1,2,3].map(k=>{
         const key=gi+'-'+k,d=!!done[key],un=isUn(gi,k),isCur=un&&!d&&!curFound
-        if(isCur)curFound=true
+        if(isCur){curFound=true;curKey=ativo+':'+key}
         const x=OFF[k],nm=k===3?(p.chamado?casoTitulo(p.chamado):''):(p.fases?.[k]?.nome||'')
         const label=k===3?(p.chamado?'Caso':'Prova final'):'Fase '+(k+1)
         const cls=(d?'done':(un?'cur':'lock'))+(k===3?' bossn':'')
         return <div className="nw" key={k} style={{'--x':x+'px'} as any}>
-          {isCur&&<><div className="bubble">Começar</div><Pingo S={S} cls={'pingo '+(x>0?'r':'l')}/></>}
-          <button className={'node '+cls} onClick={()=>setOpen(gi)} aria-label={p.titulo+', '+label+(un?'':' (bloqueada)')}>
+          {isCur&&<><div className="bubble" style={arriving(ativo+':'+key)?{visibility:'hidden'}:undefined}>Começar</div><span style={{display:'contents',visibility:arriving(ativo+':'+key)?'hidden':'visible'}}><Pingo S={S} cls={'pingo '+(x>0?'r':'l')}/></span></>}
+          <button data-k={ativo+':'+key} className={'node '+cls} onClick={()=>setOpen(gi)} aria-label={p.titulo+', '+label+(un?'':' (bloqueada)')}>
             <Html h={nodeArt(ativo,gi,k)+(d?'<span class="bdg ok">'+A.IC.check+'</span>':(un?'':'<span class="bdg lk">'+A.IC.lock+'</span>'))}/></button>
           <div className={'nlabel '+(x>0?'R':'L')}><b>{label}</b>{nm&&<small>{nm}</small>}</div>
         </div>})}</div>
@@ -85,6 +97,7 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
         const title=k===3?(p.chamado?'Caso · '+casoTitulo(p.chamado):'Prova final'):(p.fases?.[k]?.nome||'Fase '+(k+1))
         return <button key={k} disabled={!un} onClick={()=>{if(k===3&&p.chamado)setKase({g:open,id:p.chamado});else setPlay({g:open,k});setOpen(null)}} className={'srow'+(d?' done':(un?'':' lock'))+(k===3?' fin':'')}><span className="srt"><small>{k===3?(p.chamado?'Caso':'Prova final'):'Lição '+(k+1)}</small><b>{title}</b></span><em>{d?'Jogar de novo':(un?'Jogar':'Bloqueada')}</em></button>})}</div>
       <button className="btn prim" onClick={()=>setOpen(null)}>Fechar</button></div></div>}
+    {walk&&root.current&&<Walker S={S} walk={walk} root={root.current} onEnd={()=>setWalk(null)}/>}
     <EventFab S={S} json={cur.json} onOpen={setEvOpen}/>
     {evOpen&&<EventPage S={S} json={cur.json} id={evOpen} onClose={()=>setEvOpen(null)} refresh={refresh}/>}
     {kase&&<Case key={kase.id} S={S} def={(cur.json.casos||[]).find((c:any)=>c.id===kase.id)} kind="node" keyId={kase.g+'-3'} replay={!!done[kase.g+'-3']} onClose={()=>{setKase(null);refresh()}}/>}

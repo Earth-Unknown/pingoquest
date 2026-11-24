@@ -3,6 +3,7 @@ import art from './legacy/art.json'
 import { Lesson } from './Lesson'
 import { Case } from './Case'
 import { enter } from './Fx'
+import { PuzzleReveal } from './PuzzleReveal'
 import { patchSave } from './lib/save'
 import { evInfo, evList, evPool, evPick, evUse, evChamado, evSettle, fmtD, addDays, type EvRes } from './lib/events'
 import type { Q } from './lib/curso'
@@ -39,12 +40,20 @@ export function EventPage({S,json,id,onClose,refresh}:{S:any;json:any;id:string;
   const ev=(json.eventos||[]).find((e:any)=>e.id===id)
   const [qs,setQs]=useState<Q[]|null>(null)
   const [chamado,setChamado]=useState<any>(null)
+  const [reveal,setReveal]=useState<{before:number;n:number;full:boolean}|null>(null)
   if(!ev)return null
   const i=evInfo(S,ev),isCh=!!ev.steps[0]?.chamado,pool=isCh?[]:evPool(S,json)
   const nextCh=i.next?.chamado?evChamado(S,json,i.next):null
   const lacking=i.canStart&&!isCh&&pool.length<ev.qPerStep
   const fs=Math.max(1,Math.ceil((ev.qPerStep-pool.length)/3))
-  const closePlay=()=>{setQs(null);setChamado(null);refresh()}
+  // ao voltar de uma etapa com peça nova, mostra a peça entrando no quebra-cabeça
+  const closePlay=()=>{
+    setQs(null);setChamado(null)
+    const P=JSON.parse(localStorage.getItem('pingoquest-v3')||'{}').ev?.[ev.id]
+    if(P?.fresh){setReveal({before:Math.max(0,(P.pieces||0)-P.fresh),n:P.fresh,full:P.status==='completed'})}
+    else refresh()
+  }
+  const endReveal=()=>{patchSave(s=>{if(s.ev?.[ev.id])s.ev[ev.id].fresh=0});setReveal(null);refresh()}
 
   const startQuiz=()=>{
     let picked:Q[]|null=null
@@ -102,6 +111,7 @@ export function EventPage({S,json,id,onClose,refresh}:{S:any;json:any;id:string;
       <li>Peças e chips de cada etapa são entregues uma vez só.</li>
       <li>Se o evento acabar antes de você concluir, chips e itens já ganhos ficam com você, mas a coleção não pode ser retomada.</li>
       <li>O evento não libera conteúdo novo e não conta para o desafio de 5 acertos da trilha.</li></ul></div>
+    {reveal&&<PuzzleReveal art={evArt(json,ev)} equipName={ev.equipName} prizeName={ev.prize.name} before={reveal.before} n={reveal.n} full={reveal.full} onDone={endReveal}/>}
     {qs&&<Lesson key={'q'+i.done+qs.length+(qs[0]?.q||'')} S={S} qs={qs} kind="event" keyId={'ev:'+id+':'+i.next?.id} onClose={closePlay} onEvent={quizEnd}
       onRetry={()=>{setQs(null);setTimeout(startQuiz,0)}}/>}
     {chamado&&<Case S={S} def={chamado.def} kind="event" onEvent={caseEnd} onClose={closePlay}/>}
