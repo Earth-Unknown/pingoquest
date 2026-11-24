@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Pingo Quest</title><meta name="theme-color" content="#2a0a66"><meta name="description" content="Estude Redes e Linux resolvendo casos com o Pingo."><link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta property="og:title" content="Pingo Quest"><meta property="og:description" content="Estude Redes e Linux resolvendo casos com o Pingo."><meta property="og:image" content="https://loohfranca.github.io/pingoquest/icons/og.png"><meta name="twitter:card" content="summary_large_image"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <script type="application/json" id="curso-linux">{
  "formato": 1,
  "id": "linux",
@@ -10574,6 +10574,24 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .node.wpulse{animation:wpul .9s ease-out}@keyframes wpul{0%{box-shadow:0 0 0 0 rgba(24,221,251,.85)}100%{box-shadow:0 0 0 30px rgba(24,221,251,0)}}
 .hide{visibility:hidden}.wfade{animation:wfade .35s ease-out}@keyframes wfade{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){.walker,.wtr{display:none}}
+
+svg[data-m="wave"] .m-arm.r{animation:mwave .8s ease-in-out infinite alternate}
+@keyframes mwave{from{transform:rotate(-100deg)}to{transform:rotate(-62deg)}}
+svg[data-m="walk"] .lgL,svg[data-m="walk"] .lgR{animation:mleg .36s ease-in-out infinite alternate}
+svg[data-m="walk"] .lgR{animation-direction:alternate-reverse}
+@keyframes mleg{from{transform:translateY(0)}to{transform:translateY(-4.500px)}}
+svg[data-m="walk"] .m-arm.l{animation:marm .36s ease-in-out infinite alternate}
+svg[data-m="walk"] .m-arm.r{animation:marm .36s ease-in-out infinite alternate-reverse}
+@keyframes marm{from{transform:rotate(-26deg)}to{transform:rotate(26deg)}}
+svg[data-m="think"] .m-arm.r{transform:rotate(-118deg)}
+svg[data-m="sleep"]{animation:msl 3.4s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes msl{50%{transform:scaleY(.97)}}
+.m-zz text{animation:mzz 2.4s ease-in-out infinite}.m-zz text+text{animation-delay:.8s}
+@keyframes mzz{0%{opacity:0;transform:translateY(6px)}40%,70%{opacity:1}100%{opacity:0;transform:translateY(-6px)}}
+.m-heart{transform-box:fill-box;transform-origin:center;animation:mht 1s ease-in-out infinite}
+@keyframes mht{50%{transform:scale(1.18)}}
+.m-bub{animation:mbub 2.6s ease-in-out infinite}@keyframes mbub{50%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){svg[data-m] *{animation:none!important}}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -10764,7 +10782,7 @@ function avIcon(slot,it){
 function pingo(mood,cls,av){
   /* Pingo v3 (referência "Robô Kawaii Roxo"): capacete lilás grande, viseira escura, orelhas roxas com luz ciano,
      bochechas brilhantes, boca aberta rosa, peito com 3 luzinhas, antena curva com bolinha amarela. Sem mochila fixa. */
-  var eyes,mouth,brow='',
+  var eyes,mouth,brow='',topx='',
   cheeks='<ellipse cx="38.500" cy="61" rx="3.700" ry="3" fill="#ff5fae"/><ellipse cx="81.500" cy="61" rx="3.700" ry="3" fill="#ff5fae"/><ellipse cx="37.300" cy="59.900" rx="1.200" ry=".8" fill="#fff" opacity=".7"/><ellipse cx="80.300" cy="59.900" rx="1.200" ry=".8" fill="#fff" opacity=".7"/>',
   D='<g class="m-smile"><path d="M53.500 57.300h13q0 8.500-6.500 8.500t-6.500-8.500z" fill="#ff5fae"/><ellipse cx="60" cy="63.600" rx="3.600" ry="2.100" fill="#ff9fd0"/></g><ellipse class="m-wow" cx="60" cy="63" rx="5.200" ry="6" fill="#ff5fae"/><ellipse class="m-wow" cx="60" cy="66" rx="3" ry="2.200" fill="#ff9fd0"/>';
   var oval=function(cx,cy,rx,ry){return '<ellipse class="m-oval" cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'"/><circle cx="'+(cx-1.800)+'" cy="'+(cy-ry*.45)+'" r="1.700" fill="#fff"/>'};
@@ -10776,6 +10794,18 @@ function pingo(mood,cls,av){
   }else if(mood==='cheer'){
     eyes='<path class="m-eye" d="M40.500 52q6.500-12 13 0M66.500 52q6.500-12 13 0"/>';
     mouth=D;
+  }else if(mood==='think'){
+    eyes=oval(48.500,46,3.800,5.400)+oval(75.500,46,3.800,5.400);
+    brow='<path class="m-eye" style="animation:none" d="M41 38q6-4 12-1M68 37q6-3 12 1"/>';
+    mouth='<path d="M55 66q5-3 10 0" fill="none" stroke="#ff5fae" stroke-width="3.200" stroke-linecap="round"/>';
+    topx='<g class="m-bub"><circle cx="20" cy="16" r="9" fill="#fff" stroke="#c88bff" stroke-width="2"/><text x="20" y="21" text-anchor="middle" font-size="13" font-weight="900" fill="#7b3ff2" font-family="system-ui,sans-serif">?</text><circle cx="29" cy="27" r="2.200" fill="#fff" stroke="#c88bff" stroke-width="1.400"/></g>';
+  }else if(mood==='sleep'){
+    eyes='<path class="m-eye" style="animation:none" d="M40.500 49q6.500 7 13 0M66.500 49q6.500 7 13 0"/>';
+    mouth='<ellipse cx="60" cy="65" rx="3" ry="2.400" fill="#ff5fae"/>';
+    topx='<g class="m-zz"><text x="88" y="24" font-size="14" font-weight="900" fill="#18ddfb" font-family="system-ui,sans-serif">z</text><text x="97" y="14" font-size="10" font-weight="900" fill="#18ddfb" font-family="system-ui,sans-serif">z</text></g>';
+  }else if(mood==='love'){
+    var ht=function(cx,cy){return '<path d="M'+cx+' '+(cy+6)+'C'+(cx-9)+' '+(cy-1)+' '+(cx-4)+' '+(cy-8)+' '+cx+' '+(cy-3)+'C'+(cx+4)+' '+(cy-8)+' '+(cx+9)+' '+(cy-1)+' '+cx+' '+(cy+6)+'z" fill="#ff4fae" class="m-heart"/>'};
+    eyes=ht(46.500,49)+ht(73.500,49);mouth=D;
   }else if(mood==='wink'){
     eyes=oval(46.500,48,3.800,5.400)+'<path class="m-eye" d="M67 51q6.500-12 13 0"/>';
     mouth=D;
@@ -10796,8 +10826,7 @@ function pingo(mood,cls,av){
   return '<svg viewBox="0 0 120 120" class="'+(cls||'')+'"'+st+' data-m="'+mood+'" role="img" aria-label="Pingo, '+(av===false?'o roteador mascote':'seu robô')+'">'+back+
    (topAnt?'':ant)+
    /* pernas, corpo */
-   '<rect class="m-low" x="41.500" y="101" width="19.600" height="11.500" rx="5.700"/><rect class="m-low" x="62" y="101" width="19.600" height="11.500" rx="5.700"/>'+
-   '<rect x="45.500" y="107.400" width="12" height="2.800" rx="1.400" fill="var(--cyan)"/><rect x="67.500" y="107.400" width="12" height="2.800" rx="1.400" fill="var(--cyan)"/>'+
+   '<g class="lgL"><rect class="m-low" x="41.500" y="101" width="19.600" height="11.500" rx="5.700"/><rect x="45.500" y="107.400" width="12" height="2.800" rx="1.400" fill="var(--cyan)"/></g><g class="lgR"><rect class="m-low" x="62" y="101" width="19.600" height="11.500" rx="5.700"/><rect x="67.500" y="107.400" width="12" height="2.800" rx="1.400" fill="var(--cyan)"/></g>'+
    '<rect class="m-low" x="41.600" y="82.500" width="36.400" height="22" rx="11"/><rect class="m-body" x="41.600" y="80.500" width="36.400" height="22.500" rx="11"/>'+
    '<rect x="51" y="85.500" width="18" height="10" rx="5" fill="#2a1668"/><circle cx="55.500" cy="90.500" r="2.100" fill="#18ddfb"/><circle cx="60" cy="90.500" r="2.100" fill="#ffd83d"/><circle cx="64.300" cy="90.500" r="2.100" fill="#ff4fae"/>'+
    suit+
@@ -10809,7 +10838,7 @@ function pingo(mood,cls,av){
    '<path d="M38 37q5-3.500 12-3.500" fill="none" stroke="#fff" stroke-width="2.200" stroke-linecap="round" opacity=".22"/>'+
    eyes+brow+cheeks+mouth+vis+
    '<g class="m-arm l"><line class="m-limb" x1="42" y1="86" x2="34" y2="93.500"/><circle class="m-hand" cx="36" cy="95.500" r="2.300"/><rect class="m-hand" x="25.500" y="91.500" width="10.500" height="11" rx="5"/><rect x="27.300" y="93.200" width="2.400" height="3.600" rx="1.200" fill="#fff" opacity=".5"/></g>'+
-   '<g class="m-arm r"><line class="m-limb" x1="78" y1="86" x2="86" y2="93.500"/><circle class="m-hand" cx="84" cy="95.500" r="2.300"/><rect class="m-hand" x="84" y="91.500" width="10.500" height="11" rx="5"/><rect x="90.300" y="93.200" width="2.400" height="3.600" rx="1.200" fill="#fff" opacity=".5"/></g>'+hat+
+   '<g class="m-arm r"><line class="m-limb" x1="78" y1="86" x2="86" y2="93.500"/><circle class="m-hand" cx="84" cy="95.500" r="2.300"/><rect class="m-hand" x="84" y="91.500" width="10.500" height="11" rx="5"/><rect x="90.300" y="93.200" width="2.400" height="3.600" rx="1.200" fill="#fff" opacity=".5"/></g>'+hat+topx+
    (topAnt?ant:'')+'</svg>';
 }
 
@@ -11658,7 +11687,7 @@ function startWalk(w){
   function ctr(el){var b=el.getBoundingClientRect();return{x:b.left+b.width/2+sx,y:b.top+b.height/2+sy}}
   var A=ctr(ea),B=ctr(eb),pr=pg.getBoundingClientRect(),W=pr.width,H=W,T={x:pr.left+W/2+sx,y:pr.top+pr.height/2+sy};
   var el=document.createElement('div');el.className='walker';el.style.width=W+'px';el.setAttribute('aria-hidden','true');
-  el.innerHTML='<div class="wkin">'+pingo('happy','wks')+'</div>';document.body.appendChild(el);
+  el.innerHTML='<div class="wkin">'+pingo('walk','wks')+'</div>';document.body.appendChild(el);
   var inn=el.firstChild,m=(A.y+B.y)/2,dist=Math.hypot(B.x-A.x,B.y-A.y),dur=Math.max(1500,Math.min(2800,dist*6)),t0=performance.now(),lastTr=0;
   function pos(t){var u=1-t;return{x:u*u*u*A.x+3*u*u*t*A.x+3*u*t*t*B.x+t*t*t*B.x,y:u*u*u*A.y+3*u*u*t*m+3*u*t*t*m+t*t*t*B.y}}
   function put(x,y){el.style.transform='translate('+(x-W/2)+'px,'+(y-H*.8)+'px)'}
@@ -12113,7 +12142,7 @@ function showNoHearts(){
   var can=S.gems>=60;
   $('#lesson').hidden=false;document.body.classList.add('lock');
   $('#lesson').innerHTML='<div class="lw"><div class="lhead"><button class="xbtn" data-act="lclose" aria-label="Fechar">'+IC.x+'</button><div class="pbar"><i style="width:0"></i></div><div class="stat s-heart">'+IC.heart+'<span>0</span></div></div>'+
-   '<div class="center">'+pingo('sad','pingo-big')+'<h1 style="color:var(--bad)">Sem vidas!</h1><p>Errar faz parte de aprender. Treine um pouco para ganhar uma vida ou recarregue com chips.</p>'+
+   '<div class="center">'+pingo('sleep','pingo-big')+'<h1 style="color:var(--bad)">Sem vidas!</h1><p>Errar faz parte de aprender. Treine um pouco para ganhar uma vida ou recarregue com chips.</p>'+
    '<div class="stack"><button class="btn" data-act="practice">Treinar e ganhar vida</button>'+
    '<button class="btn blue" data-act="refill"'+(can?'':' disabled')+'>Recarregar por 60 chips</button>'+
    '<p class="note">Você tem '+S.gems+' chips.</p>'+
@@ -12749,7 +12778,7 @@ function showWelcome(){
   var title=need?(first?'Oi! Eu sou o Pingo':'Novo curso: '+DATA.NOME):'Que bom te ver de novo!';
   var text=need?(first?'Bem-vindo ao Pingo Quest! ':'')+curMeta().intro
     : 'Você concluiu '+doneCount()+' de '+total()+' fases em '+DATA.NOME+(st>0?' e está com '+st+(st===1?' dia':' dias')+' de brilho':'')+'. Bora continuar?';
-  $('#welcome').innerHTML='<div class="wcard" role="dialog" aria-modal="true" aria-label="Boas-vindas">'+pingo('cheer','pingo-w')+
+  $('#welcome').innerHTML='<div class="wcard" role="dialog" aria-modal="true" aria-label="Boas-vindas">'+pingo('wave','pingo-w')+
     '<h2>'+esc(title)+'</h2><p>'+esc(text)+'</p>'+
     '<div class="wpills"><span class="wpill"><span style="display:contents">'+IC.search+'</span>'+(CURSO==='linux'?'Chamados no terminal':'Resolva casos')+'</span>'+
     '<span class="wpill"><span style="color:#ff8a1f;display:contents">'+IC.brilho+'</span>Brilho diário</span>'+
@@ -12760,7 +12789,7 @@ function showWelcome(){
   var b=document.getElementById('wgo');if(b&&b.focus){try{b.focus({preventScroll:true})}catch(e){}}
 }
 function showCursoPicker(){
-  var h='<div class="wcard cpick" role="dialog" aria-modal="true" aria-label="Escolha seu curso">'+pingo('cheer','pingo-w')+'<h2>O que você quer aprender?</h2><p>Escolha um curso. Você pode trocar quando quiser, no Perfil.</p><div class="cplist">';
+  var h='<div class="wcard cpick" role="dialog" aria-modal="true" aria-label="Escolha seu curso">'+pingo('wave','pingo-w')+'<h2>O que você quer aprender?</h2><p>Escolha um curso. Você pode trocar quando quiser, no Perfil.</p><div class="cplist">';
   COURSES.forEach(function(c){
     var ok=courseReady(c.id),on=c.id===CURSO,nm=courseName(c),j=null,np=0,nc=0;
     if(ok){try{j=on?null:JSON.parse(document.getElementById('curso-'+c.id).textContent)}catch(e){}}
