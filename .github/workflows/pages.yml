@@ -1,4 +1,4 @@
-# Publica o jogo (somente index.html) no GitHub Pages a cada push na main
+# Compila o app React e publica no GitHub Pages a cada push na main (o jogo antigo fica em /jogo-antigo/)
 name: Publicar no GitHub Pages
 on:
   push:
@@ -19,13 +19,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Preparar arquivos do site
-        run: |
-          sh build-site.sh
-          mkdir _site
-          cp index.html _site/index.html
-          cp -r icons manifest.webmanifest _site/ 2>/dev/null || true
-          cp -r beta _site/beta
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Montar o site (app React na raiz, jogo antigo em /jogo-antigo/)
+        run: sh tools/montar-site.sh
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
