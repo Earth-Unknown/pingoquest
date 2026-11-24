@@ -906,6 +906,17 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .sumh em{font-style:normal;font-size:11px;font-weight:900;color:var(--muted)}.sumh em.ok{color:var(--good,#2fbf4a)}
 .sumb{display:none;padding:0 12px 10px 50px}.sumr.open .sumb{display:block}
 .sumf{padding:6px 0;border-top:1px dashed var(--line)}.sumf b{display:block;font-size:13.5px}.sumf small{font-size:12.5px;color:var(--muted);font-weight:700}.sumf.ch b{color:var(--primary,#7b3ff2)}
+
+.cflag svg{position:static!important;inset:auto!important;width:24px!important;height:24px!important;flex:none}
+.winfo{right:104px!important}
+.winfo span{display:block;line-height:1.25}.world{height:210px!important}.w-redes{background:linear-gradient(180deg,#2a0a66,#6d3be0 62%,#b98cf2)}.w-linux{background:linear-gradient(180deg,#07102e,#1a1b66 65%,#0e7f9a)}.wstage{position:absolute;right:0;top:0;width:328px;height:210px}.wstage>svg{overflow:visible}.hping{position:absolute;right:10px;bottom:72px;width:88px;z-index:1;pointer-events:none;transform-origin:50% 100%;animation:wbob 3.4s ease-in-out infinite;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3))}
+.world .hping svg{position:static;inset:auto;width:100%;height:auto;display:block}
+@keyframes wbob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-4px) rotate(1.5deg)}}
+.tw{animation:tw 3s ease-in-out infinite alternate}@keyframes tw{from{opacity:.2}to{opacity:.9}}
+.wf{animation:wf 2.1s ease-in-out infinite}@keyframes wf{0%,100%{opacity:.12}50%{opacity:.95}}
+.cl{animation:cl 18s ease-in-out infinite alternate}@keyframes cl{from{transform:translateX(-12px)}to{transform:translateX(16px)}}
+.blk{animation:blk 1.1s steps(1) infinite}@keyframes blk{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.world *,.hping{animation:none!important}}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -1758,29 +1769,38 @@ function showCursos(){
   $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
 }
 
+var RM=false;try{RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+function pkt(path,dur,begin,col){
+  var r='<rect x="-4.500" y="-4.500" width="9" height="9" rx="2.500" fill="'+(col||'#ffd83d')+'" stroke="#fff" stroke-width="1" stroke-opacity=".7">';
+  if(!RM)r+='<animateMotion dur="'+dur+'" begin="'+begin+'" repeatCount="indefinite" path="'+path+'"/>';
+  else r='<rect x="'+0+'" y="0" width="0" height="0">';
+  return r+'</rect>';
+}
 function worldScene(){
-  var h='<svg viewBox="0 0 390 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="wsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a0a66"/><stop offset=".6" stop-color="#6d3be0"/><stop offset="1" stop-color="#c88bff"/></linearGradient><linearGradient id="wgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7f0cf"/><stop offset="1" stop-color="#7cd6a6"/></linearGradient></defs><rect width="390" height="170" fill="url(#wsky)"/>';
-  [[30,22,1.5],[90,50,1.2],[160,16,1.6],[250,30,1.3],[330,18,1.8],[360,70,1.2],[60,80,1.4]].forEach(function(a){h+='<circle cx="'+a[0]+'" cy="'+a[1]+'" r="'+a[2]+'" fill="#fff" opacity=".7"/>'});
-  h+='<ellipse cx="60" cy="52" rx="24" ry="8" fill="#fff" opacity=".8"/><ellipse cx="330" cy="40" rx="20" ry="7" fill="#fff" opacity=".8"/>'+
-   '<ellipse cx="195" cy="168" rx="230" ry="44" fill="#4c24b8" opacity=".6"/><ellipse cx="195" cy="156" rx="200" ry="38" fill="url(#wgr)"/>'+
-   '<path d="M40 150Q120 128 175 118M350 150Q270 130 215 118" fill="none" stroke="#2a1668" stroke-width="3.500" stroke-linecap="round"/>'+
-   '<g transform="translate(250,18)"><rect x="-17" y="30" width="34" height="86" rx="12" fill="#8b5cf6"/><rect x="-11" y="46" width="22" height="22" rx="7" fill="#2a1668"/><circle cx="-5" cy="57" r="3" fill="#19e0ff"/><circle cx="5" cy="57" r="3" fill="#19e0ff"/><line x1="-8" y1="30" x2="-15" y2="8" stroke="#5a22c4" stroke-width="4" stroke-linecap="round"/><line x1="8" y1="30" x2="15" y2="8" stroke="#5a22c4" stroke-width="4" stroke-linecap="round"/><circle cx="-16" cy="6" r="4.500" fill="#ffd83d"/><circle cx="16" cy="6" r="4.500" fill="#ffd83d"/><path d="M-26 0q26-20 52 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/></g>';
-  [[300,'#ffe9f6'],[60,'#fff'],[130,'#e9f6ff']].forEach(function(a,i){var y=i===2?112:104;h+='<g transform="translate('+a[0]+','+y+')"><rect x="0" y="12" width="30" height="22" rx="5" fill="'+a[1]+'"/><path d="M-4 15L15 0L34 15z" fill="#5a22c4"/><rect x="11" y="20" width="8" height="14" rx="3" fill="#fff" opacity=".85"/></g>'});
-  [[110,122,-10],[170,112,0],[330,128,8],[215,126,6]].forEach(function(a){h+='<g transform="translate('+a[0]+','+a[1]+') rotate('+a[2]+')"><rect x="-7" y="-7" width="14" height="14" rx="3.500" fill="#ffd83d" stroke="#d9a400" stroke-width="1.200"/><rect x="-2" y="-7" width="4" height="14" fill="#fff" opacity=".6"/></g>'});
-  return h+'</svg>';
+  var L1='M62 126C74 128 84 118 96 108',L2='M166 106C196 116 220 126 246 130';
+  var h='<svg viewBox="0 0 328 210" overflow="visible" aria-hidden="true"><g transform="translate(0,-8)"><defs><radialGradient id="wglow"><stop offset="0" stop-color="#18ddfb" stop-opacity=".9"/><stop offset="1" stop-color="#18ddfb" stop-opacity="0"/></radialGradient><linearGradient id="wgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7f0cf"/><stop offset="1" stop-color="#7cd6a6"/></linearGradient></defs>';
+  [[20,26,1.5,0],[84,58,1.2,.8],[150,20,1.6,1.4],[200,48,1.3,.4],[290,22,1.8,1.1],[306,70,1.2,1.9]].forEach(function(a){h+='<circle class="tw" style="animation-delay:'+a[3]+'s" cx="'+a[0]+'" cy="'+a[1]+'" r="'+a[2]+'" fill="#fff"/>'});
+  h+='<g class="cl"><ellipse cx="226" cy="56" rx="22" ry="7" fill="#fff" opacity=".6"/></g>'+
+   '<ellipse cx="164" cy="214" rx="300" ry="84" fill="#4c24b8" opacity=".6"/><ellipse cx="164" cy="200" rx="260" ry="78" fill="url(#wgr)"/>';
+  [[18,'#ffe9f6'],[48,'#fff']].forEach(function(a,i){h+='<g transform="translate('+a[0]+','+(i?106:100)+')scale(.8)"><rect x="0" y="12" width="30" height="22" rx="5" fill="'+a[1]+'"/><path d="M-4 15L15 0L34 15z" fill="#5a22c4"/><rect x="11" y="20" width="8" height="14" rx="3" fill="#ffd83d" opacity=".9"/></g>'});
+  [L1,L2].forEach(function(d){h+='<path d="'+d+'" fill="none" stroke="#2a1668" stroke-width="4.500" stroke-linecap="round" opacity=".7"/><path d="'+d+'" fill="none" stroke="#c88bff" stroke-width="1.600" stroke-linecap="round" stroke-dasharray="2 5"/>'});
+  h+='<ellipse cx="130" cy="116" rx="44" ry="7" fill="url(#wglow)"/>'+
+   '<g transform="translate(130,0)"><line x1="-24" y1="88" x2="-30" y2="60" stroke="#5a22c4" stroke-width="4.500" stroke-linecap="round"/><line x1="24" y1="88" x2="30" y2="60" stroke="#5a22c4" stroke-width="4.500" stroke-linecap="round"/><circle cx="-31" cy="58" r="4.500" fill="#ffd83d"/><circle cx="31" cy="58" r="4.500" fill="#ffd83d"/>'+
+   '<rect x="-38" y="86" width="76" height="26" rx="13" fill="#8b5cf6" stroke="#2a1668" stroke-width="2.500"/><rect x="-30" y="90" width="60" height="6" rx="3" fill="#fff" opacity=".28"/>'+
+   '<circle cx="-18" cy="102" r="3" fill="#7dff2b"/><circle class="blk" cx="-8" cy="102" r="3" fill="#ffd83d"/><circle cx="2" cy="102" r="3" fill="#18ddfb"/><rect x="14" y="99" width="16" height="6" rx="3" fill="#150638"/>'+
+   '<path class="wf" d="M-9 76q9-8 18 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path class="wf" style="animation-delay:.35s" d="M-17 70q17-14 34 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path class="wf" style="animation-delay:.7s" d="M-25 64q25-20 50 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>';
+  h+=pkt(L1,'1.6s','0s')+pkt(L2,'2.2s','0.6s','#7dff2b')+pkt(L2,'2.2s','1.7s','#ff8ad0');
+  return h+'</g></svg>';
 }
 
 function linuxScene(){
-  var h='<svg viewBox="0 0 390 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="lsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07102e"/><stop offset=".65" stop-color="#1a1b66"/><stop offset="1" stop-color="#0e7f9a"/></linearGradient><linearGradient id="lgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18506e"/><stop offset="1" stop-color="#0b2347"/></linearGradient></defs><rect width="390" height="170" fill="url(#lsky)"/>';
-  [[22,24,'01'],[70,58,'1'],[132,20,'10'],[210,34,'0'],[300,16,'01'],[350,60,'1'],[40,90,'0']].forEach(function(a){h+='<text x="'+a[0]+'" y="'+a[1]+'" fill="#18ddfb" opacity=".55" font-family="monospace" font-size="12" font-weight="700">'+a[2]+'</text>'});
-  h+='<ellipse cx="195" cy="168" rx="230" ry="44" fill="#06163a" opacity=".7"/><ellipse cx="195" cy="156" rx="200" ry="38" fill="url(#lgr)"/>'+
-   '<path d="M20 150H370M60 138H330M110 128H280" stroke="#18ddfb" stroke-opacity=".25" stroke-width="1.5"/>';
-  /* janela de terminal grande */
-  h+='<g transform="translate(222,14)"><rect x="0" y="0" width="128" height="92" rx="10" fill="#0d0620" stroke="#18ddfb" stroke-width="3"/><rect x="0" y="0" width="128" height="16" rx="10" fill="#2a1668"/><circle cx="12" cy="8" r="3" fill="#ff5a7a"/><circle cx="23" cy="8" r="3" fill="#ffd83d"/><circle cx="34" cy="8" r="3" fill="#7dff2b"/>'+
-   '<text x="10" y="36" fill="#7dff2b" font-family="monospace" font-size="12" font-weight="700">aluno@pingo:~$</text><text x="10" y="54" fill="#fff" font-family="monospace" font-size="12" font-weight="700">ls -l</text><text x="10" y="72" fill="#c88bff" font-family="monospace" font-size="12" font-weight="700">cat nota.txt</text><rect x="106" y="62" width="8" height="12" fill="#18ddfb"/></g>';
-  /* racks de servidor */
-  [[48,92],[96,104]].forEach(function(a){h+='<g opacity=".75" transform="translate('+a[0]+','+a[1]+')"><rect x="0" y="0" width="34" height="'+(a[1]===92?58:46)+'" rx="5" fill="#2a1668" stroke="#7b3ff2" stroke-width="2"/>'+[8,20,32].map(function(y,i){return a[1]===104&&i>1?'':'<rect x="5" y="'+y+'" width="24" height="8" rx="2" fill="#150638"/><circle cx="10" cy="'+(y+4)+'" r="1.8" fill="'+(i===1?'#ffd83d':'#7dff2b')+'"/>'}).join('')+'</g>'});
-  h+='<g transform="translate(176,118)"><rect x="-7" y="-7" width="14" height="14" rx="3.5" fill="#ffd83d" stroke="#d9a400" stroke-width="1.2"/><text x="-4" y="4" fill="#5a3b00" font-family="monospace" font-size="9" font-weight="900">&gt;_</text></g>';
+  var h='<svg viewBox="0 0 328 210" overflow="visible" aria-hidden="true"><defs><linearGradient id="lgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18506e"/><stop offset="1" stop-color="#0b2347"/></linearGradient>'+
+   [['a',42],['b',108],['c',96]].map(function(c){return'<clipPath id="lc'+c[0]+'"><rect x="34" y="0" width="'+(RM?c[1]:0)+'" height="220">'+(RM?'':'<animate attributeName="width" dur="9s" repeatCount="indefinite" values="'+(c[0]==='a'?'0;'+c[1]+';'+c[1]+';0':c[0]==='b'?'0;0;'+c[1]+';'+c[1]+';0':'0;0;0;'+c[1]+';'+c[1]+';0')+'" keyTimes="'+(c[0]==='a'?'0;.14;.92;1':c[0]==='b'?'0;.16;.36;.92;1':'0;.38;.4;.5;.92;1')+'"/>')+'</rect></clipPath>'}).join('')+'</defs>';
+  [[196,40,'01',0],[214,66,'1',.6],[150,22,'10',1.2],[100,30,'0',.3],[20,34,'01',1.6],[222,96,'1',.9]].forEach(function(a){h+='<text class="tw" style="animation-delay:'+a[3]+'s" x="'+a[0]+'" y="'+a[1]+'" fill="#18ddfb" font-family="monospace" font-size="12" font-weight="700">'+a[2]+'</text>'});
+  h+='<ellipse cx="164" cy="214" rx="300" ry="84" fill="#06163a" opacity=".7"/><ellipse cx="164" cy="200" rx="260" ry="78" fill="url(#lgr)"/><path d="M0 150H328M20 140H300" stroke="#18ddfb" stroke-opacity=".25" stroke-width="1.500"/>';
+  h+='<g transform="translate(24,50)"><rect x="0" y="0" width="150" height="62" rx="10" fill="#0d0620" stroke="#18ddfb" stroke-width="3"/><rect x="0" y="0" width="150" height="15" rx="10" fill="#2a1668"/><circle cx="12" cy="7.500" r="3" fill="#ff5a7a"/><circle cx="23" cy="7.500" r="3" fill="#ffd83d"/><circle cx="34" cy="7.500" r="3" fill="#7dff2b"/>'+
+   '<g transform="translate(-24,-50)" font-family="monospace" font-size="10" font-weight="700"><g clip-path="url(#lca)"><text x="34" y="78" fill="#fff">$ ls -l</text></g><g clip-path="url(#lcb)"><text x="34" y="91" fill="#c88bff">$ apt install tree</text></g><g clip-path="url(#lcc)"><text x="34" y="104" fill="#7dff2b">✓ tree instalado</text></g><rect class="blk" x="34" y="108" width="7" height="2.500" fill="#18ddfb"/></g></g>';
+  h+='<g opacity=".85" transform="translate(188,62)"><rect x="0" y="0" width="26" height="50" rx="5" fill="#2a1668" stroke="#7b3ff2" stroke-width="2"/>'+[7,20,33].map(function(y,i){return'<rect x="4" y="'+y+'" width="18" height="9" rx="2" fill="#150638"/><circle class="blk" style="animation-delay:'+(i*.37)+'s" cx="8" cy="'+(y+4.5)+'" r="1.800" fill="'+(i===1?'#ffd83d':'#7dff2b')+'"/>'}).join('')+'</g>';
   return h+'</svg>';
 }
 function courseFlag(){
@@ -1790,7 +1810,7 @@ function courseFlag(){
 function worldBanner(){
   var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
   var t=GAMES.length*4,pct=Math.round(n/t*100);
-  return '<div class="world w-'+CURSO+'">'+(CURSO==='linux'?linuxScene():worldScene())+courseFlag()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
+  return '<div class="world w-'+CURSO+'">'+'<div class="wstage">'+(CURSO==='linux'?linuxScene():worldScene())+'<div class="hping">'+pingo('happy','wps')+'</div></div>'+courseFlag()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
 }
 
 function showMundo(){
