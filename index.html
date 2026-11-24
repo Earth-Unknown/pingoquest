@@ -10106,6 +10106,22 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .gt code{font:800 13px ui-monospace,Menlo,monospace;color:#fff;border-radius:8px;padding:4px 8px;align-self:flex-start;word-break:break-all}
 .gt span{font-size:12.5px;font-weight:700;line-height:1.25}
 .gt.g0 code{background:#7b3ff2}.gt.g1 code{background:#0fa8d4}.gt.g2 code{background:#d6338a}.gt.g3 code{background:#238a38}
+
+/* chamado compacto: tudo em uma tela, sem rolar */
+.lbody.tmz{display:flex;flex-direction:column;gap:8px;overflow:hidden;padding-top:6px;padding-bottom:6px}
+.tmz .tdots{display:none}
+.tmz .say{margin:0;gap:8px;align-items:center}.tmz .sp{flex:none}.tmz .sp svg{width:34px;height:34px}
+.tmz .bub{padding:6px 10px;font-size:12.5px;line-height:1.25;min-height:0}.tmz .bub:before,.tmz .bub:after{display:none}
+.tmz .bub p{margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tmz .tcur{margin:0;padding:8px 10px;border-width:2px}.trowt{display:flex;gap:8px;align-items:flex-start}.trowt b{font-size:14px;line-height:1.25;margin:0}
+.tn{flex:none;font-style:normal;font-weight:900;font-size:12px;background:var(--cyan);color:#0d0620;border-radius:8px;padding:2px 7px}
+.tmz .thint{margin-top:6px;padding:5px 8px;font-size:12.5px;gap:6px}.tmz .thint svg{width:16px;height:16px}
+.tmz .thint.cmd{flex-wrap:nowrap}.tmz .thint code{font-size:12.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tmz .thint button{min-height:30px;padding:0 12px;font-size:12px}
+.tmz #tfiles{margin:0}.tmz .tfl{margin:0;display:flex;align-items:center;gap:6px}.tmz .tfl small{margin:0;flex:none;max-width:38%;font-size:11px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tmz .tfl small svg{display:none}
+.tmz .tfl>div{flex-wrap:nowrap;overflow-x:auto;gap:5px;flex:1;min-width:0}.tmz .tfi{flex:none;min-height:30px;font-size:12px}.tfi.back{background:var(--cyan);border-color:var(--cyan);color:#0d0620}
+.tmz .term{flex:1;min-height:90px;display:flex;flex-direction:column;border-radius:14px}.tmz .tmx{flex:1;max-height:none;min-height:0;font-size:12px;padding:6px 10px}
+.tmz .tkeys{margin:0}.tmz .tkeys button{min-width:36px;min-height:34px;font-size:13px}
+.lfoot .trow .btn{min-height:40px;font-size:12.5px}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -11949,11 +11965,10 @@ function tmCost(i){var l=TM.hl[i]||0,r=TM.def.passos[i].resposta;if(l<1)return C
 function tmDots(){return (TM.def.passos||[]).map(function(x,i){return'<i class="'+(TM.done[i]?'ok':(i===tmCur()?'now':''))+'"></i>'}).join('')}
 function tmStep(){
   var T=TM,i=tmCur(),st=T.def.passos||[];
-  if(i<0)return'<div class="tcur ok"><small>Tudo pronto</small><b>Todos os passos concluídos!</b></div>';
-  var h='<div class="tcur"><small>Passo '+(i+1)+' de '+st.length+'</small><b>'+esc(st[i].texto)+'</b>',l=T.hl[i]||0;
+  if(i<0)return'<div class="tcur ok"><b>Todos os passos concluídos!</b></div>';
+  var h='<div class="tcur"><div class="trowt"><i class="tn">'+(i+1)+'/'+st.length+'</i><b>'+esc(st[i].texto)+'</b></div>',l=T.hl[i]||0;
   if(l>=1)h+='<div class="thint"><span>'+IC.search+'</span>'+esc(st[i].dica||'Tente o comando help.')+'</div>';
-  if(l>=2)h+='<div class="thint cmd"><code>'+esc(st[i].resposta)+'</code><button data-act="tfill">Colocar no terminal</button></div>';
-  if(!l&&!T.ran.length)h+='<p class="tfirst">Digite o comando no terminal abaixo e toque em Enviar. Sem ideia? Toque em Guia ou Dica.</p>';
+  if(l>=2)h+='<div class="thint cmd"><code>'+esc(st[i].resposta)+'</code><button data-act="tfill">Usar</button></div>';
   return h+'</div>';
 }
 function tmOut(){
@@ -11964,7 +11979,7 @@ function tmFiles(){
   Object.keys(T.fs).forEach(function(k){if(k!==T.cwd&&k.indexOf(pre)===0&&k.slice(pre.length).indexOf('/')<0){var b=k.slice(pre.length);if(b.charAt(0)!=='.')items.push({n:b,d:T.fs[k].d})}});
   items.sort(function(a,b){return (b.d-a.d)||(a.n<b.n?-1:1)});
   var path=T.cwd===T.home?'~ (sua pasta)':T.cwd;
-  return '<div class="tfl"><small>'+IC.map+'Você está em <b>'+esc(path)+'</b>'+(T.cwd!==T.home?'<button class="tgo" data-act="tcd">Ir para ~</button>':'')+'</small><div>'+(items.length?items.map(function(f){return'<button class="tfi'+(f.d?' d':'')+'" data-act="tname" data-n="'+esc(f.n)+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+(f.d?'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="#7b3ff2"/>':'<path d="M6 3h8l5 5v13H6z" fill="#fff" stroke="#7b3ff2" stroke-width="2"/>')+'</svg>'+esc(f.n)+'</button>'}).join(''):'<em>pasta vazia</em>')+'</div></div>';
+  return '<div class="tfl"><small>'+IC.map+'Você está em <b>'+esc(path)+'</b>'+'</small><div>'+(T.cwd!==T.home?'<button class="tfi back" data-act="tcd">↩ voltar ~</button>':'')+(items.length?items.map(function(f){return'<button class="tfi'+(f.d?' d':'')+'" data-act="tname" data-n="'+esc(f.n)+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+(f.d?'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="#7b3ff2"/>':'<path d="M6 3h8l5 5v13H6z" fill="#fff" stroke="#7b3ff2" stroke-width="2"/>')+'</svg>'+esc(f.n)+'</button>'}).join(''):'<em>pasta vazia</em>')+'</div></div>';
 }
 function tmDicaBtn(){
   var i=tmCur(),c=i<0?-1:tmCost(i);
@@ -12005,13 +12020,13 @@ function tmSubmit(){
   var r=tmRun(line);
   var lost=null;
   if(r.err&&/inexistente/.test(r.err)){tmTok(line).forEach(function(x){if(lost||typeof x!=='string'||x.charAt(0)==='-')return;var ab=tmAbs(x);if(T.fs[ab])return;var bn=tmBase(ab);Object.keys(T.fs).forEach(function(k){if(!lost&&tmBase(k)===bn&&k!==ab&&k.indexOf('/'+bn)>0)lost=k})})}
-  if(r.err){T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&C.wrong<2)C.wrong++;sfx('bad');T.msg=lost?'Não achei isso aqui. Ele está em '+lost.replace(T.home,'~')+'. Toque em «Ir para ~» ou use cd para chegar lá.':(T.erros>=2?'Calma, errar faz parte. Digite help para ver os comandos ou toque em Dica.':'Esse comando não deu certo. Leia a mensagem com calma.')}
+  if(r.err){T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&C.wrong<2)C.wrong++;sfx('bad');T.msg=lost?(lost.indexOf(T.cwd+'/')===0?'Não achei aqui. Ele está em «'+lost.slice(T.cwd.length+1)+'».':'Não achei aqui. Ele está em '+tmDir(lost).replace(T.home,'~')+'. Vá até lá com cd.'):(T.erros>=2?'Calma, errar faz parte. Digite help para ver os comandos ou toque em Dica.':'Esse comando não deu certo. Leia a mensagem com calma.')}
   else{T.ran.push(line);if(r.out)T.out.push({k:'o',t:r.out});sfx('ping')}
   var all=true,prog=false,ci=tmCur();
   (T.def.passos||[]).forEach(function(s,i){
     if(!T.done[i]){var ch=s.feito;if(!Array.isArray(ch))ch=[ch];if(ch.every(tmCheck)){T.done[i]=1;prog=true;T.msg=s.ok||'Boa! Passo concluído.';sfx('plim1')}}
     if(!T.done[i])all=false});
-  if(!r.err&&!prog&&!all&&ci>=0)T.msg='Esse comando funcionou, mas ainda não cumpre o passo. Releia: «'+T.def.passos[ci].texto+'». Confira os nomes (maiúsculas contam) e a pasta em que você está.';
+  if(!r.err&&!prog&&!all&&ci>=0)T.msg='Funcionou, mas ainda não cumpre o passo. Releia o passo e confira os nomes.';
   tmRefresh();
   if(all){C.stage='fim';inp.disabled=true;T.msg=T.def.final||'Chamado resolvido!';var m=$('#tmsg');if(m)m.textContent=T.msg;setTimeout(function(){if(C&&C.stage==='fim')caseFinish()},1100)}
 }
@@ -12021,7 +12036,7 @@ function tmHint(){
   var c=tmCost(i);if(c<0)return;
   if(S.gems<c){T.msg='Você precisa de '+c+' chips para esta dica. Ganhe mais resolvendo lições!';tmRefresh();sfx('bad');return}
   if(c){S.gems-=c;save();$('#topin').innerHTML=topHTML()}
-  T.hl[i]=(T.hl[i]||0)+1;T.msg=T.hl[i]===1?'Olha a dica ali em cima!':'Pronto: o comando está no passo. Toque para colocar no terminal.';sfx('ping');tmRefresh();
+  T.hl[i]=(T.hl[i]||0)+1;T.msg=T.hl[i]===1?'Dica no passo!':'Comando no passo. Toque em Usar.';sfx('ping');tmRefresh();
 }
 
 
