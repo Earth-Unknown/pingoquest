@@ -2723,6 +2723,264 @@
      "chamado": "lx_maquinas"
     },
     {
+     "lugar": "Loja de Programas",
+     "titulo": "Instalar programas",
+     "dicas": [
+      "apt search procura pacotes.",
+      "sudo apt install nome instala.",
+      "sudo apt remove nome tira um programa."
+     ],
+     "fases": [
+      {
+       "nome": "Buscar e instalar",
+       "conceitos": [
+        {
+         "id": "linux.buscar",
+         "nome": "Buscar e instalar pacotes",
+         "antes": [
+          "linux.pacote"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Procurar e instalar",
+         "texto": "Antes de instalar, você pode procurar: «apt search palavra» lista os pacotes que combinam, sem mudar nada no sistema. Achou? «sudo apt install nome» instala. O apt baixa o programa e tudo de que ele depende, sozinho. Dá para instalar vários de uma vez: «sudo apt install nano tree».",
+         "termos": [
+          {
+           "termo": "apt search",
+           "definicao": "Procura pacotes por palavra"
+          },
+          {
+           "termo": "Dependência",
+           "definicao": "Outro programa de que o pacote precisa"
+          },
+          {
+           "termo": "apt install",
+           "definicao": "Baixa e instala o pacote"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando procura pacotes sobre «tree»?",
+         "certa": "apt search tree",
+         "erradas": [
+          "apt look tree",
+          "ls tree",
+          "find apt tree"
+         ],
+         "explicacao": "search procura nos repositórios.",
+         "conceito": "linux.buscar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O apt também baixa as dependências do programa.",
+         "resposta": true,
+         "explicacao": "Ele cuida disso sozinho.",
+         "conceito": "linux.buscar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando instala o nano e o tree de uma vez?",
+         "certa": "sudo apt install nano tree",
+         "erradas": [
+          "sudo apt update nano tree",
+          "apt search nano tree",
+          "sudo ls nano tree"
+         ],
+         "explicacao": "Vários nomes depois do install.",
+         "conceito": "linux.buscar",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Qual comando faz o quê?",
+         "categorias": [
+          "Procura",
+          "Instala"
+         ],
+         "itens": [
+          {
+           "texto": "apt search editor",
+           "categoria": "Procura"
+          },
+          {
+           "texto": "apt search rede",
+           "categoria": "Procura"
+          },
+          {
+           "texto": "sudo apt install htop",
+           "categoria": "Instala"
+          }
+         ],
+         "explicacao": "search procura; install instala.",
+         "conceito": "linux.buscar",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O apt search precisa de sudo?",
+         "certa": "Não, só procurar não muda o sistema",
+         "erradas": [
+          "Sim, sempre",
+          "Só para pacotes grandes",
+          "Só às terças"
+         ],
+         "explicacao": "Sudo é para mudar o sistema.",
+         "conceito": "linux.buscar",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Remover e outras formas",
+       "conceitos": [
+        {
+         "id": "linux.remover",
+         "nome": "Remover e outras formas de instalar",
+         "antes": [
+          "linux.buscar"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Remover e outras formas",
+         "texto": "«sudo apt remove nome» tira um programa que você não usa mais. «sudo apt upgrade» atualiza todos os programas instalados (rode depois do update). Existem outras formas de instalar: baixar um arquivo .deb e instalar com «sudo dpkg -i arquivo.deb», ou usar o snap. Mas o apt é o jeito mais comum e seguro, porque vem dos repositórios oficiais.",
+         "termos": [
+          {
+           "termo": "apt remove",
+           "definicao": "Desinstala um pacote"
+          },
+          {
+           "termo": "upgrade",
+           "definicao": "Atualiza os programas instalados"
+          },
+          {
+           "termo": ".deb",
+           "definicao": "Arquivo de instalação do Debian/Ubuntu"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando remove o programa cowsay?",
+         "certa": "sudo apt remove cowsay",
+         "erradas": [
+          "sudo apt install cowsay",
+          "rm cowsay",
+          "apt update cowsay"
+         ],
+         "explicacao": "remove desinstala.",
+         "conceito": "linux.remover",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "«sudo apt upgrade» atualiza os programas já instalados.",
+         "resposta": true,
+         "explicacao": "Rode depois do update.",
+         "conceito": "linux.remover",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você baixou um arquivo .deb. Qual comando instala?",
+         "certa": "sudo dpkg -i arquivo.deb",
+         "erradas": [
+          "cat arquivo.deb",
+          "cd arquivo.deb",
+          "sudo apt remove arquivo.deb"
+         ],
+         "explicacao": "dpkg -i instala um .deb.",
+         "conceito": "linux.remover",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada comando ao que faz",
+         "pares": [
+          {
+           "esquerda": "apt update",
+           "direita": "Atualiza a lista"
+          },
+          {
+           "esquerda": "apt upgrade",
+           "direita": "Atualiza os programas"
+          },
+          {
+           "esquerda": "apt remove",
+           "direita": "Desinstala"
+          },
+          {
+           "esquerda": "apt search",
+           "direita": "Procura pacotes"
+          }
+         ],
+         "explicacao": "Cada um com sua tarefa.",
+         "conceito": "linux.remover",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que preferir o apt a instaladores de sites aleatórios?",
+         "certa": "Vem de repositórios oficiais, mais seguro",
+         "erradas": [
+          "É mais colorido",
+          "Usa menos teclas",
+          "Não precisa de internet"
+         ],
+         "explicacao": "Fonte confiável.",
+         "conceito": "linux.remover",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual comando instala um programa no Ubuntu?",
+       "certa": "sudo apt install",
+       "erradas": [
+        "sudo apt search",
+        "ls install",
+        "cat apt"
+       ],
+       "explicacao": "install instala.",
+       "conceito": "linux.buscar",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "O apt remove desinstala um programa.",
+       "resposta": true,
+       "explicacao": "Tira o pacote do sistema.",
+       "conceito": "linux.remover",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual vem primeiro: update ou upgrade?",
+       "certa": "update, para atualizar a lista",
+       "erradas": [
+        "upgrade",
+        "remove",
+        "Tanto faz"
+       ],
+       "explicacao": "Lista primeiro, programas depois.",
+       "conceito": "linux.remover",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_loja"
+    },
+    {
      "lugar": "Torre de Rede",
      "titulo": "Rede no terminal",
      "dicas": [
@@ -2738,7 +2996,7 @@
          "id": "linux.ip",
          "nome": "Ver IP e interfaces",
          "antes": [
-          "linux.pacote"
+          "linux.remover"
          ]
         }
        ],
@@ -3475,6 +3733,42 @@
   },
   {
    "tipo": "escolha",
+   "pergunta": "Qual comando procura pacotes?",
+   "certa": "apt search",
+   "erradas": [
+    "apt look",
+    "ls pacote"
+   ],
+   "explicacao": "Resposta: apt search.",
+   "conceito": "linux.buscar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando instala um programa?",
+   "certa": "sudo apt install",
+   "erradas": [
+    "sudo apt search",
+    "cat apt"
+   ],
+   "explicacao": "Resposta: sudo apt install.",
+   "conceito": "linux.buscar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando desinstala um programa?",
+   "certa": "sudo apt remove",
+   "erradas": [
+    "sudo apt install",
+    "rm apt"
+   ],
+   "explicacao": "Resposta: sudo apt remove.",
+   "conceito": "linux.remover",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
    "pergunta": "Qual comando mostra seus IPs?",
    "certa": "ip a",
    "erradas": [
@@ -4146,6 +4440,89 @@
    ]
   },
   {
+   "id": "lx_loja",
+   "tipo": "terminal",
+   "title": "Ferramentas novas",
+   "skill": "Instalar programas",
+   "skillText": "Instalar programas",
+   "intro": "O servidor precisa de ferramentas novas. Procure, instale e limpe o que não serve mais.",
+   "passos": [
+    {
+     "texto": "Atualize a lista de pacotes",
+     "dica": "sudo apt update",
+     "feito": {
+      "cmd": "sudo\\s+apt\\s+update"
+     },
+     "resposta": "sudo apt update"
+    },
+    {
+     "texto": "Procure um programa que mostre pastas em árvore (a palavra é «tree»)",
+     "dica": "apt search tree",
+     "feito": {
+      "cmd": "^\\s*(sudo\\s+)?apt\\s+search\\s+tree"
+     },
+     "ok": "Achou o pacote tree.",
+     "resposta": "apt search tree"
+    },
+    {
+     "texto": "Instale o tree",
+     "dica": "sudo apt install tree",
+     "feito": {
+      "instalou": "tree"
+     },
+     "ok": "tree instalado.",
+     "resposta": "sudo apt install tree"
+    },
+    {
+     "texto": "Remova o cowsay, que ninguém usa mais",
+     "dica": "sudo apt remove cowsay",
+     "feito": {
+      "removeu": "cowsay"
+     },
+     "ok": "cowsay removido.",
+     "resposta": "sudo apt remove cowsay"
+    }
+   ],
+   "pacotes": [
+    "tree",
+    "nano",
+    "htop",
+    "curl",
+    "cowsay"
+   ],
+   "instalados": [
+    "cowsay"
+   ],
+   "pacdesc": {
+    "tree": "mostra pastas em árvore",
+    "nano": "editor de texto simples",
+    "htop": "monitor de processos",
+    "curl": "busca páginas pelo terminal",
+    "cowsay": "vaquinha que fala"
+   },
+   "conclusao": "Você procurou, instalou e removeu programas com apt",
+   "explicacao": "apt search procura, sudo apt install instala e sudo apt remove desinstala. Mexer em programas altera o sistema, por isso precisa de sudo; só procurar não precisa.",
+   "final": "Ferramentas prontas!",
+   "guia": [
+    {
+     "cmd": "sudo apt update",
+     "serve": "atualiza a lista de pacotes"
+    },
+    {
+     "cmd": "apt search palavra",
+     "serve": "procura pacotes"
+    },
+    {
+     "cmd": "sudo apt install nome",
+     "serve": "instala um programa"
+    },
+    {
+     "cmd": "sudo apt remove nome",
+     "serve": "desinstala um programa"
+    }
+   ]
+  },
+  {
    "id": "lx_torre",
    "tipo": "terminal",
    "title": "Sinal da torre",
@@ -4210,34 +4587,5 @@
   }
  ],
  "eventos": [],
- "artes": {},
- "nivelamento": [
-  {
-   "pergunta": "Para que serve o terminal?",
-   "certa": "Para digitar comandos e o computador executar",
-   "erradas": [
-    "Para desenhar imagens",
-    "Para esfriar o computador"
-   ],
-   "explicacao": "No terminal você escreve comandos e o sistema obedece."
-  },
-  {
-   "pergunta": "Qual comando mostra em que pasta você está?",
-   "certa": "pwd",
-   "erradas": [
-    "mkdir",
-    "rm"
-   ],
-   "explicacao": "pwd mostra a pasta atual."
-  },
-  {
-   "pergunta": "O que o comando rm faz?",
-   "certa": "Apaga arquivos",
-   "erradas": [
-    "Renomeia arquivos",
-    "Copia arquivos"
-   ],
-   "explicacao": "rm remove, e no terminal não existe lixeira."
-  }
- ]
+ "artes": {}
 }

@@ -10,6 +10,7 @@ const SOL={
  lx_portaria:['ls -l','./backup.sh','chmod +x backup.sh','./backup.sh','chmod -w nota.txt'],
  lx_admin:['whoami','mkdir /etc/pingo.d','sudo mkdir /etc/pingo.d','sudo cp pingo.conf /etc/pingo.d/'],
  lx_maquinas:['ps','kill 2201','sudo apt update','apt install htop','sudo apt install htop'],
+ lx_loja:['sudo apt update','apt search tree','apt install tree','sudo apt install tree','sudo apt remove cowsay'],
  lx_torre:['ip a','ping gateway.local','curl http://servidor.local/status']
 };
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:800}});

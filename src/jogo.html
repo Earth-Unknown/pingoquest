@@ -897,6 +897,15 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .cpc{display:flex;align-items:center;gap:12px;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:18px;padding:10px 12px;font:inherit;text-align:left;cursor:pointer;min-height:76px}
 .cpc:active{transform:scale(.98)}.cpc.soon{opacity:.55}.cpc .cqic.big{width:56px;height:56px}.cpc .cqic.big svg{width:38px;height:38px}
 .cpt{display:flex;flex-direction:column;gap:1px;min-width:0}.cpt b{font-size:17px}.cpt small{font-size:12.5px;color:var(--muted);font-weight:700}.cpt em{font-style:normal;font-size:12px;font-weight:800;color:var(--primary,#7b3ff2);margin-top:2px}
+
+.sumbtn{margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}.sumbtn svg{width:22px;height:22px}
+.sumr{background:var(--surface);border:2px solid var(--line);border-radius:16px;margin-bottom:8px;overflow:hidden}
+.sumh{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;min-height:48px}
+.sumh i{flex:none;width:28px;height:28px;border-radius:50%;background:var(--roxo,#7b3ff2);color:#fff;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:13px}
+.sumh span{flex:1;min-width:0;display:flex;flex-direction:column}.sumh b{font-size:15px}.sumh small{font-size:12px;color:var(--muted);font-weight:700}
+.sumh em{font-style:normal;font-size:11px;font-weight:900;color:var(--muted)}.sumh em.ok{color:var(--good,#2fbf4a)}
+.sumb{display:none;padding:0 12px 10px 50px}.sumr.open .sumb{display:block}
+.sumf{padding:6px 0;border-top:1px dashed var(--line)}.sumf b{display:block;font-size:13.5px}.sumf small{font-size:12.5px;color:var(--muted);font-weight:700}.sumf.ch b{color:var(--primary,#7b3ff2)}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -1889,7 +1898,26 @@ function cursosCard(){
     var ready=courseReady(c.id),on=c.id===CURSO,pct=coursePct(c);
     h+='<button class="ccard'+(on?' on':'')+(ready?'':' soon')+'" data-act="curinfo" data-id="'+c.id+'"><span class="cqic">'+courseIcon(c)+'</span><b>'+esc(courseName(c))+'</b><small>'+(on?'Estudando':(ready?pct+'%':'Em breve'))+'</small>'+(ready?'<span class="cqbar"><i style="width:'+pct+'%"></i></span>':'')+'</button>';
   });
-  return h+'</div>';
+  h+='</div><button class="btn ghost sumbtn" data-act="sumario" data-id="'+CURSO+'"><span style="display:contents">'+IC.map+'</span>Sumário: o que tem em '+esc(DATA.NOME)+'</button>';
+  return h;
+}
+function showSumario(id){
+  var j=id===CURSO||courseReady(id)?cursoJson(id):null;if(!j)return;
+  var on=id===CURSO,gi=0,h='<div class="sheet tall sumario" role="dialog" aria-label="Sumário do curso"><h2>Sumário</h2><p class="note" style="margin:0 0 10px">'+esc(j.nome)+' · toque numa parada para ver o que ela ensina</p>';
+  (j.mundos||[]).forEach(function(m){
+    h+='<div class="tlabel">'+esc(m.nome||'Mundo '+m.numero)+'</div>';
+    (m.paradas||[]).forEach(function(q){
+      var cs=(j.casos||[]).filter(function(k){return k.id===q.chamado})[0],dn=0;
+      if(on)for(var k=0;k<4;k++)if(S.done[gi+'-'+k])dn++;
+      var st=on?(dn===4?'<em class="ok">feito</em>':(dn>0?'<em>'+dn+'/4</em>':'')):'';
+      h+='<div class="sumr"><button class="sumh" data-act="sumrow" aria-expanded="false"><i>'+(gi+1)+'</i><span><b>'+esc(q.titulo)+'</b><small>'+esc(q.lugar||'')+'</small></span>'+st+'</button><div class="sumb">'+
+        (q.fases||[]).map(function(f){var cn=(f.conceitos||[]).map(function(c){return c.nome}).join(', ');return'<div class="sumf"><b>'+esc(f.nome)+'</b><small>'+esc(cn)+'</small></div>'}).join('')+
+        (cs?'<div class="sumf ch"><b>Chamado: '+esc(cs.title||cs.id)+'</b><small>'+(cs.tipo==='terminal'?'Digite comandos de verdade no terminal':'Resolva o caso investigando')+'</small></div>':'')+'</div></div>';
+      gi++;
+    });
+  });
+  h+='<button class="btn ghost" data-act="mclose" style="margin-top:12px">Fechar</button></div>';
+  $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
 }
 function showCursoInfo(id){
   var c=COURSES.filter(function(x){return x.id===id})[0];if(!c)return;
@@ -1901,6 +1929,7 @@ function showCursoInfo(id){
     h+='<div class="cistats"><div><b>'+pars.length+'</b><span>paradas</span></div><div><b>'+(j.casos||[]).length+'</b><span>chamados</span></div><div><b>'+pars.reduce(function(n,q){return n+(q.fases||[]).reduce(function(m,f){return m+(f.itens||[]).filter(function(x){return x.tipo!=='aprender'}).length},0)},0)+'</b><span>perguntas</span></div></div>';
     h+='<div class="tlabel">O que você vai aprender</div><div class="cichips">'+pars.map(function(q,i){return'<span><i>'+(i+1)+'</i>'+esc(q.titulo)+'</span>'}).join('')+'</div>';
     h+='<div class="say"><span class="sp">'+pingo('happy','pingo-s')+'</span><div class="bub"><p>'+(term?'Aqui você aprende perguntando e depois digita comandos de verdade nos chamados!':'Aqui você aprende perguntando e depois resolve chamados investigando a rede!')+'</p></div></div>';
+    h+='<button class="btn ghost" data-act="sumario" data-id="'+id+'" style="margin-bottom:8px">Ver o conteúdo completo</button>';
     h+=on?'<button class="btn" disabled>Estudando agora</button>':'<button class="btn prim" data-act="curso" data-id="'+id+'">Estudar este curso</button>';
   }else h+='<p class="note">Ainda estamos preparando este curso. Em breve ele aparece aqui!</p>';
   h+='<button class="btn ghost" data-act="mclose" style="margin-top:10px">Fechar</button></div>';
@@ -2497,7 +2526,7 @@ function tmTok(s){
   flush();return r;
 }
 function tmInit(def){
-  var sc=def.cenario||{},u=sc.usuario||'aluno',T={user:u,host:sc.maquina||'servidor',home:'/home/'+u,fs:{},cwd:'',hist:[],out:[],ran:[],erros:0,killed:{},inst:{},exec:{},done:{},hl:{},def:def,hi:-1};
+  var sc=def.cenario||{},u=sc.usuario||'aluno',T={user:u,host:sc.maquina||'servidor',home:'/home/'+u,fs:{},cwd:'',hist:[],out:[],ran:[],erros:0,killed:{},inst:(function(){var o={};(def.instalados||[]).forEach(function(x){o[x]=1});return o})(),rem:{},exec:{},done:{},hl:{},def:def,hi:-1};
   function mk(p,dir,t){
     var par=tmDir(p);if(par!==p&&!T.fs[par])mk(par,true);
     if(T.fs[p])return T.fs[p];
@@ -2666,13 +2695,22 @@ function tmCmd(name,args,inp,ctx){
     if(rd3.hosts&&rd3.hosts[host])return tmErr('curl: (22) A página retornou erro 404');
     return tmErr('curl: (6) Não foi possível resolver o host: '+host);}
   case 'apt':{
-    var sub=r[0];
-    if(sub!=='update'&&sub!=='install')return tmErr('apt: use «apt update» ou «apt install pacote»');
+    var ar=r.filter(function(x){return x.charAt(0)!=='-'}),sub=ar[0],pk=(T.def.pacotes||[]),ds=T.def.pacdesc||{};
+    if(sub==='search'){
+      if(!ar[1])return tmErr('apt: informe o que procurar');
+      var q=ar[1].toLowerCase(),hit=pk.filter(function(x){return x.toLowerCase().indexOf(q)>-1||(ds[x]||'').toLowerCase().indexOf(q)>-1});
+      return{out:hit.length?hit.map(function(x){return x+' - '+(ds[x]||'pacote')+(T.inst[x]?' [instalado]':'')}).join('\n'):'Nada encontrado para «'+ar[1]+'».'};}
+    if(['update','upgrade','install','remove'].indexOf(sub)<0)return tmErr('apt: use update, search, install ou remove');
     if(!sd)return tmErr('E: Não foi possível abrir o bloqueio. Você é root? (dica: sudo)');
     if(sub==='update'){T.updated=1;return{out:'Lista de pacotes atualizada.'}}
-    if(!r[1])return tmErr('apt: informe o pacote');
-    var pk=(T.def.pacotes||[]);if(pk.length&&pk.indexOf(r[1])<0)return tmErr('E: Impossível encontrar o pacote '+r[1]);
-    T.inst[r[1]]=1;return{out:'Instalando '+r[1]+'... pronto.'};}
+    if(sub==='upgrade')return{out:'Todos os programas já estão atualizados.'};
+    if(!ar[1])return tmErr('apt: informe o pacote');
+    var bad=ar.slice(1).filter(function(x){return pk.length&&pk.indexOf(x)<0})[0];
+    if(bad)return tmErr('E: Impossível encontrar o pacote '+bad);
+    if(sub==='remove'){var nr=ar.slice(1).filter(function(x){return !T.inst[x]})[0];
+      if(nr)return tmErr('E: O pacote '+nr+' não está instalado');
+      ar.slice(1).forEach(function(x){delete T.inst[x];T.rem[x]=1});return{out:'Removendo '+ar.slice(1).join(' ')+'... pronto.'};}
+    ar.slice(1).forEach(function(x){T.inst[x]=1});return{out:'Instalando '+ar.slice(1).join(' ')+'... pronto.'};}
   default:
     if(name.indexOf('./')===0||name.charAt(0)==='/'){
       p=tmAbs(name);n=fs[p];
@@ -2725,6 +2763,7 @@ function tmCheck(c){
     else if(k==='saida'){if(!T.out.some(function(x){return x.k==='o'&&new RegExp(v,'i').test(x.t)}))return false}
     else if(k==='matou'){if(!T.killed[v])return false}
     else if(k==='instalou'){if(!T.inst[v])return false}
+    else if(k==='removeu'){if(!T.rem[v])return false}
     else if(k==='exec'){if(!T.exec[v])return false}
   }
   return true;
@@ -2855,6 +2894,8 @@ document.addEventListener('click',function(e){
   else if(a==='cclose'||a==='cdone'){closeCase()}
   else if(a==='cexplain'){caseExplain()}
   else if(a==='curinfo'){showCursoInfo(t.dataset.id)}
+  else if(a==='sumario'){showSumario(t.dataset.id)}
+  else if(a==='sumrow'){var sr=t.parentNode;sr.classList.toggle('open');t.setAttribute('aria-expanded',sr.classList.contains('open'))}
   else if(a==='trun'){tmSubmit()}
   else if(a==='tcd'){var tc=$('#tin');if(tc&&TM&&C&&C.stage==='term'){tc.value='cd ~';tmSubmit()}}
   else if(a==='tname'){var tn=$('#tin');if(tn){tn.value=(tn.value&&!/\s$/.test(tn.value)?tn.value+' ':tn.value)+t.dataset.n;tn.focus()}}
