@@ -10094,6 +10094,7 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .tmz .tdots{margin-bottom:8px}.tmz .tdots i{height:6px}
 .tmz .tcur{padding:9px 12px;margin-bottom:8px;border-radius:14px}.tmz .tcur b{font-size:15px}.tmz .tfirst{display:none}
 .tfl{margin-bottom:8px}.tfl small{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:5px}.tfl small svg{width:16px;height:16px}.tfl small b{color:var(--ink)}
+.tgo{margin-left:auto;border:0;border-radius:10px;background:var(--cyan);color:#0d0620;font:800 12px inherit;min-height:32px;padding:0 10px}
 .tfl>div{display:flex;flex-wrap:wrap;gap:6px}.tfl em{font-size:12px;color:var(--muted)}
 .tfi{display:flex;align-items:center;gap:6px;min-height:34px;padding:4px 10px 4px 6px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:700 12.5px ui-monospace,Menlo,monospace}
 .tfi svg{width:18px;height:18px}.tfi.d{border-color:#c88bff}
@@ -11963,7 +11964,7 @@ function tmFiles(){
   Object.keys(T.fs).forEach(function(k){if(k!==T.cwd&&k.indexOf(pre)===0&&k.slice(pre.length).indexOf('/')<0){var b=k.slice(pre.length);if(b.charAt(0)!=='.')items.push({n:b,d:T.fs[k].d})}});
   items.sort(function(a,b){return (b.d-a.d)||(a.n<b.n?-1:1)});
   var path=T.cwd===T.home?'~ (sua pasta)':T.cwd;
-  return '<div class="tfl"><small>'+IC.map+'Você está em <b>'+esc(path)+'</b></small><div>'+(items.length?items.map(function(f){return'<button class="tfi'+(f.d?' d':'')+'" data-act="tname" data-n="'+esc(f.n)+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+(f.d?'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="#7b3ff2"/>':'<path d="M6 3h8l5 5v13H6z" fill="#fff" stroke="#7b3ff2" stroke-width="2"/>')+'</svg>'+esc(f.n)+'</button>'}).join(''):'<em>pasta vazia</em>')+'</div></div>';
+  return '<div class="tfl"><small>'+IC.map+'Você está em <b>'+esc(path)+'</b>'+(T.cwd!==T.home?'<button class="tgo" data-act="tcd">Ir para ~</button>':'')+'</small><div>'+(items.length?items.map(function(f){return'<button class="tfi'+(f.d?' d':'')+'" data-act="tname" data-n="'+esc(f.n)+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+(f.d?'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="#7b3ff2"/>':'<path d="M6 3h8l5 5v13H6z" fill="#fff" stroke="#7b3ff2" stroke-width="2"/>')+'</svg>'+esc(f.n)+'</button>'}).join(''):'<em>pasta vazia</em>')+'</div></div>';
 }
 function tmDicaBtn(){
   var i=tmCur(),c=i<0?-1:tmCost(i);
@@ -12002,7 +12003,9 @@ function tmSubmit(){
   if(!line){tmRefresh();return}
   T.hist.push(line);T.hi=T.hist.length;
   var r=tmRun(line);
-  if(r.err){T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&C.wrong<2)C.wrong++;sfx('bad');T.msg=T.erros>=2?'Calma, errar faz parte. Digite help para ver os comandos ou toque em Dica.':'Esse comando não deu certo. Leia a mensagem com calma.'}
+  var lost=null;
+  if(r.err&&/inexistente/.test(r.err)){tmTok(line).forEach(function(x){if(lost||typeof x!=='string'||x.charAt(0)==='-')return;var ab=tmAbs(x);if(T.fs[ab])return;var bn=tmBase(ab);Object.keys(T.fs).forEach(function(k){if(!lost&&tmBase(k)===bn&&k!==ab&&k.indexOf('/'+bn)>0)lost=k})})}
+  if(r.err){T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&C.wrong<2)C.wrong++;sfx('bad');T.msg=lost?'Não achei isso aqui. Ele está em '+lost.replace(T.home,'~')+'. Toque em «Ir para ~» ou use cd para chegar lá.':(T.erros>=2?'Calma, errar faz parte. Digite help para ver os comandos ou toque em Dica.':'Esse comando não deu certo. Leia a mensagem com calma.')}
   else{T.ran.push(line);if(r.out)T.out.push({k:'o',t:r.out});sfx('ping')}
   var all=true,prog=false,ci=tmCur();
   (T.def.passos||[]).forEach(function(s,i){
@@ -12062,6 +12065,7 @@ document.addEventListener('click',function(e){
   else if(a==='cexplain'){caseExplain()}
   else if(a==='curinfo'){showCursoInfo(t.dataset.id)}
   else if(a==='trun'){tmSubmit()}
+  else if(a==='tcd'){var tc=$('#tin');if(tc&&TM&&C&&C.stage==='term'){tc.value='cd ~';tmSubmit()}}
   else if(a==='tname'){var tn=$('#tin');if(tn){tn.value=(tn.value&&!/\s$/.test(tn.value)?tn.value+' ':tn.value)+t.dataset.n;tn.focus()}}
   else if(a==='tguia'){if(C&&C.term)showGuia(false)}
   else if(a==='tfill'){var tf=$('#tin'),ci=tmCur();if(tf&&ci>=0){tf.value=TM.def.passos[ci].resposta;tf.focus()}}
