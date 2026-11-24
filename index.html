@@ -10122,6 +10122,13 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .tmz .term{flex:1;min-height:90px;display:flex;flex-direction:column;border-radius:14px}.tmz .tmx{flex:1;max-height:none;min-height:0;font-size:12px;padding:6px 10px}
 .tmz .tkeys{margin:0}.tmz .tkeys button{min-width:36px;min-height:34px;font-size:13px}
 .lfoot .trow .btn{min-height:40px;font-size:12.5px}
+
+.gintro{margin:10px 0 0;font-weight:700;font-size:14px;line-height:1.35}
+.tmz .term{flex:none;height:128px;min-height:0}
+.tmz .tfl{display:block}.tmz .tfl small{display:block;max-width:none;margin:0 0 4px;white-space:normal;overflow:visible;font-size:12px}
+.tmz .tfl>div{flex-wrap:wrap;overflow:visible;max-height:none}
+
+.trow .btn svg{display:inline-block!important;width:14px!important;height:14px!important;vertical-align:-2px;margin:0 2px}.trow .btn{white-space:nowrap}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -11732,7 +11739,7 @@ function tmInit(def){
   Object.keys(def.fs||{}).forEach(function(p){var v=def.fs[p];if(p.slice(-1)==='/')mk(p.replace(/\/+$/,''),true);else mk(p,false,v)});
   Object.keys(def.perm||{}).forEach(function(p){if(T.fs[p])T.fs[p].m=def.perm[p]});
   T.cwd=tmNorm(sc.inicio||'~','/',T.home);
-  T.msg=def.intro;
+  T.msg='Siga o passo e digite no terminal.';
   return T;
 }
 function tmPrompt(){return TM.user+'@'+TM.host+':'+(TM.cwd===TM.home?'~':TM.cwd.indexOf(TM.home+'/')===0?'~'+TM.cwd.slice(TM.home.length):TM.cwd)+'$ '}
@@ -12005,7 +12012,7 @@ function tmRefresh(){
 }
 function showGuia(first){
   var d=C.def,h='<div class="sheet tall" role="dialog" aria-label="Guia do chamado"><div class="cqhead">'+pingo('happy','cqping')+'<div class="cqbub">'+(first?'Antes de começar, veja os comandos deste chamado!':'Guia rápido dos comandos')+'</div></div>'+
-   '<div class="gsteps"><span><i>1</i>Leia o passo</span><span><i>2</i>Digite o comando</span><span><i>3</i>Toque em Enviar</span></div>'+
+   '<p class="gintro">'+esc(d.intro||'')+'</p><div class="gsteps"><span><i>1</i>Leia o passo</span><span><i>2</i>Digite o comando</span><span><i>3</i>Toque em Enviar</span></div>'+
    '<div class="tlabel">Comandos deste chamado</div><div class="gtiles">'+(d.guia||[]).map(function(g,i){return'<div class="gt g'+(i%4)+'"><code>'+esc(g.cmd)+'</code><span>'+esc(g.serve)+'</span></div>'}).join('')+'</div>'+
    '<p class="note" style="margin:10px 0 0">Dicas custam chips; a 1ª dica de cada chamado é grátis.</p>'+
    '<button class="btn prim" data-act="mclose" style="margin-top:14px">'+(first?'Entendi, vamos lá!':'Fechar')+'</button></div>';
