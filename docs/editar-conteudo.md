@@ -61,3 +61,19 @@ Visual, sons, avatar, amigos, duelo e as regras do jogo. Chamados (`casos`) usam
 
 ## Próximos cursos
 Cada curso novo (por exemplo Linux) terá o seu `content/linux.json` com o mesmo formato, e a tela de escolher o curso vai listá-los.
+
+## Curso de Linux e chamados de terminal
+
+O curso Terminal Linux mora em `content/linux.json`, com o mesmo formato do Redes (mundos, paradas, fases, bate_bola). Os **chamados** do Linux são de outro tipo: `"tipo": "terminal"`. A pessoa digita comandos de verdade num terminal de mentira, dentro do jogo.
+
+Um chamado de terminal tem:
+- `cenario`: `usuario`, `maquina` e `inicio` (pasta onde começa; `~` é a pasta pessoal).
+- `fs`: arquivos e pastas que existem. Caminho terminado em `/` é pasta; senão é arquivo, e o valor é o texto dele.
+- `perm` (opcional): permissões de um arquivo, por exemplo `"/home/aluno/a.sh": "rw-r--r--"`.
+- `processos`, `rede`, `pacotes`, `exec` (opcionais): usados por ps/kill, ip/ping/curl, apt e ./script.
+- `passos`: a lista de tarefas. Cada passo tem `texto`, `dica`, `ok` e `feito`, que é a condição para o passo ficar verde. Condições: `cmd` (comando digitado, aceita expressão regular), `existe`, `naoexiste`, `conteudo` [arquivo, texto], `perm` e `semperm` [arquivo, letra], `cwd`, `saida`, `matou`, `instalou`, `exec`.
+- `conclusao`, `explicacao`, `final`: textos da tela de resultado.
+
+Comandos disponíveis: pwd ls cd mkdir touch cp mv rm cat head tail grep wc sort uniq echo chmod whoami id hostname ps top kill ip ping curl apt sudo clear history help, com pipe (|) e redirecionamento (> e >>).
+
+Depois de editar, rode `node tools/validar-curso.js content/linux.json` e `sh build-site.sh`.

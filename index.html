@@ -1,4 +1,4004 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<script type="application/json" id="curso-linux">{
+ "formato": 1,
+ "id": "linux",
+ "nome": "Terminal Linux",
+ "mundos": [
+  {
+   "numero": 1,
+   "nome": "Servidor Pingo",
+   "subtitulo": "Aprenda a conversar com o terminal",
+   "paradas": [
+    {
+     "lugar": "Recepção",
+     "titulo": "O que é Linux",
+     "dicas": [
+      "Linux é um sistema operacional livre.",
+      "Kernel é o núcleo; distribuição é o sistema pronto, com programas.",
+      "Ubuntu, Debian e Fedora são distribuições."
+     ],
+     "fases": [
+      {
+       "nome": "O sistema do servidor",
+       "conceitos": [
+        {
+         "id": "linux.def",
+         "nome": "O que é o Linux",
+         "antes": []
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O sistema do servidor",
+         "texto": "O Linux é um sistema operacional: o programa que faz o computador funcionar e liga os aplicativos às peças físicas. Ele roda em servidores, celulares Android, roteadores e até em carros.",
+         "termos": [
+          {
+           "termo": "Sistema operacional",
+           "definicao": "Programa que controla o computador"
+          },
+          {
+           "termo": "Kernel",
+           "definicao": "O núcleo, que conversa com as peças"
+          },
+          {
+           "termo": "Hardware",
+           "definicao": "As peças físicas do computador"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é o Linux?",
+         "certa": "Um sistema operacional livre",
+         "erradas": [
+          "Um tipo de cabo de rede",
+          "Um aplicativo de mensagens",
+          "Um modelo de computador"
+         ],
+         "explicacao": "Linux é um sistema operacional, como Windows e macOS, mas livre.",
+         "conceito": "linux.def",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O Linux é um sistema operacional.",
+         "resposta": true,
+         "explicacao": "Ele controla o computador e liga os programas às peças.",
+         "conceito": "linux.def",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é o papel de um sistema operacional?",
+         "certa": "Fazer a ponte entre os programas e o hardware",
+         "erradas": [
+          "Só guardar fotos",
+          "Dar internet sozinho",
+          "Esfriar o processador"
+         ],
+         "explicacao": "Sem ele, os programas não conseguem usar as peças.",
+         "conceito": "linux.def",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada termo ao seu significado",
+         "pares": [
+          {
+           "esquerda": "Sistema operacional",
+           "direita": "Controla o computador e os programas"
+          },
+          {
+           "esquerda": "Kernel",
+           "direita": "Núcleo que conversa com o hardware"
+          },
+          {
+           "esquerda": "Hardware",
+           "direita": "As peças físicas do computador"
+          }
+         ],
+         "explicacao": "Hardware é o físico, o kernel é o núcleo e o sistema operacional organiza tudo.",
+         "conceito": "linux.def",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual destes é o núcleo do Linux?",
+         "certa": "O kernel",
+         "erradas": [
+          "O teclado",
+          "O monitor",
+          "O roteador"
+         ],
+         "explicacao": "Kernel quer dizer núcleo.",
+         "conceito": "linux.def",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Livre e aberto",
+       "conceitos": [
+        {
+         "id": "linux.livre",
+         "nome": "Software livre e código aberto",
+         "antes": [
+          "linux.def"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Livre e aberto",
+         "texto": "O Linux é software livre: o código-fonte é aberto. Qualquer pessoa pode usar, estudar, copiar e melhorar. Livre não quer dizer de graça para sempre: empresas ganham dinheiro com suporte e serviços.",
+         "termos": [
+          {
+           "termo": "Código-fonte",
+           "definicao": "As instruções escritas por quem programa"
+          },
+          {
+           "termo": "Código aberto",
+           "definicao": "Qualquer pessoa pode ler o código"
+          },
+          {
+           "termo": "Comunidade",
+           "definicao": "Gente do mundo todo ajudando a melhorar"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que significa o código do Linux ser aberto?",
+         "certa": "Qualquer pessoa pode ler e estudar o código",
+         "erradas": [
+          "Só a empresa dona pode ver",
+          "O código fica escondido",
+          "Ele só funciona sem internet"
+         ],
+         "explicacao": "Aberto quer dizer que o código pode ser visto por todos.",
+         "conceito": "linux.livre",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Software livre nunca pode gerar dinheiro para ninguém.",
+         "resposta": false,
+         "explicacao": "Empresas cobram por suporte, treinamento e serviços.",
+         "conceito": "linux.livre",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Quem ajuda a melhorar o Linux?",
+         "certa": "Uma comunidade de pessoas e empresas do mundo todo",
+         "erradas": [
+          "Só uma única empresa",
+          "Apenas robôs",
+          "Ninguém, ele nunca muda"
+         ],
+         "explicacao": "É um trabalho em comunidade.",
+         "conceito": "linux.livre",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Código aberto ou fechado?",
+         "categorias": [
+          "Código aberto",
+          "Código fechado"
+         ],
+         "itens": [
+          {
+           "texto": "Você pode ler o código",
+           "categoria": "Código aberto"
+          },
+          {
+           "texto": "Qualquer pessoa pode propor melhorias",
+           "categoria": "Código aberto"
+          },
+          {
+           "texto": "Só a empresa dona vê o código",
+           "categoria": "Código fechado"
+          },
+          {
+           "texto": "A comunidade revisa o código",
+           "categoria": "Código aberto"
+          }
+         ],
+         "explicacao": "No aberto todos veem; no fechado só a dona.",
+         "conceito": "linux.livre",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é o código-fonte?",
+         "certa": "As instruções escritas por quem programa",
+         "erradas": [
+          "A senha do administrador",
+          "O cabo do servidor",
+          "A tela de login"
+         ],
+         "explicacao": "É a receita que vira o programa.",
+         "conceito": "linux.livre",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Distribuições",
+       "conceitos": [
+        {
+         "id": "linux.distro",
+         "nome": "Distribuições (distros)",
+         "antes": [
+          "linux.livre"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Distribuições",
+         "texto": "O Linux, sozinho, é só o núcleo. Uma distribuição (distro) junta o núcleo com programas, visual e instalador, formando um sistema pronto. Ubuntu, Debian e Fedora são exemplos.",
+         "termos": [
+          {
+           "termo": "Distribuição",
+           "definicao": "Linux + programas, pronta para usar"
+          },
+          {
+           "termo": "Ubuntu",
+           "definicao": "Distro popular e amigável para começar"
+          },
+          {
+           "termo": "Debian",
+           "definicao": "Distro estável, muito usada em servidores"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é uma distribuição Linux?",
+         "certa": "O Linux junto com programas, formando um sistema pronto",
+         "erradas": [
+          "Um cabo de rede",
+          "Um tipo de processador",
+          "Uma senha"
+         ],
+         "explicacao": "Distro é o pacote completo.",
+         "conceito": "linux.distro",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Ubuntu e Debian são distribuições Linux.",
+         "resposta": true,
+         "explicacao": "Os dois são distros muito usadas.",
+         "conceito": "linux.distro",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que existem várias distribuições?",
+         "certa": "Cada uma é montada para um uso ou gosto diferente",
+         "erradas": [
+          "Porque o Linux quebra e precisa ser trocado",
+          "Porque só uma pode usar internet",
+          "Porque são todas iguais"
+         ],
+         "explicacao": "Há distros para servidores, para iniciantes, para jogos...",
+         "conceito": "linux.distro",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada nome ao que ele é",
+         "pares": [
+          {
+           "esquerda": "Ubuntu",
+           "direita": "Distro popular para quem está começando"
+          },
+          {
+           "esquerda": "Debian",
+           "direita": "Distro estável, comum em servidores"
+          },
+          {
+           "esquerda": "Kernel",
+           "direita": "O núcleo que todas compartilham"
+          }
+         ],
+         "explicacao": "As distros mudam, o núcleo é o Linux.",
+         "conceito": "linux.distro",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você instalou o Ubuntu no computador. O que você instalou?",
+         "certa": "Uma distribuição Linux",
+         "erradas": [
+          "Um roteador",
+          "Um navegador",
+          "Um antivírus"
+         ],
+         "explicacao": "Ubuntu é uma distro.",
+         "conceito": "linux.distro",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Seu amigo diz: «Linux é um programa que eu abro, como o navegador». Está certo?",
+       "certa": "Não: é o sistema que faz o computador funcionar",
+       "erradas": [
+        "Sim: é um navegador",
+        "Sim: é um jogo",
+        "Não: é um cabo"
+       ],
+       "explicacao": "O sistema operacional roda por baixo de todos os programas.",
+       "conceito": "linux.def",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "Dá para estudar o código do Linux sem pedir licença a ninguém.",
+       "resposta": true,
+       "explicacao": "Por ser aberto, qualquer um pode ler.",
+       "conceito": "linux.livre",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O que as distros Ubuntu e Debian têm em comum?",
+       "certa": "Usam o mesmo núcleo, o Linux",
+       "erradas": [
+        "Usam o mesmo teclado",
+        "Só funcionam em celular",
+        "São a mesma empresa"
+       ],
+       "explicacao": "O kernel Linux é a base de todas.",
+       "conceito": "linux.distro",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_acesso"
+    },
+    {
+     "lugar": "Painel de Comandos",
+     "titulo": "Terminal e comandos",
+     "dicas": [
+      "Terminal é a janela; shell é o programa que entende os comandos.",
+      "Um comando tem nome, opções e argumentos: ls -l /home.",
+      "O prompt mostra usuário, máquina e pasta; $ é usuário comum e # é administrador."
+     ],
+     "fases": [
+      {
+       "nome": "Terminal e shell",
+       "conceitos": [
+        {
+         "id": "linux.terminal",
+         "nome": "Terminal e shell",
+         "antes": [
+          "linux.def"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Terminal e shell",
+         "texto": "No Linux, dá para mandar o computador fazer coisas escrevendo comandos. A janela onde você escreve é o terminal. O programa que entende o que você escreveu é o shell (o mais comum se chama bash).",
+         "termos": [
+          {
+           "termo": "Terminal",
+           "definicao": "A janela onde você digita"
+          },
+          {
+           "termo": "Shell",
+           "definicao": "Programa que entende e executa os comandos"
+          },
+          {
+           "termo": "Comando",
+           "definicao": "Uma ordem escrita para o computador"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para que serve o terminal?",
+         "certa": "Para digitar comandos e o computador executar",
+         "erradas": [
+          "Para esfriar o computador",
+          "Para desenhar imagens",
+          "Para trocar o papel de parede só"
+         ],
+         "explicacao": "Ele é a porta para falar com o sistema por texto.",
+         "conceito": "linux.terminal",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O shell é o programa que entende os comandos digitados.",
+         "resposta": true,
+         "explicacao": "O bash é um shell muito usado.",
+         "conceito": "linux.terminal",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é a diferença entre terminal e shell?",
+         "certa": "Terminal é a janela; shell entende os comandos",
+         "erradas": [
+          "São a mesma peça de hardware",
+          "O terminal é um cabo; o shell é a tela",
+          "Não existe diferença nenhuma e nenhum dos dois roda comandos"
+         ],
+         "explicacao": "A janela mostra e o shell interpreta.",
+         "conceito": "linux.terminal",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada termo ao seu papel",
+         "pares": [
+          {
+           "esquerda": "Terminal",
+           "direita": "A janela onde você digita"
+          },
+          {
+           "esquerda": "Shell",
+           "direita": "Entende e executa o que foi digitado"
+          },
+          {
+           "esquerda": "Comando",
+           "direita": "Uma ordem para o computador"
+          }
+         ],
+         "explicacao": "Digita-se um comando; o shell executa.",
+         "conceito": "linux.terminal",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o bash é?",
+         "certa": "Um shell",
+         "erradas": [
+          "Um teclado",
+          "Uma distro",
+          "Um cabo"
+         ],
+         "explicacao": "Bash é o shell mais comum no Linux.",
+         "conceito": "linux.terminal",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Anatomia de um comando",
+       "conceitos": [
+        {
+         "id": "linux.comando",
+         "nome": "Nome, opções e argumentos",
+         "antes": [
+          "linux.terminal"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Anatomia de um comando",
+         "texto": "Um comando tem partes: o nome (o que fazer), as opções (como fazer, geralmente com um traço) e os argumentos (em quem fazer). Em «ls -l /home»: ls é o nome, -l é a opção e /home é o argumento.",
+         "termos": [
+          {
+           "termo": "Nome",
+           "definicao": "O que você quer fazer (ls, cd, cat)"
+          },
+          {
+           "termo": "Opção",
+           "definicao": "Muda como o comando age (-l, -a)"
+          },
+          {
+           "termo": "Argumento",
+           "definicao": "O alvo do comando (um arquivo ou pasta)"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Em «ls -l /home», quem é a opção?",
+         "certa": "-l",
+         "erradas": [
+          "ls",
+          "/home",
+          "Nenhuma"
+         ],
+         "explicacao": "Opções começam com traço.",
+         "conceito": "linux.comando",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Em «ls -l /home», o argumento é /home.",
+         "resposta": true,
+         "explicacao": "É o alvo do comando.",
+         "conceito": "linux.comando",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando mostra o conteúdo de uma pasta?",
+         "certa": "ls",
+         "erradas": [
+          "cd",
+          "pwd",
+          "rm"
+         ],
+         "explicacao": "ls vem de list, listar.",
+         "conceito": "linux.comando",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Nome, opção ou argumento? (em «ls -a /tmp»)",
+         "categorias": [
+          "Nome do comando",
+          "Opção",
+          "Argumento"
+         ],
+         "itens": [
+          {
+           "texto": "ls",
+           "categoria": "Nome do comando"
+          },
+          {
+           "texto": "-a",
+           "categoria": "Opção"
+          },
+          {
+           "texto": "/tmp",
+           "categoria": "Argumento"
+          }
+         ],
+         "explicacao": "Nome, depois opções, depois o alvo.",
+         "conceito": "linux.comando",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "No comando «cat nota.txt», o que é nota.txt?",
+         "certa": "O argumento",
+         "erradas": [
+          "A opção",
+          "O nome do comando",
+          "O shell"
+         ],
+         "explicacao": "É o arquivo sobre o qual o comando age.",
+         "conceito": "linux.comando",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Ler o prompt",
+       "conceitos": [
+        {
+         "id": "linux.prompt",
+         "nome": "O prompt e o $",
+         "antes": [
+          "linux.comando"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Ler o prompt",
+         "texto": "O prompt é o texto que aparece antes do cursor, avisando que o shell espera um comando. Ele costuma mostrar usuário, máquina e pasta: aluno@servidor:~$. O $ indica usuário comum; o # indica administrador (root).",
+         "termos": [
+          {
+           "termo": "Prompt",
+           "definicao": "Texto que espera seu comando"
+          },
+          {
+           "termo": "$",
+           "definicao": "Você é um usuário comum"
+          },
+          {
+           "termo": "#",
+           "definicao": "Você é o administrador (root)"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Em «aluno@servidor:~$», quem é o usuário?",
+         "certa": "aluno",
+         "erradas": [
+          "servidor",
+          "~",
+          "$"
+         ],
+         "explicacao": "O que vem antes do @ é o usuário.",
+         "conceito": "linux.prompt",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O símbolo # no fim do prompt indica o administrador.",
+         "resposta": true,
+         "explicacao": "Cuidado: o root pode mudar qualquer coisa.",
+         "conceito": "linux.prompt",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Em «aluno@servidor:~$», qual é o nome da máquina?",
+         "certa": "servidor",
+         "erradas": [
+          "aluno",
+          "$",
+          "~"
+         ],
+         "explicacao": "Depois do @ vem o nome da máquina.",
+         "conceito": "linux.prompt",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada pedaço do prompt ao que ele mostra",
+         "pares": [
+          {
+           "esquerda": "aluno",
+           "direita": "O usuário"
+          },
+          {
+           "esquerda": "servidor",
+           "direita": "O nome da máquina"
+          },
+          {
+           "esquerda": "$",
+           "direita": "Usuário comum"
+          }
+         ],
+         "explicacao": "Cada parte do prompt é uma informação.",
+         "conceito": "linux.prompt",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que é bom prestar atenção ao # no prompt?",
+         "certa": "Porque o administrador pode alterar tudo no sistema",
+         "erradas": [
+          "Porque o # liga a internet",
+          "Porque o # apaga a tela",
+          "Porque indica que o computador está lento"
+         ],
+         "explicacao": "Quem é root tem poder total.",
+         "conceito": "linux.prompt",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Seu colega abriu uma janela preta e digitou «ls». Que janela é essa?",
+       "certa": "O terminal",
+       "erradas": [
+        "O navegador",
+        "O gerenciador de energia",
+        "A lixeira"
+       ],
+       "explicacao": "É onde se digitam comandos.",
+       "conceito": "linux.terminal",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual das opções é o comando completo com opção e argumento?",
+       "certa": "ls -l /tmp",
+       "erradas": [
+        "ls",
+        "/tmp",
+        "-l"
+       ],
+       "explicacao": "Nome, opção e argumento juntos.",
+       "conceito": "linux.comando",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "O prompt «root@servidor:/#» indica que você está como administrador.",
+       "resposta": true,
+       "explicacao": "root + # = administrador.",
+       "conceito": "linux.prompt",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_comandos"
+    },
+    {
+     "lugar": "Mapa de Pastas",
+     "titulo": "Pastas e caminhos",
+     "dicas": [
+      "Tudo começa na raiz: /.",
+      "Caminho absoluto começa na raiz; relativo parte de onde você está.",
+      "~ é a sua pasta pessoal; . é aqui; .. é a pasta de cima."
+     ],
+     "fases": [
+      {
+       "nome": "A árvore de pastas",
+       "conceitos": [
+        {
+         "id": "linux.arvore",
+         "nome": "A árvore de diretórios",
+         "antes": [
+          "linux.prompt"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "A árvore de pastas",
+         "texto": "No Linux, tudo fica numa árvore que começa na raiz, escrita como «/». Pasta também se chama diretório. Dentro da raiz há pastas como /home (pessoas), /etc (configurações), /var (dados que mudam, como logs) e /tmp (temporários).",
+         "termos": [
+          {
+           "termo": "Raiz (/)",
+           "definicao": "Início de toda a árvore"
+          },
+          {
+           "termo": "/home",
+           "definicao": "Onde ficam as pastas das pessoas"
+          },
+          {
+           "termo": "/etc",
+           "definicao": "Arquivos de configuração do sistema"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como se escreve a raiz do sistema?",
+         "certa": "/",
+         "erradas": [
+          "~",
+          "..",
+          "C:"
+         ],
+         "explicacao": "A raiz é só uma barra.",
+         "conceito": "linux.arvore",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "No Linux existe uma única árvore de pastas, que começa na raiz.",
+         "resposta": true,
+         "explicacao": "Não há C: nem D: como no Windows.",
+         "conceito": "linux.arvore",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Onde ficam as pastas pessoais das pessoas usuárias?",
+         "certa": "/home",
+         "erradas": [
+          "/etc",
+          "/tmp",
+          "/var"
+         ],
+         "explicacao": "Cada pessoa tem uma pasta dentro de /home.",
+         "conceito": "linux.arvore",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada pasta ao seu uso",
+         "pares": [
+          {
+           "esquerda": "/home",
+           "direita": "Pastas das pessoas"
+          },
+          {
+           "esquerda": "/etc",
+           "direita": "Configurações do sistema"
+          },
+          {
+           "esquerda": "/tmp",
+           "direita": "Arquivos temporários"
+          }
+         ],
+         "explicacao": "Cada pasta tem uma função.",
+         "conceito": "linux.arvore",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Onde costumam ficar os arquivos de log, que registram o que aconteceu?",
+         "certa": "/var/log",
+         "erradas": [
+          "/home/aluno",
+          "/tmp",
+          "/"
+         ],
+         "explicacao": "/var guarda dados que mudam, como logs.",
+         "conceito": "linux.arvore",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Caminho absoluto e relativo",
+       "conceitos": [
+        {
+         "id": "linux.caminho",
+         "nome": "Caminhos absoluto e relativo",
+         "antes": [
+          "linux.arvore"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Caminho absoluto e relativo",
+         "texto": "Caminho é o endereço de um arquivo ou pasta. O absoluto começa na raiz (/home/aluno/nota.txt) e vale de qualquer lugar. O relativo parte de onde você está (docs/nota.txt) e não começa com barra.",
+         "termos": [
+          {
+           "termo": "Absoluto",
+           "definicao": "Começa em / e vale de qualquer lugar"
+          },
+          {
+           "termo": "Relativo",
+           "definicao": "Parte da pasta onde você está"
+          },
+          {
+           "termo": "Pasta atual",
+           "definicao": "Onde você está agora"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual destes é um caminho absoluto?",
+         "certa": "/home/aluno/nota.txt",
+         "erradas": [
+          "docs/nota.txt",
+          "nota.txt",
+          "../nota.txt"
+         ],
+         "explicacao": "Começa com / = absoluto.",
+         "conceito": "linux.caminho",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Um caminho relativo começa sempre com uma barra.",
+         "resposta": false,
+         "explicacao": "Relativo não começa com barra; parte de onde você está.",
+         "conceito": "linux.caminho",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você está em /home/aluno. O que «docs/nota.txt» significa?",
+         "certa": "/home/aluno/docs/nota.txt",
+         "erradas": [
+          "/docs/nota.txt",
+          "/home/docs/nota.txt",
+          "/nota.txt"
+         ],
+         "explicacao": "O relativo se junta à pasta atual.",
+         "conceito": "linux.caminho",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Absoluto ou relativo?",
+         "categorias": [
+          "Absoluto",
+          "Relativo"
+         ],
+         "itens": [
+          {
+           "texto": "/etc/hosts",
+           "categoria": "Absoluto"
+          },
+          {
+           "texto": "docs/nota.txt",
+           "categoria": "Relativo"
+          },
+          {
+           "texto": "/var/log/syslog",
+           "categoria": "Absoluto"
+          },
+          {
+           "texto": "projetos/app",
+           "categoria": "Relativo"
+          }
+         ],
+         "explicacao": "Com barra no começo é absoluto.",
+         "conceito": "linux.caminho",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que o caminho absoluto é seguro de usar?",
+         "certa": "Porque vale de qualquer pasta onde você esteja",
+         "erradas": [
+          "Porque é mais curto",
+          "Porque funciona só em servidores",
+          "Porque apaga o erro"
+         ],
+         "explicacao": "Ele não depende de onde você está.",
+         "conceito": "linux.caminho",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Atalhos: ~, . e ..",
+       "conceitos": [
+        {
+         "id": "linux.atalhos",
+         "nome": "Atalhos de pasta (~ . ..)",
+         "antes": [
+          "linux.caminho"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Atalhos: ~, . e ..",
+         "texto": "O til (~) é atalho para a sua pasta pessoal. O ponto (.) é a pasta onde você está. Dois pontos (..) são a pasta de cima. Com o comando cd você muda de pasta, e pwd mostra onde você está.",
+         "termos": [
+          {
+           "termo": "~",
+           "definicao": "Sua pasta pessoal (home)"
+          },
+          {
+           "termo": ".",
+           "definicao": "A pasta atual"
+          },
+          {
+           "termo": "..",
+           "definicao": "A pasta de cima"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o comando pwd mostra?",
+         "certa": "A pasta em que você está",
+         "erradas": [
+          "A lista de arquivos",
+          "O nome do usuário",
+          "A hora"
+         ],
+         "explicacao": "pwd = print working directory.",
+         "conceito": "linux.atalhos",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O comando «cd ..» sobe uma pasta.",
+         "resposta": true,
+         "explicacao": ".. é a pasta de cima.",
+         "conceito": "linux.atalhos",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando leva você direto à sua pasta pessoal?",
+         "certa": "cd ~",
+         "erradas": [
+          "cd /",
+          "cd ..",
+          "cd ."
+         ],
+         "explicacao": "~ é a sua casa.",
+         "conceito": "linux.atalhos",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada atalho ao seu significado",
+         "pares": [
+          {
+           "esquerda": "~",
+           "direita": "Sua pasta pessoal"
+          },
+          {
+           "esquerda": ".",
+           "direita": "A pasta atual"
+          },
+          {
+           "esquerda": "..",
+           "direita": "A pasta de cima"
+          }
+         ],
+         "explicacao": "Três atalhos, três lugares.",
+         "conceito": "linux.atalhos",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você está em /home/aluno/docs. Depois de «cd ..», onde fica?",
+         "certa": "/home/aluno",
+         "erradas": [
+          "/home",
+          "/",
+          "/home/aluno/docs/.."
+         ],
+         "explicacao": "Subiu uma pasta.",
+         "conceito": "linux.atalhos",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual pasta é o topo de toda a árvore?",
+       "certa": "/",
+       "erradas": [
+        "/home",
+        "/etc",
+        "~"
+       ],
+       "explicacao": "Tudo nasce na raiz.",
+       "conceito": "linux.arvore",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você está em /var e quer ir a /var/log. Qual caminho relativo serve?",
+       "certa": "log",
+       "erradas": [
+        "/log",
+        "../log",
+        "/var/var/log"
+       ],
+       "explicacao": "Relativo parte de onde você está.",
+       "conceito": "linux.caminho",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "Estando em /home/aluno, «cd ../..» leva até a raiz.",
+       "resposta": true,
+       "explicacao": "Dois níveis acima de /home/aluno é /.",
+       "conceito": "linux.atalhos",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_pastas"
+    },
+    {
+     "lugar": "Oficina de Arquivos",
+     "titulo": "Criar, copiar e mover",
+     "dicas": [
+      "mkdir cria pasta; touch cria arquivo vazio.",
+      "cp copia; mv move ou renomeia; rm apaga.",
+      "Não existe lixeira no terminal: rm apaga de vez. Maiúscula e minúscula são diferentes."
+     ],
+     "fases": [
+      {
+       "nome": "Criar pastas e arquivos",
+       "conceitos": [
+        {
+         "id": "linux.criar",
+         "nome": "Criar pastas e arquivos",
+         "antes": [
+          "linux.atalhos"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Criar pastas e arquivos",
+         "texto": "Para criar uma pasta usamos mkdir (make directory). Para criar um arquivo vazio, touch. Para ver o resultado, ls. No Linux, maiúsculas e minúsculas contam: Nota.txt e nota.txt são arquivos diferentes.",
+         "termos": [
+          {
+           "termo": "mkdir",
+           "definicao": "Cria uma pasta"
+          },
+          {
+           "termo": "touch",
+           "definicao": "Cria um arquivo vazio"
+          },
+          {
+           "termo": "ls",
+           "definicao": "Lista o que há na pasta"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando cria uma pasta?",
+         "certa": "mkdir",
+         "erradas": [
+          "touch",
+          "cd",
+          "cat"
+         ],
+         "explicacao": "mkdir = make directory.",
+         "conceito": "linux.criar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Nota.txt e nota.txt são o mesmo arquivo no Linux.",
+         "resposta": false,
+         "explicacao": "O Linux diferencia maiúsculas de minúsculas.",
+         "conceito": "linux.criar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando cria um arquivo vazio chamado ideias.txt?",
+         "certa": "touch ideias.txt",
+         "erradas": [
+          "mkdir ideias.txt",
+          "cd ideias.txt",
+          "ls ideias.txt"
+         ],
+         "explicacao": "touch cria o arquivo.",
+         "conceito": "linux.criar",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada comando ao que ele faz",
+         "pares": [
+          {
+           "esquerda": "mkdir",
+           "direita": "Cria uma pasta"
+          },
+          {
+           "esquerda": "touch",
+           "direita": "Cria um arquivo vazio"
+          },
+          {
+           "esquerda": "ls",
+           "direita": "Mostra o conteúdo da pasta"
+          }
+         ],
+         "explicacao": "Criar e conferir.",
+         "conceito": "linux.criar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você criou uma pasta e quer conferir. Qual comando usa?",
+         "certa": "ls",
+         "erradas": [
+          "rm",
+          "mv",
+          "pwd"
+         ],
+         "explicacao": "ls mostra o que há na pasta atual.",
+         "conceito": "linux.criar",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Copiar e mover",
+       "conceitos": [
+        {
+         "id": "linux.copiar",
+         "nome": "Copiar, mover e renomear",
+         "antes": [
+          "linux.criar"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Copiar e mover",
+         "texto": "cp copia: «cp origem destino». mv move: «mv origem destino». E mv também renomeia, porque mover para o mesmo lugar com outro nome é trocar o nome. A cópia deixa o original; o mv, não.",
+         "termos": [
+          {
+           "termo": "cp",
+           "definicao": "Copia (o original continua lá)"
+          },
+          {
+           "termo": "mv",
+           "definicao": "Move ou renomeia"
+          },
+          {
+           "termo": "origem e destino",
+           "definicao": "De onde sai e para onde vai"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando copia um arquivo?",
+         "certa": "cp",
+         "erradas": [
+          "mv",
+          "rm",
+          "cat"
+         ],
+         "explicacao": "cp = copy.",
+         "conceito": "linux.copiar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O comando mv pode renomear um arquivo.",
+         "resposta": true,
+         "explicacao": "mv velho.txt novo.txt troca o nome.",
+         "conceito": "linux.copiar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Depois de «cp nota.txt copia.txt», quantos arquivos existem?",
+         "certa": "Dois: nota.txt e copia.txt",
+         "erradas": [
+          "Só copia.txt",
+          "Só nota.txt",
+          "Nenhum"
+         ],
+         "explicacao": "A cópia mantém o original.",
+         "conceito": "linux.copiar",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "O original continua depois do comando?",
+         "categorias": [
+          "Continua",
+          "Some do lugar antigo"
+         ],
+         "itens": [
+          {
+           "texto": "cp nota.txt copia.txt",
+           "categoria": "Continua"
+          },
+          {
+           "texto": "mv nota.txt pasta/",
+           "categoria": "Some do lugar antigo"
+          },
+          {
+           "texto": "cp a.txt b.txt",
+           "categoria": "Continua"
+          },
+          {
+           "texto": "mv a.txt c.txt",
+           "categoria": "Some do lugar antigo"
+          }
+         ],
+         "explicacao": "mv muda de lugar; cp duplica.",
+         "conceito": "linux.copiar",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando renomeia relatorio.txt para final.txt?",
+         "certa": "mv relatorio.txt final.txt",
+         "erradas": [
+          "cp final.txt relatorio.txt",
+          "rm relatorio.txt",
+          "touch final.txt"
+         ],
+         "explicacao": "mv com um novo nome renomeia.",
+         "conceito": "linux.copiar",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Apagar com cuidado",
+       "conceitos": [
+        {
+         "id": "linux.apagar",
+         "nome": "Apagar com rm",
+         "antes": [
+          "linux.copiar"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Apagar com cuidado",
+         "texto": "rm apaga arquivos. Para apagar uma pasta com tudo dentro, usa-se rm -r. No terminal não há lixeira: o que o rm apaga não volta. Por isso, confira o nome antes de apertar Enter e, se tiver dúvida, use ls primeiro.",
+         "termos": [
+          {
+           "termo": "rm",
+           "definicao": "Apaga arquivos"
+          },
+          {
+           "termo": "rm -r",
+           "definicao": "Apaga pasta e conteúdo"
+          },
+          {
+           "termo": "Sem lixeira",
+           "definicao": "Apagou, não volta"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando apaga um arquivo?",
+         "certa": "rm",
+         "erradas": [
+          "mv",
+          "cp",
+          "mkdir"
+         ],
+         "explicacao": "rm = remove.",
+         "conceito": "linux.apagar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O que o rm apaga vai para a lixeira e pode ser restaurado.",
+         "resposta": false,
+         "explicacao": "No terminal não há lixeira.",
+         "conceito": "linux.apagar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual cuidado vale antes de usar rm?",
+         "certa": "Conferir o nome com ls e ler o comando antes do Enter",
+         "erradas": [
+          "Digitar bem rápido",
+          "Usar sempre como administrador",
+          "Apagar a pasta de cima"
+         ],
+         "explicacao": "Prevenir é melhor que perder dados.",
+         "conceito": "linux.apagar",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada comando ao que ele faz",
+         "pares": [
+          {
+           "esquerda": "rm arquivo",
+           "direita": "Apaga um arquivo"
+          },
+          {
+           "esquerda": "rm -r pasta",
+           "direita": "Apaga uma pasta e o que há dentro"
+          },
+          {
+           "esquerda": "ls",
+           "direita": "Confere o que existe antes de apagar"
+          }
+         ],
+         "explicacao": "Confira antes de apagar.",
+         "conceito": "linux.apagar",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando apaga a pasta «velhos» e tudo que há nela?",
+         "certa": "rm -r velhos",
+         "erradas": [
+          "rm velhos",
+          "mkdir velhos",
+          "cp velhos"
+         ],
+         "explicacao": "A opção -r é recursiva.",
+         "conceito": "linux.apagar",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Você digitou «mkdir fotos». O que aconteceu?",
+       "certa": "Foi criada a pasta fotos",
+       "erradas": [
+        "Foi apagada a pasta fotos",
+        "Foi criado um arquivo vazio",
+        "Nada, é erro"
+       ],
+       "explicacao": "mkdir cria pastas.",
+       "conceito": "linux.criar",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "Com «mv a.txt b.txt», o arquivo a.txt deixa de existir com esse nome.",
+       "resposta": true,
+       "explicacao": "Foi renomeado para b.txt.",
+       "conceito": "linux.copiar",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Por que apagar com rm exige cuidado?",
+       "certa": "Porque não existe lixeira no terminal",
+       "erradas": [
+        "Porque o rm é lento",
+        "Porque só funciona no domingo",
+        "Porque pede senha sempre"
+       ],
+       "explicacao": "Apagou, acabou.",
+       "conceito": "linux.apagar",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_arquivos"
+    },
+    {
+     "lugar": "Sala de Leitura",
+     "titulo": "Ler arquivos",
+     "dicas": [
+      "cat mostra o arquivo inteiro.",
+      "head mostra o começo; tail mostra o fim.",
+      "grep procura um texto dentro de arquivos."
+     ],
+     "fases": [
+      {
+       "nome": "Ver o conteúdo",
+       "conceitos": [
+        {
+         "id": "linux.ler",
+         "nome": "Ler arquivos (cat, head, tail)",
+         "antes": [
+          "linux.apagar"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Ver o conteúdo",
+         "texto": "cat mostra o arquivo inteiro na tela. head mostra só as primeiras linhas e tail mostra as últimas. Em arquivos longos, como os logs, tail é muito usado para ver o que aconteceu por último.",
+         "termos": [
+          {
+           "termo": "cat",
+           "definicao": "Mostra o arquivo inteiro"
+          },
+          {
+           "termo": "head",
+           "definicao": "Mostra as primeiras linhas"
+          },
+          {
+           "termo": "tail",
+           "definicao": "Mostra as últimas linhas"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando mostra o conteúdo de um arquivo?",
+         "certa": "cat",
+         "erradas": [
+          "mkdir",
+          "cd",
+          "touch"
+         ],
+         "explicacao": "cat exibe o arquivo.",
+         "conceito": "linux.ler",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O comando tail mostra as últimas linhas de um arquivo.",
+         "resposta": true,
+         "explicacao": "Muito útil para logs.",
+         "conceito": "linux.ler",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você quer só o começo de um arquivo enorme. O que usa?",
+         "certa": "head",
+         "erradas": [
+          "tail",
+          "rm",
+          "pwd"
+         ],
+         "explicacao": "head mostra as primeiras linhas.",
+         "conceito": "linux.ler",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada comando ao que ele mostra",
+         "pares": [
+          {
+           "esquerda": "cat",
+           "direita": "O arquivo inteiro"
+          },
+          {
+           "esquerda": "head",
+           "direita": "As primeiras linhas"
+          },
+          {
+           "esquerda": "tail",
+           "direita": "As últimas linhas"
+          }
+         ],
+         "explicacao": "Três jeitos de olhar um arquivo.",
+         "conceito": "linux.ler",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando mostra as últimas linhas de um log?",
+         "certa": "tail log.txt",
+         "erradas": [
+          "head log.txt",
+          "mkdir log.txt",
+          "cd log.txt"
+         ],
+         "explicacao": "tail mostra o fim do arquivo.",
+         "conceito": "linux.ler",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Procurar texto",
+       "conceitos": [
+        {
+         "id": "linux.grep",
+         "nome": "Procurar com grep",
+         "antes": [
+          "linux.ler"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Procurar texto",
+         "texto": "grep procura um texto dentro de arquivos e mostra só as linhas que o contêm: «grep erro log.txt». Com -i ele ignora maiúsculas e minúsculas. Já o comando wc -l conta quantas linhas há.",
+         "termos": [
+          {
+           "termo": "grep",
+           "definicao": "Mostra as linhas que têm o texto"
+          },
+          {
+           "termo": "grep -i",
+           "definicao": "Ignora maiúsculas e minúsculas"
+          },
+          {
+           "termo": "wc -l",
+           "definicao": "Conta as linhas"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para que serve o grep?",
+         "certa": "Procurar um texto dentro de arquivos",
+         "erradas": [
+          "Apagar arquivos",
+          "Mudar de pasta",
+          "Criar pastas"
+         ],
+         "explicacao": "grep filtra linhas.",
+         "conceito": "linux.grep",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "«grep erro log.txt» mostra as linhas de log.txt que contêm a palavra erro.",
+         "resposta": true,
+         "explicacao": "É exatamente isso.",
+         "conceito": "linux.grep",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual opção do grep ignora maiúsculas e minúsculas?",
+         "certa": "-i",
+         "erradas": [
+          "-r",
+          "-l",
+          "-x"
+         ],
+         "explicacao": "-i = ignore case.",
+         "conceito": "linux.grep",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Qual comando usar?",
+         "categorias": [
+          "grep",
+          "wc -l",
+          "tail"
+         ],
+         "itens": [
+          {
+           "texto": "Achar linhas com a palavra falha",
+           "categoria": "grep"
+          },
+          {
+           "texto": "Contar quantas linhas tem o arquivo",
+           "categoria": "wc -l"
+          },
+          {
+           "texto": "Ver o fim do arquivo",
+           "categoria": "tail"
+          }
+         ],
+         "explicacao": "Cada um com sua função.",
+         "conceito": "linux.grep",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando conta as linhas de log.txt?",
+         "certa": "wc -l log.txt",
+         "erradas": [
+          "grep log.txt",
+          "cat -l log.txt",
+          "ls log.txt"
+         ],
+         "explicacao": "wc -l conta linhas.",
+         "conceito": "linux.grep",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Você abriu um log gigante com cat e a tela encheu. O que ajuda?",
+       "certa": "Usar tail ou head para ver só um pedaço",
+       "erradas": [
+        "Apagar o arquivo",
+        "Reiniciar o servidor",
+        "Usar mkdir"
+       ],
+       "explicacao": "Ver só o trecho necessário.",
+       "conceito": "linux.ler",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "O grep apaga as linhas que não contêm o texto procurado.",
+       "resposta": false,
+       "explicacao": "Ele só mostra; não altera o arquivo.",
+       "conceito": "linux.grep",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "«grep -i ERRO log.txt» acha também «erro»?",
+       "certa": "Sim, o -i ignora maiúsculas",
+       "erradas": [
+        "Não, nunca",
+        "Só se for root",
+        "Só em pasta"
+       ],
+       "explicacao": "-i ignora a caixa.",
+       "conceito": "linux.grep",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_logs"
+    },
+    {
+     "lugar": "Esteira de Dados",
+     "titulo": "Pipes e redirecionamento",
+     "dicas": [
+      "> grava a saída num arquivo (e apaga o que havia).",
+      ">> acrescenta no fim do arquivo.",
+      "| (pipe) passa a saída de um comando para o próximo."
+     ],
+     "fases": [
+      {
+       "nome": "Saída e redirecionamento",
+       "conceitos": [
+        {
+         "id": "linux.redir",
+         "nome": "Redirecionar a saída",
+         "antes": [
+          "linux.grep"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Saída e redirecionamento",
+         "texto": "Todo comando produz uma saída, normalmente na tela. Com > você manda essa saída para um arquivo; com >> você acrescenta ao fim dele. Atenção: > substitui tudo o que já havia no arquivo.",
+         "termos": [
+          {
+           "termo": "Saída",
+           "definicao": "O resultado que o comando mostra"
+          },
+          {
+           "termo": ">",
+           "definicao": "Grava num arquivo, substituindo"
+          },
+          {
+           "termo": ">>",
+           "definicao": "Acrescenta ao fim do arquivo"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que faz «ls > lista.txt»?",
+         "certa": "Grava a lista de arquivos no arquivo lista.txt",
+         "erradas": [
+          "Apaga lista.txt",
+          "Copia lista.txt",
+          "Cria uma pasta"
+         ],
+         "explicacao": "> redireciona a saída.",
+         "conceito": "linux.redir",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O símbolo >> acrescenta ao fim do arquivo sem apagar o que havia.",
+         "resposta": true,
+         "explicacao": "Boa para ir juntando anotações.",
+         "conceito": "linux.redir",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que acontece com o conteúdo anterior de nota.txt em «echo oi > nota.txt»?",
+         "certa": "É substituído",
+         "erradas": [
+          "Fica guardado",
+          "Vira uma pasta",
+          "É duplicado"
+         ],
+         "explicacao": "> sobrescreve.",
+         "conceito": "linux.redir",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada símbolo ao seu efeito",
+         "pares": [
+          {
+           "esquerda": ">",
+           "direita": "Substitui o arquivo com a saída"
+          },
+          {
+           "esquerda": ">>",
+           "direita": "Acrescenta ao fim do arquivo"
+          },
+          {
+           "esquerda": "echo",
+           "direita": "Mostra um texto"
+          }
+         ],
+         "explicacao": "Cuidado com o > .",
+         "conceito": "linux.redir",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando acrescenta a palavra «fim» ao final de nota.txt?",
+         "certa": "echo fim >> nota.txt",
+         "erradas": [
+          "echo fim > nota.txt",
+          "cat fim nota.txt",
+          "rm nota.txt"
+         ],
+         "explicacao": ">> acrescenta.",
+         "conceito": "linux.redir",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "O pipe",
+       "conceitos": [
+        {
+         "id": "linux.pipe",
+         "nome": "O pipe |",
+         "antes": [
+          "linux.redir"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O pipe",
+         "texto": "O pipe (a barrinha |) liga comandos: a saída do primeiro vira a entrada do segundo. Exemplo: «cat log.txt | grep erro | wc -l» lê o log, filtra as linhas com erro e conta quantas são. É como uma esteira.",
+         "termos": [
+          {
+           "termo": "Pipe (|)",
+           "definicao": "Passa a saída para o próximo comando"
+          },
+          {
+           "termo": "Filtro",
+           "definicao": "Comando que seleciona parte da saída"
+          },
+          {
+           "termo": "Encadear",
+           "definicao": "Juntar vários comandos numa linha"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para que serve o pipe |?",
+         "certa": "Ligar a saída de um comando à entrada do próximo",
+         "erradas": [
+          "Apagar arquivos",
+          "Mudar de pasta",
+          "Desligar o computador"
+         ],
+         "explicacao": "Encadeia comandos.",
+         "conceito": "linux.pipe",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "«ls | wc -l» conta quantos itens há na pasta.",
+         "resposta": true,
+         "explicacao": "ls lista; wc -l conta.",
+         "conceito": "linux.pipe",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que faz «cat log.txt | grep erro»?",
+         "certa": "Mostra só as linhas de log.txt com a palavra erro",
+         "erradas": [
+          "Apaga os erros",
+          "Cria a pasta erro",
+          "Copia o log"
+         ],
+         "explicacao": "O grep filtra a saída do cat.",
+         "conceito": "linux.pipe",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Pipe ou redirecionamento?",
+         "categorias": [
+          "Pipe (|)",
+          "Redirecionamento (> ou >>)"
+         ],
+         "itens": [
+          {
+           "texto": "ls | wc -l",
+           "categoria": "Pipe (|)"
+          },
+          {
+           "texto": "ls > lista.txt",
+           "categoria": "Redirecionamento (> ou >>)"
+          },
+          {
+           "texto": "cat a.txt | grep oi",
+           "categoria": "Pipe (|)"
+          },
+          {
+           "texto": "echo ok >> a.txt",
+           "categoria": "Redirecionamento (> ou >>)"
+          }
+         ],
+         "explicacao": "Pipe vai para outro comando; > vai para arquivo.",
+         "conceito": "linux.pipe",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual linha conta quantas linhas de log.txt têm «erro»?",
+         "certa": "grep erro log.txt | wc -l",
+         "erradas": [
+          "grep erro | log.txt wc",
+          "wc -l > grep erro",
+          "rm erro log.txt"
+         ],
+         "explicacao": "Filtrar e depois contar.",
+         "conceito": "linux.pipe",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Você quer guardar a lista de arquivos num relatório. Qual escolhe?",
+       "certa": "ls > relatorio.txt",
+       "erradas": [
+        "ls | relatorio.txt",
+        "rm relatorio.txt",
+        "cd relatorio.txt"
+       ],
+       "explicacao": "Redirecionar a saída para arquivo.",
+       "conceito": "linux.redir",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "Usar > em um arquivo importante pode apagar o conteúdo antigo dele.",
+       "resposta": true,
+       "explicacao": "Use >> se quiser só acrescentar.",
+       "conceito": "linux.redir",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual é a ideia do pipe?",
+       "certa": "Uma esteira: a saída de um comando alimenta o próximo",
+       "erradas": [
+        "Um cabo de rede",
+        "Um atalho de pasta",
+        "Uma senha"
+       ],
+       "explicacao": "Encadeia ferramentas pequenas.",
+       "conceito": "linux.pipe",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_esteira"
+    },
+    {
+     "lugar": "Portaria",
+     "titulo": "Permissões",
+     "dicas": [
+      "r = ler, w = escrever, x = executar.",
+      "Há três grupos: dono (u), grupo (g) e outros (o).",
+      "chmod muda permissões; ls -l mostra."
+     ],
+     "fases": [
+      {
+       "nome": "Ler as permissões",
+       "conceitos": [
+        {
+         "id": "linux.perm",
+         "nome": "Permissões r, w, x",
+         "antes": [
+          "linux.pipe"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Ler as permissões",
+         "texto": "Cada arquivo tem permissões: r (ler), w (escrever) e x (executar). Elas valem para três grupos: o dono, o grupo e os outros. Com «ls -l» você vê algo como -rwxr-xr-- : o primeiro traço indica arquivo, depois vêm três letras para o dono, três para o grupo e três para os outros.",
+         "termos": [
+          {
+           "termo": "r",
+           "definicao": "Permissão de ler"
+          },
+          {
+           "termo": "w",
+           "definicao": "Permissão de escrever"
+          },
+          {
+           "termo": "x",
+           "definicao": "Permissão de executar"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que significa a letra w numa permissão?",
+         "certa": "Escrever (alterar)",
+         "erradas": [
+          "Ler",
+          "Executar",
+          "Apagar a rede"
+         ],
+         "explicacao": "w = write.",
+         "conceito": "linux.perm",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O comando ls -l mostra as permissões dos arquivos.",
+         "resposta": true,
+         "explicacao": "A primeira coluna traz as permissões.",
+         "conceito": "linux.perm",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Em «-rw-r--r--», o que o dono pode fazer?",
+         "certa": "Ler e escrever",
+         "erradas": [
+          "Só executar",
+          "Nada",
+          "Só ler"
+         ],
+         "explicacao": "Os três primeiros: rw-.",
+         "conceito": "linux.perm",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada letra ao seu significado",
+         "pares": [
+          {
+           "esquerda": "r",
+           "direita": "Ler"
+          },
+          {
+           "esquerda": "w",
+           "direita": "Escrever"
+          },
+          {
+           "esquerda": "x",
+           "direita": "Executar"
+          }
+         ],
+         "explicacao": "Três permissões básicas.",
+         "conceito": "linux.perm",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Em «-rw-r--r--», o que os outros usuários podem fazer?",
+         "certa": "Só ler",
+         "erradas": [
+          "Ler e escrever",
+          "Executar",
+          "Apagar"
+         ],
+         "explicacao": "Os últimos três: r--.",
+         "conceito": "linux.perm",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Mudar com chmod",
+       "conceitos": [
+        {
+         "id": "linux.chmod",
+         "nome": "chmod e executar scripts",
+         "antes": [
+          "linux.perm"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Mudar com chmod",
+         "texto": "chmod muda as permissões. Forma simples: «chmod +x script.sh» dá permissão de executar; «chmod -w nota.txt» tira a de escrever. Um script só roda com ./script.sh se tiver o x.",
+         "termos": [
+          {
+           "termo": "chmod",
+           "definicao": "Muda permissões"
+          },
+          {
+           "termo": "+x",
+           "definicao": "Adiciona a permissão de executar"
+          },
+          {
+           "termo": "./",
+           "definicao": "Executa um arquivo da pasta atual"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando dá permissão de executar a script.sh?",
+         "certa": "chmod +x script.sh",
+         "erradas": [
+          "chmod -x script.sh",
+          "cp +x script.sh",
+          "mkdir script.sh"
+         ],
+         "explicacao": "+x adiciona executar.",
+         "conceito": "linux.chmod",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Um script sem a permissão x não consegue ser executado com ./script.sh.",
+         "resposta": true,
+         "explicacao": "Aparece «Permissão negada».",
+         "conceito": "linux.chmod",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você tentou ./script.sh e recebeu «Permissão negada». Qual é a causa provável?",
+         "certa": "Faltava a permissão de executar",
+         "erradas": [
+          "Faltava internet",
+          "O arquivo é uma pasta",
+          "O teclado quebrou"
+         ],
+         "explicacao": "Falta o x.",
+         "conceito": "linux.chmod",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Qual comando faz o quê?",
+         "categorias": [
+          "Dá permissão",
+          "Tira permissão"
+         ],
+         "itens": [
+          {
+           "texto": "chmod +x a.sh",
+           "categoria": "Dá permissão"
+          },
+          {
+           "texto": "chmod -w nota.txt",
+           "categoria": "Tira permissão"
+          },
+          {
+           "texto": "chmod +r nota.txt",
+           "categoria": "Dá permissão"
+          },
+          {
+           "texto": "chmod -x a.sh",
+           "categoria": "Tira permissão"
+          }
+         ],
+         "explicacao": "+ dá e - tira.",
+         "conceito": "linux.chmod",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para proteger nota.txt contra alterações, o que faz?",
+         "certa": "chmod -w nota.txt",
+         "erradas": [
+          "chmod +w nota.txt",
+          "rm nota.txt",
+          "touch nota.txt"
+         ],
+         "explicacao": "-w tira a escrita.",
+         "conceito": "linux.chmod",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual é a primeira coluna de «ls -l»?",
+       "certa": "As permissões do arquivo",
+       "erradas": [
+        "O tamanho",
+        "A data",
+        "O nome"
+       ],
+       "explicacao": "Ela vem antes do dono.",
+       "conceito": "linux.perm",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "O chmod pode deixar um arquivo somente para leitura.",
+       "resposta": true,
+       "explicacao": "Basta tirar o w.",
+       "conceito": "linux.chmod",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O que faz «./backup.sh»?",
+       "certa": "Executa o script da pasta atual",
+       "erradas": [
+        "Apaga o script",
+        "Copia o script",
+        "Mostra o script"
+       ],
+       "explicacao": "./ aponta para a pasta atual.",
+       "conceito": "linux.chmod",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_portaria"
+    },
+    {
+     "lugar": "Sala do Administrador",
+     "titulo": "Usuários e sudo",
+     "dicas": [
+      "root é o administrador, com poder total.",
+      "sudo executa um comando com poderes de administrador.",
+      "whoami mostra quem você é; id mostra grupos."
+     ],
+     "fases": [
+      {
+       "nome": "Quem é você",
+       "conceitos": [
+        {
+         "id": "linux.user",
+         "nome": "Usuários e grupos",
+         "antes": [
+          "linux.chmod"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Quem é você",
+         "texto": "O Linux é multiusuário: várias pessoas podem usar a mesma máquina, cada uma com seu espaço. Usuário comum só mexe no que é dele. O administrador se chama root. whoami diz quem você é; id mostra também seus grupos.",
+         "termos": [
+          {
+           "termo": "Usuário",
+           "definicao": "Uma conta de acesso"
+          },
+          {
+           "termo": "root",
+           "definicao": "O administrador, poder total"
+          },
+          {
+           "termo": "Grupo",
+           "definicao": "Conjunto de usuários com permissões em comum"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando mostra seu nome de usuário?",
+         "certa": "whoami",
+         "erradas": [
+          "pwd",
+          "ls",
+          "cd"
+         ],
+         "explicacao": "whoami = who am I.",
+         "conceito": "linux.user",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O usuário root é o administrador do sistema.",
+         "resposta": true,
+         "explicacao": "Pode alterar tudo.",
+         "conceito": "linux.user",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que não é bom usar o root o tempo todo?",
+         "certa": "Um erro pode danificar o sistema inteiro",
+         "erradas": [
+          "Porque é mais lento",
+          "Porque desliga a tela",
+          "Porque não existe"
+         ],
+         "explicacao": "Poder demais, risco maior.",
+         "conceito": "linux.user",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada termo ao significado",
+         "pares": [
+          {
+           "esquerda": "root",
+           "direita": "Administrador do sistema"
+          },
+          {
+           "esquerda": "Grupo",
+           "direita": "Conjunto de usuários"
+          },
+          {
+           "esquerda": "whoami",
+           "direita": "Mostra seu usuário"
+          }
+         ],
+         "explicacao": "Quem manda e quem é quem.",
+         "conceito": "linux.user",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é um grupo de usuários?",
+         "certa": "Um conjunto de usuários com permissões em comum",
+         "erradas": [
+          "Um cabo",
+          "Uma pasta temporária",
+          "Um programa de e-mail"
+         ],
+         "explicacao": "Facilita dar permissões a várias pessoas.",
+         "conceito": "linux.user",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "O sudo",
+       "conceitos": [
+        {
+         "id": "linux.sudo",
+         "nome": "sudo e privilégios",
+         "antes": [
+          "linux.user"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O sudo",
+         "texto": "sudo («superuser do») executa UM comando com poderes de administrador, normalmente pedindo a sua senha. É mais seguro que virar root o tempo todo. Só quem está autorizado pode usar. Ex.: «sudo apt update».",
+         "termos": [
+          {
+           "termo": "sudo",
+           "definicao": "Roda um comando como administrador"
+          },
+          {
+           "termo": "Senha",
+           "definicao": "Pedida para confirmar que é você"
+          },
+          {
+           "termo": "Privilégio",
+           "definicao": "Poder extra no sistema"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para que serve o sudo?",
+         "certa": "Executar um comando com poderes de administrador",
+         "erradas": [
+          "Desligar a internet",
+          "Criar um arquivo vazio",
+          "Listar pastas"
+         ],
+         "explicacao": "Eleva só aquele comando.",
+         "conceito": "linux.sudo",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Qualquer pessoa pode usar o sudo, mesmo sem autorização.",
+         "resposta": false,
+         "explicacao": "Só quem foi autorizado.",
+         "conceito": "linux.sudo",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você tentou editar /etc e recebeu «Permissão negada». O que pode ser feito?",
+         "certa": "Usar sudo, se você for autorizado",
+         "erradas": [
+          "Reiniciar o teclado",
+          "Apagar o /etc",
+          "Trocar de pasta"
+         ],
+         "explicacao": "Arquivos de sistema exigem admin.",
+         "conceito": "linux.sudo",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Precisa de sudo?",
+         "categorias": [
+          "Costuma precisar",
+          "Normalmente não"
+         ],
+         "itens": [
+          {
+           "texto": "Instalar programas",
+           "categoria": "Costuma precisar"
+          },
+          {
+           "texto": "Listar sua pasta pessoal",
+           "categoria": "Normalmente não"
+          },
+          {
+           "texto": "Editar arquivos em /etc",
+           "categoria": "Costuma precisar"
+          },
+          {
+           "texto": "Criar arquivo na sua pasta",
+           "categoria": "Normalmente não"
+          }
+         ],
+         "explicacao": "Sistema pede admin; sua pasta, não.",
+         "conceito": "linux.sudo",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é a vantagem do sudo sobre ficar como root?",
+         "certa": "Dá poder só no comando necessário",
+         "erradas": [
+          "É mais lento",
+          "Esconde o prompt",
+          "Desliga o terminal"
+         ],
+         "explicacao": "Menos risco.",
+         "conceito": "linux.sudo",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "No prompt, o # no lugar do $ indica o quê?",
+       "certa": "Que você é o root",
+       "erradas": [
+        "Que a internet caiu",
+        "Que há erro",
+        "Que é um arquivo"
+       ],
+       "explicacao": "# = administrador.",
+       "conceito": "linux.user",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "O sudo costuma pedir sua senha para confirmar.",
+       "resposta": true,
+       "explicacao": "Confirma que é você.",
+       "conceito": "linux.sudo",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual comando mostra seus grupos?",
+       "certa": "id",
+       "erradas": [
+        "pwd",
+        "rm",
+        "mkdir"
+       ],
+       "explicacao": "id lista usuário e grupos.",
+       "conceito": "linux.user",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_admin"
+    },
+    {
+     "lugar": "Sala de Máquinas",
+     "titulo": "Processos e pacotes",
+     "dicas": [
+      "Processo é um programa em execução.",
+      "ps lista processos; kill encerra um.",
+      "apt instala programas (no Ubuntu/Debian)."
+     ],
+     "fases": [
+      {
+       "nome": "Processos",
+       "conceitos": [
+        {
+         "id": "linux.proc",
+         "nome": "Processos",
+         "antes": [
+          "linux.sudo"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Processos",
+         "texto": "Um processo é um programa em execução. Cada um tem um número, o PID. ps mostra os processos; top mostra em tempo real quais gastam mais; kill PID encerra um processo que travou.",
+         "termos": [
+          {
+           "termo": "Processo",
+           "definicao": "Programa em execução"
+          },
+          {
+           "termo": "PID",
+           "definicao": "Número que identifica o processo"
+          },
+          {
+           "termo": "kill",
+           "definicao": "Encerra um processo"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é um processo?",
+         "certa": "Um programa em execução",
+         "erradas": [
+          "Um arquivo de texto",
+          "Uma pasta",
+          "Um cabo"
+         ],
+         "explicacao": "Rodando agora.",
+         "conceito": "linux.proc",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Cada processo tem um número chamado PID.",
+         "resposta": true,
+         "explicacao": "Serve para identificá-lo.",
+         "conceito": "linux.proc",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando encerra o processo de PID 4321?",
+         "certa": "kill 4321",
+         "erradas": [
+          "rm 4321",
+          "cd 4321",
+          "cat 4321"
+         ],
+         "explicacao": "kill + PID.",
+         "conceito": "linux.proc",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada comando ao que faz",
+         "pares": [
+          {
+           "esquerda": "ps",
+           "direita": "Lista processos"
+          },
+          {
+           "esquerda": "top",
+           "direita": "Mostra o uso em tempo real"
+          },
+          {
+           "esquerda": "kill",
+           "direita": "Encerra um processo"
+          }
+         ],
+         "explicacao": "Ver, acompanhar, encerrar.",
+         "conceito": "linux.proc",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Um programa travou. O que você faz no terminal?",
+         "certa": "Acha o PID com ps e usa kill",
+         "erradas": [
+          "Usa mkdir",
+          "Apaga o /home",
+          "Troca o cabo"
+         ],
+         "explicacao": "Localize e encerre.",
+         "conceito": "linux.proc",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Pacotes",
+       "conceitos": [
+        {
+         "id": "linux.pacote",
+         "nome": "Instalar programas com apt",
+         "antes": [
+          "linux.proc"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Pacotes",
+         "texto": "No Ubuntu e no Debian, programas vêm em pacotes que o apt instala a partir de repositórios (lojas oficiais). Primeiro «sudo apt update» atualiza a lista; depois «sudo apt install nome» instala. Instalar exige administrador.",
+         "termos": [
+          {
+           "termo": "Pacote",
+           "definicao": "Programa empacotado para instalar"
+          },
+          {
+           "termo": "Repositório",
+           "definicao": "Loja online de pacotes"
+          },
+          {
+           "termo": "apt",
+           "definicao": "Gerenciador de pacotes do Debian/Ubuntu"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando instala o programa htop?",
+         "certa": "sudo apt install htop",
+         "erradas": [
+          "apt remove htop",
+          "ls htop",
+          "cat htop"
+         ],
+         "explicacao": "apt install instala.",
+         "conceito": "linux.pacote",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "«sudo apt update» atualiza a lista de pacotes disponíveis.",
+         "resposta": true,
+         "explicacao": "Ele não instala nada ainda.",
+         "conceito": "linux.pacote",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que instalar programas costuma exigir sudo?",
+         "certa": "Porque altera o sistema",
+         "erradas": [
+          "Porque é grátis",
+          "Porque apaga a tela",
+          "Porque usa o teclado"
+         ],
+         "explicacao": "Mexe em pastas de sistema.",
+         "conceito": "linux.pacote",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Qual comando faz o quê?",
+         "categorias": [
+          "Atualiza a lista",
+          "Instala um pacote"
+         ],
+         "itens": [
+          {
+           "texto": "sudo apt update",
+           "categoria": "Atualiza a lista"
+          },
+          {
+           "texto": "sudo apt install nano",
+           "categoria": "Instala um pacote"
+          },
+          {
+           "texto": "sudo apt install curl",
+           "categoria": "Instala um pacote"
+          }
+         ],
+         "explicacao": "update atualiza; install instala.",
+         "conceito": "linux.pacote",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Onde o apt busca os programas?",
+         "certa": "Em repositórios oficiais",
+         "erradas": [
+          "Na lixeira",
+          "No teclado",
+          "No /tmp apenas"
+         ],
+         "explicacao": "Repositórios são as lojas.",
+         "conceito": "linux.pacote",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual comando lista os processos?",
+       "certa": "ps",
+       "erradas": [
+        "pwd",
+        "cd",
+        "mv"
+       ],
+       "explicacao": "ps = process status.",
+       "conceito": "linux.proc",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "No Ubuntu, o apt é um gerenciador de pacotes.",
+       "resposta": true,
+       "explicacao": "Instala, atualiza e remove.",
+       "conceito": "linux.pacote",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Para que o top é útil?",
+       "certa": "Ver em tempo real quem usa mais o computador",
+       "erradas": [
+        "Criar pastas",
+        "Copiar arquivos",
+        "Mudar de usuário"
+       ],
+       "explicacao": "Acompanha processos.",
+       "conceito": "linux.proc",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_maquinas"
+    },
+    {
+     "lugar": "Torre de Rede",
+     "titulo": "Rede no terminal",
+     "dicas": [
+      "ip a mostra seu endereço IP.",
+      "ping testa se alguém responde.",
+      "curl busca uma página ou serviço."
+     ],
+     "fases": [
+      {
+       "nome": "Meu endereço",
+       "conceitos": [
+        {
+         "id": "linux.ip",
+         "nome": "Ver IP e interfaces",
+         "antes": [
+          "linux.pacote"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Meu endereço",
+         "texto": "O terminal também cuida da rede. «ip a» mostra as interfaces de rede e os endereços IP. «hostname» mostra o nome da máquina. A interface lo (loopback, 127.0.0.1) é a própria máquina falando consigo.",
+         "termos": [
+          {
+           "termo": "Interface",
+           "definicao": "Ponto de conexão de rede da máquina"
+          },
+          {
+           "termo": "IP",
+           "definicao": "Endereço da máquina na rede"
+          },
+          {
+           "termo": "127.0.0.1",
+           "definicao": "O endereço da própria máquina"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comando mostra seus endereços IP?",
+         "certa": "ip a",
+         "erradas": [
+          "ls -l",
+          "pwd",
+          "whoami"
+         ],
+         "explicacao": "ip a lista as interfaces.",
+         "conceito": "linux.ip",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O endereço 127.0.0.1 é o da própria máquina.",
+         "resposta": true,
+         "explicacao": "É o loopback.",
+         "conceito": "linux.ip",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o comando hostname mostra?",
+         "certa": "O nome da máquina",
+         "erradas": [
+          "O IP da internet",
+          "A senha",
+          "A hora"
+         ],
+         "explicacao": "Nome do computador.",
+         "conceito": "linux.ip",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada coisa ao significado",
+         "pares": [
+          {
+           "esquerda": "ip a",
+           "direita": "Mostra IPs e interfaces"
+          },
+          {
+           "esquerda": "hostname",
+           "direita": "Nome da máquina"
+          },
+          {
+           "esquerda": "127.0.0.1",
+           "direita": "A própria máquina"
+          }
+         ],
+         "explicacao": "Quem sou eu na rede.",
+         "conceito": "linux.ip",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para que serve a interface lo?",
+         "certa": "A máquina conversar consigo mesma",
+         "erradas": [
+          "Dar Wi-Fi",
+          "Guardar fotos",
+          "Trocar de usuário"
+         ],
+         "explicacao": "Loopback.",
+         "conceito": "linux.ip",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Testar a conexão",
+       "conceitos": [
+        {
+         "id": "linux.ping",
+         "nome": "ping e curl",
+         "antes": [
+          "linux.ip"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Testar a conexão",
+         "texto": "«ping destino» envia pacotes e espera resposta: mostra se o destino está vivo e quanto tempo levou (ms). «curl endereço» busca uma página ou serviço e mostra a resposta. Se ping funciona mas curl não, o problema pode estar no serviço, não na rede.",
+         "termos": [
+          {
+           "termo": "ping",
+           "definicao": "Testa se o destino responde"
+          },
+          {
+           "termo": "curl",
+           "definicao": "Busca uma página ou serviço"
+          },
+          {
+           "termo": "ms",
+           "definicao": "Milissegundos, o tempo da resposta"
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para que serve o ping?",
+         "certa": "Testar se um destino responde",
+         "erradas": [
+          "Apagar arquivos",
+          "Criar usuários",
+          "Mudar permissões"
+         ],
+         "explicacao": "Pacotes de teste.",
+         "conceito": "linux.ping",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O curl pode buscar uma página da web pelo terminal.",
+         "resposta": true,
+         "explicacao": "Ele pede e mostra a resposta.",
+         "conceito": "linux.ping",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O ping funciona, mas o curl não traz a página. Qual é a pista?",
+         "certa": "A rede está ok; o serviço pode estar com problema",
+         "erradas": [
+          "O cabo quebrou",
+          "O Linux acabou",
+          "O teclado falhou"
+         ],
+         "explicacao": "A rede respondeu.",
+         "conceito": "linux.ping",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Qual comando usar?",
+         "categorias": [
+          "ping",
+          "curl",
+          "ip a"
+         ],
+         "itens": [
+          {
+           "texto": "Ver se o servidor responde",
+           "categoria": "ping"
+          },
+          {
+           "texto": "Buscar o conteúdo de uma página",
+           "categoria": "curl"
+          },
+          {
+           "texto": "Descobrir o meu IP",
+           "categoria": "ip a"
+          }
+         ],
+         "explicacao": "Cada um com sua tarefa.",
+         "conceito": "linux.ping",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que significa o tempo em ms no ping?",
+         "certa": "O tempo que a resposta levou",
+         "erradas": [
+          "O tamanho do arquivo",
+          "A senha",
+          "O número de usuários"
+         ],
+         "explicacao": "Menos é melhor.",
+         "conceito": "linux.ping",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual comando mostra seu IP no Linux?",
+       "certa": "ip a",
+       "erradas": [
+        "mkdir",
+        "touch",
+        "cp"
+       ],
+       "explicacao": "Lista interfaces.",
+       "conceito": "linux.ip",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "verdadeiro_falso",
+       "pergunta": "Um ping sem resposta pode indicar problema de rede, firewall ou o destino desligado.",
+       "resposta": true,
+       "explicacao": "Há várias causas possíveis.",
+       "conceito": "linux.ping",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual comando traz o conteúdo de uma página?",
+       "certa": "curl",
+       "erradas": [
+        "ping",
+        "ls",
+        "chmod"
+       ],
+       "explicacao": "curl busca.",
+       "conceito": "linux.ping",
+       "dificuldade": 3
+      }
+     ],
+     "chamado": "lx_torre"
+    }
+   ]
+  }
+ ],
+ "bate_bola": [
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é o Linux?",
+   "certa": "Um sistema operacional livre",
+   "erradas": [
+    "Um navegador",
+    "Um cabo de rede"
+   ],
+   "explicacao": "Resposta: Um sistema operacional livre.",
+   "conceito": "linux.def",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é o kernel?",
+   "certa": "O núcleo do sistema",
+   "erradas": [
+    "O teclado",
+    "A tela"
+   ],
+   "explicacao": "Resposta: O núcleo do sistema.",
+   "conceito": "linux.def",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que quer dizer código aberto?",
+   "certa": "Qualquer pessoa pode ler o código",
+   "erradas": [
+    "Só a empresa vê",
+    "Ninguém vê"
+   ],
+   "explicacao": "Resposta: Qualquer pessoa pode ler o código.",
+   "conceito": "linux.livre",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é uma distribuição?",
+   "certa": "Linux + programas, pronto para usar",
+   "erradas": [
+    "Um cabo",
+    "Uma senha"
+   ],
+   "explicacao": "Resposta: Linux + programas, pronto para usar.",
+   "conceito": "linux.distro",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Cite uma distribuição Linux.",
+   "certa": "Ubuntu",
+   "erradas": [
+    "Excel",
+    "Chrome"
+   ],
+   "explicacao": "Resposta: Ubuntu.",
+   "conceito": "linux.distro",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é o terminal?",
+   "certa": "A janela onde se digitam comandos",
+   "erradas": [
+    "Um cabo",
+    "Um roteador"
+   ],
+   "explicacao": "Resposta: A janela onde se digitam comandos.",
+   "conceito": "linux.terminal",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é o shell?",
+   "certa": "O programa que entende os comandos",
+   "erradas": [
+    "Uma pasta",
+    "Um monitor"
+   ],
+   "explicacao": "Resposta: O programa que entende os comandos.",
+   "conceito": "linux.terminal",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Em «ls -l», o que é -l?",
+   "certa": "Uma opção",
+   "erradas": [
+    "O nome",
+    "O argumento"
+   ],
+   "explicacao": "Resposta: Uma opção.",
+   "conceito": "linux.comando",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o $ no prompt indica?",
+   "certa": "Usuário comum",
+   "erradas": [
+    "Administrador",
+    "Erro"
+   ],
+   "explicacao": "Resposta: Usuário comum.",
+   "conceito": "linux.prompt",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o # no prompt indica?",
+   "certa": "Administrador (root)",
+   "erradas": [
+    "Usuário comum",
+    "Rede caiu"
+   ],
+   "explicacao": "Resposta: Administrador (root).",
+   "conceito": "linux.prompt",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual é a raiz do sistema?",
+   "certa": "/",
+   "erradas": [
+    "~",
+    ".."
+   ],
+   "explicacao": "Resposta: /.",
+   "conceito": "linux.arvore",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual pasta guarda as configurações?",
+   "certa": "/etc",
+   "erradas": [
+    "/home",
+    "/tmp"
+   ],
+   "explicacao": "Resposta: /etc.",
+   "conceito": "linux.arvore",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual pasta guarda as pastas das pessoas?",
+   "certa": "/home",
+   "erradas": [
+    "/etc",
+    "/var"
+   ],
+   "explicacao": "Resposta: /home.",
+   "conceito": "linux.arvore",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é caminho absoluto?",
+   "certa": "O que começa na raiz",
+   "erradas": [
+    "O que é curto",
+    "O que não existe"
+   ],
+   "explicacao": "Resposta: O que começa na raiz.",
+   "conceito": "linux.caminho",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é ~?",
+   "certa": "Sua pasta pessoal",
+   "erradas": [
+    "A raiz",
+    "A pasta de cima"
+   ],
+   "explicacao": "Resposta: Sua pasta pessoal.",
+   "conceito": "linux.atalhos",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é ..?",
+   "certa": "A pasta de cima",
+   "erradas": [
+    "A pasta atual",
+    "Sua pasta pessoal"
+   ],
+   "explicacao": "Resposta: A pasta de cima.",
+   "conceito": "linux.atalhos",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o pwd mostra?",
+   "certa": "A pasta atual",
+   "erradas": [
+    "Os arquivos",
+    "O usuário"
+   ],
+   "explicacao": "Resposta: A pasta atual.",
+   "conceito": "linux.atalhos",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando muda de pasta?",
+   "certa": "cd",
+   "erradas": [
+    "ls",
+    "cp"
+   ],
+   "explicacao": "Resposta: cd.",
+   "conceito": "linux.atalhos",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando cria uma pasta?",
+   "certa": "mkdir",
+   "erradas": [
+    "touch",
+    "rm"
+   ],
+   "explicacao": "Resposta: mkdir.",
+   "conceito": "linux.criar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando cria um arquivo vazio?",
+   "certa": "touch",
+   "erradas": [
+    "mkdir",
+    "ls"
+   ],
+   "explicacao": "Resposta: touch.",
+   "conceito": "linux.criar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando lista o conteúdo?",
+   "certa": "ls",
+   "erradas": [
+    "cd",
+    "mv"
+   ],
+   "explicacao": "Resposta: ls.",
+   "conceito": "linux.criar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando copia?",
+   "certa": "cp",
+   "erradas": [
+    "mv",
+    "rm"
+   ],
+   "explicacao": "Resposta: cp.",
+   "conceito": "linux.copiar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando move ou renomeia?",
+   "certa": "mv",
+   "erradas": [
+    "cp",
+    "cat"
+   ],
+   "explicacao": "Resposta: mv.",
+   "conceito": "linux.copiar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando apaga arquivos?",
+   "certa": "rm",
+   "erradas": [
+    "mv",
+    "cp"
+   ],
+   "explicacao": "Resposta: rm.",
+   "conceito": "linux.apagar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o rm -r faz?",
+   "certa": "Apaga pasta e conteúdo",
+   "erradas": [
+    "Cria pasta",
+    "Renomeia"
+   ],
+   "explicacao": "Resposta: Apaga pasta e conteúdo.",
+   "conceito": "linux.apagar",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando mostra o arquivo inteiro?",
+   "certa": "cat",
+   "erradas": [
+    "head",
+    "touch"
+   ],
+   "explicacao": "Resposta: cat.",
+   "conceito": "linux.ler",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual mostra o fim do arquivo?",
+   "certa": "tail",
+   "erradas": [
+    "head",
+    "cat"
+   ],
+   "explicacao": "Resposta: tail.",
+   "conceito": "linux.ler",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando procura texto?",
+   "certa": "grep",
+   "erradas": [
+    "cat",
+    "cp"
+   ],
+   "explicacao": "Resposta: grep.",
+   "conceito": "linux.grep",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando conta linhas?",
+   "certa": "wc -l",
+   "erradas": [
+    "grep",
+    "ls"
+   ],
+   "explicacao": "Resposta: wc -l.",
+   "conceito": "linux.grep",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que faz o >?",
+   "certa": "Grava a saída num arquivo",
+   "erradas": [
+    "Liga dois comandos",
+    "Apaga a tela"
+   ],
+   "explicacao": "Resposta: Grava a saída num arquivo.",
+   "conceito": "linux.redir",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que faz o >>?",
+   "certa": "Acrescenta ao fim do arquivo",
+   "erradas": [
+    "Substitui o arquivo",
+    "Apaga o arquivo"
+   ],
+   "explicacao": "Resposta: Acrescenta ao fim do arquivo.",
+   "conceito": "linux.redir",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que faz o | (pipe)?",
+   "certa": "Liga a saída de um comando ao próximo",
+   "erradas": [
+    "Grava num arquivo",
+    "Apaga arquivos"
+   ],
+   "explicacao": "Resposta: Liga a saída de um comando ao próximo.",
+   "conceito": "linux.pipe",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é a permissão x?",
+   "certa": "Executar",
+   "erradas": [
+    "Ler",
+    "Escrever"
+   ],
+   "explicacao": "Resposta: Executar.",
+   "conceito": "linux.perm",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é a permissão r?",
+   "certa": "Ler",
+   "erradas": [
+    "Executar",
+    "Escrever"
+   ],
+   "explicacao": "Resposta: Ler.",
+   "conceito": "linux.perm",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando muda permissões?",
+   "certa": "chmod",
+   "erradas": [
+    "mv",
+    "grep"
+   ],
+   "explicacao": "Resposta: chmod.",
+   "conceito": "linux.chmod",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Quem é o root?",
+   "certa": "O administrador",
+   "erradas": [
+    "Uma pasta",
+    "Um cabo"
+   ],
+   "explicacao": "Resposta: O administrador.",
+   "conceito": "linux.user",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando diz quem você é?",
+   "certa": "whoami",
+   "erradas": [
+    "pwd",
+    "ls"
+   ],
+   "explicacao": "Resposta: whoami.",
+   "conceito": "linux.user",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Para que serve o sudo?",
+   "certa": "Rodar um comando como administrador",
+   "erradas": [
+    "Criar pastas",
+    "Contar linhas"
+   ],
+   "explicacao": "Resposta: Rodar um comando como administrador.",
+   "conceito": "linux.sudo",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um processo?",
+   "certa": "Um programa em execução",
+   "erradas": [
+    "Uma pasta",
+    "Um cabo"
+   ],
+   "explicacao": "Resposta: Um programa em execução.",
+   "conceito": "linux.proc",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando encerra um processo?",
+   "certa": "kill",
+   "erradas": [
+    "ls",
+    "cat"
+   ],
+   "explicacao": "Resposta: kill.",
+   "conceito": "linux.proc",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando instala programas no Ubuntu?",
+   "certa": "apt install",
+   "erradas": [
+    "ls install",
+    "cp install"
+   ],
+   "explicacao": "Resposta: apt install.",
+   "conceito": "linux.pacote",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual comando mostra seus IPs?",
+   "certa": "ip a",
+   "erradas": [
+    "pwd",
+    "mv"
+   ],
+   "explicacao": "Resposta: ip a.",
+   "conceito": "linux.ip",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é 127.0.0.1?",
+   "certa": "A própria máquina",
+   "erradas": [
+    "O roteador",
+    "A internet"
+   ],
+   "explicacao": "Resposta: A própria máquina.",
+   "conceito": "linux.ip",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Para que serve o ping?",
+   "certa": "Testar se o destino responde",
+   "erradas": [
+    "Apagar arquivos",
+    "Criar usuários"
+   ],
+   "explicacao": "Resposta: Testar se o destino responde.",
+   "conceito": "linux.ping",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Para que serve o curl?",
+   "certa": "Buscar uma página ou serviço",
+   "erradas": [
+    "Copiar pastas",
+    "Criar grupos"
+   ],
+   "explicacao": "Resposta: Buscar uma página ou serviço.",
+   "conceito": "linux.ping",
+   "dificuldade": 1
+  }
+ ],
+ "casos": [
+  {
+   "id": "lx_acesso",
+   "tipo": "terminal",
+   "title": "Quem está aí?",
+   "skill": "Reconhecer o sistema",
+   "skillText": "Reconhecer o sistema",
+   "intro": "Você acabou de entrar no servidor da Vila. Antes de mexer em qualquer coisa, descubra quem você é e onde está.",
+   "passos": [
+    {
+     "texto": "Descubra o seu nome de usuário",
+     "dica": "O comando que responde «quem sou eu?» em inglês é who am I, tudo junto.",
+     "feito": {
+      "cmd": "^\\s*whoami"
+     },
+     "ok": "Esse é você no sistema."
+    },
+    {
+     "texto": "Descubra o nome desta máquina",
+     "dica": "O comando tem o mesmo nome da coisa que você quer saber: host + name.",
+     "feito": {
+      "cmd": "^\\s*hostname"
+     },
+     "ok": "Nome anotado."
+    },
+    {
+     "texto": "Descubra em que pasta você está",
+     "dica": "pwd = print working directory.",
+     "feito": {
+      "cmd": "^\\s*pwd"
+     },
+     "ok": "Você está na sua pasta pessoal."
+    }
+   ],
+   "cenario": {
+    "usuario": "aluno",
+    "maquina": "servidor-pingo"
+   },
+   "conclusao": "Você se reconheceu no servidor com whoami, hostname e pwd",
+   "explicacao": "whoami mostra o usuário, hostname mostra o nome da máquina e pwd mostra a pasta atual. São os três primeiros comandos de quem chega a um servidor novo.",
+   "final": "Reconhecimento feito!"
+  },
+  {
+   "id": "lx_comandos",
+   "tipo": "terminal",
+   "title": "O arquivo escondido",
+   "skill": "Listar e ler",
+   "skillText": "Listar e ler",
+   "intro": "Alguém deixou um recado numa pasta, mas ele não aparece no ls comum. Ache e leia.",
+   "passos": [
+    {
+     "texto": "Liste TODOS os arquivos, inclusive os ocultos",
+     "dica": "Arquivos que começam com ponto ficam escondidos. A opção -a mostra todos.",
+     "feito": {
+      "cmd": "^\\s*ls\\s+(-\\w*a|.*\\s-\\w*a)"
+     },
+     "ok": "Apareceu um arquivo com ponto no começo."
+    },
+    {
+     "texto": "Veja os detalhes dos arquivos (tamanho, dono, permissões)",
+     "dica": "Use a opção -l.",
+     "feito": {
+      "cmd": "^\\s*ls\\s+(-\\w*l|.*\\s-\\w*l)"
+     }
+    },
+    {
+     "texto": "Leia o recado escondido",
+     "dica": "cat mostra o conteúdo. O nome do arquivo começa com ponto.",
+     "feito": {
+      "saida": "Reunião às 15h"
+     },
+     "ok": "Recado lido."
+    }
+   ],
+   "fs": {
+    "/home/aluno/notas.txt": "Comprar cabos de rede",
+    "/home/aluno/fotos/": null,
+    "/home/aluno/.recado": "Reunião às 15h na sala de máquinas."
+   },
+   "conclusao": "Você achou e leu um arquivo oculto",
+   "explicacao": "ls -a mostra arquivos ocultos (os que começam com ponto). ls -l mostra detalhes. cat lê o conteúdo.",
+   "final": "Recado encontrado!"
+  },
+  {
+   "id": "lx_pastas",
+   "tipo": "terminal",
+   "title": "Perdido no mapa",
+   "skill": "Navegar pelas pastas",
+   "skillText": "Navegar pelas pastas",
+   "intro": "Você foi parar na raiz do servidor. Navegue até o lugar certo e volte para casa.",
+   "passos": [
+    {
+     "texto": "Vá até a pasta /var/log",
+     "dica": "Use cd com o caminho absoluto, que começa na raiz.",
+     "feito": {
+      "cwd": "/var/log"
+     },
+     "ok": "Você chegou na pasta dos logs."
+    },
+    {
+     "texto": "Volte para a sua pasta pessoal",
+     "dica": "cd sozinho, ou cd ~, leva você para casa.",
+     "feito": {
+      "cwd": "/home/aluno"
+     },
+     "ok": "Em casa!"
+    },
+    {
+     "texto": "Entre na pasta docs usando caminho relativo",
+     "dica": "Estando em casa, basta cd docs.",
+     "feito": {
+      "cwd": "/home/aluno/docs"
+     },
+     "ok": "Dentro de docs."
+    }
+   ],
+   "cenario": {
+    "usuario": "aluno",
+    "maquina": "servidor-pingo",
+    "inicio": "/"
+   },
+   "fs": {
+    "/var/log/": null,
+    "/home/aluno/docs/": null
+   },
+   "conclusao": "Você navegou com caminhos absolutos e relativos",
+   "explicacao": "O caminho absoluto começa em / e vale de qualquer lugar. O relativo parte da pasta atual. cd sem argumento volta para a pasta pessoal.",
+   "final": "De volta ao mapa!"
+  },
+  {
+   "id": "lx_arquivos",
+   "tipo": "terminal",
+   "title": "Arrumando a bagunça",
+   "skill": "Criar, copiar, mover e apagar",
+   "skillText": "Criar, copiar, mover e apagar",
+   "intro": "A sua pasta virou uma bagunça. Organize do jeito certo.",
+   "passos": [
+    {
+     "texto": "Crie a pasta projetos",
+     "dica": "mkdir cria pastas.",
+     "feito": {
+      "existe": "/home/aluno/projetos"
+     }
+    },
+    {
+     "texto": "Crie o arquivo ideias.txt dentro de projetos",
+     "dica": "touch projetos/ideias.txt",
+     "feito": {
+      "existe": "/home/aluno/projetos/ideias.txt"
+     }
+    },
+    {
+     "texto": "Copie relatorio.txt para dentro de projetos",
+     "dica": "cp origem destino. A origem continua existindo.",
+     "feito": {
+      "existe": "/home/aluno/projetos/relatorio.txt"
+     }
+    },
+    {
+     "texto": "Renomeie rascunho.txt para final.txt",
+     "dica": "mv com um novo nome renomeia.",
+     "feito": {
+      "existe": "/home/aluno/final.txt",
+      "naoexiste": "/home/aluno/rascunho.txt"
+     }
+    },
+    {
+     "texto": "Apague o arquivo lixo.txt",
+     "dica": "rm apaga. Confira o nome antes!",
+     "feito": {
+      "naoexiste": "/home/aluno/lixo.txt"
+     }
+    }
+   ],
+   "fs": {
+    "/home/aluno/relatorio.txt": "Relatório do mês",
+    "/home/aluno/rascunho.txt": "versão 1",
+    "/home/aluno/lixo.txt": "apagar"
+   },
+   "conclusao": "Você organizou a pasta com mkdir, touch, cp, mv e rm",
+   "explicacao": "mkdir cria pasta, touch cria arquivo vazio, cp copia, mv move ou renomeia e rm apaga. No terminal não há lixeira, então confira antes de apagar.",
+   "final": "Pasta organizada!"
+  },
+  {
+   "id": "lx_logs",
+   "tipo": "terminal",
+   "title": "Caça ao erro",
+   "skill": "Ler e filtrar logs",
+   "skillText": "Ler e filtrar logs",
+   "intro": "O sistema anda reclamando. Descubra quantos erros há no log.",
+   "passos": [
+    {
+     "texto": "Veja as últimas linhas do log",
+     "dica": "tail mostra o fim do arquivo. O log está em /var/log/app.log.",
+     "feito": {
+      "cmd": "^\\s*tail\\s"
+     }
+    },
+    {
+     "texto": "Mostre só as linhas com ERRO",
+     "dica": "grep ERRO /var/log/app.log",
+     "feito": {
+      "cmd": "grep\\s+(-\\w+\\s+)*ERRO"
+     }
+    },
+    {
+     "texto": "Conte quantas linhas têm ERRO",
+     "dica": "Una grep e wc -l com um pipe, ou use grep -c.",
+     "feito": {
+      "cmd": "(grep\\s+ERRO\\s+\\S+\\s*\\|\\s*wc\\s+-l|grep\\s+-c\\s+ERRO|cat\\s+\\S+\\s*\\|\\s*grep\\s+ERRO\\s*\\|\\s*wc\\s+-l)"
+     },
+     "ok": "São 3 erros. Já dá para investigar."
+    }
+   ],
+   "fs": {
+    "/var/log/app.log": "INFO inicio\nINFO conectado\nERRO disco cheio\nINFO tentativa 1\nERRO sem rede\nINFO tentativa 2\nERRO timeout\nINFO fim"
+   },
+   "conclusao": "Você filtrou e contou os erros do log",
+   "explicacao": "tail mostra o fim, grep filtra linhas e wc -l conta. Juntos, com pipe, respondem «quantos erros houve?» em uma linha.",
+   "final": "3 erros achados!"
+  },
+  {
+   "id": "lx_esteira",
+   "tipo": "terminal",
+   "title": "A esteira de vendas",
+   "skill": "Pipes e redirecionamento",
+   "skillText": "Pipes e redirecionamento",
+   "intro": "Monte uma esteira que separa as vendas pendentes e guarda num relatório.",
+   "passos": [
+    {
+     "texto": "Filtre as vendas pendentes e grave em pendentes.txt",
+     "dica": "grep pendente vendas.txt > pendentes.txt",
+     "feito": {
+      "conteudo": [
+       "/home/aluno/pendentes.txt",
+       "pendente"
+      ]
+     }
+    },
+    {
+     "texto": "Acrescente a linha «fim do relatorio» ao final de pendentes.txt",
+     "dica": "Use >> para acrescentar sem apagar.",
+     "feito": {
+      "conteudo": [
+       "/home/aluno/pendentes.txt",
+       "fim do relatorio"
+      ]
+     }
+    },
+    {
+     "texto": "Conte quantas linhas o relatório tem",
+     "dica": "wc -l pendentes.txt, ou cat pendentes.txt | wc -l",
+     "feito": {
+      "cmd": "wc\\s+-l"
+     }
+    }
+   ],
+   "fs": {
+    "/home/aluno/vendas.txt": "1 pago cabo\n2 pendente roteador\n3 pago switch\n4 pendente antena\n5 pendente fonte"
+   },
+   "conclusao": "Você filtrou, gravou e acrescentou com pipes e redirecionamento",
+   "explicacao": "> grava a saída num arquivo (substituindo); >> acrescenta ao fim. O pipe | passa a saída de um comando para o próximo.",
+   "final": "Relatório pronto!"
+  },
+  {
+   "id": "lx_portaria",
+   "tipo": "terminal",
+   "title": "O script bloqueado",
+   "skill": "Permissões",
+   "skillText": "Permissões",
+   "intro": "O script de backup não roda. Descubra por quê e libere só o que for preciso.",
+   "passos": [
+    {
+     "texto": "Veja as permissões do backup.sh",
+     "dica": "ls -l mostra as permissões na primeira coluna.",
+     "feito": {
+      "cmd": "^\\s*ls\\s+(-\\w*l|.*\\s-\\w*l)"
+     }
+    },
+    {
+     "texto": "Dê a permissão de executar ao backup.sh",
+     "dica": "chmod +x backup.sh",
+     "feito": {
+      "perm": [
+       "/home/aluno/backup.sh",
+       "x"
+      ]
+     },
+     "ok": "Agora ele tem o x."
+    },
+    {
+     "texto": "Execute o script",
+     "dica": "Use ./backup.sh",
+     "feito": {
+      "exec": "/home/aluno/backup.sh"
+     },
+     "ok": "Backup rodou!"
+    },
+    {
+     "texto": "Proteja nota.txt contra alterações (tire a escrita)",
+     "dica": "chmod -w nota.txt",
+     "feito": {
+      "semperm": [
+       "/home/aluno/nota.txt",
+       "w"
+      ]
+     }
+    }
+   ],
+   "fs": {
+    "/home/aluno/backup.sh": "#!/bin/bash\ncp -r docs backup/",
+    "/home/aluno/nota.txt": "Não alterar"
+   },
+   "exec": {
+    "/home/aluno/backup.sh": "Copiando docs... backup concluído."
+   },
+   "conclusao": "Você liberou a execução e protegeu um arquivo com chmod",
+   "explicacao": "Sem a permissão x o script não executa («Permissão negada»). chmod +x libera; chmod -w impede alterações.",
+   "final": "Portaria liberada!"
+  },
+  {
+   "id": "lx_admin",
+   "tipo": "terminal",
+   "title": "Chave do administrador",
+   "skill": "Usuários e sudo",
+   "skillText": "Usuários e sudo",
+   "intro": "Um arquivo de configuração precisa entrar na pasta de sistema, onde usuário comum não escreve.",
+   "passos": [
+    {
+     "texto": "Confirme quem você é",
+     "dica": "whoami",
+     "feito": {
+      "cmd": "^\\s*whoami"
+     }
+    },
+    {
+     "texto": "Crie a pasta /etc/pingo.d como administrador",
+     "dica": "Sem sudo dá «Permissão negada». sudo mkdir /etc/pingo.d",
+     "feito": {
+      "existe": "/etc/pingo.d"
+     },
+     "ok": "Pasta criada com poderes de administrador."
+    },
+    {
+     "texto": "Copie pingo.conf para /etc/pingo.d/",
+     "dica": "sudo cp pingo.conf /etc/pingo.d/",
+     "feito": {
+      "existe": "/etc/pingo.d/pingo.conf"
+     },
+     "ok": "Configuração instalada."
+    }
+   ],
+   "fs": {
+    "/home/aluno/pingo.conf": "modo=ativo",
+    "/etc/": null
+   },
+   "conclusao": "Você usou o sudo só nos comandos que precisavam",
+   "explicacao": "Arquivos de sistema pertencem ao root. O sudo dá poder de administrador a um comando só, sem virar root o tempo todo.",
+   "final": "Configuração instalada!"
+  },
+  {
+   "id": "lx_maquinas",
+   "tipo": "terminal",
+   "title": "Programa travado",
+   "skill": "Processos e pacotes",
+   "skillText": "Processos e pacotes",
+   "intro": "Um programa travou e o servidor está lento. Encerre-o e instale uma ferramenta de monitoramento.",
+   "passos": [
+    {
+     "texto": "Liste os processos",
+     "dica": "ps",
+     "feito": {
+      "cmd": "^\\s*(ps|top)\\b"
+     }
+    },
+    {
+     "texto": "Encerre o processo travado (travado.sh)",
+     "dica": "Descubra o PID com ps e use kill PID.",
+     "feito": {
+      "matou": 2201
+     },
+     "ok": "Processo encerrado."
+    },
+    {
+     "texto": "Atualize a lista de pacotes",
+     "dica": "sudo apt update",
+     "feito": {
+      "cmd": "sudo\\s+apt\\s+update"
+     }
+    },
+    {
+     "texto": "Instale o htop",
+     "dica": "sudo apt install htop",
+     "feito": {
+      "instalou": "htop"
+     },
+     "ok": "htop instalado."
+    }
+   ],
+   "processos": [
+    {
+     "pid": 1180,
+     "nome": "editor",
+     "dono": "aluno"
+    },
+    {
+     "pid": 2201,
+     "nome": "travado.sh",
+     "dono": "aluno",
+     "cpu": "98%"
+    },
+    {
+     "pid": 2300,
+     "nome": "relogio",
+     "dono": "aluno"
+    }
+   ],
+   "pacotes": [
+    "htop",
+    "nano",
+    "curl"
+   ],
+   "conclusao": "Você encerrou um processo e instalou um pacote",
+   "explicacao": "ps mostra os processos e seus PID; kill PID encerra. Instalar com apt exige sudo, e «apt update» vem antes para atualizar a lista.",
+   "final": "Servidor aliviado!"
+  },
+  {
+   "id": "lx_torre",
+   "tipo": "terminal",
+   "title": "Sinal da torre",
+   "skill": "Rede no terminal",
+   "skillText": "Rede no terminal",
+   "intro": "A torre de rede da Vila parece fora do ar. Use o terminal para testar.",
+   "passos": [
+    {
+     "texto": "Veja o seu endereço IP",
+     "dica": "ip a",
+     "feito": {
+      "cmd": "^\\s*ip\\s+a"
+     }
+    },
+    {
+     "texto": "Teste se gateway.local responde",
+     "dica": "ping gateway.local",
+     "feito": {
+      "cmd": "^\\s*ping\\s+(-\\w+\\s+\\d+\\s+)?gateway\\.local"
+     },
+     "ok": "O gateway respondeu."
+    },
+    {
+     "texto": "Busque o status do serviço em http://servidor.local/status",
+     "dica": "curl http://servidor.local/status",
+     "feito": {
+      "saida": "ativo"
+     },
+     "ok": "O serviço está ativo."
+    }
+   ],
+   "rede": {
+    "ip": "192.168.0.15",
+    "hosts": {
+     "gateway.local": "1.2",
+     "servidor.local": true
+    },
+    "curl": {
+     "http://servidor.local/status": "servico: ativo"
+    }
+   },
+   "conclusao": "Você testou a rede com ip, ping e curl",
+   "explicacao": "ip a mostra seu IP, ping testa se o destino responde e curl busca o conteúdo do serviço. Rede ok + serviço ativo = problema não estava na torre.",
+   "final": "Torre no ar!"
+  }
+ ],
+ "eventos": [],
+ "artes": {}
+}</script>
 <script type="application/json" id="curso-redes">{
  "formato": 1,
  "id": "redes",
@@ -5813,6 +9813,21 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .cqtx{flex:1;min-width:0}.cqtx b{display:block;font-size:16px}.cqtx small{display:block;color:var(--muted);font-weight:700;font-size:12.5px;margin-top:1px}
 .cqbar{display:block;height:7px;border-radius:4px;background:var(--line);margin-top:7px;overflow:hidden}.cqbar i{display:block;height:100%;background:#7b3ff2;border-radius:4px}
 .cqcard em{font-style:normal;font-weight:900;font-size:12px;color:var(--primary)}
+
+.tsteps{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.tstep{display:flex;gap:10px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-weight:700;font-size:14px}
+.tstep i{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line-deep);display:grid;place-items:center;font-style:normal;font-size:12px}
+.tstep i svg{width:14px;height:14px}
+.tstep.ok{border-color:var(--ok,#3fbf5f)}.tstep.ok i{background:var(--ok,#3fbf5f);border-color:var(--ok,#3fbf5f);color:#0b2a12}
+.term{background:#0d0620;border:2px solid #7b3ff2;border-radius:16px;overflow:hidden;box-shadow:0 0 18px rgba(24,221,251,.18);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;color:#e9ffe9}
+.tmx{max-height:260px;min-height:120px;overflow:auto;padding:10px 12px;white-space:pre-wrap;word-break:break-word}
+.tml.p{color:#18ddfb}.tml.e{color:#ff8aa6}.tml.o{color:#e9ffe9}
+.tprompt{display:flex;align-items:center;gap:6px;padding:8px 12px;border-top:1px solid rgba(200,139,255,.3);color:#7dff2b}
+.tprompt span{white-space:nowrap;max-width:60%;overflow:hidden;text-overflow:ellipsis}
+.tprompt input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:inherit;min-height:32px}
+.tkeys{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
+.tkeys button{min-width:44px;min-height:44px;border-radius:12px;border:2px solid var(--line-deep);background:var(--surface);color:var(--ink);font:700 16px ui-monospace,Menlo,monospace}
+.trow{display:flex;gap:10px}.trow .btn{flex:1}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -5886,6 +9901,7 @@ function lerCurso(c){
   Object.keys(CUR).forEach(function(id){CUR[id].pre=CUR[id].pre.filter(function(x){return !!CUR[x]})});
   (c.bate_bola||[]).forEach(function(it,ii){var q=conv(it,'Bate-bola '+(ii+1));if(q){q.ev=1;EVQ.push(q)}});
   var CASES={},CASE_IDS=[];(c.casos||[]).forEach(function(k){CASES[k.id]=k;CASE_IDS.push(k.id)});
+  GAMES.forEach(function(g){if(g.caso&&!CASES[g.caso])delete g.caso});
   return{GAMES:GAMES,CASES:CASES,CASE_IDS:CASE_IDS,CUR:CUR,EXTRA:EXTRA,EVENTS:c.eventos||[],EVQ:EVQ,ART:c.artes||{},
     WORLD:{n:mundo.numero||1,name:mundo.nome,sub:mundo.subtitulo,places:places},ERROS:erros,NOME:c.nome};
 }
@@ -6547,10 +10563,10 @@ function conquistasHTML(){
 window.CQ={list:CONQ,sync:cqSync};
 function skillsHTML(){
   var h='<div class="sect">Habilidades</div><div class="skgrid">';
-  CASE_IDS.forEach(function(id){var r=S.casos[id],d=CASES[id],a=SKILL_ART[id],got=!!(r&&r.n);
+  CASE_IDS.forEach(function(id){var r=S.casos[id],d=CASES[id],a=SKILL_ART[id]||['#18b9e8','#7b3ff2','<path d="M24 30l18 20-18 20M50 72h28"/>'],got=!!(r&&r.n);
     h+='<div class="sktile'+(got?'':' off')+'" role="img" aria-label="'+d.skill+(got?', '+r.best+' de 3 estrelas':', ainda não conquistada')+'">'+
       '<span class="skico" style="background:linear-gradient(135deg,'+a[0]+','+a[1]+')"><svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">'+a[2]+'</svg></span>'+
-      '<b>'+({wifi:'Wi-Fi',office:'Queda de internet',dns:'DNS e sites',lenta:'Lentidão',print:'Rede do escritório'})[id]+'</b><small>'+(got?starStr(r.best)+' · '+r.n+'x':'Ainda não')+'</small></div>'});
+      '<b>'+({wifi:'Wi-Fi',office:'Queda de internet',dns:'DNS e sites',lenta:'Lentidão',print:'Rede do escritório'})[id]||d.skill+'</b><small>'+(got?starStr(r.best)+' · '+r.n+'x':'Ainda não')+'</small></div>'});
   h+='</div>';
   var nb=(S.badges||[]).length;
   if(nb)h+='<div class="prog"><div class="row"><span>Selos de Técnico da Semana</span><span>'+nb+'</span></div></div>';
@@ -6945,7 +10961,7 @@ function drawLesson(){
     h+='</div>';
   }else if(q.t==='ty'){
     var tc='tyin'+(asked?'':(L.ok?' right':' wrong'));
-    h+='<div class="eyebrow">Digite a resposta</div><div class="q">'+q.q+'</div><input class="'+tc+'" id="tyin" type="text" inputmode="text" enterkeyhint="done" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Digite aqui" aria-label="Sua resposta" value="'+String(L.sel).replace(/"/g,'&quot;')+'"'+(asked?'':' disabled')+'>';
+    h+='<div class="eyebrow">Digite a resposta</div><div class="q">'+q.q+'</div><input class="'+tc+'" id="tyin" type="text" inputoutde="text" enterkeyhint="done" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Digite aqui" aria-label="Sua resposta" value="'+String(L.sel).replace(/"/g,'&quot;')+'"'+(asked?'':' disabled')+'>';
     if(q.hint&&asked)h+='<p class="tyhint">Dica: '+q.hint+'</p>';
   }else if(q.t==='cl'){
     h+='<div class="eyebrow">Classifique</div><div class="q">'+q.q+'</div><div class="clist">';
@@ -7224,6 +11240,7 @@ function pickFault(def,seed,avoid){
 }
 function startCase(o){
   var def=CASES[o.id],rec=S.casos[o.id];
+  if(def&&def.tipo==='terminal'){startTerm(o);return}
   C={id:o.id,def:def,fault:pickFault(def,o.seed,o.avoid),kind:o.kind,key:o.key,replay:!!o.replay,insp:[],wrongSet:[],wrong:0,stage:'inv',last:null,res:null,
      opts:shuffle(def.faults.map(function(f){return{id:f.id,t:f.cause}})),guided:!(rec&&rec.n>0)&&!o.replay};
   C.msg=def.intro+(C.guided?' Toque nos aparelhos para investigar.':'');
@@ -7292,11 +11309,11 @@ function caseFinish(){
   c.res={stars:stars,xp:xp,gems:gems};c.stage='done';
   /* tela final em etapas: Pingo, estrelas uma a uma, causa em uma linha, cartões subindo; a explicação completa fica opcional */
   var st='';for(var i=0;i<3;i++)st+='<span class="'+(i<stars?'on':'')+'" style="animation-delay:'+(0.45+i*0.4)+'s">★</span>';
-  var tiles=[{c:'#ffb800',l:'Energia',v:IC.bolt+'<b data-to="'+xp+'">0</b>'},{c:'#18b9e8',l:'Chips',v:IC.gem+'<b data-to="'+gems+'" data-pre="+">+0</b>'},{c:'#3fbf5f',l:'Pistas',v:IC.search+'<b data-to="'+c.insp.length+'">0</b>'}];
+  var tiles=[{c:'#ffb800',l:'Energia',v:IC.bolt+'<b data-to="'+xp+'">0</b>'},{c:'#18b9e8',l:'Chips',v:IC.gem+'<b data-to="'+gems+'" data-pre="+">+0</b>'},{c:'#3fbf5f',l:(c.term?'Comandos':'Pistas'),v:IC.search+'<b data-to="'+c.insp.length+'">0</b>'}];
   var T0=2.1,tl=tiles.map(function(t,i){return'<div class="rt" style="--rc:'+t.c+';animation-delay:'+(T0+i*0.62)+'s"><small>'+t.l+'</small><span>'+t.v+'</span></div>'}).join('');
-  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>Caso resolvido!</h1>'+
+  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>'+(c.term?'Chamado resolvido!':'Caso resolvido!')+'</h1>'+
    '<span class="stars anim" role="img" aria-label="'+stars+' de 3 estrelas">'+st+'</span>'+
-   '<div class="cfound"><small>Causa encontrada</small><b>'+c.fault.cause+'</b></div>'+
+   '<div class="cfound"><small>'+(c.term?'O que você fez':'Causa encontrada')+'</small><b>'+c.fault.cause+'</b></div>'+
    '<div class="res2">'+tl+'</div>'+
    '<button class="btn ghost cexp" data-act="cexplain">Ver explicação</button></div></div>'+
    '<div class="lfoot late"><div class="stack" style="margin:0">'+(c.kind==='node'?'<button class="btn ghost" data-act="cagain">Jogar outro cenário</button>':'')+'<button class="btn" data-act="'+(xp>0?'collect':'cdone')+'">'+(xp>0?'Coletar energia':'Continuar')+'</button></div></div></div>';
@@ -7317,6 +11334,316 @@ function caseExplain(){
   $('#modal').hidden=false;sfx('ping');
 }
 function closeCase(){C=null;$('#lesson').hidden=true;document.body.classList.remove('lock');render()}
+
+/* ---------- terminal dos chamados de Linux ---------- */
+var TM=null;
+function tmNorm(p,cwd,home){
+  if(p==='~'||p.indexOf('~/')===0)p=home+p.slice(1);
+  if(p.charAt(0)!=='/')p=cwd+'/'+p;
+  var o=[];p.split('/').forEach(function(s){if(!s||s==='.')return;if(s==='..')o.pop();else o.push(s)});
+  return '/'+o.join('/');
+}
+function tmDir(p){var i=p.lastIndexOf('/');return i<=0?'/':p.slice(0,i)}
+function tmBase(p){return p.slice(p.lastIndexOf('/')+1)}
+function tmTok(s){
+  var r=[],cur='',q=null,has=false,i,c;
+  function flush(){if(cur||has)r.push(cur);cur='';has=false}
+  for(i=0;i<s.length;i++){c=s.charAt(i);
+    if(q){if(c===q)q=null;else cur+=c}
+    else if(c==='"'||c==="'"){q=c;has=true}
+    else if(c===' '||c==='\t'){flush()}
+    else if(c==='|'){flush();r.push({op:'|'})}
+    else if(c==='>'){flush();if(s.charAt(i+1)==='>'){r.push({op:'>>'});i++}else r.push({op:'>'})}
+    else cur+=c}
+  flush();return r;
+}
+function tmInit(def){
+  var sc=def.cenario||{},u=sc.usuario||'aluno',T={user:u,host:sc.maquina||'servidor',home:'/home/'+u,fs:{},cwd:'',hist:[],out:[],ran:[],erros:0,killed:{},inst:{},exec:{},done:{},def:def,hi:-1};
+  function mk(p,dir,t){
+    var par=tmDir(p);if(par!==p&&!T.fs[par])mk(par,true);
+    if(T.fs[p])return T.fs[p];
+    var mine=p.indexOf(T.home)===0||p.indexOf('/tmp')===0;
+    return T.fs[p]={d:!!dir,t:t||'',m:dir?'rwxr-xr-x':'rw-r--r--',o:mine?u:'root'};
+  }
+  T.mk=mk;mk('/',true);mk('/home',true);mk(T.home,true);mk('/tmp',true);
+  Object.keys(def.fs||{}).forEach(function(p){var v=def.fs[p];if(p.slice(-1)==='/')mk(p.replace(/\/+$/,''),true);else mk(p,false,v)});
+  Object.keys(def.perm||{}).forEach(function(p){if(T.fs[p])T.fs[p].m=def.perm[p]});
+  T.cwd=tmNorm(sc.inicio||'~','/',T.home);
+  T.msg=def.intro;
+  return T;
+}
+function tmPrompt(){return TM.user+'@'+TM.host+':'+(TM.cwd===TM.home?'~':TM.cwd.indexOf(TM.home+'/')===0?'~'+TM.cwd.slice(TM.home.length):TM.cwd)+'$ '}
+function tmCan(n,bit,sudo){if(sudo)return true;if(n.o!==TM.user)return n.m.charAt(6+bit)!=='-';return n.m.charAt(bit)!=='-'}
+function tmOpt(args){var f={},r=[];args.forEach(function(a){if(a.length>1&&a.charAt(0)==='-'&&!/^-\d+$/.test(a)){a.slice(1).split('').forEach(function(c){f[c]=1})}else r.push(a)});return{f:f,r:r}}
+function tmAbs(p){return tmNorm(p,TM.cwd,TM.home)}
+function tmErr(m){return{err:m}}
+function tmList(a,ctx){return a}
+function tmCmd(name,args,inp,ctx){
+  var T=TM,fs=T.fs,o=tmOpt(args),f=o.f,r=o.r,sd=ctx.sudo,i,n,p;
+  function need(){return r.length?null:tmErr(name+': falta um operando')}
+  function wr(path){ /* pode criar/alterar em path? */
+    var n=fs[path];if(n)return tmCan(n,1,sd);
+    var par=fs[tmDir(path)];return !!par&&(sd||par.o===T.user)}
+  switch(name){
+  case 'pwd':return{out:T.cwd};
+  case 'whoami':return{out:sd?'root':T.user};
+  case 'hostname':return{out:T.host};
+  case 'uname':return{out:'Linux'};
+  case 'id':return{out:'uid=1000('+T.user+') gid=1000('+T.user+') grupos=1000('+T.user+'),27(sudo)'};
+  case 'clear':T.out=[];return{out:''};
+  case 'history':return{out:T.hist.map(function(h,i){return(i+1)+'  '+h}).join('\n')};
+  case 'echo':return{out:r.join(' ')};
+  case 'help':case 'ajuda':return{out:'Comandos: pwd ls cd mkdir touch cp mv rm cat head tail grep wc sort uniq echo chmod whoami id hostname ps kill ip ping curl apt sudo clear history\nUse | para ligar comandos e > ou >> para gravar em arquivo.'};
+  case 'ls':{
+    var ts=r.length?r:['.'],out=[];
+    for(i=0;i<ts.length;i++){p=tmAbs(ts[i]);n=fs[p];
+      if(!n)return tmErr("ls: não foi possível acessar '"+ts[i]+"': Arquivo ou diretório inexistente");
+      var names=[];
+      if(n.d){var pre=p==='/'?'/':p+'/';Object.keys(fs).forEach(function(k){if(k!==p&&k.indexOf(pre)===0&&k.slice(pre.length).indexOf('/')<0){var b=k.slice(pre.length);if(f.a||b.charAt(0)!=='.')names.push(b)}});names.sort();
+        if(f.a)names=['.','..'].concat(names)}
+      else names=[tmBase(p)];
+      if(ts.length>1)out.push(ts[i]+':');
+      if(f.l){names.forEach(function(b){var q=n.d?(b==='.'||b==='..'?p:(p==='/'?'':p)+'/'+b):p,m=fs[q]||n;out.push((m.d?'d':'-')+m.m+' 1 '+m.o+' '+m.o+' '+String(m.d?4096:(m.t||'').length).padStart(5)+' '+b)})}
+      else if(ctx.pipe||ctx.redir)out.push(names.join('\n'));
+      else out.push(names.join('  '));
+    }
+    return{out:out.join('\n')};}
+  case 'cd':{
+    p=r.length?tmAbs(r[0]):T.home;n=fs[p];
+    if(!n)return tmErr('bash: cd: '+r[0]+': Arquivo ou diretório inexistente');
+    if(!n.d)return tmErr('bash: cd: '+r[0]+': Não é um diretório');
+    T.cwd=p;return{out:''};}
+  case 'mkdir':{
+    if(need())return need();
+    for(i=0;i<r.length;i++){p=tmAbs(r[i]);
+      if(fs[p]){if(f.p)continue;return tmErr("mkdir: não foi possível criar o diretório '"+r[i]+"': Arquivo existe")}
+      if(!fs[tmDir(p)]&&!f.p)return tmErr("mkdir: não foi possível criar o diretório '"+r[i]+"': Arquivo ou diretório inexistente");
+      if(!f.p&&!wr(p))return tmErr("mkdir: não foi possível criar o diretório '"+r[i]+"': Permissão negada");
+      T.mk(p,true);if(sd&&p.indexOf(T.home)!==0&&p.indexOf('/tmp')!==0)fs[p].o='root'}
+    return{out:''};}
+  case 'touch':{
+    if(need())return need();
+    for(i=0;i<r.length;i++){p=tmAbs(r[i]);
+      if(fs[p])continue;
+      if(!fs[tmDir(p)])return tmErr("touch: não foi possível tocar '"+r[i]+"': Arquivo ou diretório inexistente");
+      if(!wr(p))return tmErr("touch: não foi possível tocar '"+r[i]+"': Permissão negada");
+      T.mk(p,false,'')}
+    return{out:''};}
+  case 'cat':{
+    if(!r.length)return{out:inp||''};
+    var res=[];
+    for(i=0;i<r.length;i++){p=tmAbs(r[i]);n=fs[p];
+      if(!n)return tmErr('cat: '+r[i]+': Arquivo ou diretório inexistente');
+      if(n.d)return tmErr('cat: '+r[i]+': É um diretório');
+      if(!tmCan(n,0,sd))return tmErr('cat: '+r[i]+': Permissão negada');
+      res.push(n.t)}
+    return{out:res.join('\n')};}
+  case 'head':case 'tail':{
+    var cnt=10,tx=inp,ar=args.slice(),j;
+    for(j=0;j<ar.length;j++){if(ar[j]==='-n'&&ar[j+1]){cnt=+ar[j+1];ar.splice(j,2);break}if(/^-\d+$/.test(ar[j])){cnt=-ar[j];ar.splice(j,1);break}}
+    ar=ar.filter(function(a){return a.charAt(0)!=='-'});
+    if(ar.length){p=tmAbs(ar[0]);n=fs[p];if(!n)return tmErr(name+": não foi possível abrir '"+ar[0]+"': Arquivo ou diretório inexistente");if(n.d)return tmErr(name+': '+ar[0]+': É um diretório');if(!tmCan(n,0,sd))return tmErr(name+": não foi possível abrir '"+ar[0]+"': Permissão negada");tx=n.t}
+    var ln=(tx||'').split('\n');return{out:(name==='head'?ln.slice(0,cnt):ln.slice(-cnt)).join('\n')};}
+  case 'grep':{
+    if(!r.length)return tmErr('grep: falta o padrão de busca');
+    var pat=r[0],tx2=inp,re;
+    try{re=new RegExp(pat,f.i?'i':'')}catch(e){re=new RegExp(pat.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),f.i?'i':'')}
+    if(r.length>1){var fl=[];for(i=1;i<r.length;i++){p=tmAbs(r[i]);n=fs[p];if(!n)return tmErr('grep: '+r[i]+': Arquivo ou diretório inexistente');if(n.d)return tmErr('grep: '+r[i]+': É um diretório');if(!tmCan(n,0,sd))return tmErr('grep: '+r[i]+': Permissão negada');fl.push(n.t)}tx2=fl.join('\n')}
+    if(tx2==null)return{out:''};
+    var m=tx2.split('\n').filter(function(l){return !!re.test(l)!==!!f.v});
+    return{out:f.c?String(m.length):m.join('\n')};}
+  case 'wc':{
+    var t3=inp;if(r.length){p=tmAbs(r[0]);n=fs[p];if(!n)return tmErr('wc: '+r[0]+': Arquivo ou diretório inexistente');if(n.d)return tmErr('wc: '+r[0]+': É um diretório');if(!tmCan(n,0,sd))return tmErr('wc: '+r[0]+': Permissão negada');t3=n.t}
+    t3=t3||'';var lines=t3?t3.replace(/\n$/,'').split('\n').length:0,words=t3.split(/\s+/).filter(Boolean).length;
+    var sx=r.length?' '+r[0]:'';
+    return{out:f.l?lines+sx:f.w?words+sx:f.c?t3.length+sx:lines+' '+words+' '+t3.length+sx};}
+  case 'sort':return{out:(inp||'').split('\n').sort().join('\n')};
+  case 'uniq':return{out:(inp||'').split('\n').filter(function(l,i,a){return i===0||l!==a[i-1]}).join('\n')};
+  case 'cp':case 'mv':{
+    if(r.length<2)return tmErr(name+': falta o operando de destino');
+    var dst=tmAbs(r[r.length-1]),srcs=r.slice(0,-1),dn=fs[dst];
+    for(i=0;i<srcs.length;i++){var sp=tmAbs(srcs[i]),sn=fs[sp];
+      if(!sn)return tmErr(name+": não foi possível obter estado de '"+srcs[i]+"': Arquivo ou diretório inexistente");
+      if(sn.d&&name==='cp'&&!f.r)return tmErr("cp: -r não especificado; omitindo o diretório '"+srcs[i]+"'");
+      var tg=(dn&&dn.d)?(dst==='/'?'':dst)+'/'+tmBase(sp):dst;
+      if(srcs.length>1&&!(dn&&dn.d))return tmErr(name+": o alvo '"+r[r.length-1]+"' não é um diretório");
+      if(!fs[tmDir(tg)])return tmErr(name+": não foi possível criar '"+r[r.length-1]+"': Arquivo ou diretório inexistente");
+      if(!wr(tg)||(name==='mv'&&!sd&&sn.o!==T.user))return tmErr(name+": não foi possível mover/copiar para '"+r[r.length-1]+"': Permissão negada");
+      if(name==='cp'&&!tmCan(sn,0,sd))return tmErr("cp: não foi possível abrir '"+srcs[i]+"' para leitura: Permissão negada");
+      var keys=Object.keys(fs).filter(function(k){return k===sp||k.indexOf(sp+'/')===0}),add={};
+      keys.forEach(function(k){var c={d:fs[k].d,t:fs[k].t,m:fs[k].m,o:fs[k].o};if(tg.indexOf(T.home)===0||tg.indexOf('/tmp')===0)c.o=T.user;add[tg+k.slice(sp.length)]=c});
+      if(name==='mv')keys.forEach(function(k){delete fs[k]});
+      Object.keys(add).forEach(function(k){fs[k]=add[k]})}
+    return{out:''};}
+  case 'rm':{
+    if(need())return need();
+    for(i=0;i<r.length;i++){p=tmAbs(r[i]);n=fs[p];
+      if(!n){if(f.f)continue;return tmErr("rm: não foi possível remover '"+r[i]+"': Arquivo ou diretório inexistente")}
+      if(p==='/'||p===T.home)return tmErr("rm: não é permitido remover '"+r[i]+"'");
+      if(n.d&&!f.r)return tmErr("rm: não foi possível remover '"+r[i]+"': É um diretório");
+      var par=fs[tmDir(p)];
+      if(!sd&&par.o!==T.user)return tmErr("rm: não foi possível remover '"+r[i]+"': Permissão negada");
+      Object.keys(fs).forEach(function(k){if(k===p||k.indexOf(p+'/')===0)delete fs[k]})}
+    return{out:''};}
+  case 'chmod':{
+    r=args.filter(function(x){return x.charAt(0)!=='-'||/^-[rwx]+$/.test(x)});
+    if(r.length<2)return tmErr('chmod: falta operando');
+    var md=r[0];
+    for(i=1;i<r.length;i++){p=tmAbs(r[i]);n=fs[p];
+      if(!n)return tmErr("chmod: não foi possível acessar '"+r[i]+"': Arquivo ou diretório inexistente");
+      if(!sd&&n.o!==T.user)return tmErr("chmod: alterando as permissões de '"+r[i]+"': Operação não permitida");
+      var cur=n.m.split(''),mm;
+      if(/^[0-7]{3}$/.test(md)){var s='';md.split('').forEach(function(d){d=+d;s+=(d&4?'r':'-')+(d&2?'w':'-')+(d&1?'x':'-')});cur=s.split('')}
+      else if((mm=/^([ugoa]*)([+-])([rwx]+)$/.exec(md))){
+        var who=mm[1]||'a',ix=[];if(who.indexOf('a')>-1)who='ugo';
+        who.split('').forEach(function(w){ix.push({u:0,g:3,o:6}[w])});
+        ix.forEach(function(b){mm[3].split('').forEach(function(l){var k=b+'rwx'.indexOf(l);cur[k]=mm[2]==='+'?l:'-'})})}
+      else return tmErr("chmod: modo inválido: '"+md+"'");
+      n.m=cur.join('')}
+    return{out:''};}
+  case 'ps':{var pr=(T.def.processos||[]).filter(function(x){return !T.killed[x.pid]});
+    return{out:'  PID NOME'+pr.map(function(x){return '\n'+String(x.pid).padStart(5)+' '+x.nome}).join('')};}
+  case 'top':{var pr2=(T.def.processos||[]).filter(function(x){return !T.killed[x.pid]});
+    return{out:'  PID NOME            CPU\n'+pr2.map(function(x){return String(x.pid).padStart(5)+' '+(x.nome+'               ').slice(0,15)+' '+(x.cpu||'1%')}).join('\n')};}
+  case 'kill':{
+    if(!r.length)return tmErr('kill: uso: kill PID');
+    var pid=+r[0],pp=(T.def.processos||[]).filter(function(x){return x.pid===pid&&!T.killed[x.pid]})[0];
+    if(!pp)return tmErr('bash: kill: ('+r[0]+') - Nenhum processo encontrado');
+    if(pp.dono&&pp.dono!==T.user&&!sd)return tmErr('bash: kill: ('+r[0]+') - Operação não permitida');
+    T.killed[pid]=1;return{out:''};}
+  case 'ip':{var rd=T.def.rede||{};
+    return{out:'1: lo: <LOOPBACK,UP>\n    inet 127.0.0.1/8\n2: eth0: <BROADCAST,UP>\n    inet '+(rd.ip||'192.168.0.15')+'/24'};}
+  case 'ping':{
+    if(!r.length)return tmErr('ping: destino ausente');
+    var rd2=T.def.rede||{},h=r[0],ok=h==='localhost'||h==='127.0.0.1'||(rd2.hosts&&rd2.hosts[h]);
+    if(!ok)return tmErr('ping: '+h+': Nome ou serviço desconhecido');
+    var ms=(rd2.hosts&&rd2.hosts[h]!==true&&rd2.hosts[h])||'0.4';
+    return{out:'PING '+h+'\n64 bytes de '+h+': tempo='+ms+' ms\n64 bytes de '+h+': tempo='+ms+' ms\n--- 2 pacotes enviados, 2 recebidos, 0% de perda'};}
+  case 'curl':{
+    if(!r.length)return tmErr('curl: tente informar um endereço');
+    var rd3=T.def.rede||{},cv=rd3.curl||{},u=r[0];
+    if(cv[u]!=null)return{out:cv[u]};
+    var host=u.replace(/^https?:\/\//,'').split('/')[0];
+    if(rd3.hosts&&rd3.hosts[host])return tmErr('curl: (22) A página retornou erro 404');
+    return tmErr('curl: (6) Não foi possível resolver o host: '+host);}
+  case 'apt':{
+    var sub=r[0];
+    if(sub!=='update'&&sub!=='install')return tmErr('apt: use «apt update» ou «apt install pacote»');
+    if(!sd)return tmErr('E: Não foi possível abrir o bloqueio. Você é root? (dica: sudo)');
+    if(sub==='update'){T.updated=1;return{out:'Lista de pacotes atualizada.'}}
+    if(!r[1])return tmErr('apt: informe o pacote');
+    var pk=(T.def.pacotes||[]);if(pk.length&&pk.indexOf(r[1])<0)return tmErr('E: Impossível encontrar o pacote '+r[1]);
+    T.inst[r[1]]=1;return{out:'Instalando '+r[1]+'... pronto.'};}
+  default:
+    if(name.indexOf('./')===0||name.charAt(0)==='/'){
+      p=tmAbs(name);n=fs[p];
+      if(!n)return tmErr('bash: '+name+': Arquivo ou diretório inexistente');
+      if(n.d)return tmErr('bash: '+name+': É um diretório');
+      if(!tmCan(n,2,sd))return tmErr('bash: '+name+': Permissão negada');
+      T.exec[p]=1;return{out:(T.def.exec&&T.def.exec[p])||'Script executado.'};}
+    return tmErr('bash: '+name+': comando não encontrado');
+  }
+}
+function tmRun(line){
+  var T=TM,toks=tmTok(line),segs=[[]],i;
+  toks.forEach(function(t){if(t.op==='|')segs.push([]);else segs[segs.length-1].push(t)});
+  var input=null,res={out:''},ok=true,out='';
+  for(i=0;i<segs.length;i++){
+    var seg=segs[i],args=[],redir=null;
+    for(var j=0;j<seg.length;j++){var t=seg[j];
+      if(typeof t==='object'){if(!seg[j+1]||typeof seg[j+1]==='object'){return{err:'bash: erro de sintaxe perto de «'+t.op+'»'}}redir={op:t.op,to:seg[j+1]};j++}
+      else args.push(t)}
+    if(!args.length){if(redir)return{err:'bash: erro de sintaxe'};return{out:''}}
+    var sd=false;
+    if(args[0]==='sudo'){sd=true;args.shift();if(!args.length)return{err:'sudo: uso: sudo comando'}}
+    var ctx={sudo:sd,pipe:i<segs.length-1,redir:!!redir};
+    res=tmCmd(args[0],args.slice(1),input,ctx);
+    if(res.err)return res;
+    out=res.out||'';
+    if(redir){
+      var p=tmAbs(redir.to),fn=T.fs[p];
+      if(fn&&fn.d)return{err:'bash: '+redir.to+': É um diretório'};
+      var pr=T.fs[tmDir(p)];
+      if(!pr)return{err:'bash: '+redir.to+': Arquivo ou diretório inexistente'};
+      if(fn?!tmCan(fn,1,false):pr.o!==T.user)return{err:'bash: '+redir.to+': Permissão negada'};
+      if(!fn){T.mk(p,false,'');fn=T.fs[p]}
+      fn.t=redir.op==='>>'?(fn.t?fn.t+'\n':'')+out:out;out='';
+    }
+    input=out;
+  }
+  return{out:out};
+}
+function tmCheck(c){
+  var T=TM,fs=T.fs,k;
+  for(k in c){var v=c[k];
+    if(k==='cmd'){if(!T.ran.some(function(x){return new RegExp(v,'i').test(x)}))return false}
+    else if(k==='existe'){if(!fs[v])return false}
+    else if(k==='naoexiste'){if(fs[v])return false}
+    else if(k==='conteudo'){if(!fs[v[0]]||fs[v[0]].t.indexOf(v[1])<0)return false}
+    else if(k==='perm'){if(!fs[v[0]]||fs[v[0]].m.slice(0,3).indexOf(v[1])<0)return false}
+    else if(k==='semperm'){if(!fs[v[0]]||fs[v[0]].m.slice(0,3).indexOf(v[1])>-1)return false}
+    else if(k==='cwd'){if(T.cwd!==v)return false}
+    else if(k==='saida'){if(!T.out.some(function(x){return x.k==='o'&&new RegExp(v,'i').test(x.t)}))return false}
+    else if(k==='matou'){if(!T.killed[v])return false}
+    else if(k==='instalou'){if(!T.inst[v])return false}
+    else if(k==='exec'){if(!T.exec[v])return false}
+  }
+  return true;
+}
+function startTerm(o){
+  var def=CASES[o.id],rec=S.casos[o.id];
+  TM=tmInit(def);
+  C={id:o.id,def:def,fault:{id:'t',cause:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',need:[],clues:{}},kind:o.kind,key:o.key,replay:!!o.replay,insp:TM.ran,wrongSet:[],wrong:0,stage:'term',guided:!(rec&&rec.n>0)&&!o.replay,term:true};
+  $('#lesson').hidden=false;document.body.classList.add('lock');drawTerm();
+  setTimeout(function(){var i=$('#tin');if(i)i.focus()},200);
+}
+function tmSteps(){
+  var T=TM,h='';
+  (T.def.passos||[]).forEach(function(s,i){
+    var d=T.done[i];h+='<div class="tstep'+(d?' ok':'')+'"><i>'+(d?IC.check:(i+1))+'</i><span>'+esc(s.texto)+'</span></div>'});
+  return h;
+}
+function tmOut(){
+  return TM.out.map(function(l){return'<div class="tml '+l.k+'">'+esc(l.t)+'</div>'}).join('');
+}
+function drawTerm(){
+  var c=C,d=c.def,T=TM,
+  h='<div class="lw"><div class="lhead"><button class="xbtn" data-act="cclose" aria-label="Sair do chamado">'+IC.x+'</button>'+
+   '<div class="ctitle"><small>'+(c.kind==='daily'?'Chamado do dia':'Chamado')+'</small><b>'+esc(d.title)+'</b></div>'+starRow(Math.max(1,3-c.wrong))+'</div><div class="lbody">'+
+   '<div class="say"><span class="sp">'+pingo('happy','pingo-s')+'</span><div class="bub"><p id="tmsg">'+esc(T.msg)+'</p></div></div>'+
+   '<div class="tlabel">O que fazer</div><div class="tsteps" id="tsteps">'+tmSteps()+'</div>'+
+   '<div class="term" id="term"><div class="tmx" id="tmx">'+tmOut()+'</div><label class="tprompt"><span id="tps">'+esc(tmPrompt())+'</span><input id="tin" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" aria-label="Digite um comando"></label></div>'+
+   '<div class="tkeys">'+['|','>','>>','~','/','-','..'].map(function(k){return'<button data-act="tkey" data-k="'+k+'">'+k+'</button>'}).join('')+'<button data-act="tup" aria-label="Comando anterior">↑</button></div>'+
+   '</div><div class="lfoot"><div class="trow"><button class="btn ghost" data-act="tdica">Dica</button><button class="btn prim" data-act="trun">Enviar</button></div></div></div>';
+  $('#lesson').innerHTML=h;
+  var el=$('#tmx');if(el)el.scrollTop=el.scrollHeight;
+}
+function tmRefresh(){
+  var a=$('#tsteps'),b=$('#tmx'),c=$('#tps'),m=$('#tmsg');
+  if(a)a.innerHTML=tmSteps();if(b){b.innerHTML=tmOut();b.scrollTop=b.scrollHeight}if(c)c.textContent=tmPrompt();if(m)m.textContent=TM.msg;
+}
+function tmSubmit(){
+  var inp=$('#tin');if(!inp||!TM||!C||C.stage!=='term')return;
+  var line=inp.value.replace(/^\s+|\s+$/g,'');inp.value='';
+  var T=TM;T.out.push({k:'p',t:tmPrompt()+line});
+  if(!line){tmRefresh();return}
+  T.hist.push(line);T.hi=T.hist.length;
+  var r=tmRun(line);
+  if(r.err){T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&C.wrong<2)C.wrong++;sfx('bad');T.msg=T.erros>=2?'Calma, errar faz parte. Digite help para ver os comandos ou toque em Dica.':'Esse comando não deu certo. Leia a mensagem com calma.'}
+  else{T.ran.push(line);if(r.out)T.out.push({k:'o',t:r.out});sfx('ping')}
+  var all=true;
+  (T.def.passos||[]).forEach(function(s,i){
+    if(!T.done[i]){var ch=s.feito;if(!Array.isArray(ch))ch=[ch];if(ch.every(tmCheck)){T.done[i]=1;T.msg=s.ok||'Boa! Passo concluído.';sfx('plim1')}}
+    if(!T.done[i])all=false});
+  tmRefresh();
+  if(all){C.stage='fim';inp.disabled=true;T.msg=T.def.final||'Chamado resolvido!';var m=$('#tmsg');if(m)m.textContent=T.msg;setTimeout(function(){if(C&&C.stage==='fim')caseFinish()},1100)}
+}
+document.addEventListener('keydown',function(e){if(e.target&&e.target.id==='tin'){if(e.key==='Enter'){e.preventDefault();tmSubmit()}else if(e.key==='ArrowUp'&&TM&&TM.hist.length){e.preventDefault();TM.hi=Math.max(0,TM.hi-1);e.target.value=TM.hist[TM.hi]||''}else if(e.key==='ArrowDown'&&TM){e.preventDefault();TM.hi=Math.min(TM.hist.length,TM.hi+1);e.target.value=TM.hist[TM.hi]||''}}});
+function tmHint(){
+  var T=TM,i,st=T.def.passos||[];
+  for(i=0;i<st.length;i++)if(!T.done[i]){T.msg=st[i].dica||'Tente o comando help.';break}
+  tmRefresh();
+}
 
 /* ---------- eventos ---------- */
 document.addEventListener('click',function(e){
@@ -7356,6 +11683,10 @@ document.addEventListener('click',function(e){
   else if(a==='cpick'){pickCause(t.dataset.id)}
   else if(a==='cclose'||a==='cdone'){closeCase()}
   else if(a==='cexplain'){caseExplain()}
+  else if(a==='trun'){tmSubmit()}
+  else if(a==='tdica'){if(TM&&C&&C.term)tmHint()}
+  else if(a==='tkey'){var ti=$('#tin');if(ti){ti.value+=t.dataset.k;ti.focus()}}
+  else if(a==='tup'){var tu=$('#tin');if(tu&&TM&&TM.hist.length){TM.hi=Math.max(0,TM.hi-1);tu.value=TM.hist[TM.hi]||'';tu.focus()}}
   else if(a==='cagain'){startCase({id:C.id,kind:'node',key:C.key,replay:true,avoid:C.fault.id})}
   else if(a==='daily'){if(!day().call)startCase({id:dailyCase(),kind:'daily',seed:today()})}
   else if(a==='wclaim'){var w=wk();if(w.n>=WGOAL&&!w.claimed){w.claimed=true;S.gems+=60;S.badges.push(w.k);save();render()}}

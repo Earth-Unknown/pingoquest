@@ -786,6 +786,21 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .cqtx{flex:1;min-width:0}.cqtx b{display:block;font-size:16px}.cqtx small{display:block;color:var(--muted);font-weight:700;font-size:12.5px;margin-top:1px}
 .cqbar{display:block;height:7px;border-radius:4px;background:var(--line);margin-top:7px;overflow:hidden}.cqbar i{display:block;height:100%;background:#7b3ff2;border-radius:4px}
 .cqcard em{font-style:normal;font-weight:900;font-size:12px;color:var(--primary)}
+
+.tsteps{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.tstep{display:flex;gap:10px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-weight:700;font-size:14px}
+.tstep i{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line-deep);display:grid;place-items:center;font-style:normal;font-size:12px}
+.tstep i svg{width:14px;height:14px}
+.tstep.ok{border-color:var(--ok,#3fbf5f)}.tstep.ok i{background:var(--ok,#3fbf5f);border-color:var(--ok,#3fbf5f);color:#0b2a12}
+.term{background:#0d0620;border:2px solid #7b3ff2;border-radius:16px;overflow:hidden;box-shadow:0 0 18px rgba(24,221,251,.18);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;color:#e9ffe9}
+.tmx{max-height:260px;min-height:120px;overflow:auto;padding:10px 12px;white-space:pre-wrap;word-break:break-word}
+.tml.p{color:#18ddfb}.tml.e{color:#ff8aa6}.tml.o{color:#e9ffe9}
+.tprompt{display:flex;align-items:center;gap:6px;padding:8px 12px;border-top:1px solid rgba(200,139,255,.3);color:#7dff2b}
+.tprompt span{white-space:nowrap;max-width:60%;overflow:hidden;text-overflow:ellipsis}
+.tprompt input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:inherit;min-height:32px}
+.tkeys{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
+.tkeys button{min-width:44px;min-height:44px;border-radius:12px;border:2px solid var(--line-deep);background:var(--surface);color:var(--ink);font:700 16px ui-monospace,Menlo,monospace}
+.trow{display:flex;gap:10px}.trow .btn{flex:1}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -859,6 +874,7 @@ function lerCurso(c){
   Object.keys(CUR).forEach(function(id){CUR[id].pre=CUR[id].pre.filter(function(x){return !!CUR[x]})});
   (c.bate_bola||[]).forEach(function(it,ii){var q=conv(it,'Bate-bola '+(ii+1));if(q){q.ev=1;EVQ.push(q)}});
   var CASES={},CASE_IDS=[];(c.casos||[]).forEach(function(k){CASES[k.id]=k;CASE_IDS.push(k.id)});
+  GAMES.forEach(function(g){if(g.caso&&!CASES[g.caso])delete g.caso});
   return{GAMES:GAMES,CASES:CASES,CASE_IDS:CASE_IDS,CUR:CUR,EXTRA:EXTRA,EVENTS:c.eventos||[],EVQ:EVQ,ART:c.artes||{},
     WORLD:{n:mundo.numero||1,name:mundo.nome,sub:mundo.subtitulo,places:places},ERROS:erros,NOME:c.nome};
 }
@@ -1520,10 +1536,10 @@ function conquistasHTML(){
 window.CQ={list:CONQ,sync:cqSync};
 function skillsHTML(){
   var h='<div class="sect">Habilidades</div><div class="skgrid">';
-  CASE_IDS.forEach(function(id){var r=S.casos[id],d=CASES[id],a=SKILL_ART[id],got=!!(r&&r.n);
+  CASE_IDS.forEach(function(id){var r=S.casos[id],d=CASES[id],a=SKILL_ART[id]||['#18b9e8','#7b3ff2','<path d="M24 30l18 20-18 20M50 72h28"/>'],got=!!(r&&r.n);
     h+='<div class="sktile'+(got?'':' off')+'" role="img" aria-label="'+d.skill+(got?', '+r.best+' de 3 estrelas':', ainda não conquistada')+'">'+
       '<span class="skico" style="background:linear-gradient(135deg,'+a[0]+','+a[1]+')"><svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">'+a[2]+'</svg></span>'+
-      '<b>'+({wifi:'Wi-Fi',office:'Queda de internet',dns:'DNS e sites',lenta:'Lentidão',print:'Rede do escritório'})[id]+'</b><small>'+(got?starStr(r.best)+' · '+r.n+'x':'Ainda não')+'</small></div>'});
+      '<b>'+({wifi:'Wi-Fi',office:'Queda de internet',dns:'DNS e sites',lenta:'Lentidão',print:'Rede do escritório'})[id]||d.skill+'</b><small>'+(got?starStr(r.best)+' · '+r.n+'x':'Ainda não')+'</small></div>'});
   h+='</div>';
   var nb=(S.badges||[]).length;
   if(nb)h+='<div class="prog"><div class="row"><span>Selos de Técnico da Semana</span><span>'+nb+'</span></div></div>';
@@ -1918,7 +1934,7 @@ function drawLesson(){
     h+='</div>';
   }else if(q.t==='ty'){
     var tc='tyin'+(asked?'':(L.ok?' right':' wrong'));
-    h+='<div class="eyebrow">Digite a resposta</div><div class="q">'+q.q+'</div><input class="'+tc+'" id="tyin" type="text" inputmode="text" enterkeyhint="done" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Digite aqui" aria-label="Sua resposta" value="'+String(L.sel).replace(/"/g,'&quot;')+'"'+(asked?'':' disabled')+'>';
+    h+='<div class="eyebrow">Digite a resposta</div><div class="q">'+q.q+'</div><input class="'+tc+'" id="tyin" type="text" inputoutde="text" enterkeyhint="done" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Digite aqui" aria-label="Sua resposta" value="'+String(L.sel).replace(/"/g,'&quot;')+'"'+(asked?'':' disabled')+'>';
     if(q.hint&&asked)h+='<p class="tyhint">Dica: '+q.hint+'</p>';
   }else if(q.t==='cl'){
     h+='<div class="eyebrow">Classifique</div><div class="q">'+q.q+'</div><div class="clist">';
@@ -2197,6 +2213,7 @@ function pickFault(def,seed,avoid){
 }
 function startCase(o){
   var def=CASES[o.id],rec=S.casos[o.id];
+  if(def&&def.tipo==='terminal'){startTerm(o);return}
   C={id:o.id,def:def,fault:pickFault(def,o.seed,o.avoid),kind:o.kind,key:o.key,replay:!!o.replay,insp:[],wrongSet:[],wrong:0,stage:'inv',last:null,res:null,
      opts:shuffle(def.faults.map(function(f){return{id:f.id,t:f.cause}})),guided:!(rec&&rec.n>0)&&!o.replay};
   C.msg=def.intro+(C.guided?' Toque nos aparelhos para investigar.':'');
@@ -2265,11 +2282,11 @@ function caseFinish(){
   c.res={stars:stars,xp:xp,gems:gems};c.stage='done';
   /* tela final em etapas: Pingo, estrelas uma a uma, causa em uma linha, cartões subindo; a explicação completa fica opcional */
   var st='';for(var i=0;i<3;i++)st+='<span class="'+(i<stars?'on':'')+'" style="animation-delay:'+(0.45+i*0.4)+'s">★</span>';
-  var tiles=[{c:'#ffb800',l:'Energia',v:IC.bolt+'<b data-to="'+xp+'">0</b>'},{c:'#18b9e8',l:'Chips',v:IC.gem+'<b data-to="'+gems+'" data-pre="+">+0</b>'},{c:'#3fbf5f',l:'Pistas',v:IC.search+'<b data-to="'+c.insp.length+'">0</b>'}];
+  var tiles=[{c:'#ffb800',l:'Energia',v:IC.bolt+'<b data-to="'+xp+'">0</b>'},{c:'#18b9e8',l:'Chips',v:IC.gem+'<b data-to="'+gems+'" data-pre="+">+0</b>'},{c:'#3fbf5f',l:(c.term?'Comandos':'Pistas'),v:IC.search+'<b data-to="'+c.insp.length+'">0</b>'}];
   var T0=2.1,tl=tiles.map(function(t,i){return'<div class="rt" style="--rc:'+t.c+';animation-delay:'+(T0+i*0.62)+'s"><small>'+t.l+'</small><span>'+t.v+'</span></div>'}).join('');
-  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>Caso resolvido!</h1>'+
+  $('#lesson').innerHTML='<div class="lw"><div class="lbody lscroll"><div class="center">'+pingo('cheer','pingo-big')+'<h1>'+(c.term?'Chamado resolvido!':'Caso resolvido!')+'</h1>'+
    '<span class="stars anim" role="img" aria-label="'+stars+' de 3 estrelas">'+st+'</span>'+
-   '<div class="cfound"><small>Causa encontrada</small><b>'+c.fault.cause+'</b></div>'+
+   '<div class="cfound"><small>'+(c.term?'O que você fez':'Causa encontrada')+'</small><b>'+c.fault.cause+'</b></div>'+
    '<div class="res2">'+tl+'</div>'+
    '<button class="btn ghost cexp" data-act="cexplain">Ver explicação</button></div></div>'+
    '<div class="lfoot late"><div class="stack" style="margin:0">'+(c.kind==='node'?'<button class="btn ghost" data-act="cagain">Jogar outro cenário</button>':'')+'<button class="btn" data-act="'+(xp>0?'collect':'cdone')+'">'+(xp>0?'Coletar energia':'Continuar')+'</button></div></div></div>';
@@ -2290,6 +2307,316 @@ function caseExplain(){
   $('#modal').hidden=false;sfx('ping');
 }
 function closeCase(){C=null;$('#lesson').hidden=true;document.body.classList.remove('lock');render()}
+
+/* ---------- terminal dos chamados de Linux ---------- */
+var TM=null;
+function tmNorm(p,cwd,home){
+  if(p==='~'||p.indexOf('~/')===0)p=home+p.slice(1);
+  if(p.charAt(0)!=='/')p=cwd+'/'+p;
+  var o=[];p.split('/').forEach(function(s){if(!s||s==='.')return;if(s==='..')o.pop();else o.push(s)});
+  return '/'+o.join('/');
+}
+function tmDir(p){var i=p.lastIndexOf('/');return i<=0?'/':p.slice(0,i)}
+function tmBase(p){return p.slice(p.lastIndexOf('/')+1)}
+function tmTok(s){
+  var r=[],cur='',q=null,has=false,i,c;
+  function flush(){if(cur||has)r.push(cur);cur='';has=false}
+  for(i=0;i<s.length;i++){c=s.charAt(i);
+    if(q){if(c===q)q=null;else cur+=c}
+    else if(c==='"'||c==="'"){q=c;has=true}
+    else if(c===' '||c==='\t'){flush()}
+    else if(c==='|'){flush();r.push({op:'|'})}
+    else if(c==='>'){flush();if(s.charAt(i+1)==='>'){r.push({op:'>>'});i++}else r.push({op:'>'})}
+    else cur+=c}
+  flush();return r;
+}
+function tmInit(def){
+  var sc=def.cenario||{},u=sc.usuario||'aluno',T={user:u,host:sc.maquina||'servidor',home:'/home/'+u,fs:{},cwd:'',hist:[],out:[],ran:[],erros:0,killed:{},inst:{},exec:{},done:{},def:def,hi:-1};
+  function mk(p,dir,t){
+    var par=tmDir(p);if(par!==p&&!T.fs[par])mk(par,true);
+    if(T.fs[p])return T.fs[p];
+    var mine=p.indexOf(T.home)===0||p.indexOf('/tmp')===0;
+    return T.fs[p]={d:!!dir,t:t||'',m:dir?'rwxr-xr-x':'rw-r--r--',o:mine?u:'root'};
+  }
+  T.mk=mk;mk('/',true);mk('/home',true);mk(T.home,true);mk('/tmp',true);
+  Object.keys(def.fs||{}).forEach(function(p){var v=def.fs[p];if(p.slice(-1)==='/')mk(p.replace(/\/+$/,''),true);else mk(p,false,v)});
+  Object.keys(def.perm||{}).forEach(function(p){if(T.fs[p])T.fs[p].m=def.perm[p]});
+  T.cwd=tmNorm(sc.inicio||'~','/',T.home);
+  T.msg=def.intro;
+  return T;
+}
+function tmPrompt(){return TM.user+'@'+TM.host+':'+(TM.cwd===TM.home?'~':TM.cwd.indexOf(TM.home+'/')===0?'~'+TM.cwd.slice(TM.home.length):TM.cwd)+'$ '}
+function tmCan(n,bit,sudo){if(sudo)return true;if(n.o!==TM.user)return n.m.charAt(6+bit)!=='-';return n.m.charAt(bit)!=='-'}
+function tmOpt(args){var f={},r=[];args.forEach(function(a){if(a.length>1&&a.charAt(0)==='-'&&!/^-\d+$/.test(a)){a.slice(1).split('').forEach(function(c){f[c]=1})}else r.push(a)});return{f:f,r:r}}
+function tmAbs(p){return tmNorm(p,TM.cwd,TM.home)}
+function tmErr(m){return{err:m}}
+function tmList(a,ctx){return a}
+function tmCmd(name,args,inp,ctx){
+  var T=TM,fs=T.fs,o=tmOpt(args),f=o.f,r=o.r,sd=ctx.sudo,i,n,p;
+  function need(){return r.length?null:tmErr(name+': falta um operando')}
+  function wr(path){ /* pode criar/alterar em path? */
+    var n=fs[path];if(n)return tmCan(n,1,sd);
+    var par=fs[tmDir(path)];return !!par&&(sd||par.o===T.user)}
+  switch(name){
+  case 'pwd':return{out:T.cwd};
+  case 'whoami':return{out:sd?'root':T.user};
+  case 'hostname':return{out:T.host};
+  case 'uname':return{out:'Linux'};
+  case 'id':return{out:'uid=1000('+T.user+') gid=1000('+T.user+') grupos=1000('+T.user+'),27(sudo)'};
+  case 'clear':T.out=[];return{out:''};
+  case 'history':return{out:T.hist.map(function(h,i){return(i+1)+'  '+h}).join('\n')};
+  case 'echo':return{out:r.join(' ')};
+  case 'help':case 'ajuda':return{out:'Comandos: pwd ls cd mkdir touch cp mv rm cat head tail grep wc sort uniq echo chmod whoami id hostname ps kill ip ping curl apt sudo clear history\nUse | para ligar comandos e > ou >> para gravar em arquivo.'};
+  case 'ls':{
+    var ts=r.length?r:['.'],out=[];
+    for(i=0;i<ts.length;i++){p=tmAbs(ts[i]);n=fs[p];
+      if(!n)return tmErr("ls: não foi possível acessar '"+ts[i]+"': Arquivo ou diretório inexistente");
+      var names=[];
+      if(n.d){var pre=p==='/'?'/':p+'/';Object.keys(fs).forEach(function(k){if(k!==p&&k.indexOf(pre)===0&&k.slice(pre.length).indexOf('/')<0){var b=k.slice(pre.length);if(f.a||b.charAt(0)!=='.')names.push(b)}});names.sort();
+        if(f.a)names=['.','..'].concat(names)}
+      else names=[tmBase(p)];
+      if(ts.length>1)out.push(ts[i]+':');
+      if(f.l){names.forEach(function(b){var q=n.d?(b==='.'||b==='..'?p:(p==='/'?'':p)+'/'+b):p,m=fs[q]||n;out.push((m.d?'d':'-')+m.m+' 1 '+m.o+' '+m.o+' '+String(m.d?4096:(m.t||'').length).padStart(5)+' '+b)})}
+      else if(ctx.pipe||ctx.redir)out.push(names.join('\n'));
+      else out.push(names.join('  '));
+    }
+    return{out:out.join('\n')};}
+  case 'cd':{
+    p=r.length?tmAbs(r[0]):T.home;n=fs[p];
+    if(!n)return tmErr('bash: cd: '+r[0]+': Arquivo ou diretório inexistente');
+    if(!n.d)return tmErr('bash: cd: '+r[0]+': Não é um diretório');
+    T.cwd=p;return{out:''};}
+  case 'mkdir':{
+    if(need())return need();
+    for(i=0;i<r.length;i++){p=tmAbs(r[i]);
+      if(fs[p]){if(f.p)continue;return tmErr("mkdir: não foi possível criar o diretório '"+r[i]+"': Arquivo existe")}
+      if(!fs[tmDir(p)]&&!f.p)return tmErr("mkdir: não foi possível criar o diretório '"+r[i]+"': Arquivo ou diretório inexistente");
+      if(!f.p&&!wr(p))return tmErr("mkdir: não foi possível criar o diretório '"+r[i]+"': Permissão negada");
+      T.mk(p,true);if(sd&&p.indexOf(T.home)!==0&&p.indexOf('/tmp')!==0)fs[p].o='root'}
+    return{out:''};}
+  case 'touch':{
+    if(need())return need();
+    for(i=0;i<r.length;i++){p=tmAbs(r[i]);
+      if(fs[p])continue;
+      if(!fs[tmDir(p)])return tmErr("touch: não foi possível tocar '"+r[i]+"': Arquivo ou diretório inexistente");
+      if(!wr(p))return tmErr("touch: não foi possível tocar '"+r[i]+"': Permissão negada");
+      T.mk(p,false,'')}
+    return{out:''};}
+  case 'cat':{
+    if(!r.length)return{out:inp||''};
+    var res=[];
+    for(i=0;i<r.length;i++){p=tmAbs(r[i]);n=fs[p];
+      if(!n)return tmErr('cat: '+r[i]+': Arquivo ou diretório inexistente');
+      if(n.d)return tmErr('cat: '+r[i]+': É um diretório');
+      if(!tmCan(n,0,sd))return tmErr('cat: '+r[i]+': Permissão negada');
+      res.push(n.t)}
+    return{out:res.join('\n')};}
+  case 'head':case 'tail':{
+    var cnt=10,tx=inp,ar=args.slice(),j;
+    for(j=0;j<ar.length;j++){if(ar[j]==='-n'&&ar[j+1]){cnt=+ar[j+1];ar.splice(j,2);break}if(/^-\d+$/.test(ar[j])){cnt=-ar[j];ar.splice(j,1);break}}
+    ar=ar.filter(function(a){return a.charAt(0)!=='-'});
+    if(ar.length){p=tmAbs(ar[0]);n=fs[p];if(!n)return tmErr(name+": não foi possível abrir '"+ar[0]+"': Arquivo ou diretório inexistente");if(n.d)return tmErr(name+': '+ar[0]+': É um diretório');if(!tmCan(n,0,sd))return tmErr(name+": não foi possível abrir '"+ar[0]+"': Permissão negada");tx=n.t}
+    var ln=(tx||'').split('\n');return{out:(name==='head'?ln.slice(0,cnt):ln.slice(-cnt)).join('\n')};}
+  case 'grep':{
+    if(!r.length)return tmErr('grep: falta o padrão de busca');
+    var pat=r[0],tx2=inp,re;
+    try{re=new RegExp(pat,f.i?'i':'')}catch(e){re=new RegExp(pat.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),f.i?'i':'')}
+    if(r.length>1){var fl=[];for(i=1;i<r.length;i++){p=tmAbs(r[i]);n=fs[p];if(!n)return tmErr('grep: '+r[i]+': Arquivo ou diretório inexistente');if(n.d)return tmErr('grep: '+r[i]+': É um diretório');if(!tmCan(n,0,sd))return tmErr('grep: '+r[i]+': Permissão negada');fl.push(n.t)}tx2=fl.join('\n')}
+    if(tx2==null)return{out:''};
+    var m=tx2.split('\n').filter(function(l){return !!re.test(l)!==!!f.v});
+    return{out:f.c?String(m.length):m.join('\n')};}
+  case 'wc':{
+    var t3=inp;if(r.length){p=tmAbs(r[0]);n=fs[p];if(!n)return tmErr('wc: '+r[0]+': Arquivo ou diretório inexistente');if(n.d)return tmErr('wc: '+r[0]+': É um diretório');if(!tmCan(n,0,sd))return tmErr('wc: '+r[0]+': Permissão negada');t3=n.t}
+    t3=t3||'';var lines=t3?t3.replace(/\n$/,'').split('\n').length:0,words=t3.split(/\s+/).filter(Boolean).length;
+    var sx=r.length?' '+r[0]:'';
+    return{out:f.l?lines+sx:f.w?words+sx:f.c?t3.length+sx:lines+' '+words+' '+t3.length+sx};}
+  case 'sort':return{out:(inp||'').split('\n').sort().join('\n')};
+  case 'uniq':return{out:(inp||'').split('\n').filter(function(l,i,a){return i===0||l!==a[i-1]}).join('\n')};
+  case 'cp':case 'mv':{
+    if(r.length<2)return tmErr(name+': falta o operando de destino');
+    var dst=tmAbs(r[r.length-1]),srcs=r.slice(0,-1),dn=fs[dst];
+    for(i=0;i<srcs.length;i++){var sp=tmAbs(srcs[i]),sn=fs[sp];
+      if(!sn)return tmErr(name+": não foi possível obter estado de '"+srcs[i]+"': Arquivo ou diretório inexistente");
+      if(sn.d&&name==='cp'&&!f.r)return tmErr("cp: -r não especificado; omitindo o diretório '"+srcs[i]+"'");
+      var tg=(dn&&dn.d)?(dst==='/'?'':dst)+'/'+tmBase(sp):dst;
+      if(srcs.length>1&&!(dn&&dn.d))return tmErr(name+": o alvo '"+r[r.length-1]+"' não é um diretório");
+      if(!fs[tmDir(tg)])return tmErr(name+": não foi possível criar '"+r[r.length-1]+"': Arquivo ou diretório inexistente");
+      if(!wr(tg)||(name==='mv'&&!sd&&sn.o!==T.user))return tmErr(name+": não foi possível mover/copiar para '"+r[r.length-1]+"': Permissão negada");
+      if(name==='cp'&&!tmCan(sn,0,sd))return tmErr("cp: não foi possível abrir '"+srcs[i]+"' para leitura: Permissão negada");
+      var keys=Object.keys(fs).filter(function(k){return k===sp||k.indexOf(sp+'/')===0}),add={};
+      keys.forEach(function(k){var c={d:fs[k].d,t:fs[k].t,m:fs[k].m,o:fs[k].o};if(tg.indexOf(T.home)===0||tg.indexOf('/tmp')===0)c.o=T.user;add[tg+k.slice(sp.length)]=c});
+      if(name==='mv')keys.forEach(function(k){delete fs[k]});
+      Object.keys(add).forEach(function(k){fs[k]=add[k]})}
+    return{out:''};}
+  case 'rm':{
+    if(need())return need();
+    for(i=0;i<r.length;i++){p=tmAbs(r[i]);n=fs[p];
+      if(!n){if(f.f)continue;return tmErr("rm: não foi possível remover '"+r[i]+"': Arquivo ou diretório inexistente")}
+      if(p==='/'||p===T.home)return tmErr("rm: não é permitido remover '"+r[i]+"'");
+      if(n.d&&!f.r)return tmErr("rm: não foi possível remover '"+r[i]+"': É um diretório");
+      var par=fs[tmDir(p)];
+      if(!sd&&par.o!==T.user)return tmErr("rm: não foi possível remover '"+r[i]+"': Permissão negada");
+      Object.keys(fs).forEach(function(k){if(k===p||k.indexOf(p+'/')===0)delete fs[k]})}
+    return{out:''};}
+  case 'chmod':{
+    r=args.filter(function(x){return x.charAt(0)!=='-'||/^-[rwx]+$/.test(x)});
+    if(r.length<2)return tmErr('chmod: falta operando');
+    var md=r[0];
+    for(i=1;i<r.length;i++){p=tmAbs(r[i]);n=fs[p];
+      if(!n)return tmErr("chmod: não foi possível acessar '"+r[i]+"': Arquivo ou diretório inexistente");
+      if(!sd&&n.o!==T.user)return tmErr("chmod: alterando as permissões de '"+r[i]+"': Operação não permitida");
+      var cur=n.m.split(''),mm;
+      if(/^[0-7]{3}$/.test(md)){var s='';md.split('').forEach(function(d){d=+d;s+=(d&4?'r':'-')+(d&2?'w':'-')+(d&1?'x':'-')});cur=s.split('')}
+      else if((mm=/^([ugoa]*)([+-])([rwx]+)$/.exec(md))){
+        var who=mm[1]||'a',ix=[];if(who.indexOf('a')>-1)who='ugo';
+        who.split('').forEach(function(w){ix.push({u:0,g:3,o:6}[w])});
+        ix.forEach(function(b){mm[3].split('').forEach(function(l){var k=b+'rwx'.indexOf(l);cur[k]=mm[2]==='+'?l:'-'})})}
+      else return tmErr("chmod: modo inválido: '"+md+"'");
+      n.m=cur.join('')}
+    return{out:''};}
+  case 'ps':{var pr=(T.def.processos||[]).filter(function(x){return !T.killed[x.pid]});
+    return{out:'  PID NOME'+pr.map(function(x){return '\n'+String(x.pid).padStart(5)+' '+x.nome}).join('')};}
+  case 'top':{var pr2=(T.def.processos||[]).filter(function(x){return !T.killed[x.pid]});
+    return{out:'  PID NOME            CPU\n'+pr2.map(function(x){return String(x.pid).padStart(5)+' '+(x.nome+'               ').slice(0,15)+' '+(x.cpu||'1%')}).join('\n')};}
+  case 'kill':{
+    if(!r.length)return tmErr('kill: uso: kill PID');
+    var pid=+r[0],pp=(T.def.processos||[]).filter(function(x){return x.pid===pid&&!T.killed[x.pid]})[0];
+    if(!pp)return tmErr('bash: kill: ('+r[0]+') - Nenhum processo encontrado');
+    if(pp.dono&&pp.dono!==T.user&&!sd)return tmErr('bash: kill: ('+r[0]+') - Operação não permitida');
+    T.killed[pid]=1;return{out:''};}
+  case 'ip':{var rd=T.def.rede||{};
+    return{out:'1: lo: <LOOPBACK,UP>\n    inet 127.0.0.1/8\n2: eth0: <BROADCAST,UP>\n    inet '+(rd.ip||'192.168.0.15')+'/24'};}
+  case 'ping':{
+    if(!r.length)return tmErr('ping: destino ausente');
+    var rd2=T.def.rede||{},h=r[0],ok=h==='localhost'||h==='127.0.0.1'||(rd2.hosts&&rd2.hosts[h]);
+    if(!ok)return tmErr('ping: '+h+': Nome ou serviço desconhecido');
+    var ms=(rd2.hosts&&rd2.hosts[h]!==true&&rd2.hosts[h])||'0.4';
+    return{out:'PING '+h+'\n64 bytes de '+h+': tempo='+ms+' ms\n64 bytes de '+h+': tempo='+ms+' ms\n--- 2 pacotes enviados, 2 recebidos, 0% de perda'};}
+  case 'curl':{
+    if(!r.length)return tmErr('curl: tente informar um endereço');
+    var rd3=T.def.rede||{},cv=rd3.curl||{},u=r[0];
+    if(cv[u]!=null)return{out:cv[u]};
+    var host=u.replace(/^https?:\/\//,'').split('/')[0];
+    if(rd3.hosts&&rd3.hosts[host])return tmErr('curl: (22) A página retornou erro 404');
+    return tmErr('curl: (6) Não foi possível resolver o host: '+host);}
+  case 'apt':{
+    var sub=r[0];
+    if(sub!=='update'&&sub!=='install')return tmErr('apt: use «apt update» ou «apt install pacote»');
+    if(!sd)return tmErr('E: Não foi possível abrir o bloqueio. Você é root? (dica: sudo)');
+    if(sub==='update'){T.updated=1;return{out:'Lista de pacotes atualizada.'}}
+    if(!r[1])return tmErr('apt: informe o pacote');
+    var pk=(T.def.pacotes||[]);if(pk.length&&pk.indexOf(r[1])<0)return tmErr('E: Impossível encontrar o pacote '+r[1]);
+    T.inst[r[1]]=1;return{out:'Instalando '+r[1]+'... pronto.'};}
+  default:
+    if(name.indexOf('./')===0||name.charAt(0)==='/'){
+      p=tmAbs(name);n=fs[p];
+      if(!n)return tmErr('bash: '+name+': Arquivo ou diretório inexistente');
+      if(n.d)return tmErr('bash: '+name+': É um diretório');
+      if(!tmCan(n,2,sd))return tmErr('bash: '+name+': Permissão negada');
+      T.exec[p]=1;return{out:(T.def.exec&&T.def.exec[p])||'Script executado.'};}
+    return tmErr('bash: '+name+': comando não encontrado');
+  }
+}
+function tmRun(line){
+  var T=TM,toks=tmTok(line),segs=[[]],i;
+  toks.forEach(function(t){if(t.op==='|')segs.push([]);else segs[segs.length-1].push(t)});
+  var input=null,res={out:''},ok=true,out='';
+  for(i=0;i<segs.length;i++){
+    var seg=segs[i],args=[],redir=null;
+    for(var j=0;j<seg.length;j++){var t=seg[j];
+      if(typeof t==='object'){if(!seg[j+1]||typeof seg[j+1]==='object'){return{err:'bash: erro de sintaxe perto de «'+t.op+'»'}}redir={op:t.op,to:seg[j+1]};j++}
+      else args.push(t)}
+    if(!args.length){if(redir)return{err:'bash: erro de sintaxe'};return{out:''}}
+    var sd=false;
+    if(args[0]==='sudo'){sd=true;args.shift();if(!args.length)return{err:'sudo: uso: sudo comando'}}
+    var ctx={sudo:sd,pipe:i<segs.length-1,redir:!!redir};
+    res=tmCmd(args[0],args.slice(1),input,ctx);
+    if(res.err)return res;
+    out=res.out||'';
+    if(redir){
+      var p=tmAbs(redir.to),fn=T.fs[p];
+      if(fn&&fn.d)return{err:'bash: '+redir.to+': É um diretório'};
+      var pr=T.fs[tmDir(p)];
+      if(!pr)return{err:'bash: '+redir.to+': Arquivo ou diretório inexistente'};
+      if(fn?!tmCan(fn,1,false):pr.o!==T.user)return{err:'bash: '+redir.to+': Permissão negada'};
+      if(!fn){T.mk(p,false,'');fn=T.fs[p]}
+      fn.t=redir.op==='>>'?(fn.t?fn.t+'\n':'')+out:out;out='';
+    }
+    input=out;
+  }
+  return{out:out};
+}
+function tmCheck(c){
+  var T=TM,fs=T.fs,k;
+  for(k in c){var v=c[k];
+    if(k==='cmd'){if(!T.ran.some(function(x){return new RegExp(v,'i').test(x)}))return false}
+    else if(k==='existe'){if(!fs[v])return false}
+    else if(k==='naoexiste'){if(fs[v])return false}
+    else if(k==='conteudo'){if(!fs[v[0]]||fs[v[0]].t.indexOf(v[1])<0)return false}
+    else if(k==='perm'){if(!fs[v[0]]||fs[v[0]].m.slice(0,3).indexOf(v[1])<0)return false}
+    else if(k==='semperm'){if(!fs[v[0]]||fs[v[0]].m.slice(0,3).indexOf(v[1])>-1)return false}
+    else if(k==='cwd'){if(T.cwd!==v)return false}
+    else if(k==='saida'){if(!T.out.some(function(x){return x.k==='o'&&new RegExp(v,'i').test(x.t)}))return false}
+    else if(k==='matou'){if(!T.killed[v])return false}
+    else if(k==='instalou'){if(!T.inst[v])return false}
+    else if(k==='exec'){if(!T.exec[v])return false}
+  }
+  return true;
+}
+function startTerm(o){
+  var def=CASES[o.id],rec=S.casos[o.id];
+  TM=tmInit(def);
+  C={id:o.id,def:def,fault:{id:'t',cause:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',need:[],clues:{}},kind:o.kind,key:o.key,replay:!!o.replay,insp:TM.ran,wrongSet:[],wrong:0,stage:'term',guided:!(rec&&rec.n>0)&&!o.replay,term:true};
+  $('#lesson').hidden=false;document.body.classList.add('lock');drawTerm();
+  setTimeout(function(){var i=$('#tin');if(i)i.focus()},200);
+}
+function tmSteps(){
+  var T=TM,h='';
+  (T.def.passos||[]).forEach(function(s,i){
+    var d=T.done[i];h+='<div class="tstep'+(d?' ok':'')+'"><i>'+(d?IC.check:(i+1))+'</i><span>'+esc(s.texto)+'</span></div>'});
+  return h;
+}
+function tmOut(){
+  return TM.out.map(function(l){return'<div class="tml '+l.k+'">'+esc(l.t)+'</div>'}).join('');
+}
+function drawTerm(){
+  var c=C,d=c.def,T=TM,
+  h='<div class="lw"><div class="lhead"><button class="xbtn" data-act="cclose" aria-label="Sair do chamado">'+IC.x+'</button>'+
+   '<div class="ctitle"><small>'+(c.kind==='daily'?'Chamado do dia':'Chamado')+'</small><b>'+esc(d.title)+'</b></div>'+starRow(Math.max(1,3-c.wrong))+'</div><div class="lbody">'+
+   '<div class="say"><span class="sp">'+pingo('happy','pingo-s')+'</span><div class="bub"><p id="tmsg">'+esc(T.msg)+'</p></div></div>'+
+   '<div class="tlabel">O que fazer</div><div class="tsteps" id="tsteps">'+tmSteps()+'</div>'+
+   '<div class="term" id="term"><div class="tmx" id="tmx">'+tmOut()+'</div><label class="tprompt"><span id="tps">'+esc(tmPrompt())+'</span><input id="tin" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" aria-label="Digite um comando"></label></div>'+
+   '<div class="tkeys">'+['|','>','>>','~','/','-','..'].map(function(k){return'<button data-act="tkey" data-k="'+k+'">'+k+'</button>'}).join('')+'<button data-act="tup" aria-label="Comando anterior">↑</button></div>'+
+   '</div><div class="lfoot"><div class="trow"><button class="btn ghost" data-act="tdica">Dica</button><button class="btn prim" data-act="trun">Enviar</button></div></div></div>';
+  $('#lesson').innerHTML=h;
+  var el=$('#tmx');if(el)el.scrollTop=el.scrollHeight;
+}
+function tmRefresh(){
+  var a=$('#tsteps'),b=$('#tmx'),c=$('#tps'),m=$('#tmsg');
+  if(a)a.innerHTML=tmSteps();if(b){b.innerHTML=tmOut();b.scrollTop=b.scrollHeight}if(c)c.textContent=tmPrompt();if(m)m.textContent=TM.msg;
+}
+function tmSubmit(){
+  var inp=$('#tin');if(!inp||!TM||!C||C.stage!=='term')return;
+  var line=inp.value.replace(/^\s+|\s+$/g,'');inp.value='';
+  var T=TM;T.out.push({k:'p',t:tmPrompt()+line});
+  if(!line){tmRefresh();return}
+  T.hist.push(line);T.hi=T.hist.length;
+  var r=tmRun(line);
+  if(r.err){T.out.push({k:'e',t:r.err});T.erros++;if(T.erros%4===0&&C.wrong<2)C.wrong++;sfx('bad');T.msg=T.erros>=2?'Calma, errar faz parte. Digite help para ver os comandos ou toque em Dica.':'Esse comando não deu certo. Leia a mensagem com calma.'}
+  else{T.ran.push(line);if(r.out)T.out.push({k:'o',t:r.out});sfx('ping')}
+  var all=true;
+  (T.def.passos||[]).forEach(function(s,i){
+    if(!T.done[i]){var ch=s.feito;if(!Array.isArray(ch))ch=[ch];if(ch.every(tmCheck)){T.done[i]=1;T.msg=s.ok||'Boa! Passo concluído.';sfx('plim1')}}
+    if(!T.done[i])all=false});
+  tmRefresh();
+  if(all){C.stage='fim';inp.disabled=true;T.msg=T.def.final||'Chamado resolvido!';var m=$('#tmsg');if(m)m.textContent=T.msg;setTimeout(function(){if(C&&C.stage==='fim')caseFinish()},1100)}
+}
+document.addEventListener('keydown',function(e){if(e.target&&e.target.id==='tin'){if(e.key==='Enter'){e.preventDefault();tmSubmit()}else if(e.key==='ArrowUp'&&TM&&TM.hist.length){e.preventDefault();TM.hi=Math.max(0,TM.hi-1);e.target.value=TM.hist[TM.hi]||''}else if(e.key==='ArrowDown'&&TM){e.preventDefault();TM.hi=Math.min(TM.hist.length,TM.hi+1);e.target.value=TM.hist[TM.hi]||''}}});
+function tmHint(){
+  var T=TM,i,st=T.def.passos||[];
+  for(i=0;i<st.length;i++)if(!T.done[i]){T.msg=st[i].dica||'Tente o comando help.';break}
+  tmRefresh();
+}
 
 /* ---------- eventos ---------- */
 document.addEventListener('click',function(e){
@@ -2329,6 +2656,10 @@ document.addEventListener('click',function(e){
   else if(a==='cpick'){pickCause(t.dataset.id)}
   else if(a==='cclose'||a==='cdone'){closeCase()}
   else if(a==='cexplain'){caseExplain()}
+  else if(a==='trun'){tmSubmit()}
+  else if(a==='tdica'){if(TM&&C&&C.term)tmHint()}
+  else if(a==='tkey'){var ti=$('#tin');if(ti){ti.value+=t.dataset.k;ti.focus()}}
+  else if(a==='tup'){var tu=$('#tin');if(tu&&TM&&TM.hist.length){TM.hi=Math.max(0,TM.hi-1);tu.value=TM.hist[TM.hi]||'';tu.focus()}}
   else if(a==='cagain'){startCase({id:C.id,kind:'node',key:C.key,replay:true,avoid:C.fault.id})}
   else if(a==='daily'){if(!day().call)startCase({id:dailyCase(),kind:'daily',seed:today()})}
   else if(a==='wclaim'){var w=wk();if(w.n>=WGOAL&&!w.claimed){w.claimed=true;S.gems+=60;S.badges.push(w.k);save();render()}}
