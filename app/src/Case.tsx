@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import art from './legacy/art.json'
 import { Pingo } from './Pingo'
+import type { EvRes } from './lib/events'
 import { pickFault, finishCase, countInspect, spend, hasLupa } from './lib/cases'
 import { shuffle } from './lib/curso'
 import { today } from './lib/progress'
@@ -10,22 +11,23 @@ const A:any=art
 const Html=({h,cls}:{h:string;cls?:string})=><span className={cls} style={cls?undefined:{display:'contents'}} dangerouslySetInnerHTML={{__html:h}}/>
 const Stars=({n}:{n:number})=><span className="stars" role="img" aria-label={n+' de 3 estrelas'}>{[0,1,2].map(i=><span key={i} className={i<n?'on':''}>★</span>)}</span>
 
-export type CaseProps={def:any;kind:'node'|'daily';keyId?:string;S:any;replay?:boolean;onClose:()=>void}
+export type CaseProps={def:any;kind:'node'|'daily'|'event';onEvent?:(stars:number)=>EvRes;keyId?:string;S:any;replay?:boolean;onClose:()=>void}
 export function Case(p:CaseProps){
   return p.def.tipo==='terminal'?<Terminal {...p}/>:<Investigate {...p}/>
 }
 
-type Res={stars:number;xp:number;gems:number;what:string;fix:string;why:string;proof:{n:string;t:string}[];n:number}
+type Res={ev?:EvRes;stars:number;xp:number;gems:number;what:string;fix:string;why:string;proof:{n:string;t:string}[];n:number}
 function Result({S,p,res,again,term}:{S:any;p:CaseProps;res:Res;again?:()=>void;term?:boolean}){
   const [exp,setExp]=useState(false)
   return <div id="lesson"><div className="lw"><div className="lbody lscroll"><div className="center">
-    <Pingo S={S} mood="cheer"/><h1>{term?'Chamado resolvido!':'Caso resolvido!'}</h1>
+    <Pingo S={S} mood="cheer"/><h1>{res.ev?res.ev.title:term?'Chamado resolvido!':'Caso resolvido!'}</h1>
     <span className="stars anim" role="img" aria-label={res.stars+' de 3 estrelas'}>{[0,1,2].map(i=><span key={i} className={i<res.stars?'on':''} style={{animationDelay:(0.45+i*0.4)+'s'}}>★</span>)}</span>
     <div className="cfound"><small>{term?'O que você fez':'Causa encontrada'}</small><b>{res.what}</b></div>
     <div className="res2">
       <div className="rt" style={{'--rc':'#ffb800'} as any}><small>Energia</small><span><Html h={A.IC.bolt}/><b>{res.xp}</b></span></div>
       <div className="rt" style={{'--rc':'#18b9e8'} as any}><small>Chips</small><span><Html h={A.IC.gem}/><b>+{res.gems}</b></span></div>
-      <div className="rt" style={{'--rc':'#3fbf5f'} as any}><small>{term?'Comandos':'Pistas'}</small><span><Html h={A.IC.search}/><b>{res.n}</b></span></div></div>
+      {res.ev?.got?<div className="rt" style={{'--rc':'#3fbf5f'} as any}><small>Peças</small><span><Html h={A.IC.puzzle}/><b>+{res.ev.got.pieces}</b></span></div>
+      :<div className="rt" style={{'--rc':'#3fbf5f'} as any}><small>{term?'Comandos':'Pistas'}</small><span><Html h={A.IC.search}/><b>{res.n}</b></span></div>}</div>
     <button className="btn ghost cexp" onClick={()=>setExp(true)}>Ver explicação</button>
   </div></div><div className="lfoot"><div className="stack" style={{margin:0}}>
     {again&&<button className="btn ghost" onClick={again}>Jogar outro cenário</button>}
@@ -68,8 +70,9 @@ function Investigate(p:CaseProps){
   const pick=(id:string)=>{
     if(stage!=='guess'||wrongSet.includes(id))return
     if(id===fault.id){
-      const r=finishCase({kind:p.kind,key:p.keyId,replay,wrong,id:def.id,insp:insp.length})
-      setRes({...r,what:fault.cause,fix:fault.fix,why:fault.why,n:insp.length,proof:fault.need.map((n:string)=>({n:dev(n).name,t:fault.clues[n]}))})
+      const ev=p.kind==='event'?p.onEvent!(Math.max(1,3-wrong)):undefined
+      const r=ev?{stars:Math.max(1,3-wrong),xp:ev.xp,gems:ev.got?.gems||0}:finishCase({kind:p.kind as 'node'|'daily',key:p.keyId,replay,wrong,id:def.id,insp:insp.length})
+      setRes({ev,...r,what:fault.cause,fix:fault.fix,why:fault.why,n:insp.length,proof:fault.need.map((n:string)=>({n:dev(n).name,t:fault.clues[n]}))})
       setStage('done');return
     }
     setWrongSet([...wrongSet,id])
@@ -156,8 +159,10 @@ function Terminal(p:CaseProps){
     if(all){
       st.current.fim=true;T.msg=T.def.final||'Chamado resolvido!'
       setTimeout(()=>{
-        const e=finishCase({kind:p.kind,key:p.keyId,replay:p.replay,wrong:st.current.wrong,id:def.id,insp:T.ran.length})
-        setRes({...e,what:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',n:T.ran.length,proof:[]})
+        const stars=Math.max(1,3-st.current.wrong)
+        const ev=p.kind==='event'?p.onEvent!(stars):undefined
+        const e=ev?{stars,xp:ev.xp,gems:ev.got?.gems||0}:finishCase({kind:p.kind as 'node'|'daily',key:p.keyId,replay:p.replay,wrong:st.current.wrong,id:def.id,insp:T.ran.length})
+        setRes({ev,...e,what:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',n:T.ran.length,proof:[]})
       },1100)
     }
     rf()

@@ -19,6 +19,7 @@ const Svg=({h}:{h:string})=><span style={{display:'contents'}} dangerouslySetInn
 export default function App(){
   const [v,setV]=useState(0)
   const [tab,setTab]=useState<Tab>('path')
+  const [evOpen,setEvOpen]=useState<string|null>(null) // fica aqui para sobreviver ao refresh da tela
   const refresh=()=>setV(x=>x+1)
   let S=load()
   const provas=gamesOf(S.curso||'redes').filter(g=>!g.caso).length
@@ -35,7 +36,7 @@ export default function App(){
       <div className="stat s-heart"><Svg h={A.IC.heart}/><span>{S.hearts??5}</span></div>
     </div></div>
     <main className="wrap" id="main" key={v}>
-      {tab==='path'&&<Trail S={S} refresh={refresh}/>}
+      {tab==='path'&&<Trail S={S} refresh={refresh} evOpen={evOpen} setEvOpen={setEvOpen}/>}
       {tab==='missions'&&<Missions S={S} refresh={refresh}/>}
       {tab==='review'&&<Review S={S} refresh={refresh}/>}
       {tab==='conq'&&<Conquests S={S}/>}

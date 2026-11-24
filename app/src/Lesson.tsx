@@ -3,6 +3,7 @@ import { Pingo } from './Pingo'
 import { shuffle, type Q } from './lib/curso'
 import { patchSave } from './lib/save'
 import { day, touchStreak, wkAdd, addMiss, fixMiss, cqSync } from './lib/progress'
+import type { EvRes } from './lib/events'
 
 type Item=Q&{src:Q;opts?:{t:string;c:boolean}[];left?:{id:number;t:string}[];right?:{id:number;t:string}[];ci?:{id:number;t:string;c:number}[]}
 const prep=(q:Q):Item=>{
@@ -13,8 +14,10 @@ const prep=(q:Q):Item=>{
   return c
 }
 
+/** conhecimento por assunto (usado para priorizar o que está frágil nos eventos) */
+const know=(s:any,q:Q,good:boolean)=>{if(!q.cid)return;s.know=s.know||{};const k=s.know[q.cid]||(s.know[q.cid]={ok:0,bad:0,seen:0,last:''});if(good)k.ok++;else k.bad++}
 export type Result={xp:number;gems:number;acc:number;perfect:boolean}
-export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'boss'|'review';keyId:string;onClose:()=>void}){
+export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];kind:'phase'|'boss'|'review'|'event';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
   const [queue,setQueue]=useState<Item[]>(()=>qs.map(prep))
   const [i,setI]=useState(0)
   const [hearts,setHearts]=useState<number>(S.hearts??5)
@@ -24,25 +27,25 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
   const [mp,setMp]=useState<{sel:{side:string;id:number}|null;done:number[];flash:{l:number;r:number}|null;err:number}>({sel:null,done:[],flash:null,err:0})
   const [touch,setTouch]=useState<number|null>(null)
   const [right,setRight]=useState(0),[miss,setMiss]=useState(0)
-  const [res,setRes]=useState<Result|null>(null)
+  const [res,setRes]=useState<(Result&{ev?:EvRes})|null>(null)
   const [noHearts,setNoHearts]=useState(false)
   const base=useMemo(()=>qs.length,[qs])
   const qb=useMemo(()=>qs.filter(x=>x.t!=='learn').length,[qs])
   const q=queue[i]
   const run=useRef(0)
-  const free=kind==='review'
+  const free=kind==='review'||kind==='event'
 
   const reset=(it:Item)=>{setState('ask');setOk(false);setTouch(null);setMp({sel:null,done:[],flash:null,err:0})
     setSel(it.t==='cl'?it.ci!.map(()=>null):null)}
   const wrong=(it:Item,requeue:boolean)=>{
     setMiss(m=>m+1);run.current=0
     if(!free)setHearts(Math.max(0,hearts-1))
-    patchSave(s=>{addMiss(s,it.src);if(!free)s.hearts=Math.max(0,(s.hearts??5)-1)})
-    if(requeue)setQueue(qu=>[...qu,prep(it.src)])
+    patchSave(s=>{addMiss(s,it.src);know(s,it.src,false);if(!free)s.hearts=Math.max(0,(s.hearts??5)-1)})
+    if(requeue&&kind!=='event')setQueue(qu=>[...qu,prep(it.src)])
   }
   /** acerto: sequência e metas do dia; na revisão, a pergunta sai da lista */
   const hit=(it:Item,pairs=false)=>{setRight(r=>r+1);run.current++
-    patchSave(s=>{const d=day(s);d.correct++;if(run.current>d.bestRun)d.bestRun=run.current;if(pairs)d.pairs++;if(free)fixMiss(s,it.src)})}
+    patchSave(s=>{const d=day(s);d.correct++;if(run.current>d.bestRun)d.bestRun=run.current;if(pairs)d.pairs++;if(kind==='review')fixMiss(s,it.src);know(s,it.src,true)})}
   const stat=(good:boolean)=>patchSave(s=>{s.total=(s.total||0)+1;if(good)s.ok=(s.ok||0)+1})
 
   const check=()=>{
@@ -75,6 +78,10 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
   }
   const lnext=()=>{setRight(r=>r+1);const n=i+1;if(n>=queue.length){finish();return}setI(n);reset(queue[n])}
   const finish=()=>{
+    if(kind==='event'&&onEvent){
+      const r=onEvent(qb-miss,qb)
+      setRes({xp:r.xp,gems:r.got?.gems||0,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect:r.pass,ev:r});return
+    }
     let first=false,xp=10,gems=0
     const perfect=miss===0&&!free
     patchSave(s=>{
@@ -99,6 +106,13 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
     <div className="stat s-heart"><span>{free?'Treino':'❤ '+hearts}</span></div></div>
 
   if(noHearts)return <div id="lesson"><div className="lw"><div className="lbody"><div className="center"><Pingo S={S} mood="sad"/><h1>Acabaram as vidas</h1><p>Volte ao jogo completo para recuperar vidas treinando.</p></div></div><div className="lfoot"><button className="btn" onClick={onClose}>Voltar</button></div></div></div>
+  if(res?.ev)return <div id="lesson"><div className="lw"><div className="lbody lscroll"><div className="center">
+    <Pingo S={S} mood={res.ev.pass?'cheer':'happy'}/><h1>{res.ev.title}</h1><p>{res.ev.sub}</p>
+    <div className="res2"><div className="rt" style={{'--rc':'#ffb800'} as any}><small>Energia</small><span><b>{res.xp}</b></span></div>
+      {res.gems>0&&<div className="rt" style={{'--rc':'#18b9e8'} as any}><small>Chips</small><span><b>+{res.gems}</b></span></div>}
+      {res.ev.got?<div className="rt" style={{'--rc':'#3fbf5f'} as any}><small>Peças</small><span><b>+{res.ev.got.pieces}</b></span></div>
+      :<div className="rt" style={{'--rc':'#18b9e8'} as any}><small>Acertos</small><span><b>{res.ev.correct}</b></span></div>}</div>
+  </div></div><div className="lfoot">{!res.ev.pass&&onRetry&&<button className="btn xbtn" onClick={onRetry}>Tentar de novo</button>}<button className="btn" onClick={onClose}>Continuar</button></div></div></div>
   if(res)return <div id="lesson"><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood="cheer"/><h1>{free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
     <p>{free?'Bom treino!':res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>

@@ -5,6 +5,7 @@ import { CURSOS } from './lib/cursos'
 import { parseCurso, lessonQs } from './lib/curso'
 import { Lesson } from './Lesson'
 import { Case } from './Case'
+import { EventBanners, EventPage, EventFab } from './Events'
 
 const A:any=art
 const OFF=[-54,42,-34,54]
@@ -18,7 +19,7 @@ function nodeArt(curso:string,gi:number,k:number){
   return '<svg class="dv" viewBox="0 0 46 46" aria-hidden="true">'+A.DVI[nm]+'</svg>'
 }
 
-export function Trail({S,refresh}:{S:any;refresh:()=>void}){
+export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpen:string|null;setEvOpen:(id:string|null)=>void}){
   const ativo=S.curso||'redes'
   const cur=CURSOS.find(c=>c.id===ativo)||CURSOS[0]
   const mundo=cur.json.mundos[0],par:any[]=mundo.paradas||[]
@@ -55,6 +56,7 @@ export function Trail({S,refresh}:{S:any;refresh:()=>void}){
     return()=>{clearTimeout(t);window.removeEventListener('resize',draw)}
   })
   return <div className="screen" ref={root}>
+    <EventBanners S={S} json={cur.json} onOpen={setEvOpen}/>
     <div className={'world w-'+ativo}>
       <div className="wstage"><Html h={ativo==='linux'?A.linuxScene:A.worldScene}/><div className="hping"><Pingo S={S} cls="wps"/></div></div>
       <span className={'cflag cf-'+ativo}><Html h={courseIcon(ativo)}/><b>{cur.nome}</b></span>
@@ -82,6 +84,8 @@ export function Trail({S,refresh}:{S:any;refresh:()=>void}){
         const title=k===3?(p.chamado?'Caso · '+casoTitulo(p.chamado):'Prova final'):(p.fases?.[k]?.nome||'Fase '+(k+1))
         return <button key={k} disabled={!un} onClick={()=>{if(k===3&&p.chamado)setKase({g:open,id:p.chamado});else setPlay({g:open,k});setOpen(null)}} className={'srow'+(d?' done':(un?'':' lock'))+(k===3?' fin':'')}><span className="srt"><small>{k===3?(p.chamado?'Caso':'Prova final'):'Lição '+(k+1)}</small><b>{title}</b></span><em>{d?'Jogar de novo':(un?'Jogar':'Bloqueada')}</em></button>})}</div>
       <button className="btn prim" onClick={()=>setOpen(null)}>Fechar</button></div></div>}
+    <EventFab S={S} json={cur.json} onOpen={setEvOpen}/>
+    {evOpen&&<EventPage S={S} json={cur.json} id={evOpen} onClose={()=>setEvOpen(null)} refresh={refresh}/>}
     {kase&&<Case key={kase.id} S={S} def={(cur.json.casos||[]).find((c:any)=>c.id===kase.id)} kind="node" keyId={kase.g+'-3'} replay={!!done[kase.g+'-3']} onClose={()=>{setKase(null);refresh()}}/>}
     {play&&<Lesson key={play.g+'-'+play.k} S={S} qs={lessonQs(games[play.g],play.k)} kind={play.k===3?'boss':'phase'} keyId={play.g+'-'+play.k} onClose={()=>{setPlay(null);refresh()}}/>}
   </div>

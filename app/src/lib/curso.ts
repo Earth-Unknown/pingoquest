@@ -3,7 +3,7 @@ export type Q={t:'learn'|'mc'|'vf'|'mp'|'cl';q?:string;e?:string;title?:string;t
   o?:string[];a?:any;pairs?:string[][];cats?:string[];items?:[string,number][];cid?:string}
 export type Game={title:string;names:string[];phases:Q[][];caso?:string}
 
-function conv(it:any):Q|null{
+export function conv(it:any):Q|null{
   const t=it?.tipo
   if(t==='aprender')return{t:'learn',title:it.titulo,text:it.texto,touch:(it.termos||[]).map((x:any)=>[x.termo,x.definicao])}
   if(!it?.pergunta)return null
@@ -42,3 +42,6 @@ export function lessonQs(g:Game,k:number):Q[]{
   const all=g.phases.flat().filter((x,i,ar)=>x.t!=='learn'&&ar.indexOf(x)===i)
   return shuffle(all).slice(0,6)
 }
+
+/** Perguntas "bate-bola" do curso: usadas nas etapas dos eventos */
+export const bateBola=(j:any):Q[]=>(j.bate_bola||[]).map(conv).filter(Boolean) as Q[]
