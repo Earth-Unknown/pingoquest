@@ -816,6 +816,11 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .cichips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .cichips span{display:flex;align-items:center;gap:6px;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:4px 10px 4px 4px;font-weight:700;font-size:13px}
 .cichips i{width:22px;height:22px;border-radius:50%;background:var(--roxo,#7b3ff2);color:#fff;display:grid;place-items:center;font-style:normal;font-size:11px}
+
+.cflag{position:absolute;top:12px;left:12px;z-index:3;display:flex;align-items:center;gap:6px;border-radius:14px;padding:4px 12px 4px 5px;background:rgba(255,255,255,.94);color:#2a0a66;font-size:13px;box-shadow:0 3px 10px rgba(0,0,0,.25)}
+.cflag svg{width:24px;height:24px}.cflag b{font-weight:900;letter-spacing:.02em}
+.cflag.cf-linux{background:#0d0620;color:#7dff2b;border:2px solid #18ddfb;font-family:ui-monospace,Menlo,monospace}.cflag.cf-linux b:before{content:"$ ";color:#18ddfb}
+.world.w-linux{box-shadow:0 8px 22px rgba(24,221,251,.25)}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -1678,10 +1683,28 @@ function worldScene(){
   [[110,122,-10],[170,112,0],[330,128,8],[215,126,6]].forEach(function(a){h+='<g transform="translate('+a[0]+','+a[1]+') rotate('+a[2]+')"><rect x="-7" y="-7" width="14" height="14" rx="3.500" fill="#ffd83d" stroke="#d9a400" stroke-width="1.200"/><rect x="-2" y="-7" width="4" height="14" fill="#fff" opacity=".6"/></g>'});
   return h+'</svg>';
 }
+
+function linuxScene(){
+  var h='<svg viewBox="0 0 390 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="lsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07102e"/><stop offset=".65" stop-color="#1a1b66"/><stop offset="1" stop-color="#0e7f9a"/></linearGradient><linearGradient id="lgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18506e"/><stop offset="1" stop-color="#0b2347"/></linearGradient></defs><rect width="390" height="170" fill="url(#lsky)"/>';
+  [[22,24,'01'],[70,58,'1'],[132,20,'10'],[210,34,'0'],[300,16,'01'],[350,60,'1'],[40,90,'0']].forEach(function(a){h+='<text x="'+a[0]+'" y="'+a[1]+'" fill="#18ddfb" opacity=".55" font-family="monospace" font-size="12" font-weight="700">'+a[2]+'</text>'});
+  h+='<ellipse cx="195" cy="168" rx="230" ry="44" fill="#06163a" opacity=".7"/><ellipse cx="195" cy="156" rx="200" ry="38" fill="url(#lgr)"/>'+
+   '<path d="M20 150H370M60 138H330M110 128H280" stroke="#18ddfb" stroke-opacity=".25" stroke-width="1.5"/>';
+  /* janela de terminal grande */
+  h+='<g transform="translate(222,14)"><rect x="0" y="0" width="128" height="92" rx="10" fill="#0d0620" stroke="#18ddfb" stroke-width="3"/><rect x="0" y="0" width="128" height="16" rx="10" fill="#2a1668"/><circle cx="12" cy="8" r="3" fill="#ff5a7a"/><circle cx="23" cy="8" r="3" fill="#ffd83d"/><circle cx="34" cy="8" r="3" fill="#7dff2b"/>'+
+   '<text x="10" y="36" fill="#7dff2b" font-family="monospace" font-size="12" font-weight="700">aluno@pingo:~$</text><text x="10" y="54" fill="#fff" font-family="monospace" font-size="12" font-weight="700">ls -l</text><text x="10" y="72" fill="#c88bff" font-family="monospace" font-size="12" font-weight="700">cat nota.txt</text><rect x="106" y="62" width="8" height="12" fill="#18ddfb"/></g>';
+  /* racks de servidor */
+  [[48,92],[96,104]].forEach(function(a){h+='<g opacity=".75" transform="translate('+a[0]+','+a[1]+')"><rect x="0" y="0" width="34" height="'+(a[1]===92?58:46)+'" rx="5" fill="#2a1668" stroke="#7b3ff2" stroke-width="2"/>'+[8,20,32].map(function(y,i){return a[1]===104&&i>1?'':'<rect x="5" y="'+y+'" width="24" height="8" rx="2" fill="#150638"/><circle cx="10" cy="'+(y+4)+'" r="1.8" fill="'+(i===1?'#ffd83d':'#7dff2b')+'"/>'}).join('')+'</g>'});
+  h+='<g transform="translate(176,118)"><rect x="-7" y="-7" width="14" height="14" rx="3.5" fill="#ffd83d" stroke="#d9a400" stroke-width="1.2"/><text x="-4" y="4" fill="#5a3b00" font-family="monospace" font-size="9" font-weight="900">&gt;_</text></g>';
+  return h+'</svg>';
+}
+function courseFlag(){
+  var c=COURSES.filter(function(x){return x.id===CURSO})[0]||COURSES[0];
+  return '<span class="cflag cf-'+c.id+'">'+courseIcon(c)+'<b>'+esc(DATA.NOME)+'</b></span>';
+}
 function worldBanner(){
   var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
   var t=GAMES.length*4,pct=Math.round(n/t*100);
-  return '<div class="world">'+worldScene()+''+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
+  return '<div class="world w-'+CURSO+'">'+(CURSO==='linux'?linuxScene():worldScene())+courseFlag()+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
 }
 
 function showMundo(){
