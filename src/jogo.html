@@ -801,6 +801,21 @@ svg.poke .r .m-oval{animation:wink .7s ease-in-out}
 .tkeys{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
 .tkeys button{min-width:44px;min-height:44px;border-radius:12px;border:2px solid var(--line-deep);background:var(--surface);color:var(--ink);font:700 16px ui-monospace,Menlo,monospace}
 .trow{display:flex;gap:10px}.trow .btn{flex:1}
+
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 6px}
+.mini>div{display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:8px 4px;text-align:center}
+.mini svg{width:20px;height:20px}.mini b{font-size:16px;line-height:1.1;font-weight:900}.mini span{font-size:11px;color:var(--muted);font-weight:700}
+.cscroll{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory}
+.ccard{flex:none;width:132px;scroll-snap-align:start;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:18px;padding:12px;font:inherit;cursor:pointer}
+.ccard.on{border-color:var(--cyan);box-shadow:0 0 14px rgba(24,221,251,.3)}.ccard.soon{opacity:.6}
+.ccard b{font-size:15px}.ccard small{font-size:12px;color:var(--muted);font-weight:700}.ccard .cqbar{width:100%}
+.cihero{display:flex;gap:14px;align-items:center;margin-bottom:12px}.cihero h2{margin:0}.cihero p{margin:2px 0 0;color:var(--muted);font-weight:700}
+.cqic.big{width:64px;height:64px;flex:none}.cqic.big svg{width:44px;height:44px}
+.cistats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.cistats>div{text-align:center;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:8px 4px}.cistats b{display:block;font-size:20px}.cistats span{font-size:12px;color:var(--muted);font-weight:700}
+.cichips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.cichips span{display:flex;align-items:center;gap:6px;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:4px 10px 4px 4px;font-weight:700;font-size:13px}
+.cichips i{width:22px;height:22px;border-radius:50%;background:var(--roxo,#7b3ff2);color:#fff;display:grid;place-items:center;font-style:normal;font-size:11px}
 </style>
 
 <div id="top"><div class="wrap" id="topin"></div></div>
@@ -1666,7 +1681,7 @@ function worldScene(){
 function worldBanner(){
   var n=0;GAMES.forEach(function(g,gi){for(var k=0;k<4;k++)if(S.done[gi+'-'+k])n++});
   var t=GAMES.length*4,pct=Math.round(n/t*100);
-  return '<div class="world">'+worldScene()+'<button class="cqchip" data-act="cursos" aria-label="Trocar de curso"><span>'+esc(DATA.NOME.split(' ')[0])+'</span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>'+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
+  return '<div class="world">'+worldScene()+''+'<div class="winfo"><small>MUNDO '+WORLD.n+'</small><b>'+WORLD.name+'</b><span>'+WORLD.sub+'</span><div class="wprog"><i style="width:'+pct+'%"></i></div></div></div>';
 }
 
 function showMundo(){
@@ -1742,16 +1757,42 @@ function admCheck(v){
     render();
   });
 }
+
+function cursoJson(id){try{return JSON.parse(document.getElementById('curso-'+id).textContent)}catch(e){return null}}
+function cursosCard(){
+  var h='<div class="sect">Cursos</div><div class="cscroll">';
+  COURSES.forEach(function(c){
+    var ready=courseReady(c.id),on=c.id===CURSO,pct=coursePct(c);
+    h+='<button class="ccard'+(on?' on':'')+(ready?'':' soon')+'" data-act="curinfo" data-id="'+c.id+'"><span class="cqic">'+courseIcon(c)+'</span><b>'+esc(courseName(c))+'</b><small>'+(on?'Estudando':(ready?pct+'%':'Em breve'))+'</small>'+(ready?'<span class="cqbar"><i style="width:'+pct+'%"></i></span>':'')+'</button>';
+  });
+  return h+'</div>';
+}
+function showCursoInfo(id){
+  var c=COURSES.filter(function(x){return x.id===id})[0];if(!c)return;
+  var ready=courseReady(id),on=id===CURSO,j=ready?cursoJson(id):null,h;
+  h='<div class="sheet tall cinfo" role="dialog" aria-label="Sobre o curso"><div class="cihero"><span class="cqic big">'+courseIcon(c)+'</span><div><h2>'+esc(courseName(c))+'</h2><p>'+esc(ready?c.sub:'Em breve')+'</p></div></div>';
+  if(j){
+    var pars=[];(j.mundos||[]).forEach(function(m){(m.paradas||[]).forEach(function(q){pars.push(q)})});
+    var term=(j.casos||[]).some(function(k){return k.tipo==='terminal'});
+    h+='<div class="cistats"><div><b>'+pars.length+'</b><span>paradas</span></div><div><b>'+(j.casos||[]).length+'</b><span>chamados</span></div><div><b>'+pars.reduce(function(n,q){return n+(q.fases||[]).reduce(function(m,f){return m+(f.itens||[]).filter(function(x){return x.tipo!=='aprender'}).length},0)},0)+'</b><span>perguntas</span></div></div>';
+    h+='<div class="tlabel">O que você vai aprender</div><div class="cichips">'+pars.map(function(q,i){return'<span><i>'+(i+1)+'</i>'+esc(q.titulo)+'</span>'}).join('')+'</div>';
+    h+='<div class="say"><span class="sp">'+pingo('happy','pingo-s')+'</span><div class="bub"><p>'+(term?'Aqui você aprende perguntando e depois digita comandos de verdade nos chamados!':'Aqui você aprende perguntando e depois resolve chamados investigando a rede!')+'</p></div></div>';
+    h+=on?'<button class="btn" disabled>Estudando agora</button>':'<button class="btn prim" data-act="curso" data-id="'+id+'">Estudar este curso</button>';
+  }else h+='<p class="note">Ainda estamos preparando este curso. Em breve ele aparece aqui!</p>';
+  h+='<button class="btn ghost" data-act="mclose" style="margin-top:10px">Fechar</button></div>';
+  $('#modal').innerHTML=h;$('#modal').hidden=false;sfx('ping');
+}
 function profileHTML(){
   var acc=S.total?Math.round(S.ok/S.total*100):0;
-  var h='<div class="ph">'+pingo('happy','pingo-big',true)+'<div><h1 data-act="admtap">'+(S.nick?esc(S.nick):'Meu perfil')+'</h1><p>Redes de Computadores</p><button class="nickbtn" data-act="amigos">'+(S.nick?'Editar apelido':'Escolher apelido')+'</button></div></div><div class="grid">'+
-   '<div class="tile">'+IC.bolt+'<div><b>'+S.xp+'</b><span>Energia total</span></div></div>'+
-   '<div class="tile"><span style="color:#ff8a1f;display:contents">'+IC.brilho+'</span><div><b>'+streakNow()+'</b><span>dias de brilho</span></div></div>'+
-   '<div class="tile">'+IC.map+'<div><b>'+doneCount()+' / '+total()+'</b><span>fases concluídas</span></div></div>'+
-   '<div class="tile">'+IC.skull+'<div><b>'+S.bosses+' / '+GAMES.filter(function(g){return !g.caso}).length+'</b><span>provas finais</span></div></div>'+
-   '<div class="tile">'+IC.target+'<div><b>'+acc+'%</b><span>de acertos</span></div></div>'+
-   '<div class="tile"><span style="color:var(--cyan);display:contents">'+IC.gem+'</span><div><b>'+S.gems+'</b><span>chips</span></div></div></div>'+
-   '';
+  var h='<div class="ph">'+pingo('happy','pingo-big',true)+'<div><h1 data-act="admtap">'+(S.nick?esc(S.nick):'Meu perfil')+'</h1><p>'+esc(DATA.NOME)+'</p><button class="nickbtn" data-act="amigos">'+(S.nick?'Editar apelido':'Escolher apelido')+'</button></div></div>'+
+   '<div class="mini">'+
+   '<div>'+IC.bolt+'<b>'+S.xp+'</b><span>energia</span></div>'+
+   '<div><span style="color:#ff8a1f;display:contents">'+IC.brilho+'</span><b>'+streakNow()+'</b><span>dias</span></div>'+
+   '<div><span style="color:var(--cyan);display:contents">'+IC.gem+'</span><b>'+S.gems+'</b><span>chips</span></div>'+
+   '<div>'+IC.map+'<b>'+doneCount()+'/'+total()+'</b><span>fases</span></div>'+
+   '<div>'+IC.skull+'<b>'+S.bosses+'/'+GAMES.filter(function(g){return !g.caso}).length+'</b><span>provas</span></div>'+
+   '<div>'+IC.target+'<b>'+acc+'%</b><span>acertos</span></div></div>';
+  h+=cursosCard();
   h+=amigosCard();
   h+=avatarHTML();
   h+='<div class="sect">Ajustes</div><button class="btn ghost" data-act="theme" style="margin-bottom:10px">Tema: '+(themeNow()==='dark'?'escuro (roxo)':'claro')+'</button><button class="btn ghost" data-act="snd" style="margin-bottom:10px">Sons do Pingo: '+(SND.on?'ligados':'desligados')+'</button>'+admHTML()+'<button class="btn ghost" data-act="reset" id="resetbtn">Zerar progresso</button>'+
@@ -2656,6 +2697,7 @@ document.addEventListener('click',function(e){
   else if(a==='cpick'){pickCause(t.dataset.id)}
   else if(a==='cclose'||a==='cdone'){closeCase()}
   else if(a==='cexplain'){caseExplain()}
+  else if(a==='curinfo'){showCursoInfo(t.dataset.id)}
   else if(a==='trun'){tmSubmit()}
   else if(a==='tdica'){if(TM&&C&&C.term)tmHint()}
   else if(a==='tkey'){var ti=$('#tin');if(ti){ti.value+=t.dataset.k;ti.focus()}}
