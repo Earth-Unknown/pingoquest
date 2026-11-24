@@ -24,6 +24,8 @@ jobs:
           sh build-site.sh
           mkdir _site
           cp index.html _site/index.html
+          cp -r icons manifest.webmanifest _site/ 2>/dev/null || true
+          cp -r beta _site/beta
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
