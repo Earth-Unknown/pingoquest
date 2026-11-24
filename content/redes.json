@@ -1,0 +1,5026 @@
+{
+ "formato": 1,
+ "id": "redes",
+ "nome": "Redes de Computadores",
+ "mundos": [
+  {
+   "numero": 1,
+   "nome": "Vila Roteador",
+   "subtitulo": "Equipamentos, pacotes e conexões",
+   "paradas": [
+    {
+     "lugar": "Praça da Rede",
+     "titulo": "O que é uma rede",
+     "dicas": [
+      "Rede: aparelhos ligados entre si para trocar informações.",
+      "Uma rede serve para compartilhar internet, arquivos e impressora.",
+      "Host (aparelho na rede) é qualquer coisa conectada: celular, PC, TV."
+     ],
+     "fases": [
+      {
+       "nome": "Aparelhos conversando",
+       "conceitos": [
+        {
+         "id": "rede.def",
+         "nome": "O que é uma rede",
+         "antes": []
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Aparelhos conversando",
+         "texto": "Uma rede de computadores é um grupo de aparelhos ligados entre si para trocar informações. Pode ser o celular e a TV da sua casa, ou os computadores de uma empresa inteira.",
+         "termos": [
+          {
+           "termo": "Rede",
+           "definicao": "Aparelhos ligados para trocar informações."
+          },
+          {
+           "termo": "Informação",
+           "definicao": "Fotos, vídeos, mensagens e arquivos."
+          },
+          {
+           "termo": "Conexão",
+           "definicao": "O caminho que liga um aparelho ao outro."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é uma rede de computadores?",
+         "certa": "Aparelhos ligados entre si para trocar informações",
+         "erradas": [
+          "Um programa que limpa o computador",
+          "Um tipo de cabo de energia",
+          "Uma senha para entrar no celular"
+         ],
+         "explicacao": "Rede é isso: aparelhos conversando.",
+         "conceito": "rede.def",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Um computador sozinho, sem ligação com nenhum outro aparelho, forma uma rede.",
+         "resposta": false,
+         "explicacao": "Uma rede precisa de pelo menos dois aparelhos ligados.",
+         "conceito": "rede.def",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual destas situações mostra uma rede funcionando?",
+         "certa": "Seu celular enviando uma foto para a TV da sala",
+         "erradas": [
+          "Um computador desligado na gaveta",
+          "Uma calculadora comum",
+          "Um livro de redes na estante"
+         ],
+         "explicacao": "Celular e TV trocando informação: isso é rede.",
+         "conceito": "rede.def",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada ideia ao seu significado",
+         "pares": [
+          {
+           "esquerda": "Rede",
+           "direita": "Aparelhos ligados"
+          },
+          {
+           "esquerda": "Informação",
+           "direita": "O que passa pela rede"
+          },
+          {
+           "esquerda": "Conexão",
+           "direita": "O caminho entre aparelhos"
+          }
+         ],
+         "explicacao": "Rede liga aparelhos, a informação passa por ela e a conexão é o caminho.",
+         "conceito": "rede.def",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual par forma uma rede, mesmo sem internet?",
+         "certa": "Celular e TV trocando uma foto",
+         "erradas": [
+          "Dois livros na mesa",
+          "Uma lâmpada e uma tomada",
+          "Um mouse sem pilha"
+         ],
+         "explicacao": "Dois aparelhos trocando informação já formam uma rede.",
+         "conceito": "rede.def",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Para que serve",
+       "conceitos": [
+        {
+         "id": "rede.uso",
+         "nome": "Para que serve uma rede",
+         "antes": [
+          "rede.def"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Para que serve",
+         "texto": "Com uma rede você compartilha coisas: a internet, uma impressora, arquivos e até a música da caixa de som. Sem rede, cada aparelho ficaria sozinho.",
+         "termos": [
+          {
+           "termo": "Internet",
+           "definicao": "Um só acesso para vários aparelhos."
+          },
+          {
+           "termo": "Impressora",
+           "definicao": "Todo mundo da casa pode imprimir nela."
+          },
+          {
+           "termo": "Arquivos",
+           "definicao": "Enviar de um aparelho para o outro."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Duas pessoas da casa usam a mesma impressora pelo Wi-Fi. O que isso mostra?",
+         "certa": "Que ela está compartilhada pela rede",
+         "erradas": [
+          "Que ela não precisa de energia",
+          "Que ela é uma impressora de internet",
+          "Que o cabo é invisível"
+         ],
+         "explicacao": "Compartilhar recursos é uma das principais funções da rede.",
+         "conceito": "rede.uso",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Uma rede permite que vários aparelhos usem a mesma internet.",
+         "resposta": true,
+         "explicacao": "Isso mesmo: o roteador reparte a internet entre os aparelhos.",
+         "conceito": "rede.uso",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "O que dá para compartilhar em uma rede?",
+         "categorias": [
+          "Dá para compartilhar",
+          "Não dá"
+         ],
+         "itens": [
+          {
+           "texto": "Impressora",
+           "categoria": "Dá para compartilhar"
+          },
+          {
+           "texto": "Arquivos",
+           "categoria": "Dá para compartilhar"
+          },
+          {
+           "texto": "Acesso à internet",
+           "categoria": "Dá para compartilhar"
+          },
+          {
+           "texto": "Luz da sala",
+           "categoria": "Não dá"
+          }
+         ],
+         "explicacao": "Em rede compartilhamos informação e recursos, não a energia da casa.",
+         "conceito": "rede.uso",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você assiste a um vídeo no celular e outra pessoa joga no PC, com a mesma internet. Por que funciona?",
+         "certa": "Os dois aparelhos estão na mesma rede",
+         "erradas": [
+          "Os dois são do mesmo tamanho",
+          "O vídeo usa o jogo",
+          "A internet só atende um por vez"
+         ],
+         "explicacao": "Na mesma rede, vários aparelhos dividem a internet.",
+         "conceito": "rede.uso",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para quê serve compartilhar a internet em uma rede?",
+         "certa": "Para vários aparelhos usarem a mesma conexão",
+         "erradas": [
+          "Para o celular não precisar de bateria",
+          "Para deixar a casa mais fria",
+          "Para trocar a senha do banco"
+         ],
+         "explicacao": "A rede reparte a internet entre os aparelhos.",
+         "conceito": "rede.uso",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Quem entra na rede",
+       "conceitos": [
+        {
+         "id": "rede.host",
+         "nome": "Host (aparelho da rede)",
+         "antes": [
+          "rede.def"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Quem entra na rede",
+         "texto": "Cada aparelho ligado à rede se chama host (aparelho da rede). Celular, notebook, TV, videogame e até lâmpada inteligente podem ser hosts.",
+         "termos": [
+          {
+           "termo": "Host",
+           "definicao": "Qualquer aparelho ligado à rede."
+          },
+          {
+           "termo": "Celular",
+           "definicao": "Host muito comum."
+          },
+          {
+           "termo": "TV smart",
+           "definicao": "Também é host, se estiver conectada."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como se chama um aparelho ligado à rede?",
+         "certa": "Host",
+         "erradas": [
+          "Cabo",
+          "Sinal",
+          "Senha"
+         ],
+         "explicacao": "Host é o nome técnico de qualquer aparelho conectado.",
+         "conceito": "rede.host",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Um celular conectado ao Wi-Fi da casa é um host da rede.",
+         "resposta": true,
+         "explicacao": "Sim, é um aparelho conectado à rede.",
+         "conceito": "rede.host",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Quem pode ser host?",
+         "categorias": [
+          "Host",
+          "Não é host"
+         ],
+         "itens": [
+          {
+           "texto": "Notebook no Wi-Fi",
+           "categoria": "Host"
+          },
+          {
+           "texto": "Videogame online",
+           "categoria": "Host"
+          },
+          {
+           "texto": "TV conectada",
+           "categoria": "Host"
+          },
+          {
+           "texto": "Panela elétrica sem conexão",
+           "categoria": "Não é host"
+          }
+         ],
+         "explicacao": "Host precisa estar ligado à rede.",
+         "conceito": "rede.host",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue o aparelho ao que ele costuma fazer na rede",
+         "pares": [
+          {
+           "esquerda": "Notebook",
+           "direita": "Navega e trabalha"
+          },
+          {
+           "esquerda": "Impressora",
+           "direita": "Imprime para todos"
+          },
+          {
+           "esquerda": "Smart TV",
+           "direita": "Mostra vídeos da internet"
+          }
+         ],
+         "explicacao": "Cada aparelho usa a rede de um jeito.",
+         "conceito": "rede.host",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é o nome do aparelho ligado à rede, como o seu celular?",
+         "certa": "Host",
+         "erradas": [
+          "Cabo",
+          "Provedor",
+          "Sinal"
+         ],
+         "explicacao": "Host é qualquer aparelho conectado.",
+         "conceito": "rede.host",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Seu primo diz: «meu notebook está desligado da internet, então não faz parte de nenhuma rede». Isso é verdade?",
+       "certa": "Não: ele pode estar ligado a outros aparelhos da casa sem internet",
+       "erradas": [
+        "Sim: rede só existe com internet",
+        "Sim: notebook nunca entra em rede",
+        "Não: rede é só cabo de energia"
+       ],
+       "explicacao": "Rede é ligação entre aparelhos. A internet é só um dos recursos que ela pode dar.",
+       "conceito": "rede.def"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual destes exemplos NÃO é uma rede de computadores?",
+       "certa": "Duas pessoas conversando em voz alta numa sala",
+       "erradas": [
+        "Celular e TV trocando uma foto",
+        "Computadores de uma escola ligados",
+        "Um notebook enviando arquivo para a impressora"
+       ],
+       "explicacao": "Conversa em voz alta não liga aparelhos entre si.",
+       "conceito": "rede.def"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "A família quer imprimir de três aparelhos diferentes sem trocar cabos. O que resolve melhor?",
+       "certa": "Colocar a impressora na rede, compartilhada",
+       "erradas": [
+        "Comprar três impressoras",
+        "Trocar o cabo toda vez",
+        "Imprimir só pelo celular de um"
+       ],
+       "explicacao": "Compartilhar a impressora na rede é um uso clássico.",
+       "conceito": "rede.uso"
+      }
+     ]
+    },
+    {
+     "lugar": "Casa do Pingo",
+     "titulo": "A rede da sua casa",
+     "dicas": [
+      "LAN (Local Area Network) é a rede local, a de um lugar só.",
+      "O roteador distribui a internet para os aparelhos.",
+      "O modem recebe a internet que chega pelo cabo ou fibra."
+     ],
+     "fases": [
+      {
+       "nome": "Rede local (LAN)",
+       "conceitos": [
+        {
+         "id": "lan",
+         "nome": "Rede local (LAN)",
+         "antes": [
+          "rede.def"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Rede local (LAN)",
+         "texto": "A rede da sua casa é uma rede local, chamada LAN (Local Area Network). Ela fica em um lugar só: casa, escritório ou escola. Os aparelhos dela conversam entre si mesmo sem internet.",
+         "termos": [
+          {
+           "termo": "LAN",
+           "definicao": "Rede local, de um lugar só."
+          },
+          {
+           "termo": "Local",
+           "definicao": "Casa, sala, escritório, escola."
+          },
+          {
+           "termo": "Sem internet",
+           "definicao": "Ainda dá para conversar entre os aparelhos."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como se chama a rede de um lugar só, como a da sua casa?",
+         "certa": "LAN (rede local)",
+         "erradas": [
+          "Internet",
+          "Provedor",
+          "Navegador"
+         ],
+         "explicacao": "LAN é a rede local.",
+         "conceito": "lan",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Dois aparelhos da mesma casa podem se comunicar mesmo sem internet.",
+         "resposta": true,
+         "explicacao": "Sim. Quem faz isso é a rede local (LAN), sem precisar da internet.",
+         "conceito": "lan",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O Wi-Fi da sua casa é um exemplo de qual tipo de rede?",
+         "certa": "Rede local (LAN)",
+         "erradas": [
+          "Rede do mundo todo",
+          "Rede de satélite",
+          "Rede de TV a cabo"
+         ],
+         "explicacao": "Dentro da casa, a rede é local.",
+         "conceito": "lan",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Onde existe uma LAN?",
+         "categorias": [
+          "Tem LAN",
+          "Não é LAN"
+         ],
+         "itens": [
+          {
+           "texto": "Wi-Fi de casa",
+           "categoria": "Tem LAN"
+          },
+          {
+           "texto": "Rede de uma escola",
+           "categoria": "Tem LAN"
+          },
+          {
+           "texto": "Rede de um escritório",
+           "categoria": "Tem LAN"
+          },
+          {
+           "texto": "A internet inteira",
+           "categoria": "Não é LAN"
+          }
+         ],
+         "explicacao": "A LAN é pequena e fica em um lugar. A internet é gigante.",
+         "conceito": "lan",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Onde uma rede local (LAN) costuma existir?",
+         "certa": "Em uma casa, escola ou escritório",
+         "erradas": [
+          "No mundo inteiro ao mesmo tempo",
+          "Dentro do cabo de energia",
+          "Só em satélites"
+         ],
+         "explicacao": "A LAN fica em um lugar.",
+         "conceito": "lan",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "O roteador",
+       "conceitos": [
+        {
+         "id": "equip.roteador",
+         "nome": "Roteador",
+         "antes": [
+          "lan"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O roteador",
+         "texto": "O roteador é o aparelho que reparte a internet entre os aparelhos da casa. Ele cria o Wi-Fi e também tem portas para ligar cabos. É por ele que tudo sai para a internet.",
+         "termos": [
+          {
+           "termo": "Roteador",
+           "definicao": "Reparte a internet e cria o Wi-Fi."
+          },
+          {
+           "termo": "Portas",
+           "definicao": "Entradas para ligar cabos."
+          },
+          {
+           "termo": "Wi-Fi",
+           "definicao": "Sinal sem fio criado pelo roteador."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual aparelho reparte a internet entre os aparelhos da casa e cria o Wi-Fi?",
+         "certa": "Roteador",
+         "erradas": [
+          "Impressora",
+          "Caixa de som",
+          "Carregador"
+         ],
+         "explicacao": "O roteador faz esse papel.",
+         "conceito": "equip.roteador",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Se o roteador desliga, os aparelhos perdem o Wi-Fi da casa.",
+         "resposta": true,
+         "explicacao": "Sim, o roteador é quem cria o sinal.",
+         "conceito": "equip.roteador",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você quer ligar o PC por cabo no roteador. Onde o cabo encaixa?",
+         "certa": "Nas portas do roteador",
+         "erradas": [
+          "Na tomada de energia",
+          "No botão de ligar",
+          "Na antena"
+         ],
+         "explicacao": "O roteador tem portas para cabos de rede.",
+         "conceito": "equip.roteador",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada parte do roteador à sua função",
+         "pares": [
+          {
+           "esquerda": "Antena",
+           "direita": "Espalha o sinal Wi-Fi"
+          },
+          {
+           "esquerda": "Porta de rede",
+           "direita": "Recebe cabo"
+          },
+          {
+           "esquerda": "Luzes",
+           "direita": "Mostram o estado da conexão"
+          }
+         ],
+         "explicacao": "As antenas espalham o Wi-Fi, as portas recebem cabos e as luzes avisam o estado.",
+         "conceito": "equip.roteador",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Quem cria o sinal Wi-Fi da sua casa na maioria dos casos?",
+         "certa": "O roteador",
+         "erradas": [
+          "O teclado",
+          "O monitor",
+          "O carregador"
+         ],
+         "explicacao": "O roteador espalha o Wi-Fi.",
+         "conceito": "equip.roteador",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "O modem",
+       "conceitos": [
+        {
+         "id": "equip.modem",
+         "nome": "Modem",
+         "antes": [
+          "equip.roteador"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O modem",
+         "texto": "O modem é quem recebe a internet que chega à sua casa, pelo cabo ou pela fibra, e entrega para o roteador. Muitos provedores entregam um aparelho só, que faz as duas coisas.",
+         "termos": [
+          {
+           "termo": "Modem",
+           "definicao": "Recebe a internet de fora."
+          },
+          {
+           "termo": "Roteador",
+           "definicao": "Divide a internet dentro de casa."
+          },
+          {
+           "termo": "Dois em um",
+           "definicao": "Um aparelho que faz os dois papéis."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual aparelho recebe a internet que chega de fora da casa?",
+         "certa": "Modem",
+         "erradas": [
+          "Fone de ouvido",
+          "Mouse",
+          "Monitor"
+         ],
+         "explicacao": "O modem faz a ligação com o provedor.",
+         "conceito": "equip.modem",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O modem e o roteador sempre são dois aparelhos separados.",
+         "resposta": false,
+         "explicacao": "Muitos provedores entregam um aparelho que faz os dois papéis.",
+         "conceito": "equip.modem",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "A internet chega por fibra na sua casa. Quem recebe esse sinal?",
+         "certa": "O modem",
+         "erradas": [
+          "O mouse",
+          "O ventilador",
+          "A tomada"
+         ],
+         "explicacao": "O modem recebe o sinal do provedor e passa adiante.",
+         "conceito": "equip.modem",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada um ao seu papel",
+         "pares": [
+          {
+           "esquerda": "Provedor",
+           "direita": "Vende a internet"
+          },
+          {
+           "esquerda": "Modem",
+           "direita": "Recebe a internet em casa"
+          },
+          {
+           "esquerda": "Roteador",
+           "direita": "Espalha o Wi-Fi"
+          }
+         ],
+         "explicacao": "O provedor entrega, o modem recebe e o roteador distribui.",
+         "conceito": "equip.modem",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o modem faz?",
+         "certa": "Recebe a internet que vem do provedor",
+         "erradas": [
+          "Imprime documentos",
+          "Toca música",
+          "Mostra vídeos"
+         ],
+         "explicacao": "Ele faz a ligação com o provedor.",
+         "conceito": "equip.modem",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Na sua casa, a TV não abre vídeos da internet, mas o celular ainda manda foto para ela. O que isso mostra?",
+       "certa": "A rede local funciona mesmo sem internet",
+       "erradas": [
+        "A TV quebrou",
+        "O celular é o roteador",
+        "A casa não tem rede"
+       ],
+       "explicacao": "A LAN permite conversa interna sem a internet.",
+       "conceito": "lan"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual destes é o melhor exemplo de LAN?",
+       "certa": "A rede de uma sala de informática da escola",
+       "erradas": [
+        "A internet do mundo inteiro",
+        "Conexão entre dois países",
+        "Rede de uma operadora nacional"
+       ],
+       "explicacao": "LAN é rede de um lugar só.",
+       "conceito": "lan"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você ligou um cabo no PC, mas ele não conecta. Antes de culpar o provedor, o que verificar primeiro?",
+       "certa": "Se o cabo está encaixado numa porta do roteador",
+       "erradas": [
+        "Se a TV está ligada",
+        "A cor da parede",
+        "O volume do celular"
+       ],
+       "explicacao": "O cabo precisa estar na porta certa do roteador.",
+       "conceito": "equip.roteador"
+      }
+     ]
+    },
+    {
+     "lugar": "Posto de Cabos",
+     "titulo": "Cabo ou Wi-Fi?",
+     "dicas": [
+      "Cabo de rede é mais estável. Wi-Fi é mais prático.",
+      "Wi-Fi é a rede sem fio. Paredes e distância enfraquecem o sinal.",
+      "Fibra óptica leva dados com luz e é muito rápida."
+     ],
+     "fases": [
+      {
+       "nome": "Cabo de rede",
+       "conceitos": [
+        {
+         "id": "meio.transmissao",
+         "nome": "Cabo de rede",
+         "antes": [
+          "rede.def"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Cabo de rede",
+         "texto": "O cabo de rede liga o aparelho direto no roteador. Por ser uma ligação física, costuma ser mais estável e rápido que o Wi-Fi. O cabo mais comum se chama UTP.",
+         "termos": [
+          {
+           "termo": "Cabo de rede",
+           "definicao": "Liga o aparelho ao roteador."
+          },
+          {
+           "termo": "UTP",
+           "definicao": "O cabo mais comum, de fios trançados."
+          },
+          {
+           "termo": "Estável",
+           "definicao": "Cai menos que o Wi-Fi."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual opção costuma ser mais estável para jogar ou trabalhar?",
+         "certa": "Cabo de rede",
+         "erradas": [
+          "Sinal de rádio",
+          "Bluetooth",
+          "Wi-Fi atrás de várias paredes"
+         ],
+         "explicacao": "O cabo não sofre com paredes e interferência.",
+         "conceito": "meio.transmissao",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Um cabo de rede liga o computador diretamente ao roteador.",
+         "resposta": true,
+         "explicacao": "É assim que funciona a ligação por cabo.",
+         "conceito": "meio.transmissao",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como se chama o cabo de rede mais comum nas casas e escritórios?",
+         "certa": "UTP",
+         "erradas": [
+          "HDMI",
+          "USB-C",
+          "Cabo de antena"
+         ],
+         "explicacao": "UTP é o cabo de rede mais usado.",
+         "conceito": "meio.transmissao",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue a situação ao melhor meio",
+         "pares": [
+          {
+           "esquerda": "Computador de mesa fixo",
+           "direita": "Cabo"
+          },
+          {
+           "esquerda": "Celular na sala",
+           "direita": "Wi-Fi"
+          },
+          {
+           "esquerda": "Videogame que não sai do lugar",
+           "direita": "Cabo"
+          }
+         ],
+         "explicacao": "Cabo para o que fica parado, Wi-Fi para o que se move.",
+         "conceito": "meio.transmissao",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual opção costuma ser mais estável: cabo ou Wi-Fi?",
+         "certa": "O cabo",
+         "erradas": [
+          "O Wi-Fi sempre",
+          "Os dois sempre iguais",
+          "Nenhum funciona"
+         ],
+         "explicacao": "O cabo sofre menos interferência.",
+         "conceito": "meio.transmissao",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Wi-Fi",
+       "conceitos": [
+        {
+         "id": "meio.wifi",
+         "nome": "Wi-Fi",
+         "antes": [
+          "lan"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Wi-Fi",
+         "texto": "O Wi-Fi leva a internet pelo ar, sem fio. É prático, mas o sinal enfraquece com distância e paredes. Quanto mais longe do roteador, mais fraco.",
+         "termos": [
+          {
+           "termo": "Wi-Fi",
+           "definicao": "Rede sem fio."
+          },
+          {
+           "termo": "Sinal fraco",
+           "definicao": "Longe do roteador ou atrás de paredes."
+          },
+          {
+           "termo": "Interferência",
+           "definicao": "Outros aparelhos atrapalhando o sinal."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que costuma deixar o Wi-Fi fraco?",
+         "certa": "Distância e paredes grossas",
+         "erradas": [
+          "Escolher uma cor diferente",
+          "Abrir mais abas",
+          "Ligar a luz"
+         ],
+         "explicacao": "O sinal perde força no caminho.",
+         "conceito": "meio.wifi",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Quanto mais longe do roteador, mais fraco costuma ficar o Wi-Fi.",
+         "resposta": true,
+         "explicacao": "Sim, o sinal enfraquece com a distância.",
+         "conceito": "meio.wifi",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O sinal está fraco no quarto. Qual atitude pode ajudar?",
+         "certa": "Aproximar-se do roteador",
+         "erradas": [
+          "Trocar de nome de usuário",
+          "Desligar o celular da tomada",
+          "Apagar fotos"
+         ],
+         "explicacao": "Chegar mais perto melhora o sinal.",
+         "conceito": "meio.wifi",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Cabo ou Wi-Fi?",
+         "categorias": [
+          "Cabo",
+          "Wi-Fi"
+         ],
+         "itens": [
+          {
+           "texto": "Liga com fio no roteador",
+           "categoria": "Cabo"
+          },
+          {
+           "texto": "Funciona pelo ar",
+           "categoria": "Wi-Fi"
+          },
+          {
+           "texto": "Costuma ser mais estável",
+           "categoria": "Cabo"
+          },
+          {
+           "texto": "Mais prático para celular",
+           "categoria": "Wi-Fi"
+          }
+         ],
+         "explicacao": "O cabo é estável. O Wi-Fi é prático.",
+         "conceito": "meio.wifi",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual destes atrapalha o sinal do Wi-Fi?",
+         "certa": "Paredes grossas",
+         "erradas": [
+          "Um copo d'água",
+          "Um quadro de foto",
+          "Uma planta pequena"
+         ],
+         "explicacao": "Paredes grossas enfraquecem o sinal.",
+         "conceito": "meio.wifi",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Fibra óptica",
+       "conceitos": [
+        {
+         "id": "meio.fibra",
+         "nome": "Fibra óptica",
+         "antes": [
+          "meio.transmissao"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Fibra óptica",
+         "texto": "A fibra óptica é um fio finíssimo que leva dados na forma de luz. É por ela que muita internet chega às casas hoje, e é muito rápida.",
+         "termos": [
+          {
+           "termo": "Fibra óptica",
+           "definicao": "Fio de vidro que leva dados com luz."
+          },
+          {
+           "termo": "Rápida",
+           "definicao": "Alta velocidade de internet."
+          },
+          {
+           "termo": "Chega à casa",
+           "definicao": "O provedor leva a fibra até o modem."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como a fibra óptica leva os dados?",
+         "certa": "Com pulsos de luz",
+         "erradas": [
+          "Com energia da tomada",
+          "Com ondas de som",
+          "Com papel"
+         ],
+         "explicacao": "A fibra transmite luz.",
+         "conceito": "meio.fibra",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "A fibra óptica é um meio de transmissão muito rápido.",
+         "resposta": true,
+         "explicacao": "Sim, é um dos mais rápidos.",
+         "conceito": "meio.fibra",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Seu provedor leva fibra até sua casa. Quem recebe essa fibra?",
+         "certa": "O modem",
+         "erradas": [
+          "O mouse",
+          "O teclado",
+          "O carregador"
+         ],
+         "explicacao": "O modem recebe e converte o sinal.",
+         "conceito": "meio.fibra",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada meio à sua característica",
+         "pares": [
+          {
+           "esquerda": "Cabo UTP",
+           "direita": "Fios trançados de cobre"
+          },
+          {
+           "esquerda": "Fibra óptica",
+           "direita": "Luz dentro de um fio de vidro"
+          },
+          {
+           "esquerda": "Wi-Fi",
+           "direita": "Sinal pelo ar"
+          }
+         ],
+         "explicacao": "Cada meio leva os dados de um jeito.",
+         "conceito": "meio.fibra",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual meio de transmissão usa luz?",
+         "certa": "Fibra óptica",
+         "erradas": [
+          "Cabo UTP",
+          "Wi-Fi",
+          "Bluetooth"
+         ],
+         "explicacao": "A fibra leva os dados em pulsos de luz.",
+         "conceito": "meio.fibra",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Uma empresa quer uma ligação estável para uma videochamada importante no computador fixo. O que escolher?",
+       "certa": "Cabo de rede",
+       "erradas": [
+        "Wi-Fi atrás de duas paredes",
+        "Bluetooth",
+        "Um repetidor longe do roteador"
+       ],
+       "explicacao": "O cabo é mais estável.",
+       "conceito": "meio.transmissao"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O cabo de rede mais comum nas casas é o UTP. O que ele tem de característica?",
+       "certa": "Fios de cobre trançados",
+       "erradas": [
+        "Luz dentro de vidro",
+        "Ondas de rádio",
+        "Papel"
+       ],
+       "explicacao": "UTP significa par trançado sem blindagem.",
+       "conceito": "meio.transmissao"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O Wi-Fi está ótimo na sala e fraco no quarto do fundo. Qual é a explicação mais provável?",
+       "certa": "Distância e paredes enfraquecem o sinal",
+       "erradas": [
+        "O celular usa outra internet",
+        "O provedor sabe em que cômodo você está",
+        "A internet cansa de noite"
+       ],
+       "explicacao": "Distância e obstáculos reduzem o sinal.",
+       "conceito": "meio.wifi"
+      }
+     ],
+     "chamado": "wifi"
+    },
+    {
+     "lugar": "Porto da Internet",
+     "titulo": "O que é a internet",
+     "dicas": [
+      "A internet é uma rede gigante que liga muitas redes.",
+      "O provedor (ISP) é a empresa que dá acesso à internet.",
+      "Cliente pede, servidor responde."
+     ],
+     "fases": [
+      {
+       "nome": "Rede de redes",
+       "conceitos": [
+        {
+         "id": "internet",
+         "nome": "Internet (rede de redes)",
+         "antes": [
+          "lan"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Rede de redes",
+         "texto": "A internet não é uma coisa só: é uma rede gigante que liga milhões de redes menores, como a da sua casa e a de empresas. Por isso se diz que é uma rede de redes.",
+         "termos": [
+          {
+           "termo": "Internet",
+           "definicao": "Muitas redes ligadas entre si."
+          },
+          {
+           "termo": "Sua casa",
+           "definicao": "Uma rede pequena dentro dela."
+          },
+          {
+           "termo": "Mundo todo",
+           "definicao": "Redes de todos os países conectadas."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é a internet?",
+         "certa": "Uma rede gigante que liga muitas redes",
+         "erradas": [
+          "Um site famoso",
+          "Um cabo único mundial",
+          "Um programa do celular"
+         ],
+         "explicacao": "A internet é uma rede de redes.",
+         "conceito": "internet",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "A rede da sua casa pode se conectar à internet.",
+         "resposta": true,
+         "explicacao": "É isso que o roteador faz.",
+         "conceito": "internet",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que a internet é chamada de rede de redes?",
+         "certa": "Porque liga muitas redes menores",
+         "erradas": [
+          "Porque só tem sites",
+          "Porque usa só um cabo",
+          "Porque é de uma empresa só"
+         ],
+         "explicacao": "Ela conecta redes de casas, empresas e escolas.",
+         "conceito": "internet",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "É a internet ou é a sua LAN?",
+         "categorias": [
+          "Internet",
+          "LAN"
+         ],
+         "itens": [
+          {
+           "texto": "Liga redes do mundo todo",
+           "categoria": "Internet"
+          },
+          {
+           "texto": "Wi-Fi do seu apartamento",
+           "categoria": "LAN"
+          },
+          {
+           "texto": "Conecta países",
+           "categoria": "Internet"
+          },
+          {
+           "texto": "Rede de uma sala de aula",
+           "categoria": "LAN"
+          }
+         ],
+         "explicacao": "A LAN é local e a internet é global.",
+         "conceito": "internet",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como podemos descrever a internet?",
+         "certa": "Uma rede de redes, que liga muitas redes do mundo",
+         "erradas": [
+          "Um site",
+          "Um programa de celular",
+          "Um cabo único"
+         ],
+         "explicacao": "A internet interliga milhões de redes.",
+         "conceito": "internet",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "O provedor",
+       "conceitos": [
+        {
+         "id": "isp",
+         "nome": "Provedor de internet",
+         "antes": [
+          "internet"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O provedor",
+         "texto": "Para sair da sua rede e chegar à internet, você contrata um provedor de internet (ISP, na sigla em inglês). Ele liga a sua casa ao resto da internet e cobra pelo serviço.",
+         "termos": [
+          {
+           "termo": "Provedor",
+           "definicao": "Empresa que dá acesso à internet."
+          },
+          {
+           "termo": "ISP",
+           "definicao": "Sigla em inglês de provedor."
+          },
+          {
+           "termo": "Plano",
+           "definicao": "Velocidade que você contrata."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Quem dá acesso à internet para a sua casa?",
+         "certa": "O provedor de internet",
+         "erradas": [
+          "O fabricante do celular",
+          "O fabricante da TV",
+          "O dono do site"
+         ],
+         "explicacao": "O provedor (ISP) faz essa ligação.",
+         "conceito": "isp",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O plano contratado define a velocidade máxima da internet.",
+         "resposta": true,
+         "explicacao": "Sim, plano maior costuma significar velocidade maior.",
+         "conceito": "isp",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "A internet caiu na rua inteira. Quem provavelmente tem o problema?",
+         "certa": "O provedor",
+         "erradas": [
+          "O seu celular",
+          "O seu carregador",
+          "Seu aplicativo de música"
+         ],
+         "explicacao": "Se cai para todo mundo, o problema costuma ser do provedor.",
+         "conceito": "isp",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada peça ao seu papel",
+         "pares": [
+          {
+           "esquerda": "Provedor",
+           "direita": "Dá acesso à internet"
+          },
+          {
+           "esquerda": "Roteador",
+           "direita": "Divide a internet em casa"
+          },
+          {
+           "esquerda": "Celular",
+           "direita": "Usa a internet"
+          }
+         ],
+         "explicacao": "O provedor entrega, o roteador divide e o aparelho usa.",
+         "conceito": "isp",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Quem fornece o acesso à internet?",
+         "certa": "O provedor",
+         "erradas": [
+          "O celular",
+          "O roteador sozinho",
+          "A TV"
+         ],
+         "explicacao": "O provedor (ISP) faz essa ligação.",
+         "conceito": "isp",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Quem pede e quem responde",
+       "conceitos": [
+        {
+         "id": "cliente.servidor",
+         "nome": "Cliente e servidor",
+         "antes": [
+          "internet"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Quem pede e quem responde",
+         "texto": "Quando você abre um site, seu aparelho é o cliente: ele pede a página. Do outro lado, um computador chamado servidor guarda o site e responde. É assim que a internet funciona.",
+         "termos": [
+          {
+           "termo": "Cliente",
+           "definicao": "Quem pede (seu celular ou PC)."
+          },
+          {
+           "termo": "Servidor",
+           "definicao": "Quem guarda e entrega (o site)."
+          },
+          {
+           "termo": "Pedido e resposta",
+           "definicao": "A conversa básica da internet."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Ao abrir um site, o que o seu celular é?",
+         "certa": "O cliente, que faz o pedido",
+         "erradas": [
+          "O servidor, que guarda o site",
+          "Um cabo de rede",
+          "Um provedor"
+         ],
+         "explicacao": "O cliente pede e o servidor responde.",
+         "conceito": "cliente.servidor",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O servidor é o computador que guarda o site e responde aos pedidos.",
+         "resposta": true,
+         "explicacao": "É assim mesmo.",
+         "conceito": "cliente.servidor",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você assiste a um vídeo. Quem manda o vídeo para o seu celular?",
+         "certa": "Um servidor",
+         "erradas": [
+          "O seu roteador",
+          "Um cabo",
+          "O seu modem"
+         ],
+         "explicacao": "Servidores guardam e enviam os vídeos.",
+         "conceito": "cliente.servidor",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada papel",
+         "pares": [
+          {
+           "esquerda": "Cliente",
+           "direita": "Pede a página"
+          },
+          {
+           "esquerda": "Servidor",
+           "direita": "Entrega a página"
+          },
+          {
+           "esquerda": "Navegador",
+           "direita": "Mostra a página para você"
+          }
+         ],
+         "explicacao": "O cliente pede, o servidor entrega e o navegador mostra.",
+         "conceito": "cliente.servidor",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Quando você abre um site, quem pede a página?",
+         "certa": "O cliente (seu aparelho)",
+         "erradas": [
+          "O servidor",
+          "O cabo",
+          "O provedor"
+         ],
+         "explicacao": "O cliente pede e o servidor responde.",
+         "conceito": "cliente.servidor",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Dois amigos estão em cidades diferentes e jogam juntos. Que rede liga as duas casas?",
+       "certa": "A internet, que liga redes do mundo",
+       "erradas": [
+        "A LAN da casa de um deles",
+        "Um cabo único entre as casas",
+        "O Bluetooth"
+       ],
+       "explicacao": "Casas diferentes se ligam pela internet.",
+       "conceito": "internet"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual é o motivo de chamarmos a internet de rede de redes?",
+       "certa": "Ela interliga muitas redes menores",
+       "erradas": [
+        "Porque só existe em sites",
+        "Porque tem só um roteador",
+        "Porque é de uma única empresa"
+       ],
+       "explicacao": "É a interligação de muitas redes.",
+       "conceito": "internet"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "A internet some em um bairro inteiro ao mesmo tempo. Qual a causa mais provável?",
+       "certa": "Um problema no provedor",
+       "erradas": [
+        "Todos esqueceram a senha",
+        "Todos trocaram de celular",
+        "O Wi-Fi ficou cansado"
+       ],
+       "explicacao": "Se falha para muita gente, o problema costuma ser do provedor.",
+       "conceito": "isp"
+      }
+     ]
+    },
+    {
+     "lugar": "Rua dos Endereços",
+     "titulo": "Endereço IP",
+     "dicas": [
+      "IP é o endereço do aparelho na rede.",
+      "Dentro de casa os IPs são privados. Para a internet, a casa tem um IP público.",
+      "DHCP entrega o IP sozinho."
+     ],
+     "fases": [
+      {
+       "nome": "O endereço do aparelho",
+       "conceitos": [
+        {
+         "id": "ip.v4",
+         "nome": "Endereço IP",
+         "antes": [
+          "rede.host"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O endereço do aparelho",
+         "texto": "Todo aparelho na rede recebe um número que o identifica, o endereço IP (IP significa Protocolo de Internet). É como o endereço de uma casa: serve para os dados saberem para onde ir. Exemplo: 192.168.0.10.",
+         "termos": [
+          {
+           "termo": "IP",
+           "definicao": "Endereço do aparelho na rede."
+          },
+          {
+           "termo": "Quatro números",
+           "definicao": "Separados por pontos, como 192.168.0.10."
+          },
+          {
+           "termo": "Único",
+           "definicao": "Cada aparelho tem o seu, na mesma rede."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Para que serve o endereço IP?",
+         "certa": "Identificar o aparelho na rede",
+         "erradas": [
+          "Trocar a cor do Wi-Fi",
+          "Mudar o volume",
+          "Salvar fotos"
+         ],
+         "explicacao": "O IP diz para onde os dados devem ir.",
+         "conceito": "ip.v4",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual destes parece um endereço IP?",
+         "certa": "192.168.0.10",
+         "erradas": [
+          "Pingo.quest",
+          "12 de março",
+          "Wi-Fi_casa"
+         ],
+         "explicacao": "O IP tem quatro números separados por pontos.",
+         "conceito": "ip.v4",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Dois aparelhos da mesma rede podem ter exatamente o mesmo IP sem problema.",
+         "resposta": false,
+         "explicacao": "Isso causa conflito. Cada aparelho precisa de um IP próprio.",
+         "conceito": "ip.v4",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada exemplo",
+         "pares": [
+          {
+           "esquerda": "Endereço de casa",
+           "direita": "Diz onde a casa fica"
+          },
+          {
+           "esquerda": "Endereço IP",
+           "direita": "Diz onde o aparelho está na rede"
+          },
+          {
+           "esquerda": "Número da placa",
+           "direita": "Identifica o carro"
+          }
+         ],
+         "explicacao": "O IP é como o endereço do aparelho na rede.",
+         "conceito": "ip.v4",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O endereço IP identifica o quê?",
+         "certa": "O aparelho na rede",
+         "erradas": [
+          "A cor do cabo",
+          "O nome do provedor",
+          "O volume do som"
+         ],
+         "explicacao": "O IP é o endereço do aparelho.",
+         "conceito": "ip.v4",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "IP de casa e IP de fora",
+       "conceitos": [
+        {
+         "id": "ip.privado",
+         "nome": "IP privado e público",
+         "antes": [
+          "ip.v4",
+          "equip.roteador"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "IP de casa e IP de fora",
+         "texto": "Dentro da sua casa, os aparelhos usam IPs privados, como 192.168.0.10. Eles só valem ali dentro. Para a internet, a casa inteira aparece com um só IP público, fornecido pelo provedor.",
+         "termos": [
+          {
+           "termo": "IP privado",
+           "definicao": "Vale só dentro da rede de casa."
+          },
+          {
+           "termo": "IP público",
+           "definicao": "Identifica sua casa na internet."
+          },
+          {
+           "termo": "192.168...",
+           "definicao": "Começo comum de IP privado."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual destes é um IP privado, de uma rede de casa?",
+         "certa": "192.168.0.15",
+         "erradas": [
+          "8.8.8.8",
+          "200.10.5.1",
+          "1.1.1.1"
+         ],
+         "explicacao": "192.168.x.x é uma faixa privada.",
+         "conceito": "ip.privado",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O IP privado do seu celular pode ser acessado diretamente por qualquer pessoa na internet.",
+         "resposta": false,
+         "explicacao": "Ele só vale dentro da rede da casa.",
+         "conceito": "ip.privado",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Quantos IPs públicos a sua casa costuma mostrar para a internet?",
+         "certa": "Um só, o do roteador",
+         "erradas": [
+          "Um por aparelho",
+          "Nenhum",
+          "Mil"
+         ],
+         "explicacao": "O roteador representa toda a casa na internet.",
+         "conceito": "ip.privado",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "IP privado ou público?",
+         "categorias": [
+          "Privado",
+          "Público"
+         ],
+         "itens": [
+          {
+           "texto": "192.168.1.20",
+           "categoria": "Privado"
+          },
+          {
+           "texto": "10.0.0.5",
+           "categoria": "Privado"
+          },
+          {
+           "texto": "8.8.8.8",
+           "categoria": "Público"
+          },
+          {
+           "texto": "200.150.10.1",
+           "categoria": "Público"
+          }
+         ],
+         "explicacao": "192.168 e 10 são privados. Os outros são públicos.",
+         "conceito": "ip.privado",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Quem entrega o IP automaticamente quando você entra no Wi-Fi?",
+         "certa": "O DHCP",
+         "erradas": [
+          "O teclado",
+          "O monitor",
+          "O cabo de rede"
+         ],
+         "explicacao": "DHCP entrega IP sozinho.",
+         "conceito": "ip.privado",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "IP automático",
+       "conceitos": [
+        {
+         "id": "ip.mac.dhcp",
+         "nome": "IP automático (DHCP) e MAC",
+         "antes": [
+          "ip.v4"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "IP automático e MAC",
+         "texto": "Quando você entra no Wi-Fi, o roteador entrega um IP automaticamente. Quem faz isso se chama DHCP. Já o MAC é o número de série da placa de rede: vem de fábrica e não muda.",
+         "termos": [
+          {
+           "termo": "DHCP",
+           "definicao": "Entrega o IP sozinho."
+          },
+          {
+           "termo": "MAC",
+           "definicao": "Número de série da placa de rede."
+          },
+          {
+           "termo": "IP muda",
+           "definicao": "MAC não muda."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você entra no Wi-Fi de um amigo e já navega, sem digitar nenhum número. Quem entregou o seu IP?",
+         "certa": "O DHCP do roteador",
+         "erradas": [
+          "O seu navegador",
+          "A sua câmera",
+          "O seu teclado"
+         ],
+         "explicacao": "O DHCP entrega o IP automaticamente.",
+         "conceito": "ip.mac.dhcp",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O endereço MAC é o número de série da placa de rede e vem de fábrica.",
+         "resposta": true,
+         "explicacao": "É isso. O IP é que pode mudar.",
+         "conceito": "ip.mac.dhcp",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual das duas identificações pode mudar quando você troca de rede?",
+         "certa": "O IP",
+         "erradas": [
+          "O MAC",
+          "O nome do fabricante",
+          "O número de série"
+         ],
+         "explicacao": "O IP muda de rede para rede. O MAC fica.",
+         "conceito": "ip.mac.dhcp",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada sigla",
+         "pares": [
+          {
+           "esquerda": "IP",
+           "direita": "Endereço na rede"
+          },
+          {
+           "esquerda": "MAC",
+           "direita": "Número de série da placa"
+          },
+          {
+           "esquerda": "DHCP",
+           "direita": "Entrega IP automático"
+          }
+         ],
+         "explicacao": "IP é endereço, MAC é número de série e DHCP entrega IP.",
+         "conceito": "ip.mac.dhcp",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o endereço MAC é?",
+         "certa": "O número de série da placa de rede",
+         "erradas": [
+          "O nome do Wi-Fi",
+          "A senha do roteador",
+          "O endereço do site"
+         ],
+         "explicacao": "O MAC vem de fábrica.",
+         "conceito": "ip.mac.dhcp",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Dois computadores da mesma rede ficaram com o mesmo IP. O que costuma acontecer?",
+       "certa": "Conflito: a rede pode falhar para os dois",
+       "erradas": [
+        "Nada, é normal",
+        "Fica mais rápido",
+        "Eles trocam de nome"
+       ],
+       "explicacao": "IP precisa ser único na rede.",
+       "conceito": "ip.v4"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual destes é um endereço IP válido?",
+       "certa": "192.168.1.20",
+       "erradas": [
+        "999.1.1.1.1",
+        "casa.pingo",
+        "192-168-1"
+       ],
+       "explicacao": "O IP tem quatro números de 0 a 255.",
+       "conceito": "ip.v4"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O IP do seu celular é 192.168.0.12. Dá para um desconhecido na internet acessá-lo direto por esse número?",
+       "certa": "Não, ele só vale dentro da sua rede",
+       "erradas": [
+        "Sim, qualquer um acessa",
+        "Sim, se tiver o nome do celular",
+        "Só se o Wi-Fi estiver desligado"
+       ],
+       "explicacao": "IP privado só vale na rede local.",
+       "conceito": "ip.privado"
+      }
+     ],
+     "chamado": "print"
+    },
+    {
+     "lugar": "Agenda de Nomes",
+     "titulo": "Nomes de sites",
+     "dicas": [
+      "DNS traduz o nome do site em número (IP).",
+      "O DNS funciona como a agenda de contatos da internet.",
+      "Se o DNS falha, o nome não abre, mas o número pode abrir."
+     ],
+     "fases": [
+      {
+       "nome": "Nome ou número?",
+       "conceitos": [
+        {
+         "id": "dns",
+         "nome": "DNS: nome em número",
+         "antes": [
+          "ip.v4",
+          "internet"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Nome ou número?",
+         "texto": "Os sites têm nome, como pingoquest.com, mas os computadores se encontram pelos números, os IPs. Para ligar um ao outro, existe o DNS: o tradutor que descobre o número a partir do nome.",
+         "termos": [
+          {
+           "termo": "Nome",
+           "definicao": "O que você digita."
+          },
+          {
+           "termo": "IP",
+           "definicao": "O número que o computador usa."
+          },
+          {
+           "termo": "DNS",
+           "definicao": "Traduz nome em número."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o DNS faz?",
+         "certa": "Traduz o nome do site em endereço IP",
+         "erradas": [
+          "Aumenta a velocidade do Wi-Fi",
+          "Apaga vírus",
+          "Muda a senha do roteador"
+         ],
+         "explicacao": "O DNS descobre o IP do nome que você digitou.",
+         "conceito": "dns",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Você digita o nome do site, e por trás o computador usa o IP.",
+         "resposta": true,
+         "explicacao": "É isso mesmo.",
+         "conceito": "dns",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que não precisamos decorar o IP dos sites?",
+         "certa": "Porque o DNS traduz os nomes",
+         "erradas": [
+          "Porque IP não existe",
+          "Porque o celular adivinha",
+          "Porque o site avisa"
+         ],
+         "explicacao": "O DNS cuida disso para a gente.",
+         "conceito": "dns",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada item",
+         "pares": [
+          {
+           "esquerda": "Nome do site",
+           "direita": "O que a gente digita"
+          },
+          {
+           "esquerda": "IP",
+           "direita": "O número que o computador usa"
+          },
+          {
+           "esquerda": "DNS",
+           "direita": "Faz a tradução"
+          }
+         ],
+         "explicacao": "O DNS liga o nome ao número.",
+         "conceito": "dns",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é o trabalho do DNS na internet?",
+         "certa": "Descobre o número (IP) a partir do nome do site",
+         "erradas": [
+          "Aumenta a bateria",
+          "Limpa o histórico",
+          "Troca a senha"
+         ],
+         "explicacao": "DNS traduz nome em número.",
+         "conceito": "dns",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "A lista de contatos",
+       "conceitos": [
+        {
+         "id": "dns.agenda",
+         "nome": "DNS como lista de contatos",
+         "antes": [
+          "dns"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "A lista de contatos",
+         "texto": "Pense no DNS como a lista de contatos do celular. Você toca no nome da pessoa e o celular liga para o número. Na internet, você digita o nome do site e o DNS acha o número.",
+         "termos": [
+          {
+           "termo": "Lista de contatos",
+           "definicao": "Guarda nome e número."
+          },
+          {
+           "termo": "DNS",
+           "definicao": "Guarda nome de site e IP."
+          },
+          {
+           "termo": "Consulta",
+           "definicao": "O navegador pergunta ao DNS."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual comparação descreve bem o DNS?",
+         "certa": "A lista de contatos do celular",
+         "erradas": [
+          "Uma lanterna",
+          "Um cabo de força",
+          "Uma foto"
+         ],
+         "explicacao": "Nome para número, igual aos contatos.",
+         "conceito": "dns.agenda",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Quando você digita um site, o navegador primeiro consulta o DNS.",
+         "resposta": true,
+         "explicacao": "Primeiro descobre o IP e depois pede a página.",
+         "conceito": "dns.agenda",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual o primeiro passo ao abrir um site pelo nome?",
+         "certa": "Descobrir o IP pelo DNS",
+         "erradas": [
+          "Baixar a página inteira",
+          "Trocar o IP do roteador",
+          "Desligar o Wi-Fi"
+         ],
+         "explicacao": "Sem o IP, o pedido não sabe para onde ir.",
+         "conceito": "dns.agenda",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Nome ou número?",
+         "categorias": [
+          "Nome",
+          "Número (IP)"
+         ],
+         "itens": [
+          {
+           "texto": "google.com",
+           "categoria": "Nome"
+          },
+          {
+           "texto": "pingoquest.com",
+           "categoria": "Nome"
+          },
+          {
+           "texto": "142.250.0.1",
+           "categoria": "Número (IP)"
+          },
+          {
+           "texto": "8.8.8.8",
+           "categoria": "Número (IP)"
+          }
+         ],
+         "explicacao": "Nomes são para pessoas, números são para computadores.",
+         "conceito": "dns.agenda",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é a comparação mais próxima do DNS?",
+         "certa": "Uma lista de contatos",
+         "erradas": [
+          "Um carregador",
+          "Um fone",
+          "Uma lanterna"
+         ],
+         "explicacao": "Nome leva ao número.",
+         "conceito": "dns.agenda",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Quando o site não abre",
+       "conceitos": [
+        {
+         "id": "dns.falha",
+         "nome": "Quando o site não abre",
+         "antes": [
+          "dns.agenda"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Quando o site não abre",
+         "texto": "Às vezes o site não abre, mas outros funcionam. Pode ser problema no DNS, no site ou na sua internet. Se alguns sites abrem e outros não, a internet está funcionando.",
+         "termos": [
+          {
+           "termo": "Só um site",
+           "definicao": "Provavelmente o problema é do site."
+          },
+          {
+           "termo": "Nenhum site",
+           "definicao": "Provavelmente é a sua internet."
+          },
+          {
+           "termo": "DNS",
+           "definicao": "Pode estar com problema, e o nome não é traduzido."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Só um site não abre e todos os outros abrem normalmente. O que isso sugere?",
+         "certa": "Problema no site, não na sua internet",
+         "erradas": [
+          "Seu roteador queimou",
+          "Seu celular está sem bateria",
+          "Você está sem provedor"
+         ],
+         "explicacao": "Se os outros sites abrem, sua internet está boa.",
+         "conceito": "dns.falha",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Se nenhum site abre, o problema provavelmente é na sua conexão.",
+         "resposta": true,
+         "explicacao": "Quando nada abre, comece verificando a conexão.",
+         "conceito": "dns.falha",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você tenta abrir um site e aparece erro de nome não encontrado. Qual serviço provavelmente falhou?",
+         "certa": "O DNS",
+         "erradas": [
+          "O teclado",
+          "A tela",
+          "O carregador"
+         ],
+         "explicacao": "Nome não encontrado costuma ser falha de DNS.",
+         "conceito": "dns.falha",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue o sintoma à possível causa",
+         "pares": [
+          {
+           "esquerda": "Nenhum site abre",
+           "direita": "Sua conexão caiu"
+          },
+          {
+           "esquerda": "Só um site não abre",
+           "direita": "Problema nesse site"
+          },
+          {
+           "esquerda": "Nome não encontrado",
+           "direita": "DNS com falha"
+          }
+         ],
+         "explicacao": "Cada sintoma aponta para uma causa diferente.",
+         "conceito": "dns.falha",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Só um site não abre, e os outros abrem. O que isso sugere?",
+         "certa": "O problema está nesse site",
+         "erradas": [
+          "Sua internet caiu",
+          "O roteador queimou",
+          "O celular quebrou"
+         ],
+         "explicacao": "Se outros sites abrem, sua conexão está ok.",
+         "conceito": "dns.falha",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Você digita um site e vê erro de nome não encontrado, mas o número IP do site abre normalmente. Qual serviço está com falha?",
+       "certa": "O DNS",
+       "erradas": [
+        "O teclado",
+        "A energia",
+        "O cabo de vídeo"
+       ],
+       "explicacao": "O número abre, o nome não: o DNS falhou.",
+       "conceito": "dns"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Por que o DNS é útil para as pessoas?",
+       "certa": "Porque ninguém precisa decorar números de IP",
+       "erradas": [
+        "Porque aumenta a bateria",
+        "Porque limpa o celular",
+        "Porque cria Wi-Fi"
+       ],
+       "explicacao": "Ele traduz nome em número.",
+       "conceito": "dns"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Comparando o DNS com a agenda do celular, o que seria o IP?",
+       "certa": "O número de telefone do contato",
+       "erradas": [
+        "O nome do contato",
+        "A foto do contato",
+        "O toque do celular"
+       ],
+       "explicacao": "Nome vira número, como na agenda.",
+       "conceito": "dns.agenda"
+      }
+     ],
+     "chamado": "dns"
+    },
+    {
+     "lugar": "Correio de Pacotes",
+     "titulo": "Dados e velocidade",
+     "dicas": [
+      "Dados são feitos de bits: zeros e uns.",
+      "Os dados viajam em pedacinhos chamados pacotes.",
+      "Banda é a velocidade. Latência (ping) é o atraso."
+     ],
+     "fases": [
+      {
+       "nome": "Bits e dados",
+       "conceitos": [
+        {
+         "id": "dados.bits",
+         "nome": "Bits e dados",
+         "antes": [
+          "rede.def"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Bits e dados",
+         "texto": "Tudo o que passa pela rede, como foto, vídeo e mensagem, vira zeros e uns. Cada zero ou um é um bit. Juntando muitos bits, formamos os dados.",
+         "termos": [
+          {
+           "termo": "Bit",
+           "definicao": "Um zero ou um um (0 ou 1)."
+          },
+          {
+           "termo": "Dados",
+           "definicao": "Muitos bits juntos."
+          },
+          {
+           "termo": "Tudo vira bit",
+           "definicao": "Foto, vídeo e texto."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Como a informação viaja pela rede?",
+         "certa": "Em forma de zeros e uns (bits)",
+         "erradas": [
+          "Em forma de desenhos",
+          "Em forma de cores",
+          "Em forma de papel"
+         ],
+         "explicacao": "Tudo vira bits.",
+         "conceito": "dados.bits",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Uma foto enviada pela rede é transformada em bits.",
+         "resposta": true,
+         "explicacao": "Sim, tudo vira zeros e uns.",
+         "conceito": "dados.bits",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é o menor pedaço de informação digital?",
+         "certa": "O bit",
+         "erradas": [
+          "O site",
+          "O pacote",
+          "O roteador"
+         ],
+         "explicacao": "O bit é a menor unidade.",
+         "conceito": "dados.bits",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada termo",
+         "pares": [
+          {
+           "esquerda": "Bit",
+           "direita": "Um zero ou um um"
+          },
+          {
+           "esquerda": "Dados",
+           "direita": "Muitos bits juntos"
+          },
+          {
+           "esquerda": "Arquivo",
+           "direita": "Dados guardados com um nome"
+          }
+         ],
+         "explicacao": "Bits formam dados e arquivos.",
+         "conceito": "dados.bits",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Em que forma uma mensagem viaja pelo cabo?",
+         "certa": "Em bits, zeros e uns",
+         "erradas": [
+          "Em papel",
+          "Em ondas de voz",
+          "Em desenhos"
+         ],
+         "explicacao": "Tudo vira bits.",
+         "conceito": "dados.bits",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Pacotes",
+       "conceitos": [
+        {
+         "id": "pacotes",
+         "nome": "Pacotes",
+         "antes": [
+          "dados.bits"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Pacotes",
+         "texto": "Para viajar pela rede, os dados são cortados em pedacinhos chamados pacotes. Cada pacote leva o endereço de destino, como uma encomenda. No destino, eles são montados de novo.",
+         "termos": [
+          {
+           "termo": "Pacote",
+           "definicao": "Pedacinho de dados com endereço."
+          },
+          {
+           "termo": "Destino",
+           "definicao": "Onde o pacote precisa chegar."
+          },
+          {
+           "termo": "Montagem",
+           "definicao": "Os pacotes se juntam no fim."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é um pacote de rede?",
+         "certa": "Um pedacinho dos dados com endereço de destino",
+         "erradas": [
+          "Um cabo embrulhado",
+          "Uma caixa de roteador",
+          "Um programa novo"
+         ],
+         "explicacao": "Dados viajam em pacotes.",
+         "conceito": "pacotes",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Um vídeo grande viaja cortado em vários pacotes.",
+         "resposta": true,
+         "explicacao": "Isso mesmo, depois eles se juntam no destino.",
+         "conceito": "pacotes",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Um pacote chega fora de ordem. O que acontece no destino?",
+         "certa": "Os pacotes são colocados na ordem certa",
+         "erradas": [
+          "O vídeo é apagado",
+          "A internet desliga",
+          "O roteador muda de cor"
+         ],
+         "explicacao": "Na chegada eles são reorganizados.",
+         "conceito": "pacotes",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue o pacote à comparação",
+         "pares": [
+          {
+           "esquerda": "Pacote",
+           "direita": "Encomenda com endereço"
+          },
+          {
+           "esquerda": "Rede",
+           "direita": "Estrada dos Correios"
+          },
+          {
+           "esquerda": "Destino",
+           "direita": "Casa de quem recebe"
+          }
+         ],
+         "explicacao": "Os pacotes viajam como encomendas.",
+         "conceito": "pacotes",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que é um pacote?",
+         "certa": "Um pedaço dos dados com endereço de destino",
+         "erradas": [
+          "Um cabo especial",
+          "Um aplicativo",
+          "Uma senha"
+         ],
+         "explicacao": "Os dados viajam em pacotes.",
+         "conceito": "pacotes",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Velocidade e atraso",
+       "conceitos": [
+        {
+         "id": "banda.latencia",
+         "nome": "Velocidade (banda) e atraso (latência)",
+         "antes": [
+          "pacotes"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Velocidade e atraso",
+         "texto": "Banda é a velocidade da sua internet, em megabits por segundo (Mb/s): quanto maior, mais dados passam. Latência é o atraso: o tempo que a informação leva para ir e voltar. O ping mede esse atraso.",
+         "termos": [
+          {
+           "termo": "Banda",
+           "definicao": "Velocidade da internet (Mb/s)."
+          },
+          {
+           "termo": "Latência",
+           "definicao": "Atraso, em milissegundos (ms)."
+          },
+          {
+           "termo": "Ping",
+           "definicao": "Mede a latência."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que mede a banda da internet?",
+         "certa": "A quantidade de dados que passa por segundo",
+         "erradas": [
+          "A cor do roteador",
+          "O tamanho do cabo",
+          "O número de aparelhos"
+         ],
+         "explicacao": "Banda é a velocidade.",
+         "conceito": "banda.latencia",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Um ping alto significa mais atraso na conexão.",
+         "resposta": true,
+         "explicacao": "Ping baixo é melhor para jogos e chamadas.",
+         "conceito": "banda.latencia",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual situação sofre mais com latência alta?",
+         "certa": "Jogo online",
+         "erradas": [
+          "Ler um PDF salvo",
+          "Ver uma foto já baixada",
+          "Apagar um arquivo"
+         ],
+         "explicacao": "Jogos precisam de resposta rápida.",
+         "conceito": "banda.latencia",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada palavra ao significado",
+         "pares": [
+          {
+           "esquerda": "Banda",
+           "direita": "Quanto passa por segundo"
+          },
+          {
+           "esquerda": "Latência",
+           "direita": "Tempo de ida e volta"
+          },
+          {
+           "esquerda": "Ping",
+           "direita": "Teste de atraso"
+          }
+         ],
+         "explicacao": "Banda é quantidade, latência é tempo.",
+         "conceito": "banda.latencia",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que mede o ping?",
+         "certa": "O atraso (latência) da conexão",
+         "erradas": [
+          "A cor do Wi-Fi",
+          "O tamanho do arquivo",
+          "A senha"
+         ],
+         "explicacao": "Ping baixo significa pouco atraso.",
+         "conceito": "banda.latencia",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Uma foto de 5 MB está sendo enviada. Em que forma ela viaja pela rede?",
+       "certa": "Zeros e uns (bits)",
+       "erradas": [
+        "Pequenas letras",
+        "Cores soltas",
+        "Papel digital"
+       ],
+       "explicacao": "Tudo vira bits.",
+       "conceito": "dados.bits"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual afirmação descreve melhor o que é um bit?",
+       "certa": "Um zero ou um um",
+       "erradas": [
+        "Um tipo de cabo",
+        "Um site",
+        "Um pacote inteiro"
+       ],
+       "explicacao": "O bit é a menor unidade.",
+       "conceito": "dados.bits"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Um vídeo grande chega no destino perfeito, mesmo que os pacotes tenham chegado fora de ordem. O que explica isso?",
+       "certa": "Eles são reorganizados no destino",
+       "erradas": [
+        "O vídeo é pequeno",
+        "A internet nunca erra",
+        "Os pacotes não existem"
+       ],
+       "explicacao": "Os pacotes são remontados na ordem certa.",
+       "conceito": "pacotes"
+      }
+     ],
+     "chamado": "lenta"
+    },
+    {
+     "lugar": "Central de Equipamentos",
+     "titulo": "Equipamentos da rede",
+     "dicas": [
+      "Switch liga vários aparelhos por cabo.",
+      "Ponto de acesso espalha Wi-Fi. Repetidor aumenta o alcance.",
+      "Cada equipamento tem seu papel no caminho da internet."
+     ],
+     "fases": [
+      {
+       "nome": "O switch",
+       "conceitos": [
+        {
+         "id": "equip.switch",
+         "nome": "Switch",
+         "antes": [
+          "lan"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O switch",
+         "texto": "O switch é como uma extensão com inteligência: liga vários aparelhos por cabo na mesma rede e envia os dados só para quem precisa. É muito usado em escritórios.",
+         "termos": [
+          {
+           "termo": "Switch",
+           "definicao": "Liga vários aparelhos por cabo."
+          },
+          {
+           "termo": "Portas",
+           "definicao": "Cada aparelho em uma."
+          },
+          {
+           "termo": "Escritório",
+           "definicao": "Lugar onde é muito comum."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual equipamento liga vários computadores por cabo na mesma rede?",
+         "certa": "Switch",
+         "erradas": [
+          "Mouse",
+          "Webcam",
+          "Pen drive"
+         ],
+         "explicacao": "O switch cria várias portas de rede.",
+         "conceito": "equip.switch",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O switch envia os dados apenas para o aparelho que precisa receber.",
+         "resposta": true,
+         "explicacao": "Ele é eficiente: não grita para todo mundo.",
+         "conceito": "equip.switch",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Um escritório tem 20 computadores por cabo. O que ajuda a ligar todos?",
+         "certa": "Um switch",
+         "erradas": [
+          "Uma lâmpada",
+          "Um relógio",
+          "Um monitor extra"
+         ],
+         "explicacao": "O switch dá portas para muitos aparelhos.",
+         "conceito": "equip.switch",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue o equipamento à função",
+         "pares": [
+          {
+           "esquerda": "Switch",
+           "direita": "Liga aparelhos por cabo"
+          },
+          {
+           "esquerda": "Roteador",
+           "direita": "Liga a rede à internet"
+          },
+          {
+           "esquerda": "Modem",
+           "direita": "Recebe a internet do provedor"
+          }
+         ],
+         "explicacao": "Cada um tem seu papel.",
+         "conceito": "equip.switch",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual equipamento liga vários aparelhos por cabo na mesma rede?",
+         "certa": "Switch",
+         "erradas": [
+          "Mouse",
+          "Webcam",
+          "Teclado"
+         ],
+         "explicacao": "O switch tem várias portas.",
+         "conceito": "equip.switch",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Ponto de acesso e repetidor",
+       "conceitos": [
+        {
+         "id": "equip.ap",
+         "nome": "Ponto de acesso e repetidor",
+         "antes": [
+          "meio.wifi"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Ponto de acesso e repetidor",
+         "texto": "O ponto de acesso espalha Wi-Fi em um lugar onde o sinal não chega bem, ligado por cabo. O repetidor pega o sinal que já existe e repete para ir mais longe.",
+         "termos": [
+          {
+           "termo": "Ponto de acesso",
+           "definicao": "Cria Wi-Fi, ligado por cabo."
+          },
+          {
+           "termo": "Repetidor",
+           "definicao": "Repete o sinal existente."
+          },
+          {
+           "termo": "Alcance",
+           "definicao": "Distância que o Wi-Fi cobre."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O Wi-Fi não chega ao fundo da casa. O que pode ajudar?",
+         "certa": "Um repetidor de sinal",
+         "erradas": [
+          "Uma lâmpada maior",
+          "Um mouse novo",
+          "Um teclado sem fio"
+         ],
+         "explicacao": "O repetidor aumenta o alcance.",
+         "conceito": "equip.ap",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O ponto de acesso ligado por cabo costuma dar um Wi-Fi mais estável que o repetidor.",
+         "resposta": true,
+         "explicacao": "Por usar cabo, ele recebe a internet melhor.",
+         "conceito": "equip.ap",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual equipamento repete o sinal Wi-Fi que já existe?",
+         "certa": "Repetidor",
+         "erradas": [
+          "Switch",
+          "Modem",
+          "Impressora"
+         ],
+         "explicacao": "Repetir o sinal é a função dele.",
+         "conceito": "equip.ap",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Qual equipamento resolve melhor?",
+         "categorias": [
+          "Repetidor",
+          "Ponto de acesso"
+         ],
+         "itens": [
+          {
+           "texto": "Sinal fraco no quarto, sem cabo disponível",
+           "categoria": "Repetidor"
+          },
+          {
+           "texto": "Escritório com cabo passando por todas as salas",
+           "categoria": "Ponto de acesso"
+          },
+          {
+           "texto": "Aumentar rápido o alcance",
+           "categoria": "Repetidor"
+          },
+          {
+           "texto": "Wi-Fi mais estável em um andar",
+           "categoria": "Ponto de acesso"
+          }
+         ],
+         "explicacao": "Repetidor é prático. Ponto de acesso é mais estável.",
+         "conceito": "equip.ap",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o repetidor faz?",
+         "certa": "Repete o sinal Wi-Fi para ir mais longe",
+         "erradas": [
+          "Cria um site",
+          "Troca o IP",
+          "Aumenta a bateria"
+         ],
+         "explicacao": "Ele aumenta o alcance do sinal.",
+         "conceito": "equip.ap",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "O mapa da rede",
+       "conceitos": [
+        {
+         "id": "rede.mapa",
+         "nome": "O mapa da rede",
+         "antes": [
+          "equip.modem",
+          "equip.roteador"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O mapa da rede",
+         "texto": "O caminho da internet em casa costuma ser assim: provedor, modem, roteador e, por fim, os aparelhos. Se um deles falha, tudo depois dele para de funcionar.",
+         "termos": [
+          {
+           "termo": "Provedor",
+           "definicao": "Começo do caminho."
+          },
+          {
+           "termo": "Modem e roteador",
+           "definicao": "Recebem e dividem a internet."
+          },
+          {
+           "termo": "Aparelhos",
+           "definicao": "Fim do caminho."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual a ordem do caminho da internet em casa?",
+         "certa": "Provedor, modem, roteador, aparelhos",
+         "erradas": [
+          "Aparelhos, modem, provedor, roteador",
+          "Roteador, aparelhos, provedor, modem",
+          "Modem, aparelhos, roteador, provedor"
+         ],
+         "explicacao": "A internet vem do provedor até os aparelhos.",
+         "conceito": "rede.mapa",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Se o modem estiver desligado, nenhum aparelho recebe internet.",
+         "resposta": true,
+         "explicacao": "Sem modem, a internet não entra.",
+         "conceito": "rede.mapa",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O Wi-Fi aparece, mas nenhum site abre. Qual parte do caminho vale checar primeiro?",
+         "certa": "O modem e a conexão com o provedor",
+         "erradas": [
+          "O fone de ouvido",
+          "O teclado",
+          "A foto de perfil"
+         ],
+         "explicacao": "O Wi-Fi pode existir mesmo sem internet chegando.",
+         "conceito": "rede.mapa",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada parte ao que acontece se ela falhar",
+         "pares": [
+          {
+           "esquerda": "Modem desligado",
+           "direita": "Sem internet em casa"
+          },
+          {
+           "esquerda": "Roteador desligado",
+           "direita": "Sem Wi-Fi em casa"
+          },
+          {
+           "esquerda": "Celular sem Wi-Fi ligado",
+           "direita": "Só ele fica sem rede"
+          }
+         ],
+         "explicacao": "Cada falha afeta uma parte diferente.",
+         "conceito": "rede.mapa",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por onde a internet passa até chegar ao seu celular?",
+         "certa": "Provedor, modem, roteador, aparelhos",
+         "erradas": [
+          "Aparelhos, roteador, modem, provedor",
+          "Roteador, provedor, aparelhos, modem",
+          "Modem, aparelhos, provedor, roteador"
+         ],
+         "explicacao": "Vem do provedor até os aparelhos.",
+         "conceito": "rede.mapa",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "O escritório tem 24 computadores por cabo e só uma porta livre no roteador. O que ajuda?",
+       "certa": "Um switch ligado ao roteador",
+       "erradas": [
+        "Mais um mouse",
+        "Uma tomada nova",
+        "Trocar o monitor"
+       ],
+       "explicacao": "O switch multiplica as portas.",
+       "conceito": "equip.switch"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual afirmação sobre o switch está correta?",
+       "certa": "Ele liga aparelhos por cabo na mesma rede",
+       "erradas": [
+        "Ele substitui o provedor",
+        "Ele só funciona com Bluetooth",
+        "Ele cria o site"
+       ],
+       "explicacao": "É a função do switch.",
+       "conceito": "equip.switch"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Uma casa de dois andares tem sinal fraco no andar de cima, e há um cabo de rede chegando lá. Qual solução tende a ser mais estável?",
+       "certa": "Um ponto de acesso ligado por cabo",
+       "erradas": [
+        "Um repetidor no meio da escada",
+        "Trocar o nome do Wi-Fi",
+        "Desligar o roteador"
+       ],
+       "explicacao": "O ponto de acesso por cabo é mais estável que o repetidor.",
+       "conceito": "equip.ap"
+      }
+     ],
+     "chamado": "office"
+    },
+    {
+     "lugar": "Mapa das Redes",
+     "titulo": "Tipos de rede",
+     "dicas": [
+      "PAN é a menor: em volta de você. LAN é de um lugar.",
+      "MAN cobre uma cidade. WAN cobre grandes distâncias.",
+      "Na estrela, todos se ligam em um aparelho central."
+     ],
+     "fases": [
+      {
+       "nome": "PAN e LAN",
+       "conceitos": [
+        {
+         "id": "rede.alcance",
+         "nome": "PAN e LAN",
+         "antes": [
+          "lan"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "PAN e LAN",
+         "texto": "As redes têm tamanhos diferentes. A PAN (Personal Area Network) é a rede pessoal, de poucos metros, como o celular com o fone Bluetooth. A LAN (Local Area Network) é a rede de um lugar, como sua casa.",
+         "termos": [
+          {
+           "termo": "PAN",
+           "definicao": "Rede pessoal, bem pertinho."
+          },
+          {
+           "termo": "LAN",
+           "definicao": "Rede local, de um lugar."
+          },
+          {
+           "termo": "Bluetooth",
+           "definicao": "Exemplo de PAN."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Celular conectado ao fone por Bluetooth forma qual tipo de rede?",
+         "certa": "PAN (rede pessoal)",
+         "erradas": [
+          "WAN",
+          "MAN",
+          "Internet"
+         ],
+         "explicacao": "É uma rede bem pequena, em volta de você.",
+         "conceito": "rede.alcance",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "O Wi-Fi do apartamento é um exemplo de LAN.",
+         "resposta": true,
+         "explicacao": "Sim, é uma rede local.",
+         "conceito": "rede.alcance",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual das duas é maior?",
+         "certa": "LAN",
+         "erradas": [
+          "PAN",
+          "Elas têm o mesmo tamanho",
+          "Nenhuma tem tamanho"
+         ],
+         "explicacao": "A LAN cobre um local inteiro. A PAN é bem menor.",
+         "conceito": "rede.alcance",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "PAN ou LAN?",
+         "categorias": [
+          "PAN",
+          "LAN"
+         ],
+         "itens": [
+          {
+           "texto": "Fone Bluetooth no celular",
+           "categoria": "PAN"
+          },
+          {
+           "texto": "Rede de uma escola",
+           "categoria": "LAN"
+          },
+          {
+           "texto": "Smartwatch e celular",
+           "categoria": "PAN"
+          },
+          {
+           "texto": "Wi-Fi do escritório",
+           "categoria": "LAN"
+          }
+         ],
+         "explicacao": "PAN é pessoal. LAN é de um lugar.",
+         "conceito": "rede.alcance",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "A rede entre celular e fone Bluetooth é uma...",
+         "certa": "PAN",
+         "erradas": [
+          "WAN",
+          "MAN",
+          "Internet"
+         ],
+         "explicacao": "É uma rede pessoal.",
+         "conceito": "rede.alcance",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "MAN e WAN",
+       "conceitos": [
+        {
+         "id": "rede.man.wan",
+         "nome": "MAN e WAN",
+         "antes": [
+          "rede.alcance",
+          "internet"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "MAN e WAN",
+         "texto": "A MAN (Metropolitan Area Network) cobre uma cidade. A WAN (Wide Area Network) cobre grandes distâncias, como cidades ou países. A internet é a maior WAN do mundo.",
+         "termos": [
+          {
+           "termo": "MAN",
+           "definicao": "Rede de uma cidade."
+          },
+          {
+           "termo": "WAN",
+           "definicao": "Rede de grandes distâncias."
+          },
+          {
+           "termo": "Internet",
+           "definicao": "A maior WAN do mundo."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual rede liga filiais de uma empresa em cidades diferentes?",
+         "certa": "WAN",
+         "erradas": [
+          "PAN",
+          "LAN",
+          "Bluetooth"
+         ],
+         "explicacao": "WAN cobre grandes distâncias.",
+         "conceito": "rede.man.wan",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "A MAN cobre uma cidade.",
+         "resposta": true,
+         "explicacao": "É isso: Metropolitan Area Network.",
+         "conceito": "rede.man.wan",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é a maior rede do mundo?",
+         "certa": "A internet",
+         "erradas": [
+          "A sua LAN",
+          "O fone Bluetooth",
+          "Uma PAN"
+         ],
+         "explicacao": "A internet liga redes do mundo todo.",
+         "conceito": "rede.man.wan",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada sigla ao alcance",
+         "pares": [
+          {
+           "esquerda": "PAN",
+           "direita": "Pertinho de você"
+          },
+          {
+           "esquerda": "LAN",
+           "direita": "Um lugar"
+          },
+          {
+           "esquerda": "MAN",
+           "direita": "Uma cidade"
+          },
+          {
+           "esquerda": "WAN",
+           "direita": "Países e continentes"
+          }
+         ],
+         "explicacao": "O tamanho aumenta de PAN até WAN.",
+         "conceito": "rede.man.wan",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "A WAN cobre...",
+         "certa": "Grandes distâncias, como cidades ou países",
+         "erradas": [
+          "Uma mesa",
+          "Um bolso",
+          "Uma sala"
+         ],
+         "explicacao": "WAN é a rede de longa distância.",
+         "conceito": "rede.man.wan",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Como ligar a rede",
+       "conceitos": [
+        {
+         "id": "rede.topologia",
+         "nome": "Rede em estrela",
+         "antes": [
+          "equip.switch"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Como ligar a rede",
+         "texto": "Existem várias formas de ligar os aparelhos. A mais comum hoje é a estrela: todos ligados a um aparelho central, como o switch ou o roteador. Se um cabo falha, só um aparelho cai.",
+         "termos": [
+          {
+           "termo": "Estrela",
+           "definicao": "Todos ligados a um centro."
+          },
+          {
+           "termo": "Centro",
+           "definicao": "Roteador ou switch."
+          },
+          {
+           "termo": "Vantagem",
+           "definicao": "Um problema não derruba todo mundo."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Em uma rede em estrela, como os aparelhos se ligam?",
+         "certa": "Todos a um aparelho central",
+         "erradas": [
+          "Um no outro, em fila",
+          "Sem nenhuma ligação",
+          "Só por Bluetooth"
+         ],
+         "explicacao": "O centro liga todo mundo.",
+         "conceito": "rede.topologia",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Na rede em estrela, se um cabo falhar só o aparelho dele fica sem rede.",
+         "resposta": true,
+         "explicacao": "Esse é o ponto forte da estrela.",
+         "conceito": "rede.topologia",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual aparelho costuma ficar no centro de uma rede doméstica?",
+         "certa": "O roteador",
+         "erradas": [
+          "O monitor",
+          "O teclado",
+          "O carregador"
+         ],
+         "explicacao": "O roteador é o centro da rede da casa.",
+         "conceito": "rede.topologia",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Em uma rede em estrela:",
+         "categorias": [
+          "Verdade",
+          "Mito"
+         ],
+         "itens": [
+          {
+           "texto": "Existe um aparelho central",
+           "categoria": "Verdade"
+          },
+          {
+           "texto": "Todos ligam no centro",
+           "categoria": "Verdade"
+          },
+          {
+           "texto": "Um cabo ruim derruba todos",
+           "categoria": "Mito"
+          },
+          {
+           "texto": "É comum em casas e escritórios",
+           "categoria": "Verdade"
+          }
+         ],
+         "explicacao": "Na estrela, um cabo com problema só afeta um aparelho.",
+         "conceito": "rede.topologia",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Na rede em estrela, o que fica no centro?",
+         "certa": "Um aparelho central, como o roteador ou o switch",
+         "erradas": [
+          "Um computador qualquer",
+          "Um cabo único",
+          "Nada"
+         ],
+         "explicacao": "Todos ligam no centro.",
+         "conceito": "rede.topologia",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Seu smartwatch se conecta ao celular por Bluetooth. Que tipo de rede é essa?",
+       "certa": "PAN (rede pessoal)",
+       "erradas": [
+        "WAN",
+        "MAN",
+        "Internet"
+       ],
+       "explicacao": "É uma rede bem pequena, em volta de você.",
+       "conceito": "rede.alcance"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual é a diferença entre PAN e LAN?",
+       "certa": "A PAN é bem menor, em volta da pessoa; a LAN cobre um lugar",
+       "erradas": [
+        "A PAN é do mundo e a LAN é de casa",
+        "Não há diferença",
+        "A LAN só existe sem fio"
+       ],
+       "explicacao": "PAN é pessoal e LAN é de um local.",
+       "conceito": "rede.alcance"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Uma rede liga as agências de um banco em cinco estados. Que tipo de rede é essa?",
+       "certa": "WAN",
+       "erradas": [
+        "PAN",
+        "LAN de casa",
+        "Bluetooth"
+       ],
+       "explicacao": "WAN cobre grandes distâncias.",
+       "conceito": "rede.man.wan"
+      }
+     ]
+    },
+    {
+     "lugar": "Portão Seguro",
+     "titulo": "Segurança básica",
+     "dicas": [
+      "Senha forte e só para quem precisa.",
+      "HTTPS (cadeado) protege a conversa com o site.",
+      "Cuidado com Wi-Fi público e links estranhos."
+     ],
+     "fases": [
+      {
+       "nome": "Senha do Wi-Fi",
+       "conceitos": [
+        {
+         "id": "seg.senha",
+         "nome": "Senha do Wi-Fi",
+         "antes": [
+          "meio.wifi"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Senha do Wi-Fi",
+         "texto": "A senha do Wi-Fi impede que desconhecidos usem a sua internet e vejam o que passa pela sua rede. Prefira uma senha longa e não use datas óbvias ou o nome da família.",
+         "termos": [
+          {
+           "termo": "Senha forte",
+           "definicao": "Longa e difícil de adivinhar."
+          },
+          {
+           "termo": "Rede aberta",
+           "definicao": "Sem senha: qualquer um entra."
+          },
+          {
+           "termo": "Troca",
+           "definicao": "Mude se compartilhou com muita gente."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Por que o Wi-Fi da casa deve ter senha?",
+         "certa": "Para impedir que desconhecidos usem a sua rede",
+         "erradas": [
+          "Para a internet ficar mais bonita",
+          "Para o roteador gastar menos",
+          "Para os sites abrirem mais rápido"
+         ],
+         "explicacao": "A senha protege a rede.",
+         "conceito": "seg.senha",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Uma senha longa e difícil de adivinhar é mais segura.",
+         "resposta": true,
+         "explicacao": "Sim, evite datas e nomes óbvios.",
+         "conceito": "seg.senha",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual destas é a senha mais fraca?",
+         "certa": "123456",
+         "erradas": [
+          "Uma frase longa com números",
+          "Uma sequência aleatória longa",
+          "Quatro palavras sem relação"
+         ],
+         "explicacao": "Sequências simples são fáceis de adivinhar.",
+         "conceito": "seg.senha",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Senha forte ou fraca?",
+         "categorias": [
+          "Forte",
+          "Fraca"
+         ],
+         "itens": [
+          {
+           "texto": "12345678",
+           "categoria": "Fraca"
+          },
+          {
+           "texto": "Nome do cachorro + data de nascimento",
+           "categoria": "Fraca"
+          },
+          {
+           "texto": "Frase longa e esquisita com números",
+           "categoria": "Forte"
+          },
+          {
+           "texto": "Sequência aleatória de 14 caracteres",
+           "categoria": "Forte"
+          }
+         ],
+         "explicacao": "Evite o óbvio e prefira longa.",
+         "conceito": "seg.senha",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é a senha de Wi-Fi mais forte?",
+         "certa": "Uma frase longa com números",
+         "erradas": [
+          "12345678",
+          "Seu nome",
+          "A data de aniversário"
+         ],
+         "explicacao": "Longa e imprevisível é melhor.",
+         "conceito": "seg.senha",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "O cadeado do site",
+       "conceitos": [
+        {
+         "id": "seg.https",
+         "nome": "O cadeado do site (HTTPS)",
+         "antes": [
+          "internet"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "O cadeado do site",
+         "texto": "Quando o endereço do site começa com HTTPS e aparece um cadeado, a conversa entre você e o site é protegida. Em sites sem cadeado, evite digitar senhas e dados do cartão.",
+         "termos": [
+          {
+           "termo": "HTTPS",
+           "definicao": "Versão protegida do HTTP."
+          },
+          {
+           "termo": "Cadeado",
+           "definicao": "Sinal de conexão protegida."
+          },
+          {
+           "termo": "Sem cadeado",
+           "definicao": "Não digite dados importantes."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o cadeado no navegador indica?",
+         "certa": "Que a conexão com o site é protegida",
+         "erradas": [
+          "Que o site é de graça",
+          "Que o site é famoso",
+          "Que o site é rápido"
+         ],
+         "explicacao": "O HTTPS protege a conversa.",
+         "conceito": "seg.https",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Em site sem cadeado, é melhor não digitar senha nem dados de cartão.",
+         "resposta": true,
+         "explicacao": "Sem proteção, outras pessoas podem ver o que você envia.",
+         "conceito": "seg.https",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual endereço é protegido?",
+         "certa": "https://banco.com.br",
+         "erradas": [
+          "http://banco.com.br",
+          "banco.com.br sem cadeado",
+          "um site com alerta de insegurança"
+         ],
+         "explicacao": "HTTPS é a versão protegida.",
+         "conceito": "seg.https",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "ligar",
+         "pergunta": "Ligue cada situação à atitude",
+         "pares": [
+          {
+           "esquerda": "Site com cadeado",
+           "direita": "Pode confiar mais na conexão"
+          },
+          {
+           "esquerda": "Site sem cadeado",
+           "direita": "Evite digitar senhas"
+          },
+          {
+           "esquerda": "Link estranho por mensagem",
+           "direita": "Não clique"
+          }
+         ],
+         "explicacao": "Cadeado ajuda, mas cuidado com links estranhos mesmo assim.",
+         "conceito": "seg.https",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "O que o cadeado do site indica?",
+         "certa": "A conexão é protegida (HTTPS)",
+         "erradas": [
+          "O site é gratuito",
+          "O site é novo",
+          "O site é lento"
+         ],
+         "explicacao": "HTTPS protege a conversa.",
+         "conceito": "seg.https",
+         "dificuldade": 2
+        }
+       ]
+      },
+      {
+       "nome": "Hábitos seguros",
+       "conceitos": [
+        {
+         "id": "seg.habitos",
+         "nome": "Hábitos seguros",
+         "antes": [
+          "seg.senha"
+         ]
+        }
+       ],
+       "itens": [
+        {
+         "tipo": "aprender",
+         "titulo": "Hábitos seguros",
+         "texto": "Pequenos cuidados evitam muito problema: atualizar o celular e o roteador, desconfiar de links estranhos e evitar digitar senhas em Wi-Fi público, como o de aeroportos e cafés.",
+         "termos": [
+          {
+           "termo": "Atualizar",
+           "definicao": "Corrige falhas de segurança."
+          },
+          {
+           "termo": "Wi-Fi público",
+           "definicao": "Evite senhas e banco nele."
+          },
+          {
+           "termo": "Link estranho",
+           "definicao": "Desconfie e não clique."
+          }
+         ]
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual hábito ajuda a manter o celular seguro?",
+         "certa": "Manter o sistema atualizado",
+         "erradas": [
+          "Nunca desligar o aparelho",
+          "Usar a mesma senha em tudo",
+          "Aceitar todo convite"
+         ],
+         "explicacao": "Atualizações corrigem falhas.",
+         "conceito": "seg.habitos",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "verdadeiro_falso",
+         "pergunta": "Wi-Fi público é um bom lugar para acessar o aplicativo do banco.",
+         "resposta": false,
+         "explicacao": "Em Wi-Fi público, evite acessar dados sensíveis.",
+         "conceito": "seg.habitos",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Você recebe uma mensagem com um link que promete um prêmio. O que fazer?",
+         "certa": "Não clicar e apagar a mensagem",
+         "erradas": [
+          "Clicar rápido para garantir",
+          "Enviar para todos os contatos",
+          "Responder com sua senha"
+         ],
+         "explicacao": "Prêmios inesperados costumam ser golpe.",
+         "conceito": "seg.habitos",
+         "dificuldade": 2
+        },
+        {
+         "tipo": "classificar",
+         "pergunta": "Bom hábito ou risco?",
+         "categorias": [
+          "Bom hábito",
+          "Risco"
+         ],
+         "itens": [
+          {
+           "texto": "Atualizar o celular",
+           "categoria": "Bom hábito"
+          },
+          {
+           "texto": "Usar senha longa",
+           "categoria": "Bom hábito"
+          },
+          {
+           "texto": "Clicar em link estranho",
+           "categoria": "Risco"
+          },
+          {
+           "texto": "Passar a senha do Wi-Fi para qualquer um",
+           "categoria": "Risco"
+          }
+         ],
+         "explicacao": "Cuidados simples evitam dores de cabeça.",
+         "conceito": "seg.habitos",
+         "dificuldade": 1
+        },
+        {
+         "tipo": "escolha",
+         "pergunta": "Qual é um bom hábito de segurança?",
+         "certa": "Manter o celular atualizado",
+         "erradas": [
+          "Clicar em links desconhecidos",
+          "Usar uma senha só",
+          "Aceitar qualquer convite"
+         ],
+         "explicacao": "Atualizações corrigem falhas.",
+         "conceito": "seg.habitos",
+         "dificuldade": 2
+        }
+       ]
+      }
+     ],
+     "extras": [
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual é a senha de Wi-Fi mais segura?",
+       "certa": "Uma frase longa e esquisita com números",
+       "erradas": [
+        "123456",
+        "O nome do cachorro",
+        "A data de aniversário"
+       ],
+       "explicacao": "Senhas longas e imprevisíveis são mais seguras.",
+       "conceito": "seg.senha"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Por que não é bom usar a mesma senha para tudo?",
+       "certa": "Se uma vazar, as outras ficam expostas",
+       "erradas": [
+        "Porque senhas se cansam",
+        "Porque o roteador reclama",
+        "Porque ocupa memória"
+       ],
+       "explicacao": "Uma senha vazada abre todas as contas.",
+       "conceito": "seg.senha"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você vai pagar uma compra e o site está sem cadeado. O que fazer?",
+       "certa": "Não digitar dados do cartão",
+       "erradas": [
+        "Digitar rápido",
+        "Mandar a senha por mensagem",
+        "Ignorar o aviso"
+       ],
+       "explicacao": "Sem proteção, evite dados sensíveis.",
+       "conceito": "seg.https"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "bate_bola": [
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é uma rede de computadores?",
+   "certa": "Aparelhos ligados para trocar informações",
+   "erradas": [
+    "Um tipo de programa",
+    "Um cabo muito longo"
+   ],
+   "explicacao": "Rede é um grupo de aparelhos conectados.",
+   "conceito": "rede.def",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como uma rede funciona?",
+   "certa": "Os aparelhos enviam e recebem dados",
+   "erradas": [
+    "Cada aparelho trabalha isolado",
+    "Só funciona com pen drive"
+   ],
+   "explicacao": "Na rede, os aparelhos trocam dados entre si.",
+   "conceito": "rede.def",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Celular e TV no mesmo Wi-Fi formam uma rede.",
+   "resposta": true,
+   "explicacao": "Aparelhos ligados entre si já são uma rede.",
+   "conceito": "rede.def",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Para que serve uma rede?",
+   "certa": "Compartilhar internet, arquivos e impressora",
+   "erradas": [
+    "Deixar o aparelho mais pesado",
+    "Apagar arquivos"
+   ],
+   "explicacao": "A rede serve para compartilhar.",
+   "conceito": "rede.uso",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual é um uso comum da rede?",
+   "certa": "Vários aparelhos usando a mesma impressora",
+   "erradas": [
+    "Carregar a bateria",
+    "Ligar a TV na tomada"
+   ],
+   "explicacao": "A impressora compartilhada é um uso típico.",
+   "conceito": "rede.uso",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Uma rede só serve para acessar a internet.",
+   "resposta": false,
+   "explicacao": "Ela também compartilha arquivos e impressoras.",
+   "conceito": "rede.uso",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um host?",
+   "certa": "Qualquer aparelho conectado à rede",
+   "erradas": [
+    "Só o computador mais forte",
+    "O cabo da rede"
+   ],
+   "explicacao": "Host é todo aparelho na rede.",
+   "conceito": "rede.host",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual destes é um host?",
+   "certa": "Um celular conectado ao Wi-Fi",
+   "erradas": [
+    "Um cabo guardado na gaveta",
+    "A tomada da parede"
+   ],
+   "explicacao": "Para ser host, o aparelho precisa estar na rede.",
+   "conceito": "rede.host",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Uma TV conectada ao Wi-Fi é um host.",
+   "resposta": true,
+   "explicacao": "Qualquer aparelho conectado é host.",
+   "conceito": "rede.host",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é uma LAN?",
+   "certa": "Uma rede local, como a de casa",
+   "erradas": [
+    "A rede do mundo todo",
+    "Um tipo de cabo"
+   ],
+   "explicacao": "LAN é a rede local.",
+   "conceito": "lan",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Que área uma LAN costuma cobrir?",
+   "certa": "Casa, sala ou escritório",
+   "erradas": [
+    "Vários países",
+    "Só um aparelho"
+   ],
+   "explicacao": "A LAN cobre um espaço pequeno.",
+   "conceito": "lan",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Dois aparelhos na mesma LAN podem conversar sem internet.",
+   "resposta": true,
+   "explicacao": "A LAN funciona mesmo sem internet.",
+   "conceito": "lan",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o roteador faz?",
+   "certa": "Divide a internet entre os aparelhos",
+   "erradas": [
+    "Guarda os arquivos",
+    "Imprime documentos"
+   ],
+   "explicacao": "O roteador distribui a conexão.",
+   "conceito": "equip.roteador",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Onde o roteador fica numa rede de casa?",
+   "certa": "No centro, ligando os aparelhos",
+   "erradas": [
+    "Dentro do celular",
+    "Só no provedor"
+   ],
+   "explicacao": "Ele liga a casa à internet.",
+   "conceito": "equip.roteador",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "O roteador cria o Wi-Fi da casa.",
+   "resposta": true,
+   "explicacao": "Em geral, é ele que emite o Wi-Fi.",
+   "conceito": "equip.roteador",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é o modem?",
+   "certa": "Aparelho que recebe o sinal do provedor",
+   "erradas": [
+    "Um tipo de celular",
+    "Um teclado"
+   ],
+   "explicacao": "O modem faz a ponte com o provedor.",
+   "conceito": "equip.modem",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como o modem ajuda?",
+   "certa": "Traduz o sinal do provedor para sua rede",
+   "erradas": [
+    "Aumenta o volume",
+    "Carrega a bateria"
+   ],
+   "explicacao": "Ele converte o sinal para sua rede entender.",
+   "conceito": "equip.modem",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Muitas vezes, modem e roteador vêm no mesmo aparelho.",
+   "resposta": true,
+   "explicacao": "Isso é comum nas casas.",
+   "conceito": "equip.modem",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é o cabo de rede?",
+   "certa": "Fio que liga aparelhos e leva dados",
+   "erradas": [
+    "Cabo de energia",
+    "Cabo de antena de TV"
+   ],
+   "explicacao": "Ele transporta dados.",
+   "conceito": "meio.transmissao",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual a vantagem do cabo?",
+   "certa": "Conexão estável e rápida",
+   "erradas": [
+    "Funciona sem ligar em nada",
+    "Dispensa qualquer equipamento"
+   ],
+   "explicacao": "O cabo costuma ser mais estável que o Wi-Fi.",
+   "conceito": "meio.transmissao",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Um cabo de rede pode ligar o computador ao roteador.",
+   "resposta": true,
+   "explicacao": "É um jeito comum de conectar.",
+   "conceito": "meio.transmissao",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é Wi-Fi?",
+   "certa": "Uma rede sem fio",
+   "erradas": [
+    "Um tipo de cabo",
+    "Um aplicativo"
+   ],
+   "explicacao": "Wi-Fi conecta sem cabo.",
+   "conceito": "meio.wifi",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como o Wi-Fi leva os dados?",
+   "certa": "Por ondas de rádio",
+   "erradas": [
+    "Pela tomada",
+    "Por um cabo escondido"
+   ],
+   "explicacao": "O sinal viaja pelo ar.",
+   "conceito": "meio.wifi",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Quanto mais longe do roteador, mais fraco o sinal tende a ficar.",
+   "resposta": true,
+   "explicacao": "A distância enfraquece o Wi-Fi.",
+   "conceito": "meio.wifi",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é fibra óptica?",
+   "certa": "Cabo que leva dados como luz",
+   "erradas": [
+    "Fio de cobre grosso",
+    "Um tipo de Wi-Fi"
+   ],
+   "explicacao": "A fibra usa pulsos de luz.",
+   "conceito": "meio.fibra",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Por que a fibra é rápida?",
+   "certa": "Usa pulsos de luz",
+   "erradas": [
+    "Usa mais energia",
+    "Usa mais cabos"
+   ],
+   "explicacao": "A luz leva dados muito rápido.",
+   "conceito": "meio.fibra",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "A fibra óptica pode levar a internet até a casa.",
+   "resposta": true,
+   "explicacao": "Muitos provedores entregam por fibra.",
+   "conceito": "meio.fibra",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é a internet?",
+   "certa": "Uma rede de redes",
+   "erradas": [
+    "Um computador gigante",
+    "Um aplicativo de celular"
+   ],
+   "explicacao": "Ela liga muitas redes entre si.",
+   "conceito": "internet",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como a internet existe?",
+   "certa": "Muitas redes ligadas entre si",
+   "erradas": [
+    "Um servidor único",
+    "Um app que se instala"
+   ],
+   "explicacao": "São redes conectadas pelo mundo.",
+   "conceito": "internet",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Internet e Wi-Fi são a mesma coisa.",
+   "resposta": false,
+   "explicacao": "Wi-Fi é só um jeito de se conectar sem fio.",
+   "conceito": "internet",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um provedor de internet?",
+   "certa": "Empresa que entrega a internet até você",
+   "erradas": [
+    "Um site de busca",
+    "Um tipo de roteador"
+   ],
+   "explicacao": "O provedor dá o acesso.",
+   "conceito": "isp",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como a internet chega até sua casa?",
+   "certa": "Pelo provedor, por cabo ou fibra",
+   "erradas": [
+    "Pela tomada de energia",
+    "Por um pen drive"
+   ],
+   "explicacao": "O provedor leva o sinal até você.",
+   "conceito": "isp",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "O provedor conecta sua casa à internet.",
+   "resposta": true,
+   "explicacao": "É o papel dele.",
+   "conceito": "isp",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um servidor?",
+   "certa": "Computador que entrega dados a quem pede",
+   "erradas": [
+    "O aparelho que pede dados",
+    "O cabo da rede"
+   ],
+   "explicacao": "O servidor atende pedidos.",
+   "conceito": "cliente.servidor",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como funciona cliente e servidor?",
+   "certa": "O cliente pede e o servidor responde",
+   "erradas": [
+    "O servidor pede e o cliente responde",
+    "Ninguém responde"
+   ],
+   "explicacao": "Quem pede é o cliente.",
+   "conceito": "cliente.servidor",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Ao abrir um site, seu celular age como cliente.",
+   "resposta": true,
+   "explicacao": "Ele pede a página ao servidor.",
+   "conceito": "cliente.servidor",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é o endereço IP?",
+   "certa": "O endereço de um aparelho na rede",
+   "erradas": [
+    "A senha do Wi-Fi",
+    "O nome do site"
+   ],
+   "explicacao": "O IP identifica o aparelho.",
+   "conceito": "ip.v4",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Para que serve o IP?",
+   "certa": "Para os dados chegarem ao aparelho certo",
+   "erradas": [
+    "Para deixar a tela mais clara",
+    "Para gastar menos bateria"
+   ],
+   "explicacao": "Sem endereço, o dado se perde.",
+   "conceito": "ip.v4",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Dois aparelhos da mesma rede devem ter o mesmo IP.",
+   "resposta": false,
+   "explicacao": "Cada aparelho precisa de um IP diferente.",
+   "conceito": "ip.v4",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um IP privado?",
+   "certa": "IP usado dentro da sua rede local",
+   "erradas": [
+    "IP usado pelo mundo todo",
+    "A senha da rede"
+   ],
+   "explicacao": "O IP privado vale só na rede local.",
+   "conceito": "ip.privado",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Por qual IP o mundo enxerga sua rede?",
+   "certa": "Pelo IP público",
+   "erradas": [
+    "Pelo IP privado de cada aparelho",
+    "Pelo nome do Wi-Fi"
+   ],
+   "explicacao": "O IP público é o da rede para fora.",
+   "conceito": "ip.privado",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "O IP 192.168.1.10 é um exemplo de IP privado.",
+   "resposta": true,
+   "explicacao": "Essa faixa é de IPs privados.",
+   "conceito": "ip.privado",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o DHCP faz?",
+   "certa": "Entrega um IP automaticamente",
+   "erradas": [
+    "Esconde o Wi-Fi",
+    "Guarda fotos"
+   ],
+   "explicacao": "Ele distribui os IPs.",
+   "conceito": "ip.mac.dhcp",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é o endereço MAC?",
+   "certa": "Identificador único da placa de rede",
+   "erradas": [
+    "Uma senha de Wi-Fi",
+    "O nome do roteador"
+   ],
+   "explicacao": "O MAC vem de fábrica.",
+   "conceito": "ip.mac.dhcp",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Com DHCP, não precisa digitar o IP à mão.",
+   "resposta": true,
+   "explicacao": "A configuração é automática.",
+   "conceito": "ip.mac.dhcp",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o DNS faz?",
+   "certa": "Transforma nome de site em número (IP)",
+   "erradas": [
+    "Aumenta a velocidade",
+    "Protege contra vírus"
+   ],
+   "explicacao": "Ele traduz nomes em endereços.",
+   "conceito": "dns",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como o DNS ajuda você?",
+   "certa": "Você digita o nome e ele acha o IP",
+   "erradas": [
+    "Ele troca sua senha",
+    "Ele desliga o Wi-Fi"
+   ],
+   "explicacao": "Você não precisa decorar números.",
+   "conceito": "dns",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Sem DNS, ainda dá para acessar um site pelo IP.",
+   "resposta": true,
+   "explicacao": "O IP continua funcionando.",
+   "conceito": "dns",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O DNS é parecido com...",
+   "certa": "Uma lista de contatos",
+   "erradas": [
+    "Uma calculadora",
+    "Uma lanterna"
+   ],
+   "explicacao": "Nome vira número, como na agenda.",
+   "conceito": "dns.agenda",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Na lista de contatos do DNS, o IP seria...",
+   "certa": "O número de telefone",
+   "erradas": [
+    "O nome do contato",
+    "A foto do contato"
+   ],
+   "explicacao": "O nome do site é o contato; o IP é o telefone.",
+   "conceito": "dns.agenda",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "No DNS, o nome do site é como o nome do contato.",
+   "resposta": true,
+   "explicacao": "E o IP é o telefone dele.",
+   "conceito": "dns.agenda",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Um site não abre, mas os outros sim. O que fazer?",
+   "certa": "Testar de novo e verificar o endereço",
+   "erradas": [
+    "Trocar o roteador",
+    "Comprar internet nova"
+   ],
+   "explicacao": "A falha pode ser só daquele site.",
+   "conceito": "dns.falha",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como saber se a internet caiu?",
+   "certa": "Tentar abrir outros sites",
+   "erradas": [
+    "Mudar a cor da tela",
+    "Desligar a luz"
+   ],
+   "explicacao": "Se nenhum abre, a conexão pode ter caído.",
+   "conceito": "dns.falha",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Se nenhum site abre, o problema pode ser a conexão.",
+   "resposta": true,
+   "explicacao": "Vale checar o roteador e o modem.",
+   "conceito": "dns.falha",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um bit?",
+   "certa": "A menor unidade de dado (0 ou 1)",
+   "erradas": [
+    "Um tipo de cabo",
+    "Uma senha"
+   ],
+   "explicacao": "Todo dado digital vira bits.",
+   "conceito": "dados.bits",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Quantos bits tem 1 byte?",
+   "certa": "8",
+   "erradas": [
+    "2",
+    "100"
+   ],
+   "explicacao": "1 byte = 8 bits.",
+   "conceito": "dados.bits",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Todo dado digital é guardado como 0 e 1.",
+   "resposta": true,
+   "explicacao": "É a linguagem dos computadores.",
+   "conceito": "dados.bits",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um pacote?",
+   "certa": "Pedaço pequeno de dados enviado pela rede",
+   "erradas": [
+    "Uma caixa física",
+    "Um cabo"
+   ],
+   "explicacao": "Os dados viajam em pacotes.",
+   "conceito": "pacotes",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Por que dividir em pacotes?",
+   "certa": "Para enviar e reenviar partes com facilidade",
+   "erradas": [
+    "Para gastar mais internet",
+    "Para esconder o IP"
+   ],
+   "explicacao": "Se um pacote se perde, só ele é reenviado.",
+   "conceito": "pacotes",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Um arquivo grande é enviado em vários pacotes.",
+   "resposta": true,
+   "explicacao": "O destino junta tudo no final.",
+   "conceito": "pacotes",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é a banda?",
+   "certa": "Quanto de dado passa por segundo",
+   "erradas": [
+    "O tempo de espera",
+    "O tamanho da tela"
+   ],
+   "explicacao": "Banda é a capacidade da conexão.",
+   "conceito": "banda.latencia",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é a latência?",
+   "certa": "O atraso entre pedir e receber",
+   "erradas": [
+    "A cor do Wi-Fi",
+    "O tamanho do arquivo"
+   ],
+   "explicacao": "Latência baixa é resposta rápida.",
+   "conceito": "banda.latencia",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Em jogo online, uma latência baixa é melhor.",
+   "resposta": true,
+   "explicacao": "Menos atraso, mais fluidez.",
+   "conceito": "banda.latencia",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um switch?",
+   "certa": "Aparelho que liga vários aparelhos na rede local",
+   "erradas": [
+    "Um tipo de celular",
+    "O provedor"
+   ],
+   "explicacao": "O switch distribui a rede por cabo.",
+   "conceito": "equip.switch",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Como o switch trabalha?",
+   "certa": "Envia os dados só ao aparelho certo",
+   "erradas": [
+    "Apaga os dados",
+    "Cria a senha do Wi-Fi"
+   ],
+   "explicacao": "Ele encaminha para o destino.",
+   "conceito": "equip.switch",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "O switch ajuda a ligar vários computadores por cabo.",
+   "resposta": true,
+   "explicacao": "Ele tem várias portas.",
+   "conceito": "equip.switch",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é um ponto de acesso?",
+   "certa": "Aparelho que leva o Wi-Fi a mais lugares",
+   "erradas": [
+    "Um cabo longo",
+    "Um teclado"
+   ],
+   "explicacao": "Ele amplia a rede sem fio.",
+   "conceito": "equip.ap",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Para que serve o repetidor?",
+   "certa": "Estender o alcance do Wi-Fi",
+   "erradas": [
+    "Diminuir a velocidade",
+    "Imprimir"
+   ],
+   "explicacao": "Ele repete o sinal.",
+   "conceito": "equip.ap",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Um repetidor pode ajudar numa casa grande com sinal fraco.",
+   "resposta": true,
+   "explicacao": "Ele alcança cantos distantes.",
+   "conceito": "equip.ap",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual a ordem comum, da internet ao celular?",
+   "certa": "Provedor, modem, roteador, celular",
+   "erradas": [
+    "Celular, roteador, modem, provedor",
+    "Roteador, provedor, celular, modem"
+   ],
+   "explicacao": "O sinal passa por cada aparelho na ordem.",
+   "conceito": "rede.mapa",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que um mapa da rede mostra?",
+   "certa": "Como os aparelhos estão ligados",
+   "erradas": [
+    "O clima da cidade",
+    "O saldo do celular"
+   ],
+   "explicacao": "Ele ajuda a achar problemas.",
+   "conceito": "rede.mapa",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Saber como os aparelhos se ligam ajuda a achar o defeito.",
+   "resposta": true,
+   "explicacao": "Você investiga na ordem certa.",
+   "conceito": "rede.mapa",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é uma PAN?",
+   "certa": "Rede pessoal, bem pertinho de você",
+   "erradas": [
+    "A rede do país inteiro",
+    "Uma rede de cidade"
+   ],
+   "explicacao": "PAN é a rede pessoal.",
+   "conceito": "rede.alcance",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual é um exemplo de PAN?",
+   "certa": "Celular com fone Bluetooth",
+   "erradas": [
+    "A internet do bairro",
+    "A rede de uma universidade"
+   ],
+   "explicacao": "Aparelhos bem próximos formam uma PAN.",
+   "conceito": "rede.alcance",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "A LAN costuma ser maior que a PAN.",
+   "resposta": true,
+   "explicacao": "A PAN é ainda mais pessoal.",
+   "conceito": "rede.alcance",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é uma MAN?",
+   "certa": "Rede que cobre uma cidade",
+   "erradas": [
+    "Rede de uma sala",
+    "Rede de um fone"
+   ],
+   "explicacao": "MAN é a rede metropolitana.",
+   "conceito": "rede.man.wan",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que é uma WAN?",
+   "certa": "Rede de longa distância",
+   "erradas": [
+    "Rede só da casa",
+    "Rede do fone"
+   ],
+   "explicacao": "WAN liga lugares distantes.",
+   "conceito": "rede.man.wan",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "A internet é um exemplo de WAN.",
+   "resposta": true,
+   "explicacao": "Ela cobre o mundo todo.",
+   "conceito": "rede.man.wan",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Na rede em estrela, quem fica no centro?",
+   "certa": "Um aparelho central, como switch ou roteador",
+   "erradas": [
+    "O computador mais velho",
+    "Nada"
+   ],
+   "explicacao": "Todos se ligam ao centro.",
+   "conceito": "rede.topologia",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual a vantagem da estrela?",
+   "certa": "Se um cabo falha, os outros seguem funcionando",
+   "erradas": [
+    "Usa um só cabo para tudo",
+    "Dispensa equipamentos"
+   ],
+   "explicacao": "Cada aparelho tem seu próprio cabo.",
+   "conceito": "rede.topologia",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Na estrela, cada aparelho liga ao centro.",
+   "resposta": true,
+   "explicacao": "É o desenho em forma de estrela.",
+   "conceito": "rede.topologia",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual senha de Wi-Fi é mais forte?",
+   "certa": "Uma frase longa com números",
+   "erradas": [
+    "12345678",
+    "O seu nome"
+   ],
+   "explicacao": "Longa e imprevisível é melhor.",
+   "conceito": "seg.senha",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Por que proteger o Wi-Fi com senha?",
+   "certa": "Para impedir que estranhos entrem",
+   "erradas": [
+    "Para o Wi-Fi ficar mais bonito",
+    "Para economizar energia"
+   ],
+   "explicacao": "Senha protege sua rede.",
+   "conceito": "seg.senha",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "A data de aniversário é uma boa senha.",
+   "resposta": false,
+   "explicacao": "É fácil de adivinhar.",
+   "conceito": "seg.senha",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o cadeado do site indica?",
+   "certa": "A conexão é protegida (HTTPS)",
+   "erradas": [
+    "O site é gratuito",
+    "O site é novo"
+   ],
+   "explicacao": "HTTPS protege a conversa.",
+   "conceito": "seg.https",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que o HTTPS faz?",
+   "certa": "Protege os dados entre você e o site",
+   "erradas": [
+    "Apaga os anúncios",
+    "Deixa tudo mais rápido sempre"
+   ],
+   "explicacao": "Os dados viajam protegidos.",
+   "conceito": "seg.https",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Antes de digitar dados importantes, vale conferir o cadeado.",
+   "resposta": true,
+   "explicacao": "É um sinal de conexão protegida.",
+   "conceito": "seg.https",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Qual é um hábito seguro?",
+   "certa": "Manter o celular atualizado",
+   "erradas": [
+    "Clicar em links desconhecidos",
+    "Usar a mesma senha em tudo"
+   ],
+   "explicacao": "Atualizações corrigem falhas.",
+   "conceito": "seg.habitos",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O que fazer com um link estranho?",
+   "certa": "Não clicar",
+   "erradas": [
+    "Clicar rápido",
+    "Mandar para todo mundo"
+   ],
+   "explicacao": "Link desconhecido pode ser golpe.",
+   "conceito": "seg.habitos",
+   "dificuldade": 1
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Atualizar o aparelho corrige falhas de segurança.",
+   "resposta": true,
+   "explicacao": "Por isso vale atualizar sempre.",
+   "conceito": "seg.habitos",
+   "dificuldade": 1
+  }
+ ],
+ "casos": [
+  {
+   "id": "wifi",
+   "title": "O Wi-Fi não conecta",
+   "skill": "Diagnosticar o Wi-Fi",
+   "skillText": "Investigar celular, roteador e cabo para descobrir por que a internet não chega.",
+   "intro": "Seu primo chegou e disse: “O Wi-Fi da sua casa não funciona!” Descubra o que está acontecendo.",
+   "devices": [
+    {
+     "id": "phone",
+     "name": "Celular",
+     "ic": "phone"
+    },
+    {
+     "id": "router",
+     "name": "Roteador",
+     "ic": "router"
+    },
+    {
+     "id": "cable",
+     "name": "Cabo da internet",
+     "ic": "cable"
+    }
+   ],
+   "faults": [
+    {
+     "id": "router_off",
+     "cause": "O roteador está desligado",
+     "fix": "Você ligou o roteador na tomada e as luzes acenderam.",
+     "why": "Sem energia, o roteador não cria o Wi-Fi, então nenhuma rede aparece nos aparelhos.",
+     "need": [
+      "router"
+     ],
+     "clues": {
+      "phone": "A lista de Wi-Fi está vazia. Nenhuma rede aparece, nem a da sua casa.",
+      "router": "Todas as luzes estão apagadas. Ele parece estar sem energia.",
+      "cable": "O cabo da internet está bem encaixado na parede e no roteador."
+     }
+    },
+    {
+     "id": "cable_out",
+     "cause": "O cabo da internet está solto",
+     "fix": "Você encaixou o cabo de volta na porta do roteador.",
+     "why": "O Wi-Fi existe, mas sem o cabo o roteador não recebe a internet do provedor.",
+     "need": [
+      "router",
+      "cable"
+     ],
+     "clues": {
+      "phone": "O celular conecta ao Wi-Fi, mas mostra “Conectado, sem internet”.",
+      "router": "A luz de energia está acesa, mas a luz da internet está apagada.",
+      "cable": "Uma ponta do cabo está meio fora da porta do roteador."
+     }
+    },
+    {
+     "id": "phone_air",
+     "cause": "O celular está no modo avião",
+     "fix": "Você desativou o modo avião e o celular achou o Wi-Fi.",
+     "why": "No modo avião o celular desliga todas as conexões sem fio, mesmo com a rede funcionando.",
+     "need": [
+      "phone"
+     ],
+     "clues": {
+      "phone": "Há um ícone de avião no topo da tela. O Wi-Fi está desativado.",
+      "router": "Todas as luzes estão acesas. O roteador está funcionando normalmente.",
+      "cable": "O cabo da internet está bem encaixado."
+     }
+    }
+   ]
+  },
+  {
+   "id": "office",
+   "title": "A internet caiu no escritório",
+   "skill": "Diagnosticar queda de internet",
+   "skillText": "Separar problema no cabo, no roteador e no provedor.",
+   "intro": "No escritório, uma pessoa não consegue abrir nenhuma página. O chefe pediu ajuda ao Pingo e ao time de TI: você.",
+   "devices": [
+    {
+     "id": "pc",
+     "name": "Computador",
+     "ic": "pc"
+    },
+    {
+     "id": "cable",
+     "name": "Cabo de rede",
+     "ic": "cable"
+    },
+    {
+     "id": "router",
+     "name": "Roteador",
+     "ic": "router"
+    },
+    {
+     "id": "isp",
+     "name": "Provedor",
+     "ic": "cloud"
+    }
+   ],
+   "faults": [
+    {
+     "id": "pc_cable",
+     "cause": "O cabo de rede do computador está solto",
+     "fix": "Você encaixou o cabo no computador e a rede voltou.",
+     "why": "Sem o cabo, aquele computador não consegue falar com a rede, mesmo que o resto esteja perfeito.",
+     "need": [
+      "pc",
+      "cable"
+     ],
+     "clues": {
+      "pc": "O ícone de rede mostra um X vermelho: nenhum cabo detectado.",
+      "cable": "Uma ponta do cabo está fora da entrada do computador.",
+      "router": "Luzes normais. Os outros computadores estão navegando.",
+      "isp": "Sem avisos de falha. Os outros computadores estão online."
+     }
+    },
+    {
+     "id": "router_hang",
+     "cause": "O roteador travou e precisa reiniciar",
+     "fix": "Você desligou o roteador por 30 segundos e ligou de novo. A internet voltou.",
+     "why": "Roteadores podem travar. Reiniciar limpa o travamento e refaz a conexão com o provedor.",
+     "need": [
+      "router"
+     ],
+     "clues": {
+      "pc": "Conectado à rede do escritório, mas nenhuma página abre.",
+      "cable": "O cabo está bem encaixado.",
+      "router": "As luzes estão acesas, mas a luz da internet pisca sem parar.",
+      "isp": "O aplicativo da operadora não mostra nenhuma falha na região."
+     }
+    },
+    {
+     "id": "isp_down",
+     "cause": "O provedor de internet está fora do ar",
+     "fix": "Você ligou para o provedor, abriu um chamado e aguardou o reparo. A internet voltou depois.",
+     "why": "Quando o problema está na rua, nada que você faça dentro do escritório resolve. É hora de avisar o provedor.",
+     "need": [
+      "router",
+      "isp"
+     ],
+     "clues": {
+      "pc": "Conectado à rede do escritório, mas nenhuma página abre.",
+      "cable": "O cabo está bem encaixado.",
+      "router": "A luz da internet está vermelha e fixa, sem piscar.",
+      "isp": "O aplicativo da operadora avisa: “Falha na região. Previsão de reparo: 2 horas.”"
+     }
+    }
+   ]
+  },
+  {
+   "id": "dns",
+   "title": "O site não abre",
+   "skill": "Diagnosticar DNS e sites",
+   "skillText": "Descobrir se a falha está no DNS, no site ou na sua conexão.",
+   "intro": "Você tenta abrir um site, mas só aparece erro. Será que é a sua internet, o DNS ou o próprio site?",
+   "devices": [
+    {
+     "id": "pc",
+     "name": "Seu computador",
+     "ic": "pc"
+    },
+    {
+     "id": "router",
+     "name": "Roteador",
+     "ic": "router"
+    },
+    {
+     "id": "dns",
+     "name": "DNS",
+     "ic": "book"
+    },
+    {
+     "id": "site",
+     "name": "Servidor do site",
+     "ic": "server"
+    }
+   ],
+   "faults": [
+    {
+     "id": "dns_bad",
+     "cause": "O DNS não está traduzindo o nome do site",
+     "fix": "Você trocou o DNS do roteador por um que funciona e o site abriu pelo nome.",
+     "why": "Sem DNS, o nome não vira número. O site está bem: digitando o IP, ele abre.",
+     "need": [
+      "pc",
+      "dns"
+     ],
+     "clues": {
+      "pc": "Outros aplicativos funcionam, mas o navegador diz “não foi possível encontrar o site”.",
+      "router": "Luzes normais. A internet está conectada.",
+      "dns": "Não responde: ele não consegue traduzir o nome em número.",
+      "site": "Se você digita o número (IP) do site, ele abre normalmente."
+     }
+    },
+    {
+     "id": "site_down",
+     "cause": "O servidor do site está fora do ar",
+     "fix": "Você avisou o dono do site e tentou de novo mais tarde, quando o servidor voltou.",
+     "why": "Quando só um site falha e os outros abrem, o problema costuma estar no servidor dele, não na sua rede.",
+     "need": [
+      "pc",
+      "site"
+     ],
+     "clues": {
+      "pc": "Outros sites abrem normalmente. Só este não abre.",
+      "router": "Tudo normal.",
+      "dns": "Traduz o nome certinho para o número do site.",
+      "site": "O servidor não responde: está desligado."
+     }
+    },
+    {
+     "id": "no_net",
+     "cause": "O roteador está sem internet",
+     "fix": "Você verificou o cabo, reiniciou o roteador e a conexão voltou. Depois disso, o site abriu.",
+     "why": "Se nenhum site abre, o problema está na sua conexão, e não no DNS nem no site.",
+     "need": [
+      "pc",
+      "router"
+     ],
+     "clues": {
+      "pc": "Nenhum site abre, nem os que você sempre usa.",
+      "router": "A luz da internet está apagada: o roteador está sem conexão.",
+      "dns": "Não dá para consultá-lo, porque a internet não chega.",
+      "site": "Não dá para saber, porque a sua internet está fora."
+     }
+    }
+   ]
+  },
+  {
+   "id": "lenta",
+   "title": "A internet está lenta",
+   "skill": "Diagnosticar lentidão",
+   "skillText": "Separar sinal fraco, tráfego pesado e problema no plano de internet.",
+   "intro": "Toda noite o vídeo trava e as páginas demoram a abrir. A internet não caiu, mas está muito lenta. Descubra o motivo.",
+   "devices": [
+    {
+     "id": "phone",
+     "name": "Celular",
+     "ic": "phone"
+    },
+    {
+     "id": "router",
+     "name": "Roteador",
+     "ic": "router"
+    },
+    {
+     "id": "pc",
+     "name": "Computador da sala",
+     "ic": "pc"
+    }
+   ],
+   "faults": [
+    {
+     "id": "far_wifi",
+     "cause": "O sinal do Wi-Fi está fraco, longe do roteador",
+     "fix": "Você aproximou o celular do roteador (ou ligou por cabo) e a velocidade voltou ao normal.",
+     "why": "O Wi-Fi enfraquece com a distância e com paredes. O cabo não sofre com isso.",
+     "need": [
+      "phone",
+      "router"
+     ],
+     "clues": {
+      "phone": "O Wi-Fi mostra só 1 barrinha de sinal. Perto do roteador, o mesmo celular mostra 4.",
+      "router": "Luzes normais. Ele fica no outro lado da casa, atrás de uma parede grossa.",
+      "pc": "O computador da sala, ligado por cabo, navega rápido."
+     }
+    },
+    {
+     "id": "heavy_use",
+     "cause": "Outro aparelho está usando muita internet",
+     "fix": "Você pausou o download pesado e a internet dos outros aparelhos voltou a correr.",
+     "why": "A internet da casa é dividida entre todos os aparelhos. Um download enorme pode ocupar quase tudo.",
+     "need": [
+      "router",
+      "pc"
+     ],
+     "clues": {
+      "phone": "O sinal está cheio, mas tudo carrega devagar.",
+      "router": "A luz de dados pisca sem parar: há muito tráfego passando.",
+      "pc": "Está baixando um jogo de 80 GB. A barra de download está usando quase toda a banda."
+     }
+    },
+    {
+     "id": "slow_plan",
+     "cause": "A velocidade que chega do provedor está baixa",
+     "fix": "Você mostrou o teste de velocidade ao provedor, que corrigiu o problema na linha.",
+     "why": "Se até o cabo está lento e ninguém está usando muito, o problema vem de fora: do provedor.",
+     "need": [
+      "pc",
+      "router"
+     ],
+     "clues": {
+      "phone": "Sinal cheio, mas lento como o resto.",
+      "router": "Luzes normais e cabo bem encaixado. Nada fora do comum.",
+      "pc": "Mesmo ligado por cabo e sem downloads, o teste mostra 2 Mbps. O plano contratado é de 200 Mbps."
+     }
+    }
+   ]
+  },
+  {
+   "id": "print",
+   "title": "A impressora não imprime",
+   "skill": "Diagnosticar rede do escritório",
+   "skillText": "Investigar IP repetido, rede errada e aparelho desligado.",
+   "intro": "No escritório, ninguém consegue imprimir. O computador está navegando normalmente, então o problema é entre ele e a impressora.",
+   "devices": [
+    {
+     "id": "pc",
+     "name": "Computador",
+     "ic": "pc"
+    },
+    {
+     "id": "printer",
+     "name": "Impressora",
+     "ic": "printer"
+    },
+    {
+     "id": "router",
+     "name": "Roteador",
+     "ic": "router"
+    }
+   ],
+   "faults": [
+    {
+     "id": "printer_off",
+     "cause": "A impressora está desligada",
+     "fix": "Você ligou a impressora e ela voltou à rede. A impressão saiu.",
+     "why": "Aparelho desligado não responde na rede. Antes de pensar em coisas complicadas, confira o básico.",
+     "need": [
+      "printer"
+     ],
+     "clues": {
+      "pc": "Está na rede e a internet funciona. Só a impressão falha.",
+      "printer": "A tela está apagada. Ela está sem energia.",
+      "router": "Tudo normal. Os outros aparelhos estão conectados."
+     }
+    },
+    {
+     "id": "ip_conflict",
+     "cause": "Dois aparelhos estão com o mesmo endereço IP",
+     "fix": "Você configurou a impressora para receber IP automático (DHCP) e o conflito acabou.",
+     "why": "Cada aparelho precisa de um IP único. Com IP repetido, a informação não sabe para quem entregar.",
+     "need": [
+      "printer",
+      "router"
+     ],
+     "clues": {
+      "pc": "Aparece o aviso: “Conflito de endereço IP na rede”.",
+      "printer": "Está ligada. O IP dela é 192.168.0.20.",
+      "router": "A lista de aparelhos mostra dois itens com 192.168.0.20: a impressora e um notebook."
+     }
+    },
+    {
+     "id": "wrong_net",
+     "cause": "O computador está na rede errada",
+     "fix": "Você conectou o computador à rede do escritório e a impressora apareceu.",
+     "why": "Redes separadas, como Escritório e Visitantes, não conversam entre si. É assim que se isola cada grupo.",
+     "need": [
+      "pc",
+      "router"
+     ],
+     "clues": {
+      "pc": "Está conectado à rede “Visitantes”, não à do escritório.",
+      "printer": "Ligada e conectada à rede “Escritório”.",
+      "router": "Mostra duas redes separadas: “Escritório” e “Visitantes”."
+     }
+    }
+   ]
+  }
+ ],
+ "eventos": [
+  {
+   "id": "rede-conectada",
+   "enabled": true,
+   "name": "Operação Rede Conectada",
+   "tag": "Evento especial",
+   "blurb": "Reúna as peças e monte um roteador. Cada etapa revisa o que você já estudou e entrega peças e chips.",
+   "start": "2026-11-22",
+   "end": "2026-12-01",
+   "equipment": "roteador",
+   "equipName": "Roteador",
+   "qPerStep": 6,
+   "passMin": 4,
+   "steps": [
+    {
+     "id": "s1",
+     "title": "Identifique a conexão",
+     "desc": "Reconheça os elementos da rede que você já conhece.",
+     "pieces": 2,
+     "gems": 10
+    },
+    {
+     "id": "s2",
+     "title": "Encontre a falha",
+     "desc": "Use o que aprendeu para achar o que está errado.",
+     "pieces": 3,
+     "gems": 15
+    },
+    {
+     "id": "s3",
+     "title": "Restaure a rede",
+     "desc": "Junte tudo e coloque a rede para funcionar.",
+     "pieces": 4,
+     "gems": 25
+    }
+   ],
+   "prize": {
+    "id": "antena-wifi",
+    "name": "Antena Wi-Fi especial",
+    "gems": 0
+   }
+  }
+ ],
+ "artes": {
+  "roteador": "<rect width=\"90\" height=\"90\" fill=\"#d7f3fc\"/><path d=\"M24 44 18 12M66 44l6-32\" stroke=\"#2b3a6b\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"18\" cy=\"11\" r=\"4\" fill=\"#ffc43d\"/><circle cx=\"72\" cy=\"11\" r=\"4\" fill=\"#ffc43d\"/><path d=\"M34 30a16 16 0 0 1 22 0M38 35a10 10 0 0 1 14 0\" fill=\"none\" stroke=\"#19b5e8\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"45\" cy=\"39\" r=\"2.4\" fill=\"#19b5e8\"/><rect x=\"8\" y=\"44\" width=\"74\" height=\"30\" rx=\"9\" fill=\"#2b3a6b\"/><circle cx=\"22\" cy=\"59\" r=\"3.2\" fill=\"#2fbf6b\"/><circle cx=\"32\" cy=\"59\" r=\"3.2\" fill=\"#ffc43d\"/><circle cx=\"42\" cy=\"59\" r=\"3.2\" fill=\"#19b5e8\"/><rect x=\"54\" y=\"53\" width=\"8\" height=\"12\" rx=\"2\" fill=\"#e8ecff\"/><rect x=\"65\" y=\"53\" width=\"8\" height=\"12\" rx=\"2\" fill=\"#e8ecff\"/><rect x=\"16\" y=\"74\" width=\"12\" height=\"5\" rx=\"2\" fill=\"#1b2140\"/><rect x=\"62\" y=\"74\" width=\"12\" height=\"5\" rx=\"2\" fill=\"#1b2140\"/>"
+ }
+}

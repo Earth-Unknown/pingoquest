@@ -1,6 +1,6 @@
 const {chromium}=require('playwright');const fs=require('fs');const assert=require('assert');
 (async()=>{
- let h=fs.readFileSync(__dirname+'/../src/jogo.html','utf8');
+ let h=fs.readFileSync(__dirname+'/../index.html','utf8');
  h='<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>[hidden]{display:none!important}</style><body>'+h;
  const b=await chromium.launch();const pg=await b.newPage({viewport:{width:400,height:800}});
  const errs=[];pg.on('pageerror',e=>errs.push(e.message));

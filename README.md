@@ -66,3 +66,7 @@ Teste: `CODIGO=<arquivo com o código> node tests/dono.test.js`.
 - Cada fase tem 5 perguntas (o Desafio do Pingo conta 5 acertos seguidos). Extras do desafio refeitos por unidade (`NEWX`).
 - Fim de lição: pouco texto, cartões de XP/precisão/cristais (ou sequência) aparecem um a um com som.
 - O intermediário/avançado (jogos 10 a 13) ainda é o conteúdo antigo e será refeito.
+
+
+## Conteúdo do curso
+Perguntas, lições, chamados e evento vivem em `content/redes.json` (o build embute no `index.html`). Veja `docs/editar-conteudo.md` e valide com `node tools/validar-curso.js content/redes.json`.

@@ -1,7 +1,7 @@
 const {chromium}=require('playwright');const fs=require('fs');
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:390,height:800}});
 const errs=[];p.on('pageerror',e=>errs.push(e.message));
-fs.writeFileSync('/tmp/pq-test.html','<style>[hidden]{display:none!important}</style>'+fs.readFileSync(__dirname+'/../src/jogo.html','utf8'));
+fs.writeFileSync('/tmp/pq-test.html','<style>[hidden]{display:none!important}</style>'+fs.readFileSync(__dirname+'/../index.html','utf8'));
 await p.goto('file:///tmp/pq-test.html');await p.waitForTimeout(400);
 const r=await p.evaluate(()=>{const out=[];const CUR=PK.CUR;
  // 1 estrutura
