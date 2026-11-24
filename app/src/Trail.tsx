@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import art from './legacy/art.json'
 import { Pingo } from './Pingo'
 import { CURSOS } from './lib/cursos'
@@ -29,7 +29,30 @@ export function Trail({S,refresh}:{S:any;refresh:()=>void}){
   const casoTitulo=(id:string)=>(cur.json.casos||[]).find((c:any)=>c.id===id)?.title||''
   const n=Object.keys(done).length,pct=par.length?Math.round(n/(par.length*4)*100):0
   let curFound=false
-  return <div className="screen">
+  const root=useRef<HTMLDivElement>(null)
+  /* cabos ligando as etapas (mesma ideia do jogo) */
+  useLayoutEffect(()=>{
+    const draw=()=>{
+      const NS='http://www.w3.org/2000/svg'
+      root.current?.querySelectorAll<HTMLElement>('.nodes').forEach(box=>{
+        box.querySelector('svg.cab')?.remove()
+        const r=box.getBoundingClientRect(),pts:number[][]=[],st:boolean[]=[]
+        box.querySelectorAll<HTMLElement>('.node').forEach(n=>{const b=n.getBoundingClientRect();pts.push([b.left-r.left+b.width/2,b.top-r.top+b.height/2]);st.push(n.classList.contains('done'))})
+        if(pts.length<2)return
+        let lit='',dim=''
+        for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],m=(a[1]+b[1])/2,seg=`M${a[0]} ${a[1]} C${a[0]} ${m} ${b[0]} ${m} ${b[0]} ${b[1]}`
+          if(st[i-1])lit+=`<path d="${seg}" fill="none" stroke="#18ddfb" stroke-width="8" stroke-linecap="round"/>`
+          else dim+=`<path d="${seg}" fill="none" stroke="#b9a6ee" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 14"/>`}
+        const sv=document.createElementNS(NS,'svg');sv.setAttribute('class','cab');sv.setAttribute('width',String(r.width));sv.setAttribute('height',String(r.height));sv.setAttribute('aria-hidden','true')
+        sv.innerHTML='<defs><filter id="cglow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'+dim+'<g filter="url(#cglow)">'+lit+'</g>'
+        box.insertBefore(sv,box.firstChild)
+      })
+    }
+    draw();const t=setTimeout(draw,950) // depois da animação de entrada dos nós
+    window.addEventListener('resize',draw)
+    return()=>{clearTimeout(t);window.removeEventListener('resize',draw)}
+  })
+  return <div className="screen" ref={root}>
     <div className={'world w-'+ativo}>
       <div className="wstage"><Html h={ativo==='linux'?A.linuxScene:A.worldScene}/><div className="hping"><Pingo S={S} cls="wps"/></div></div>
       <span className={'cflag cf-'+ativo}><Html h={courseIcon(ativo)}/><b>{cur.nome}</b></span>

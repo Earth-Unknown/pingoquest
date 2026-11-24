@@ -21,12 +21,13 @@ const ctx2 = { JSON, Math, S: { done: {}, bosses: 0 }, CURSO: 'redes', RM: false
 const code2 = [
   src.slice(src.indexOf('var IC={'), src.indexOf('/* Desenhos dos adere')),
   src.slice(src.indexOf('var PLACE_IC=['), src.indexOf('function placeIcon')),
+  src.slice(src.indexOf('var NAV={'), src.indexOf('/* ---------- trilha')),
   src.slice(src.indexOf('var IC_TERM='), src.indexOf('\n', src.indexOf('var IC_TERM=')) + 1),
   src.slice(src.indexOf('var DVI={'), src.indexOf('function nodeArt')),
   src.slice(src.indexOf('function pkt('), src.indexOf('function courseFlag')),
 ].join('\n')
 vm.createContext(ctx2); vm.runInContext(code2, ctx2)
-const art = { IC: ctx2.IC, PLACE_IC: ctx2.PLACE_IC, IC_TERM: ctx2.IC_TERM, DVI: ctx2.DVI, DVPOOL: ctx2.DVPOOL,
+const art = { NAV: ctx2.NAV, IC: ctx2.IC, PLACE_IC: ctx2.PLACE_IC, IC_TERM: ctx2.IC_TERM, DVI: ctx2.DVI, DVPOOL: ctx2.DVPOOL,
   worldScene: vm.runInContext('worldScene()', ctx2), linuxScene: vm.runInContext('linuxScene()', ctx2) }
 fs.writeFileSync(new URL('art.json', out), JSON.stringify(art))
 console.log('art', Object.keys(art.IC).length, art.PLACE_IC.length, art.worldScene.length, art.linuxScene.length)
