@@ -5,6 +5,7 @@ import { attentionAll as attention } from './lib/cases'
 import { streakNow, missKeys, cqSync, gamesOf } from './lib/progress'
 import { sync as avSync } from './lib/avatar'
 import { pendingDuel } from './lib/duel'
+import { PingoPoke } from './PingoPoke'
 import { Welcome } from './Welcome'
 import { Streak } from './Streak'
 import { MotionConfig, motion, FxLayer } from './Fx'
@@ -16,6 +17,7 @@ import { Review } from './Review'
 import { Conquests } from './Conquests'
 import art from './legacy/art.json'
 import './legacy/jogo.css'
+import './app.css'
 
 const A:any=art
 type Tab='path'|'missions'|'review'|'conq'|'profile'
@@ -41,6 +43,7 @@ export default function App(){
   const dots:Partial<Record<Tab,number>>={missions:attention(S),review:missKeys(S).length}
   return <MotionConfig reducedMotion="user">
     <FxLayer/>
+    <PingoPoke/>
     <div id="top"><div className="wrap" id="topin">
       <button className="stat s-streak" onClick={()=>setStreak(true)} title="Ver meu brilho" aria-label="Ver meu brilho"><Svg h={A.IC.brilho}/><span>{streakNow(S)}</span></button>
       <div className="stat s-gems"><Svg h={A.IC.gem}/><span>{S.gems??50}</span></div>
