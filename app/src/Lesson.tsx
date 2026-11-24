@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Pingo } from './Pingo'
 import { shuffle, type Q } from './lib/curso'
 import { patchSave } from './lib/save'
+import { day, touchStreak, wkAdd, addMiss, fixMiss, cqSync } from './lib/progress'
 
 type Item=Q&{src:Q;opts?:{t:string;c:boolean}[];left?:{id:number;t:string}[];right?:{id:number;t:string}[];ci?:{id:number;t:string;c:number}[]}
 const prep=(q:Q):Item=>{
@@ -13,7 +14,7 @@ const prep=(q:Q):Item=>{
 }
 
 export type Result={xp:number;gems:number;acc:number;perfect:boolean}
-export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'boss';keyId:string;onClose:()=>void}){
+export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'boss'|'review';keyId:string;onClose:()=>void}){
   const [queue,setQueue]=useState<Item[]>(()=>qs.map(prep))
   const [i,setI]=useState(0)
   const [hearts,setHearts]=useState<number>(S.hearts??5)
@@ -28,15 +29,20 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
   const base=useMemo(()=>qs.length,[qs])
   const qb=useMemo(()=>qs.filter(x=>x.t!=='learn').length,[qs])
   const q=queue[i]
+  const run=useRef(0)
+  const free=kind==='review'
 
   const reset=(it:Item)=>{setState('ask');setOk(false);setTouch(null);setMp({sel:null,done:[],flash:null,err:0})
     setSel(it.t==='cl'?it.ci!.map(()=>null):null)}
   const wrong=(it:Item,requeue:boolean)=>{
-    const h=Math.max(0,hearts-1);setHearts(h);setMiss(m=>m+1)
-    patchSave(s=>{s.hearts=Math.max(0,(s.hearts??5)-1)})
+    setMiss(m=>m+1);run.current=0
+    if(!free)setHearts(Math.max(0,hearts-1))
+    patchSave(s=>{addMiss(s,it.src);if(!free)s.hearts=Math.max(0,(s.hearts??5)-1)})
     if(requeue)setQueue(qu=>[...qu,prep(it.src)])
   }
-  const hit=()=>{setRight(r=>r+1)}
+  /** acerto: sequência e metas do dia; na revisão, a pergunta sai da lista */
+  const hit=(it:Item,pairs=false)=>{setRight(r=>r+1);run.current++
+    patchSave(s=>{const d=day(s);d.correct++;if(run.current>d.bestRun)d.bestRun=run.current;if(pairs)d.pairs++;if(free)fixMiss(s,it.src)})}
   const stat=(good:boolean)=>patchSave(s=>{s.total=(s.total||0)+1;if(good)s.ok=(s.ok||0)+1})
 
   const check=()=>{
@@ -45,7 +51,7 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
     if(q.t==='vf')good=sel===q.a
     if(q.t==='cl')good=q.ci!.every(it=>sel[it.id]===it.c)
     setOk(good);setState('fb');stat(good)
-    if(good)hit();else wrong(q,true)
+    if(good)hit(q);else wrong(q,true)
   }
   const mpTap=(side:string,id:number)=>{
     if(state!=='ask'||mp.flash)return
@@ -53,7 +59,7 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
     const l=side==='l'?id:mp.sel.id,r=side==='r'?id:mp.sel.id
     if(l===r){
       const done=[...mp.done,l]
-      if(done.length===q.pairs!.length){const good=mp.err===0;setMp({...mp,done,sel:null});setOk(good);setState('fb');stat(good);if(good)hit();else setMiss(m=>m+1)}
+      if(done.length===q.pairs!.length){const good=mp.err===0;setMp({...mp,done,sel:null});setOk(good);setState('fb');stat(good);if(good)hit(q,true);else setMiss(m=>m+1)}
       else setMp({...mp,done,sel:null})
       return
     }
@@ -62,7 +68,7 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
     setTimeout(()=>setMp(m=>({...m,flash:null})),650)
   }
   const next=()=>{
-    if(hearts<=0){setNoHearts(true);return}
+    if(!free&&hearts<=0){setNoHearts(true);return}
     const n=i+1
     if(n>=queue.length){finish();return}
     setI(n);reset(queue[n])
@@ -70,12 +76,19 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
   const lnext=()=>{setRight(r=>r+1);const n=i+1;if(n>=queue.length){finish();return}setI(n);reset(queue[n])}
   const finish=()=>{
     let first=false,xp=10,gems=0
-    const perfect=miss===0
+    const perfect=miss===0&&!free
     patchSave(s=>{
-      s.done=s.done||{};first=!s.done[keyId]
-      if(kind==='boss'){gems=first?25:0;xp=25;if(first)s.bosses=(s.bosses||0)+1}else gems=first?10:0
-      if(miss===0&&first)gems+=5
-      s.done[keyId]=true;s.xp=(s.xp||0)+xp;s.gems=(s.gems||0)+gems
+      const d=day(s)
+      if(free)xp=8
+      else{
+        s.done=s.done||{};first=!s.done[keyId]
+        if(kind==='boss'){gems=first?25:0;xp=25;if(first)s.bosses=(s.bosses||0)+1}else gems=first?10:0
+        if(miss===0&&first)gems+=5
+        d.phases++;if(miss===0){d.perfect++;s.perfectN=(s.perfectN||0)+1}
+        s.done[keyId]=true
+      }
+      d.xp+=xp;s.xp=(s.xp||0)+xp;s.gems=(s.gems??50)+gems
+      wkAdd(s,xp);touchStreak(s);cqSync(s)
     })
     setRes({xp,gems,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect})
   }
@@ -83,13 +96,13 @@ export function Lesson({S,qs,kind,keyId,onClose}:{S:any;qs:Q[];kind:'phase'|'bos
   const pct=Math.round(Math.min(right,base)/base*100)
   const head=<div className="lhead"><button className="xbtn" onClick={onClose} aria-label="Sair da fase">✕</button>
     <div className="pbar" role="progressbar" aria-valuenow={pct}><i style={{width:pct+'%'}}/></div>
-    <div className="stat s-heart"><span>❤ {hearts}</span></div></div>
+    <div className="stat s-heart"><span>{free?'Treino':'❤ '+hearts}</span></div></div>
 
   if(noHearts)return <div id="lesson"><div className="lw"><div className="lbody"><div className="center"><Pingo S={S} mood="sad"/><h1>Acabaram as vidas</h1><p>Volte ao jogo completo para recuperar vidas treinando.</p></div></div><div className="lfoot"><button className="btn" onClick={onClose}>Voltar</button></div></div></div>
   if(res)return <div id="lesson"><div className="lw"><div className="lbody lscroll"><div className="center">
-    <Pingo S={S} mood="cheer"/><h1>{res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
-    <p>{res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>
-    <div className="res2"><div className="rt" style={{'--rc':'#ffb800'} as any}><small>Energia total</small><span><b>{res.xp}</b></span></div>
+    <Pingo S={S} mood="cheer"/><h1>{free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
+    <p>{free?'Bom treino!':res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>
+    <div className="res2"><div className="rt" style={{'--rc':'#ffb800'} as any}><small>Energia</small><span><b>{res.xp}</b></span></div>
       <div className="rt" style={{'--rc':'#18b9e8'} as any}><small>Precisão</small><span><b>{res.acc}%</b></span></div>
       {res.gems>0&&<div className="rt" style={{'--rc':'#ff4fae'} as any}><small>Chips</small><span><b>+{res.gems}</b></span></div>}</div>
   </div></div><div className="lfoot"><button className="btn" onClick={onClose}>Continuar</button></div></div></div>

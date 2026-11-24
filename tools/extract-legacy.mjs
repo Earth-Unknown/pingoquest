@@ -27,7 +27,18 @@ const code2 = [
   src.slice(src.indexOf('function pkt('), src.indexOf('function courseFlag')),
 ].join('\n')
 vm.createContext(ctx2); vm.runInContext(code2, ctx2)
-const art = { NAV: ctx2.NAV, IC: ctx2.IC, PLACE_IC: ctx2.PLACE_IC, IC_TERM: ctx2.IC_TERM, DVI: ctx2.DVI, DVPOOL: ctx2.DVPOOL,
+// --- telas Missões / Conquistas: baú, artes das conquistas e habilidades, ícones das etapas ---
+const code3 = [
+  slice('var DV={', 'function hashStr'),
+  slice('var SKILL_ART={', '/* ===== Conquistas'),
+  slice('var CQ_ART={', 'var CONQ=['),
+  slice('function chestSVG(', 'function chestReady'),
+  slice('var DU_COL=', 'var WHEEL_MINI'),
+].join('\n')
+vm.runInContext(code3, ctx2)
+const extra = { SKILL_ART: ctx2.SKILL_ART, CQ_ART: ctx2.CQ_ART, chest: vm.runInContext("chestSVG('a')", ctx2),
+  chestZ: vm.runInContext("chestSVG('z')", ctx2), DU_COL: ctx2.DU_COL, DU: [...Array(10).keys()].map(i => vm.runInContext('duIcon(' + i + ')', ctx2)) }
+const art = { ...extra, NAV: ctx2.NAV, IC: ctx2.IC, PLACE_IC: ctx2.PLACE_IC, IC_TERM: ctx2.IC_TERM, DVI: ctx2.DVI, DVPOOL: ctx2.DVPOOL,
   worldScene: vm.runInContext('worldScene()', ctx2), linuxScene: vm.runInContext('linuxScene()', ctx2) }
 fs.writeFileSync(new URL('art.json', out), JSON.stringify(art))
 console.log('art', Object.keys(art.IC).length, art.PLACE_IC.length, art.worldScene.length, art.linuxScene.length)
