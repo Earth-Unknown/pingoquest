@@ -1,4 +1,4 @@
-# Testa, empacota e publica a API no Cloud Run (southamerica-east1) a cada push na main que mude api/ ou content/.
+# Testa, empacota e publica a API no Cloud Run (southamerica-east1) a cada push na main que mude api/.
 # Autenticação por Workload Identity Federation (sem chave JSON). Variáveis em Settings > Variables (não são segredos).
 name: Deploy da API
 on:
@@ -6,13 +6,11 @@ on:
     branches: [main]
     paths:
       - "api/**"
-      - "content/**"
       - ".github/workflows/deploy-api.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: deploy-api
@@ -45,6 +43,9 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -82,7 +83,7 @@ jobs:
             --cpu 1 \
             --memory 512Mi \
             --timeout 30 \
-            --update-env-vars "GCP_PROJECT_ID=${{ vars.GCP_PROJECT_ID }},APP_TIMEZONE=America/Sao_Paulo" \
+            --update-env-vars "GCP_PROJECT_ID=${{ vars.GCP_PROJECT_ID }}" \
             --quiet
 
       - name: Smoke test direto no Cloud Run

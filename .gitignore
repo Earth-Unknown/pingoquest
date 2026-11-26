@@ -1,5 +1,6 @@
 _site/
 api/node_modules/
 api/dist/
-api/.env
+api/.env*
+!api/.env.example
 *-debug.log
