@@ -5,6 +5,8 @@ import { GoogleButton } from './GoogleButton'
 import { AuthError, type AuthErrorInfo } from './AuthError'
 import { classifyAuthError, errorCode, signInGoogle, signInGuest, type AuthStep } from './lib/auth'
 import { streakNow } from './lib/progress'
+import { CURSOS } from './lib/cursos'
+import art from './legacy/art.json'
 import { buzz, reducedMotion, sfx } from './lib/sound'
 import type { Save } from './lib/store'
 
@@ -37,48 +39,30 @@ function falaDoPingo(S: Save, dias: number): { titulo: string; sub: string } {
   const saud = h < 5 ? 'Oi, coruja' : h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite'
   const nome = S.nick ? ', ' + S.nick : ''
   const titulo = saud === 'Oi, coruja' ? `Oi, coruja${nome}!` : `${saud}${nome}!`
-  const brilho = dias > 1 ? ` Seu brilho está em ${dias} dias: não deixa apagar!` : ''
-  return { titulo, sub: `Estava te esperando! Guardei o seu lugar. Bora continuar de onde você parou?${brilho}` }
+  const brilho = dias > 1 ? ` Seu brilho está em ${dias} dias, não deixa apagar!` : ''
+  return { titulo, sub: `Eu sou o Pingo, seu robô-professor. Bora aprender mais tecnologia?${brilho}` }
 }
 
-/** O que o Pingo ensina, em geral: frases que se revezam (fixas para quem pediu menos movimento) */
-const PITCH = [
-  'Aqui você treina o raciocínio lógico, um desafio de cada vez.',
-  'Aprender fica leve quando vira descoberta.',
-  'Eu te mostro como as coisas funcionam por trás da tela.',
-  'Errar faz parte: cada tentativa deixa você mais esperto.',
-]
-const HABILIDADES = ['Lógica', 'Resolver problemas', 'Curiosidade', 'Tecnologia']
+/** O que o Pingo Quest ensina, dito com clareza: os cursos de verdade (a lista vem do conteúdo) */
+const iconeCurso = (id: string) => id === 'linux'
+  ? (art as any).IC_TERM
+  : '<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="21" width="30" height="13" rx="6" fill="#7b3ff2"/><circle cx="12" cy="27.5" r="2" fill="#fff"/><circle cx="19" cy="27.5" r="2" fill="#fff"/><path d="M13 21 10 9M27 21l3-12" stroke="#7b3ff2" stroke-width="3" stroke-linecap="round"/></svg>'
 
-function Pitch() {
-  const [i, setI] = useState(0)
-  useEffect(() => {
-    if (reducedMotion()) return
-    const t = setInterval(() => setI(x => (x + 1) % PITCH.length), 3400)
-    return () => clearInterval(t)
-  }, [])
-  return (
-    <div className="lg-pitch" aria-live="off" style={{ minHeight: 48, display: 'grid', placeItems: 'center' }}>
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.p key={i} className="lg-sub" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ margin: 0 }}>
-          {PITCH[i]}
-        </motion.p>
-      </AnimatePresence>
-    </div>
-  )
-}
-
-function Habilidades() {
+function OQueVoceVaiAprender() {
   const parado = reducedMotion()
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, maxWidth: 320 }} aria-label="O que você vai treinar">
-      {HABILIDADES.map((h, k) => (
-        <motion.span key={h} initial={{ opacity: 0, scale: 0.8 }} animate={parado ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1, y: [0, -4, 0] }}
-          transition={parado ? { duration: 0.2 } : { opacity: { delay: 0.5 + k * 0.12 }, scale: { delay: 0.5 + k * 0.12, type: 'spring', stiffness: 300, damping: 18 }, y: { delay: 1 + k * 0.3, duration: 2.6, repeat: Infinity, ease: 'easeInOut' } }}
-          style={{ padding: '5px 12px', borderRadius: 99, fontSize: 13, fontWeight: 800, border: '2px solid rgba(255,255,255,.22)', background: 'rgba(255,255,255,.08)', color: 'inherit' }}>
-          {h}
-        </motion.span>
-      ))}
+    <div style={{ width: '100%', maxWidth: 340, textAlign: 'left' }}>
+      <p style={{ margin: '0 0 8px', textAlign: 'center', fontSize: 12, fontWeight: 800, letterSpacing: 0.8, textTransform: 'uppercase', opacity: 0.75 }}>O que você vai aprender</p>
+      <div style={{ display: 'grid', gap: 8 }}>
+        {CURSOS.map((c, k) => (
+          <motion.div key={c.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: parado ? 0 : 0.5 + k * 0.15, duration: parado ? 0.2 : 0.35 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 12px', borderRadius: 16, border: '2px solid rgba(255,255,255,.18)', background: 'rgba(255,255,255,.07)' }}>
+            <span style={{ width: 38, height: 38, flex: 'none', display: 'inline-flex', background: 'rgba(255,255,255,.9)', borderRadius: 12, padding: 5, boxSizing: 'border-box' }} dangerouslySetInnerHTML={{ __html: iconeCurso(c.id) }} />
+            <span><b style={{ display: 'block', fontSize: 16 }}>{c.nome}</b><span style={{ fontSize: 13, fontWeight: 700, opacity: 0.8 }}>{c.sub}</span></span>
+          </motion.div>
+        ))}
+      </div>
+      <p style={{ margin: '8px 0 0', textAlign: 'center', fontSize: 13, fontWeight: 700, opacity: 0.8 }}>Lições curtas, desafios e conquistas, no seu ritmo.</p>
     </div>
   )
 }
@@ -220,11 +204,10 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
           </motion.h1>
           {!success && (
             <motion.p className="lg-sub" {...stagger(2)}>
-              {variant === 'A' ? 'Eu vou te ensinar a pensar, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
+              {variant === 'A' ? 'Sou o seu robô-professor. Aqui você aprende tecnologia jogando, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
             </motion.p>
           )}
-          {!success && <motion.div {...stagger(3)}><Pitch /></motion.div>}
-          {!success && <motion.div {...stagger(4)}><Habilidades /></motion.div>}
+          {!success && <motion.div {...stagger(3)} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}><OQueVoceVaiAprender /></motion.div>}
         </div>
         <span className="lg-sr" role="status">{success?.text}</span>
         <AnimatePresence>
