@@ -29,7 +29,7 @@ const SUCCESS_REDUCED_MS = 500
 
 const SUPPORT_DEFAULT = {
   A: 'Com Google, seu progresso fica guardado e você libera amigos e presentes. Como convidado, você joga já e salva depois.',
-  B: 'Entre com o Google para guardar seu progresso na nuvem e jogar em outro aparelho.',
+  B: 'Entre com o Google para guardar seu progresso na nuvem e continuar em outro aparelho.',
 }
 
 /** Fala do Pingo para quem volta: cumprimenta pela hora e diz o que vem agora (tirado do progresso real) */
@@ -128,7 +128,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
       else await signInGuest()
       setBusy(null)
       setSuccess({
-        text: variant === 'B' ? 'Seu progresso está salvo. Bora jogar!' : step === 'google' ? 'Conectado! Bora jogar.' : 'Tudo pronto! Bora jogar.',
+        text: variant === 'B' ? 'Seu progresso está salvo. Bora aprender!' : step === 'google' ? 'Conectado! Bora aprender.' : 'Tudo pronto! Bora aprender.',
         dest: variant === 'B' ? 'trail' : 'welcome',
       })
       sfx('win')
@@ -174,7 +174,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
               {showSkel && <><div className="lg-skel" /><div className="lg-skel" /></>}
             </div>
             {slow && <p className="lg-note" role="status">Está demorando mais que o normal...</p>}
-            {slow && hasLocal && <button type="button" className="btn ghost" onClick={onContinueLocal}>Jogar sem conexão por enquanto</button>}
+            {slow && hasLocal && <button type="button" className="btn ghost" onClick={onContinueLocal}>Continuar sem conexão por enquanto</button>}
           </div>
         </div>
       </main>
@@ -224,7 +224,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
                 </>
               ) : (
                 <>
-                  <button type="button" className="btn" aria-disabled={busy ? true : undefined} onClick={() => { if (!busy) { sfx('start'); onContinueLocal() } }}>Bora jogar!</button>
+                  <button type="button" className="btn" aria-disabled={busy ? true : undefined} onClick={() => { if (!busy) { sfx('start'); onContinueLocal() } }}>Bora aprender!</button>
                   {!signedIn && <>
                     <p className="lg-or" aria-hidden="true">ou</p>
                     <GoogleButton label="Continuar com o Google" busy={busy === 'google'} onClick={() => run('google')} />
@@ -249,7 +249,7 @@ function GuestButton({ busy, blocked, onClick }: { busy: boolean; blocked: boole
   const inert = busy || blocked
   return (
     <button type="button" className="btn ghost" aria-busy={busy || undefined} aria-disabled={inert || undefined} onClick={() => { if (!inert) onClick() }}>
-      {busy ? 'Preparando seu robô...' : 'Jogar como convidado'}
+      {busy ? 'Preparando seu robô...' : 'Entrar como convidado'}
     </button>
   )
 }
