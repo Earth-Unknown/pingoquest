@@ -30,6 +30,9 @@ export type ConclusaoProps = {
   repeticao: boolean     // lição já feita antes: o Pingo só confere, sem peça nova
   titulo: string         // ex.: "Lição concluída!"
   subtitulo?: string     // ex.: "Mais uma descoberta!"
+  sabe?: string
+  pratica?: string
+  proxima?: string
   xp: number             // energia ganha (já aplicada)
   chips: number          // chips ganhos (já aplicados)
   acertos?: number       // precisão 0 a 100 (opcional, discreta)

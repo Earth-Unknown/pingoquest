@@ -13,7 +13,7 @@ const FINAL = 5
 const LINHA_NOVA: [number, number][] = [[500, 1], [1000, 2], [1550, 3], [1850, 4], [2100, 5]]
 const LINHA_REP: [number, number][] = [[400, 3], [750, 4], [950, 5]]
 
-const css = `.cc-pingo svg{width:clamp(72px,13vh,104px)!important;display:block}
+const css = `.cc-pingo svg{width:clamp(56px,10vh,80px)!important;display:block}
 .cc-ic{display:inline-flex;width:20px;height:20px}.cc-ic svg{width:100%;height:100%;display:block}`
 
 export function CenaConclusao(p: ConclusaoProps) {
@@ -62,7 +62,7 @@ export function CenaConclusao(p: ConclusaoProps) {
       <motion.div className="cc-pingo" animate={pulinho ? { y: [0, -10, 0], rotate: [0, -4, 0] } : { y: 0, rotate: 0 }}
         transition={{ duration: 0.45, ease: 'easeOut' }}><Pingo S={p.S} mood={humor} /></motion.div>
 
-      <div ref={palco} style={{ position: 'relative', width: 'max(200px, min(100%, 300px, calc((100dvh - 440px) * ' + PROPORCAO + ')))', aspectRatio: String(PROPORCAO) }}>
+      <div ref={palco} style={{ position: 'relative', width: 'max(160px, min(100%, 220px, calc((100dvh - 560px) * ' + PROPORCAO + ')))', aspectRatio: String(PROPORCAO) }}>
         <Invencao invencao={p.invencao} acesos={acesos} vazio={vazio} />
 
         {fase >= 3 && !pulou && !reduzido && <motion.i aria-hidden initial={{ opacity: 0, scale: 0.5 }}
@@ -94,12 +94,17 @@ export function CenaConclusao(p: ConclusaoProps) {
       </div>
 
       <motion.div animate={fase >= 4 ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }} transition={suave()}
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, width: '100%' }}>
         <h1 style={{ margin: 0, fontSize: 26 }}>{p.titulo}</h1>
-        {!p.repeticao && modulo && <p style={{ margin: 0 }}>{modulo} encaixada</p>}
-        <div role="img" aria-label={`Estação Pingo: ${p.indice + 1} de ${p.invencao.modulos.length} módulos`} style={{ display: 'flex', gap: 6 }}>
+        {p.sabe && !p.repeticao && <p style={{ margin: 0, fontSize: 17, fontWeight: 800, lineHeight: 1.35 }}>{p.sabe.charAt(0).toUpperCase() + p.sabe.slice(1)}</p>}
+        {p.subtitulo && <p style={{ margin: 0 }}>{p.subtitulo}</p>}
+        {p.pratica && <div style={{ background: 'var(--locked,#f1ecff)', borderRadius: 16, padding: '10px 14px', textAlign: 'left', fontSize: 15, lineHeight: 1.4, width: '100%', boxSizing: 'border-box' }}>
+          <b style={{ color: 'var(--primary)' }}>Na prática: </b>{p.pratica}</div>}
+        <div role="img" aria-label={`Estação Pingo: ${p.indice + 1} de ${p.invencao.modulos.length} módulos`} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--muted)', fontSize: 13, fontWeight: 800 }}>
           {p.invencao.modulos.map((m, i) => <i key={m.id} style={{ width: 8, height: 8, borderRadius: 4, background: i <= p.indice ? 'var(--primary)' : 'var(--line-deep)' }} />)}
+          {!p.repeticao && modulo && <span style={{ marginLeft: 4 }}>{modulo} encaixada</span>}
         </div>
+        {p.proxima && <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--muted)' }}>A seguir: <span style={{ color: 'var(--ink)' }}>{p.proxima}</span></div>}
       </motion.div>
     </div></div>
     <div className="lfoot"><button className="btn" onClick={p.onContinuar}>Continuar</button></div>
