@@ -4,9 +4,10 @@ import { Pingo } from './Pingo'
 import { GoogleButton } from './GoogleButton'
 import { AuthError, type AuthErrorInfo } from './AuthError'
 import { classifyAuthError, errorCode, signInGoogle, signInGuest, type AuthStep } from './lib/auth'
-import { streakNow } from './lib/progress'
-import { CURSOS } from './lib/cursos'
-import art from './legacy/art.json'
+import { trocarCurso } from './lib/progress'
+import { Vitrine, OndeParou } from './LoginVitrine'
+import { cursosComecados } from './lib/parou'
+import { patchSave } from './lib/save'
 import { buzz, reducedMotion, sfx } from './lib/sound'
 import type { Save } from './lib/store'
 
@@ -34,37 +35,12 @@ const SUPPORT_DEFAULT = {
 }
 
 /** Fala do Pingo para quem volta: cumprimenta pela hora e convida a continuar (sem falar de um curso específico) */
-function falaDoPingo(S: Save, dias: number): { titulo: string; sub: string } {
+function falaDoPingo(S: Save): { titulo: string; sub: string } {
   const h = new Date().getHours()
   const saud = h < 5 ? 'Oi, coruja' : h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite'
   const nome = S.nick ? ', ' + S.nick : ''
   const titulo = saud === 'Oi, coruja' ? `Oi, coruja${nome}!` : `${saud}${nome}!`
-  const brilho = dias > 1 ? ` Seu brilho está em ${dias} dias, não deixa apagar!` : ''
-  return { titulo, sub: `Eu sou o Pingo, seu robô-professor. Bora aprender mais tecnologia?${brilho}` }
-}
-
-/** O que o Pingo Quest ensina, dito com clareza: os cursos de verdade (a lista vem do conteúdo) */
-const iconeCurso = (id: string) => id === 'linux'
-  ? (art as any).IC_TERM
-  : '<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="21" width="30" height="13" rx="6" fill="#7b3ff2"/><circle cx="12" cy="27.5" r="2" fill="#fff"/><circle cx="19" cy="27.5" r="2" fill="#fff"/><path d="M13 21 10 9M27 21l3-12" stroke="#7b3ff2" stroke-width="3" stroke-linecap="round"/></svg>'
-
-function OQueVoceVaiAprender() {
-  const parado = reducedMotion()
-  return (
-    <div style={{ width: '100%', maxWidth: 340, textAlign: 'left' }}>
-      <p style={{ margin: '0 0 8px', textAlign: 'center', fontSize: 12, fontWeight: 800, letterSpacing: 0.8, textTransform: 'uppercase', opacity: 0.75 }}>O que você vai aprender</p>
-      <div style={{ display: 'grid', gap: 8 }}>
-        {CURSOS.map((c, k) => (
-          <motion.div key={c.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: parado ? 0 : 0.5 + k * 0.15, duration: parado ? 0.2 : 0.35 }}
-            style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 12px', borderRadius: 16, border: '2px solid rgba(255,255,255,.18)', background: 'rgba(255,255,255,.07)' }}>
-            <span style={{ width: 38, height: 38, flex: 'none', display: 'inline-flex', background: 'rgba(255,255,255,.9)', borderRadius: 12, padding: 5, boxSizing: 'border-box' }} dangerouslySetInnerHTML={{ __html: iconeCurso(c.id) }} />
-            <span><b style={{ display: 'block', fontSize: 16 }}>{c.nome}</b><span style={{ fontSize: 13, fontWeight: 700, opacity: 0.8 }}>{c.sub}</span></span>
-          </motion.div>
-        ))}
-      </div>
-      <p style={{ margin: '8px 0 0', textAlign: 'center', fontSize: 13, fontWeight: 700, opacity: 0.8 }}>Lições curtas, desafios e conquistas, no seu ritmo.</p>
-    </div>
-  )
+  return { titulo, sub: 'Que bom te ver de novo!' }
 }
 
 /** Texto que aparece como se o Pingo estivesse digitando (sem animar para quem pediu menos movimento) */
@@ -188,8 +164,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
     )
   }
 
-  const days = streakNow(S)
-  const fala = variant === 'B' ? falaDoPingo(S, days) : null
+  const fala = variant === 'B' ? falaDoPingo(S) : null
   const support = busy === 'google' ? 'Termine o login na janelinha do Google.' : hint ?? SUPPORT_DEFAULT[variant]
 
   return (
@@ -204,10 +179,14 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
           </motion.h1>
           {!success && (
             <motion.p className="lg-sub" {...stagger(2)}>
-              {variant === 'A' ? 'Sou o seu robô-professor. Aqui você aprende tecnologia jogando, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
+              {variant === 'A' ? 'Eu te ajudo a pensar, descobrir e aprender, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
             </motion.p>
           )}
-          {!success && <motion.div {...stagger(3)} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}><OQueVoceVaiAprender /></motion.div>}
+          {!success && <motion.div {...stagger(3)} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            {variant === 'B' && cursosComecados(S).length > 0
+              ? <OndeParou S={S} onAbrir={id => { sfx('start'); patchSave(x => trocarCurso(x, id)); onContinueLocal() }} />
+              : <Vitrine />}
+          </motion.div>}
         </div>
         <span className="lg-sr" role="status">{success?.text}</span>
         <AnimatePresence>
