@@ -28,6 +28,21 @@ export function FxLayer(){
   </div>
 }
 
+/* ---------- aviso rápido (role=status): toast('mensagem') de qualquer tela ---------- */
+let toasts:((msg:string)=>void)|null=null
+export function toast(msg:string){toasts?.(msg)}
+export function ToastLayer(){
+  const [t,setT]=useState<{id:number;msg:string}|null>(null)
+  useEffect(()=>{
+    let id=0,timer:ReturnType<typeof setTimeout>|undefined
+    toasts=msg=>{clearTimeout(timer);setT({id:++id,msg});timer=setTimeout(()=>setT(null),3000)}
+    return()=>{toasts=null;clearTimeout(timer)}
+  },[])
+  return <div role="status" aria-live="polite" className="toast-wrap">
+    <AnimatePresence>{t&&<motion.p key={t.id} className="toast" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} exit={{opacity:0,transition:{duration:.15}}} transition={{duration:.2}}>{t.msg}</motion.p>}</AnimatePresence>
+  </div>
+}
+
 /* ---------- número que sobe contando (resultados) ---------- */
 export function CountUp({to,prefix='',delay=0}:{to:number;prefix?:string;delay?:number}){
   const v=useMotionValue(0),txt=useTransform(v,x=>prefix+Math.round(x))

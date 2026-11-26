@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { load } from './lib/store'
 import { patchSave } from './lib/save'
 import { attentionAll as attention } from './lib/cases'
@@ -9,7 +9,11 @@ import { inviteFromHash } from './lib/friends'
 import { PingoPoke } from './PingoPoke'
 import { Welcome } from './Welcome'
 import { Streak } from './Streak'
-import { MotionConfig, motion, FxLayer } from './Fx'
+import { MotionConfig, motion, FxLayer, ToastLayer } from './Fx'
+import { AuthProvider } from './AuthProvider'
+import { useAuth } from './lib/use-auth'
+import { Login, type LoginDest } from './Login'
+import { ensureGuestInBackground } from './lib/auth'
 import { armClickSounds } from './lib/sound'
 import { Profile } from './Profile'
 import { Trail } from './Trail'
@@ -25,11 +29,11 @@ type Tab='path'|'missions'|'review'|'conq'|'profile'
 const TABS:[Tab,string][]=[['path','Trilha'],['missions','Missões'],['review','Revisar'],['conq','Conquistas'],['profile','Perfil']]
 const Svg=({h}:{h:string})=><span style={{display:'contents'}} dangerouslySetInnerHTML={{__html:h}}/>
 
-export default function App(){
+function Game({skipWelcome}:{skipWelcome:boolean}){
   const [v,setV]=useState(0)
   const [tab,setTab]=useState<Tab>(()=>pendingDuel()?'missions':(inviteFromHash()&&load().onb?'profile':'path'))
   const [evOpen,setEvOpen]=useState<string|null>(null) // fica aqui para sobreviver ao refresh da tela
-  const [welcome,setWelcome]=useState(()=>!pendingDuel())
+  const [welcome,setWelcome]=useState(()=>!pendingDuel()&&!skipWelcome)
   const [streak,setStreak]=useState(false)
   const refresh=()=>setV(x=>x+1)
   let S=load()
@@ -42,9 +46,7 @@ export default function App(){
   useEffect(()=>{let t='light';try{t=localStorage.getItem('pingoquest-theme')==='dark'?'dark':'light'}catch{}
     document.documentElement.setAttribute('data-theme',t)},[])
   const dots:Partial<Record<Tab,number>>={missions:attention(S),review:missKeys(S).length}
-  return <MotionConfig reducedMotion="user">
-    <FxLayer/>
-    <PingoPoke/>
+  return <>
     <div id="top"><div className="wrap" id="topin">
       <button className="stat s-streak" onClick={()=>setStreak(true)} title="Ver meu brilho" aria-label="Ver meu brilho"><Svg h={A.IC.brilho}/><span>{streakNow(S)}</span></button>
       <div className="stat s-gems"><Svg h={A.IC.gem}/><span>{S.gems??50}</span></div>
@@ -63,5 +65,26 @@ export default function App(){
       {TABS.map(([k,n])=><button key={k} className="nbtn" aria-current={tab===k?'page':undefined} onClick={()=>{setTab(k);window.scrollTo(0,0)}}>
         <Svg h={A.NAV[k]}/>{n}{!!dots[k]&&<span className="dot">{dots[k]}</span>}</button>)}
     </div></nav>
+  </>
+}
+
+function Gate(){
+  const {status}=useAuth()
+  const [hold,setHold]=useState(false) // segura o Login durante o login e a tela de sucesso
+  const [local,setLocal]=useState(false) // quem já jogava entra sem esperar a rede
+  const [skipWelcome,setSkipWelcome]=useState(false)
+  if(status==='in'&&local)setLocal(false)
+  const onDone=useCallback((dest:LoginDest)=>{setSkipWelcome(dest==='trail');setHold(false)},[])
+  const onContinueLocal=useCallback(()=>{setSkipWelcome(true);setLocal(true);ensureGuestInBackground()},[])
+  const showLogin=!local&&(status!=='in'||hold)
+  return <MotionConfig reducedMotion="user">
+    <FxLayer/>
+    <PingoPoke/>
+    <ToastLayer/>
+    {showLogin?<Login S={load()} booting={status==='booting'} onBusy={setHold} onContinueLocal={onContinueLocal} onDone={onDone}/>:<Game skipWelcome={skipWelcome}/>}
   </MotionConfig>
+}
+
+export default function App(){
+  return <AuthProvider><Gate/></AuthProvider>
 }

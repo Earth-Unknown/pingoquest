@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import art from './legacy/art.json'
 import { popIn } from './Fx'
 import { Pingo } from './Pingo'
@@ -11,6 +11,10 @@ import { KEY } from './lib/store'
 import { avCfg } from './lib/pingo'
 import { SLOTS, has, equip, icon } from './lib/avatar'
 import { streakNow, trocarCurso, gamesOf } from './lib/progress'
+import { useAuth } from './lib/use-auth'
+import { SaveProgressCard } from './SaveProgress'
+import { logOut } from './lib/auth'
+import { toast } from './Fx'
 
 const A:any=art
 const Html=({h,cls}:{h:string;cls?:string})=><span className={cls} style={cls?undefined:{display:'contents'}} dangerouslySetInnerHTML={{__html:h}}/>
@@ -25,6 +29,10 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
   const [friends,setFriends]=useState(!!invite)
   const [cap,setCap]=useState('Toque num item para vestir. Itens com cadeado mostram como ganhar.')
   const [sure,setSure]=useState(false)
+  const {status,isAnonymous}=useAuth()
+  const [leaving,setLeaving]=useState(false)
+  const cancelRef=useRef<HTMLButtonElement>(null)
+  useEffect(()=>{if(leaving)cancelRef.current?.focus()},[leaving])
   const [snd,setSnd]=useState(soundOn())
   const [theme,setTheme]=useState(themeNow())
   const total=S.total||0,acc=total?Math.round((S.ok||0)/total*100):0
@@ -36,10 +44,16 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
   const act=(fn:(s:any)=>void)=>{patchSave(fn);refresh()}
   const toggleTheme=()=>{const t=theme==='dark'?'light':'dark';try{localStorage.setItem('pingoquest-theme',t)}catch{};document.documentElement.setAttribute('data-theme',t);setTheme(t)}
   const reset=()=>{if(!sure){setSure(true);return};try{localStorage.removeItem(KEY)}catch{};setSure(false);refresh()}
+  const leave=async()=>{
+    if(isAnonymous&&!leaving){setLeaving(true);return}
+    setLeaving(false)
+    try{await logOut()}catch(e){console.error('sign out failed',e);toast('Não consegui sair agora. Tente de novo.')}
+  }
   let nOwn=0,nAll=0;SLOTS.forEach(sl=>sl.itens.forEach(it=>{nAll++;if(has(S,sl.id,it))nOwn++}))
   return <div className="screen">
     <div className="ph"><Pingo S={S}/><div><h1>{S.nick||'Meu perfil'}</h1><p>{cur.nome}</p>
       <button className="nickbtn" onClick={()=>setFriends(true)}>{S.nick?'Editar apelido':'Escolher apelido'}</button></div></div>
+    <SaveProgressCard S={S}/>
     <div className="mini">{stats.map(([k,v])=><div key={k}><b>{v}</b><span>{k}</span></div>)}</div>
     <div className="sect">Cursos</div>
     <div className="cscroll">{CURSOS.map(c=>{const on=c.id===ativo,p=pct(S,c)
@@ -65,6 +79,10 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
     <button className="btn ghost" style={{marginBottom:10}} onClick={toggleTheme}>Tema: {theme==='dark'?'escuro (roxo)':'claro'}</button>
     <button className="btn ghost" style={{marginBottom:10}} onClick={()=>{const v=!snd;setSound(v);setSnd(v);if(v)sfx('ok')}}>Sons do Pingo: {snd?'ligados':'desligados'}</button>
     <button className="btn ghost" onClick={reset}>{sure?'Toque de novo para confirmar':'Zerar progresso'}</button>
+    {status==='in'&&!(leaving&&isAnonymous)&&<button className="btn ghost" style={{marginTop:10}} onClick={leave}>{isAnonymous?'Sair do convidado':'Sair da conta'}</button>}
+    {leaving&&isAnonymous&&<div role="alert" style={{marginTop:10}}><p className="note" style={{margin:'0 0 10px'}}>Sair desliga a sua conta de convidado. O progresso continua guardado neste aparelho, mas, sem salvar com o Google, você não consegue recuperá-lo em outro aparelho.</p>
+      <button className="btn ghost" ref={cancelRef} style={{marginBottom:10}} onClick={()=>setLeaving(false)}>Cancelar</button>
+      <button className="btn ghost" onClick={leave}>Sair mesmo assim</button></div>}
     <p className="note" style={{marginTop:12}}>O progresso fica salvo neste navegador. Algo não funcionou direito? O <a href="jogo-antigo/" style={{color:'var(--primary-deep)',fontWeight:800}}>jogo antigo</a> continua disponível e usa o mesmo progresso.</p>
 
     {sum&&<Sumario S={S} id={sum} onClose={()=>setSum(null)}/>}

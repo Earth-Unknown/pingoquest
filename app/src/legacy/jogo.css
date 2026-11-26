@@ -15,7 +15,7 @@
   --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
   color-scheme:light;
 }
-:root[data-theme="dark"]{
+:root[data-theme="dark"],#login{
   --bg:#150638; --surface:#211052; --ink:#ffffff; --muted:#b9a9e4;
   --line:#3d2a8f; --line-deep:#31207a;
   --ok:#7dff2b; --ok-deep:#4fb80e; --ok-bg:#24511c; --ok-ink:#c4ff9a;
