@@ -3,8 +3,7 @@ import art from './legacy/art.json'
 import { Pingo } from './Pingo'
 import type { EvRes } from './lib/events'
 import { sfx } from './lib/sound'
-import { collect } from './lib/collect'
-import { confetti, enter, popIn, ResultTiles, StarsAnim } from './Fx'
+import { enter, popIn, StarsAnim } from './Fx'
 import { pickFault, finishCase, countInspect, spend, hasLupa } from './lib/cases'
 import { shuffle } from './lib/curso'
 import { today } from './lib/progress'
@@ -20,25 +19,31 @@ export function Case(p:CaseProps){
 }
 
 type Res={ev?:EvRes;stars:number;xp:number;gems:number;what:string;fix:string;why:string;proof:{n:string;t:string}[];n:number}
+const cardCss=`.cr-cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;padding:2px 8% 6px;box-sizing:border-box;scroll-padding:0 8%;touch-action:pan-x pan-y;scrollbar-width:none}.cr-cards::-webkit-scrollbar{display:none}
+.cr-card{flex:0 0 84%;scroll-snap-align:center;border-radius:16px;padding:10px 14px;text-align:left;font-size:15px;line-height:1.4;box-sizing:border-box;background:var(--locked,#f1ecff)}
+.cr-card b{color:var(--primary)}.cr-pingo svg{width:clamp(64px,11vh,92px)!important;display:block}
+.cr-pill{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:3px 10px 3px 7px;font-weight:900;font-size:14px;background:var(--surface,#fff);box-shadow:0 1px 4px rgba(26,16,72,.18)}.cr-pill svg{width:16px;height:16px;display:block}`
+/** Resultado do caso/chamado: o que você descobriu, as pistas que provam e a recompensa discreta (sem cartões nem moedas voando) */
 function Result({S,p,res,again,term}:{S:any;p:CaseProps;res:Res;again?:()=>void;term?:boolean}){
-  const [exp,setExp]=useState(false)
-  return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
-    <Pingo S={S} mood="cheer"/><h1>{res.ev?res.ev.title:term?'Chamado resolvido!':'Caso resolvido!'}</h1>
+  const cards:{k:string;t:string;x:string}[]=[
+    ...(res.fix?[{k:'fix',t:term?'Como foi':'Como resolver',x:res.fix}]:[]),
+    ...(res.why?[{k:'why',t:'Por quê',x:res.why}]:[]),
+    ...res.proof.map((x,i)=>({k:'p'+i,t:'Pista · '+x.n,x:x.t}))]
+  return <div id="lesson" ref={enter}><style>{cardCss}</style><div className="lw"><div className="lbody lscroll"><div className="center" style={{gap:10}}>
+    <div className="cr-pingo"><Pingo S={S} mood="cheer"/></div>
+    <h1 style={{margin:0,fontSize:26}}>{res.ev?res.ev.title:term?'Chamado resolvido!':'Caso resolvido!'}</h1>
     <StarsAnim n={res.stars}/>
     <div className="cfound"><small>{term?'O que você fez':'Causa encontrada'}</small><b>{res.what}</b></div>
-    <ResultTiles tiles={[{c:'#ffb800',l:'Energia',to:res.xp,icon:A.IC.bolt},{c:'#18b9e8',l:'Chips',to:res.gems,prefix:'+',icon:A.IC.gem},
-      res.ev?.got?{c:'#3fbf5f',l:'Peças',to:res.ev.got.pieces,prefix:'+',icon:A.IC.puzzle}:{c:'#3fbf5f',l:term?'Comandos':'Pistas',to:res.n,icon:A.IC.search}]}/>
-    <button className="btn ghost cexp" onClick={()=>setExp(true)}>Ver explicação</button>
+    {cards.length>0&&<><div className="cr-cards" tabIndex={0} aria-label="Entenda o caso: deslize para ver tudo">{cards.map(c=><div className="cr-card" key={c.k}><b>{c.t}: </b>{c.x}</div>)}</div>
+      {cards.length>1&&<small style={{color:'var(--muted)',fontWeight:700,marginTop:-4}}>Deslize para o lado para entender o caso →</small>}</>}
+    <div style={{display:'flex',flexWrap:'wrap',justifyContent:'center',gap:8}} aria-label="Você ganhou">
+      <span className="cr-pill" style={{color:'#ffb800'}}><Html h={A.IC.bolt}/>{res.xp}</span>
+      {res.gems>0&&<span className="cr-pill" style={{color:'#ff4fae'}}><Html h={A.IC.gem}/>{res.gems}</span>}
+      {res.ev?.got&&<span className="cr-pill" style={{color:'#3fbf5f'}}><Html h={A.IC.puzzle}/>+{res.ev.got.pieces}</span>}
+    </div>
   </div></div><div className="lfoot"><div className="stack" style={{margin:0}}>
     {again&&<button className="btn ghost" onClick={again}>Jogar outro cenário</button>}
-    <button className="btn" onClick={()=>void collect(res.xp,res.gems).then(p.onClose)}>{res.xp>0?'Coletar energia':'Continuar'}</button></div></div></div>
-    {exp&&<div id="modal" onClick={()=>setExp(false)}><div className="sheet tall" ref={popIn} role="dialog" aria-label="Explicação do caso" onClick={e=>e.stopPropagation()}>
-      <h2 style={{margin:'0 0 8px'}}>Entenda o caso</h2>
-      <p style={{margin:'0 0 8px'}}><b>{term?'Resumo':'Causa'}:</b> {res.what}.</p>
-      {res.fix&&<p style={{margin:'0 0 8px'}}>{res.fix}</p>}{res.why&&<p className="note" style={{margin:'0 0 12px'}}>{res.why}</p>}
-      {res.proof.length>0&&<div className="proof"><small>As pistas que provam isso</small>{res.proof.map((x,i)=><div key={i}><b>{x.n}:</b> {x.t}</div>)}</div>}
-      <button className="btn prim" style={{marginTop:16}} onClick={()=>setExp(false)}>Fechar</button></div></div>}
-  </div>
+    <button className="btn" onClick={p.onClose}>Continuar</button></div></div></div></div>
 }
 
 /* ---------- casos de investigação (Redes) ---------- */
@@ -73,7 +78,7 @@ function Investigate(p:CaseProps){
       const ev=p.kind==='event'?p.onEvent!(Math.max(1,3-wrong)):undefined
       const r=ev?{stars:Math.max(1,3-wrong),xp:ev.xp,gems:ev.got?.gems||0}:finishCase({kind:p.kind as 'node'|'daily',key:p.keyId,replay,wrong,id:def.id,insp:insp.length})
       setRes({ev,...r,what:fault.cause,fix:fault.fix,why:fault.why,n:insp.length,proof:fault.need.map((n:string)=>({n:dev(n).name,t:fault.clues[n]}))})
-      setStage('done');sfx('win');confetti();return
+      setStage('done');sfx('ok');return
     }
     sfx('bad')
     setWrongSet([...wrongSet,id])
@@ -163,7 +168,7 @@ function Terminal(p:CaseProps){
         const stars=Math.max(1,3-st.current.wrong)
         const ev=p.kind==='event'?p.onEvent!(stars):undefined
         const e=ev?{stars,xp:ev.xp,gems:ev.got?.gems||0}:finishCase({kind:p.kind as 'node'|'daily',key:p.keyId,replay:p.replay,wrong:st.current.wrong,id:def.id,insp:T.ran.length})
-        sfx('win');confetti()
+        sfx('ok')
         setRes({ev,...e,what:def.conclusao||def.title,fix:def.explicacao||'',why:def.porque||'',n:T.ran.length,proof:[]})
       },1100)
     }
