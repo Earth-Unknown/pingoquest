@@ -7,6 +7,7 @@ import { sfx } from '../lib/sound'
 import art from '../legacy/art.json'
 import { Invencao, PecaSolta, ENCAIXES, PROPORCAO } from './Invencao'
 import type { ConclusaoProps } from './contrato'
+import { FimParadaTela, NovoItemLinha } from './FimParada'
 
 /* Fases: 0 observa · 1 peça surge · 2 peça voa · 3 encaixa (módulo acende) · 4 título · 5 recompensas (final) */
 const FINAL = 5
@@ -17,6 +18,12 @@ const css = `.cc-pingo svg{width:clamp(56px,10vh,80px)!important;display:block}
 .cc-cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;padding:2px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.cc-cards::-webkit-scrollbar{display:none}.cc-card{flex:0 0 84%;scroll-snap-align:center;border-radius:16px;padding:10px 14px;text-align:left;font-size:15px;line-height:1.4;box-sizing:border-box}.cc-ic{display:inline-flex;width:20px;height:20px}.cc-ic svg{width:100%;height:100%;display:block}`
 
 export function CenaConclusao(p: ConclusaoProps) {
+  const [passo, setPasso] = useState<'cena' | 'fim'>('cena')
+  if (passo === 'fim' && p.fim) return <FimParadaTela S={p.S} invencao={p.invencao} fim={p.fim} novos={p.novos} onContinuar={p.onContinuar} />
+  return <Cena {...p} onContinuar={p.fim ? () => setPasso('fim') : p.onContinuar} />
+}
+
+function Cena(p: ConclusaoProps) {
   const reduzido = !!useReducedMotion()
   const [fase, setFase] = useState(reduzido ? FINAL : 0)
   const [pulou, setPulou] = useState(false)
@@ -110,7 +117,8 @@ export function CenaConclusao(p: ConclusaoProps) {
           {p.invencao.modulos.map((m, i) => <i key={m.id} style={{ width: 8, height: 8, borderRadius: 4, background: i <= p.indice ? 'var(--primary)' : 'var(--line-deep)' }} />)}
           {!p.repeticao && modulo && <span style={{ marginLeft: 4 }}>{modulo} encaixada</span>}
         </div>
-        {p.proxima && <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--muted)' }}>A seguir: <span style={{ color: 'var(--ink)' }}>{p.proxima}</span></div>}
+        {fase >= FINAL && !p.fim && p.novos?.map(n => <NovoItemLinha key={n.slot + n.id} n={n} />)}
+        {p.proxima && !p.fim && <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--muted)' }}>A seguir: <span style={{ color: 'var(--ink)' }}>{p.proxima}</span></div>}
       </motion.div>
     </div></div>
     <div className="lfoot"><button className="btn" onClick={p.onContinuar}>Continuar</button></div>

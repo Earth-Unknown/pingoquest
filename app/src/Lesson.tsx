@@ -11,6 +11,7 @@ import { confetti, enter, riseIn, ResultTiles, motion } from './Fx'
 import { HeartsRow, HEART_ICON } from './Hearts'
 import { CenaConclusao } from './conclusao/CenaConclusao'
 import { ESTACAO_PINGO } from './conclusao/contrato'
+import { sync as avSync, SLOTS, icon as avIcon } from './lib/avatar'
 
 type Item=Q&{src:Q;opts?:{t:string;c:boolean}[];left?:{id:number;t:string}[];right?:{id:number;t:string}[];ci?:{id:number;t:string;c:number}[]}
 const prep=(q:Q):Item=>{
@@ -23,10 +24,11 @@ const prep=(q:Q):Item=>{
 
 /** conhecimento por assunto (usado para priorizar o que está frágil nos eventos) */
 const know=(s:any,q:Q,good:boolean)=>{if(!q.cid)return;s.know=s.know||{};const k=s.know[q.cid]||(s.know[q.cid]={ok:0,bad:0,seen:0,last:''});if(good)k.ok++;else k.bad++}
-export type Result={xp:number;gems:number;first?:boolean;acc:number;perfect:boolean;hearts?:{from:number;gain:number}}
+export type Novo={slot:string;id:string;nome:string;icone:string}
+export type Result={xp:number;gems:number;first?:boolean;novos?:Novo[];cheias?:boolean;acc:number;perfect:boolean;hearts?:{from:number;gain:number}}
 /** Vidas que o treino devolve (o limite é 5) */
 const PRACTICE_HEARTS=3
-export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;resumo?:{sabe?:string;pratica?:string;proxima?:string};qs:Q[];kind:'phase'|'boss'|'review'|'event'|'practice';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
+export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;resumo?:{sabe?:string;pratica?:string;proxima?:string;fim?:import('./conclusao/contrato').FimParada};qs:Q[];kind:'phase'|'boss'|'review'|'event'|'practice';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
   const [queue,setQueue]=useState<Item[]>(()=>qs.map(prep))
   const [i,setI]=useState(0)
   const [hearts,setHearts]=useState<number>(S.hearts??5)
@@ -94,7 +96,7 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
       const r=onEvent(qb-miss,qb);sfx(r.pass?'win':'ok');if(r.pass)confetti()
       setRes({xp:r.xp,gems:r.got?.gems||0,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect:r.pass,ev:r});return
     }
-    let first=false,xp=10,gems=0,hFrom=0,hGain=0
+    let first=false,xp=10,gems=0,hFrom=0,hGain=0,cheias=false,novos:Novo[]=[]
     const perfect=miss===0&&!free
     if(kind!=='phase'&&kind!=='boss'){sfx('win');confetti()}
     patchSave(s=>{
@@ -106,11 +108,22 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
         if(miss===0&&first)gems+=5
         d.phases++;if(miss===0){d.perfect++;s.perfectN=(s.perfectN||0)+1}
         s.done[keyId]=true
+        if(kind==='boss'&&first){ // fecha a parada: vidas cheias e a invenção vai para a Oficina do Pingo
+          if((s.hearts??5)<5){s.hearts=5;cheias=true}
+          s.ofi=s.ofi||[];const oid=(s.curso||'redes')+':'+keyId.split('-')[0];if(!s.ofi.includes(oid))s.ofi.push(oid)
+        }
       }
       d.xp+=xp;s.xp=(s.xp||0)+xp;s.gems=(s.gems??50)+gems
       wkAdd(s,xp);touchStreak(s);cqSync(s)
+      if(!free){ // itens do robô que esta lição liberou (as metas já existiam; agora o aluno vê o prêmio na hora)
+        const antes=(s.inv?.items||[]).slice()
+        avSync(s,gamesOf(s.curso||'redes').filter(g=>!g.caso).length)
+        novos=(s.inv?.items||[]).filter((k:string)=>!antes.includes(k)).flatMap((k:string)=>{
+          const [slot,id]=k.split(':'),it=SLOTS.find(x=>x.id===slot)?.itens.find(i=>i.id===id)
+          return it?[{slot,id,nome:it.nome,icone:avIcon(slot,it)}]:[]})
+      }
     })
-    setRes({xp,gems,first,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect,hearts:kind==='practice'?{from:hFrom,gain:hGain}:undefined})
+    setRes({xp,gems,first,novos,cheias,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect,hearts:kind==='practice'?{from:hFrom,gain:hGain}:undefined})
   }
 
   const pct=Math.round(Math.min(right,base)/base*100)
@@ -153,7 +166,7 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
   </div></div><div className="lfoot"><button className="btn" onClick={()=>void collect(res.xp,res.gems,res.hearts?.gain).then(onClose)}>Voltar ao jogo</button></div></div></div>
   if(res&&(kind==='phase'||kind==='boss')&&!res.ev)return <CenaConclusao S={S} invencao={ESTACAO_PINGO} indice={Math.min(3,Math.max(0,parseInt(keyId.split('-')[1])||0))} repeticao={!res.first}
     titulo={!res.first?'Estação conferida!':resumo?.sabe?(kind==='boss'?'Agora você domina!':'Agora você sabe!'):kind==='boss'?'Estação Pingo completa!':'Mais uma descoberta!'} subtitulo={res.first?undefined:'Você já tinha essa peça. Bom reforço!'}
-    xp={res.xp} chips={res.gems} acertos={res.acc} sabe={resumo?.sabe} pratica={resumo?.pratica} proxima={resumo?.proxima} aprendi={qs.filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])} onContinuar={onClose}/>
+    xp={res.xp} chips={res.gems} acertos={res.acc} sabe={resumo?.sabe} pratica={resumo?.pratica} proxima={resumo?.proxima} novos={res.novos} fim={kind==='boss'&&res.first&&resumo?.fim?{...resumo.fim,vidasCheias:!!res.cheias}:undefined} aprendi={qs.filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])} onContinuar={onClose}/>
   if(res)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood="cheer"/><h1>{kind==='practice'?'Vida recuperada!':free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
     <p>{kind==='practice'?'+1 vida. Bom treino!':free?'Bom treino!':res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>

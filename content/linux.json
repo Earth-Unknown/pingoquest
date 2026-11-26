@@ -404,7 +404,8 @@
      ],
      "chamado": "lx_acesso",
      "sabe": "o que é o Linux, por que ele é livre e o que são distribuições.",
-     "pratica": "você entende do que falam os times de TI quando citam Linux, Ubuntu ou Debian, e consegue acompanhar a escolha do sistema de um servidor."
+     "pratica": "você entende do que falam os times de TI quando citam Linux, Ubuntu ou Debian, e consegue acompanhar a escolha do sistema de um servidor.",
+     "gancho": "Linux, Ubuntu, Debian: o que esses nomes significam na TI?"
     },
     {
      "lugar": "Painel de Comandos",
@@ -793,7 +794,8 @@
      ],
      "chamado": "lx_comandos",
      "sabe": "o que são terminal, shell, comando e prompt e como ler cada um.",
-     "pratica": "você abre o terminal de um servidor sem receio, lê o prompt para saber quem e onde você está e entende a estrutura de um comando."
+     "pratica": "você abre o terminal de um servidor sem receio, lê o prompt para saber quem e onde você está e entende a estrutura de um comando.",
+     "gancho": "O que aparece no terminal de um servidor e como ler cada parte?"
     },
     {
      "lugar": "Mapa de Pastas",
@@ -1173,7 +1175,8 @@
      ],
      "chamado": "lx_pastas",
      "sabe": "como as pastas se organizam e como se mover com caminhos absolutos, relativos e atalhos.",
-     "pratica": "num servidor, você se orienta pelas pastas e chega a qualquer arquivo usando cd, pwd e caminhos corretos."
+     "pratica": "num servidor, você se orienta pelas pastas e chega a qualquer arquivo usando cd, pwd e caminhos corretos.",
+     "gancho": "Como se mover pelas pastas de um servidor sem se perder?"
     },
     {
      "lugar": "Oficina de Arquivos",
@@ -1553,7 +1556,8 @@
      ],
      "chamado": "lx_arquivos",
      "sabe": "como criar, copiar, mover e apagar arquivos e pastas com cuidado.",
-     "pratica": "você organiza arquivos de um servidor e faz cópias de segurança antes de mexer, sabendo que o rm não tem volta."
+     "pratica": "você organiza arquivos de um servidor e faz cópias de segurança antes de mexer, sabendo que o rm não tem volta.",
+     "gancho": "Como copiar ou mover arquivos sem perder nada por engano?"
     },
     {
      "lugar": "Sala de Leitura",
@@ -1855,7 +1859,8 @@
      ],
      "chamado": "lx_logs",
      "sabe": "como ler arquivos e procurar texto neles com cat, head, tail e grep.",
-     "pratica": "ao investigar uma falha, você lê o fim de um log e filtra só as linhas que importam."
+     "pratica": "ao investigar uma falha, você lê o fim de um log e filtra só as linhas que importam.",
+     "gancho": "Como achar uma linha de erro num arquivo com milhares de linhas?"
     },
     {
      "lugar": "Esteira de Dados",
@@ -2132,7 +2137,8 @@
      ],
      "chamado": "lx_esteira",
      "sabe": "como redirecionar a saída para arquivos e ligar comandos com o pipe.",
-     "pratica": "você monta consultas rápidas, como contar erros de um log, e guarda o resultado num arquivo para um relatório."
+     "pratica": "você monta consultas rápidas, como contar erros de um log, e guarda o resultado num arquivo para um relatório.",
+     "gancho": "Como contar os erros de um log e guardar o resultado num arquivo?"
     },
     {
      "lugar": "Portaria",
@@ -2409,7 +2415,8 @@
      ],
      "chamado": "lx_portaria",
      "sabe": "como ler e mudar as permissões de arquivos com «ls -l» e «chmod».",
-     "pratica": "você descobre por que um arquivo não abre ou um script não roda e corrige a permissão com segurança."
+     "pratica": "você descobre por que um arquivo não abre ou um script não roda e corrige a permissão com segurança.",
+     "gancho": "Por que um arquivo não abre ou um script não roda?"
     },
     {
      "lugar": "Sala do Administrador",
@@ -2686,7 +2693,8 @@
      ],
      "chamado": "lx_admin",
      "sabe": "como saber quem você é no sistema e usar o sudo para tarefas de administrador.",
-     "pratica": "você faz tarefas de administração com sudo só quando precisa, sem trabalhar como root o tempo todo."
+     "pratica": "você faz tarefas de administração com sudo só quando precisa, sem trabalhar como root o tempo todo.",
+     "gancho": "Quando vale usar sudo e quando é melhor evitar?"
     },
     {
      "lugar": "Sala de Máquinas",
@@ -2963,7 +2971,8 @@
      ],
      "chamado": "lx_maquinas",
      "sabe": "como ver e encerrar processos e como o apt instala pacotes.",
-     "pratica": "você resolve um programa travado encerrando o processo e coloca novos programas num servidor Debian ou Ubuntu."
+     "pratica": "você resolve um programa travado encerrando o processo e coloca novos programas num servidor Debian ou Ubuntu.",
+     "gancho": "O que fazer com um programa travado num servidor?"
     },
     {
      "lugar": "Loja de Programas",
@@ -3244,7 +3253,8 @@
      ],
      "chamado": "lx_loja",
      "sabe": "como buscar, instalar, remover e atualizar programas com o apt.",
-     "pratica": "você mantém um servidor com os programas certos e atualizados, usando os repositórios oficiais."
+     "pratica": "você mantém um servidor com os programas certos e atualizados, usando os repositórios oficiais.",
+     "gancho": "Como instalar e atualizar programas num servidor Debian ou Ubuntu?"
     },
     {
      "lugar": "Torre de Rede",
@@ -3530,7 +3540,8 @@
      ],
      "chamado": "lx_torre",
      "sabe": "como ver o endereço da máquina e testar a conexão com «ip a», «ping» e «curl».",
-     "pratica": "diante de um problema de conexão, você descobre se a falha está na máquina, na rede ou no serviço."
+     "pratica": "diante de um problema de conexão, você descobre se a falha está na máquina, na rede ou no serviço.",
+     "gancho": "Se a conexão falha, o problema está na máquina, na rede ou no serviço?"
     },
     {
      "lugar": "Oficina de Scripts",
@@ -3811,7 +3822,8 @@
      ],
      "chamado": "lx_script",
      "sabe": "como criar e rodar um script simples e usar variáveis nele.",
-     "pratica": "você transforma uma sequência de comandos repetida num script e a executa com um só comando."
+     "pratica": "você transforma uma sequência de comandos repetida num script e a executa com um só comando.",
+     "gancho": "Dá para transformar comandos repetidos em um só comando?"
     },
     {
      "lugar": "Relógio de Tarefas",
@@ -4092,7 +4104,8 @@
      ],
      "chamado": "lx_agenda",
      "sabe": "como agendar tarefas automáticas com o cron e conferir a agenda com «crontab».",
-     "pratica": "você deixa cópias de segurança e limpezas rodando sozinhas no horário certo, sem precisar lembrar."
+     "pratica": "você deixa cópias de segurança e limpezas rodando sozinhas no horário certo, sem precisar lembrar.",
+     "gancho": "Como fazer uma cópia de segurança rodar sozinha todo dia?"
     },
     {
      "lugar": "Caçador de Arquivos",
@@ -4373,7 +4386,8 @@
      ],
      "chamado": "lx_busca",
      "sabe": "como achar arquivos com «find» e medir o espaço em disco com «df» e «du».",
-     "pratica": "você encontra arquivos perdidos e descobre o que está enchendo o disco antes que o servidor pare de gravar."
+     "pratica": "você encontra arquivos perdidos e descobre o que está enchendo o disco antes que o servidor pare de gravar.",
+     "gancho": "O que está enchendo o disco do servidor e como achar arquivos perdidos?"
     },
     {
      "lugar": "Portal Remoto",
@@ -4650,7 +4664,8 @@
      ],
      "chamado": "lx_remoto",
      "sabe": "como entrar em um servidor com o ssh, usar chaves e copiar arquivos com o scp.",
-     "pratica": "você administra servidores à distância, de forma segura, e envia arquivos para eles sem sair do terminal."
+     "pratica": "você administra servidores à distância, de forma segura, e envia arquivos para eles sem sair do terminal.",
+     "gancho": "Como entrar num servidor distante e enviar arquivos para ele?"
     }
    ]
   }
