@@ -15,6 +15,7 @@ import { useAuth } from './lib/use-auth'
 import { SaveProgressCard } from './SaveProgress'
 import { logOut } from './lib/auth'
 import { toast } from './Fx'
+import { ModoDono } from './ModoDono'
 import { Invencao } from './conclusao/Invencao'
 import { ESTACAO_PINGO } from './conclusao/contrato'
 import { matiz } from './conclusao/FimParada'
@@ -37,6 +38,8 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
   const cancelRef=useRef<HTMLButtonElement>(null)
   useEffect(()=>{if(leaving)cancelRef.current?.focus()},[leaving])
   const [snd,setSnd]=useState(soundOn())
+  const [taps,setTaps]=useState(0)
+  const [pedeCodigo,setPedeCodigo]=useState(false)
   const [theme,setTheme]=useState(themeNow())
   const total=S.total||0,acc=total?Math.round((S.ok||0)/total*100):0
   const provas=gamesOf(ativo).filter(g=>!g.caso).length
@@ -54,7 +57,7 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
   }
   let nOwn=0,nAll=0;SLOTS.forEach(sl=>sl.itens.forEach(it=>{nAll++;if(has(S,sl.id,it))nOwn++}))
   return <div className="screen">
-    <div className="ph"><Pingo S={S}/><div><h1>{S.nick||'Meu perfil'}</h1><p>{cur.nome}</p>
+    <div className="ph"><Pingo S={S}/><div><h1 onClick={()=>{const n=taps+1;setTaps(n);if(n>=7){setPedeCodigo(true);setTaps(0)}}}>{S.nick||'Meu perfil'}</h1><p>{cur.nome}</p>
       <button className="nickbtn" onClick={()=>setFriends(true)}>{S.nick?'Editar apelido':'Escolher apelido'}</button></div></div>
     <SaveProgressCard S={S}/>
     <div className="mini">{stats.map(([k,v])=><div key={k}><b>{v}</b><span>{k}</span></div>)}</div>
@@ -79,6 +82,8 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
     <p className="note" style={{margin:'8px 0 0'}}>Inventário: {nOwn} de {nAll} itens.</p>
 
     <Oficina S={S}/>
+
+    <ModoDono S={S} aberto={pedeCodigo} onFechar={()=>setPedeCodigo(false)}/>
 
     <div className="sect">Ajustes</div>
     <button className="btn ghost" style={{marginBottom:10}} onClick={toggleTheme}>Tema: {theme==='dark'?'escuro (roxo)':'claro'}</button>
