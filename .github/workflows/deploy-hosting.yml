@@ -1,5 +1,5 @@
 # Monta o site (_site) e publica no Firebase Hosting, com o rewrite /api/** para o Cloud Run.
-# Roda quando o site muda e também depois de cada deploy da API (API primeiro: o app novo nunca chama rota inexistente).
+# Roda quando o site ou o conteúdo dos cursos muda e também depois de cada deploy da API (API primeiro: o app novo nunca chama rota inexistente).
 # Pré-requisito: o serviço Cloud Run "api" já existe (o firebase deploy recusa rewrite para serviço inexistente).
 name: Deploy do Hosting
 on:
@@ -10,6 +10,7 @@ on:
       - "icons/**"
       - "manifest.webmanifest"
       - "index.html"
+      - "content/**" # os cursos são embutidos no app na compilação: mudou o conteúdo, publica de novo
       - "src/**"
       - "build-site.sh"
       - "tools/montar-site.sh"

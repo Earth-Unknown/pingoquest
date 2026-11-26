@@ -1,5 +1,10 @@
 # Hospedagem do Pingo Quest (Firebase Hosting + Cloudflare)
 
+## Qual endereço divulgar
+- **Oficial: https://pingoquest.web.app** (Firebase Hosting). Tem o login (Google ou convidado) e a API em `/api/**`. Divulgue este.
+- **Reserva: https://earth-unknown.github.io/pingoquest** (GitHub Pages). Mesmo jogo, sem API. Não divulgue: o progresso fica no navegador de cada endereço e não passa de um para o outro.
+- Os dois são atualizados juntos a cada merge na `main` (ver "Publicação automática" abaixo).
+
 O site é estático (o app React compilado). Não precisa de servidor, então Firebase Hosting serve direto, sem Cloud Run.
 
 - `/` é o **app React** (pasta `app/`), a versão principal.
@@ -14,6 +19,12 @@ O site é estático (o app React compilado). Não precisa de servidor, então Fi
 4. `firebase deploy --only hosting`
 
 Nas próximas vezes: `sh tools/montar-site.sh && firebase deploy --only hosting`.
+
+## Publicação automática (a cada merge na main)
+Dois workflows publicam o mesmo site, para os dois endereços não ficarem diferentes:
+- `pages.yml` → GitHub Pages (earth-unknown.github.io/pingoquest), em qualquer push na `main`.
+- `deploy-hosting.yml` → Firebase Hosting (pingoquest.web.app), quando mudam `app/`, `src/`, `content/`, ícones, `index.html`, `firebase.json` ou depois de um deploy da API.
+Ambos usam `sh tools/montar-site.sh`. Para publicar na mão: `sh tools/montar-site.sh && firebase deploy --only hosting`.
 
 ## Domínio e Cloudflare
 - Firebase Console > Hosting > "Adicionar domínio personalizado" e siga os registros DNS.
