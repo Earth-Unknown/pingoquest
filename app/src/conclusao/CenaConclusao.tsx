@@ -81,24 +81,25 @@ export function CenaConclusao(p: ConclusaoProps) {
           style={{ position: 'absolute', left: alvo.x + '%', top: alvo.y + '%', width: tam, height: tam, marginLeft: -tam / 2, marginTop: -tam / 2, pointerEvents: 'none' }}>
           <PecaSolta invencao={p.invencao} indice={p.indice} tamanho={tam} />
         </motion.div>}
+
+        <motion.div aria-label={`Ganhou ${p.xp} de energia${p.chips > 0 ? ` e ${p.chips} chips` : ''}`} initial={false}
+          animate={fase >= FINAL ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }} transition={suave(0, 0.3)}
+          style={{ position: 'absolute', left: (p.indice >= 3 ? alvo.x + 26 : alvo.x) + '%', top: (p.indice >= 3 ? alvo.y - 2 : Math.max(2, alvo.y - 20)) + '%', transform: p.indice >= 3 ? 'translate(-50%,-50%)' : 'translate(-50%,-50%)',
+            display: 'flex', gap: 6, pointerEvents: 'none', fontWeight: 900, fontSize: 13, whiteSpace: 'nowrap' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, color: '#ffb800', background: 'var(--surface,#fff)', borderRadius: 99, padding: '2px 8px 2px 5px', boxShadow: '0 1px 4px rgba(26,16,72,.18)' }}>
+            <span className="cc-ic" style={{ width: 14, height: 14 }} dangerouslySetInnerHTML={{ __html: (art as any).IC.bolt }} />{p.xp}</span>
+          {p.chips > 0 && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, color: '#ff4fae', background: 'var(--surface,#fff)', borderRadius: 99, padding: '2px 8px 2px 5px', boxShadow: '0 1px 4px rgba(26,16,72,.18)' }}>
+            <span className="cc-ic" style={{ width: 14, height: 14 }} dangerouslySetInnerHTML={{ __html: (art as any).IC.gem }} />{p.chips}</span>}
+        </motion.div>
       </div>
 
       <motion.div animate={fase >= 4 ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }} transition={suave()}
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-        <h1 style={{ margin: 0 }}>{p.titulo}</h1>
-        {p.subtitulo && <p>{p.subtitulo}</p>}
-        {!p.repeticao && modulo && <small style={{ color: 'var(--muted)', fontWeight: 800 }}>{modulo} encaixada</small>}
-      </motion.div>
-
-      <motion.div animate={fase >= FINAL ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }} transition={suave(0, 0.3)}
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '4px 18px', fontWeight: 900, fontSize: 18 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#ffb800' }}>
-            <span className="cc-ic" dangerouslySetInnerHTML={{ __html: (art as any).IC.bolt }} />+{p.xp} energia</span>
-          {p.chips > 0 && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#ff4fae' }}>
-            <span className="cc-ic" dangerouslySetInnerHTML={{ __html: (art as any).IC.gem }} />+{p.chips} chips</span>}
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+        <h1 style={{ margin: 0, fontSize: 26 }}>{p.titulo}</h1>
+        {!p.repeticao && modulo && <p style={{ margin: 0 }}>{modulo} encaixada</p>}
+        <div role="img" aria-label={`Estação Pingo: ${p.indice + 1} de ${p.invencao.modulos.length} módulos`} style={{ display: 'flex', gap: 6 }}>
+          {p.invencao.modulos.map((m, i) => <i key={m.id} style={{ width: 8, height: 8, borderRadius: 4, background: i <= p.indice ? 'var(--primary)' : 'var(--line-deep)' }} />)}
         </div>
-        {p.acertos != null && <small style={{ color: 'var(--muted)', fontWeight: 700 }}>Precisão {Math.round(p.acertos)}%</small>}
       </motion.div>
     </div></div>
     <div className="lfoot"><button className="btn" onClick={p.onContinuar}>Continuar</button></div>

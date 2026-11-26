@@ -152,7 +152,7 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
     <ResultTiles tiles={[{c:'#ff4b6e',l:'Vidas',to:res.hearts.gain,prefix:'+',icon:HEART_ICON},{c:'#ffb800',l:'Energia',to:res.xp},{c:'#18b9e8',l:'Precisão',to:res.acc}]}/>
   </div></div><div className="lfoot"><button className="btn" onClick={()=>void collect(res.xp,res.gems,res.hearts?.gain).then(onClose)}>Voltar ao jogo</button></div></div></div>
   if(res&&(kind==='phase'||kind==='boss')&&!res.ev)return <CenaConclusao S={S} invencao={ESTACAO_PINGO} indice={Math.min(3,Math.max(0,parseInt(keyId.split('-')[1])||0))} repeticao={!res.first}
-    titulo={res.first?(kind==='boss'?'Estação Pingo completa!':res.perfect?'Mais uma descoberta, sem erros!':'Mais uma descoberta!'):'Estação conferida!'} subtitulo={res.first?(kind==='boss'?'Você montou a última peça da prova final.':'Uma peça de cada vez.'):'Você já tinha essa peça. Bom reforço!'}
+    titulo={res.first?(kind==='boss'?'Estação Pingo completa!':'Mais uma descoberta!'):'Estação conferida!'} subtitulo={res.first?(kind==='boss'?'Você montou a última peça da prova final.':'Uma peça de cada vez.'):'Você já tinha essa peça. Bom reforço!'}
     xp={res.xp} chips={res.gems} acertos={res.acc} onContinuar={onClose}/>
   if(res)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood="cheer"/><h1>{kind==='practice'?'Vida recuperada!':free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
