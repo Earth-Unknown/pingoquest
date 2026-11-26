@@ -410,7 +410,12 @@
      ],
      "sabe": "o que é uma rede e por que ela existe.",
      "pratica": "quando você divide a internet ou a impressora com a família, é uma rede de casa que faz isso funcionar.",
-     "gancho": "Quando você divide a internet com a família, o que faz isso funcionar?"
+     "gancho": "Quando você divide a internet com a família, o que faz isso funcionar?",
+     "curiosidades": [
+      "A primeira mensagem entre dois computadores na ARPANET, em 1969, foi «LO». Era para ser «LOGIN», mas o sistema caiu.",
+      "A ARPANET, de onde a internet nasceu, começou ligando apenas quatro universidades americanas, em 1969.",
+      "Em 1973, a ARPANET ligou-se pela primeira vez a computadores fora dos EUA, na Noruega e na Inglaterra."
+     ]
     },
     {
      "lugar": "Casa do Pingo",
@@ -796,7 +801,12 @@
      ],
      "sabe": "como é a rede de uma casa e o papel do roteador e do modem.",
      "pratica": "se a internet cair em casa, você sabe separar o que é do modem, o que é do roteador e o que é dos aparelhos.",
-     "gancho": "Você sabe qual caixinha da sua casa leva a internet até o celular?"
+     "gancho": "Você sabe qual caixinha da sua casa leva a internet até o celular?",
+     "curiosidades": [
+      "Antigamente, cada aparelho precisava de um cabo até o computador. O Wi-Fi acabou com essa bagunça de fios!",
+      "A palavra «roteador» vem de «rota»: ele escolhe o caminho dos dados, como um guarda de trânsito.",
+      "Muita gente chama o roteador de «modem», mas são funções diferentes. Às vezes ficam na mesma caixinha."
+     ]
     },
     {
      "lugar": "Posto de Cabos",
@@ -1203,7 +1213,12 @@
      "chamado": "wifi",
      "sabe": "quando usar cabo, Wi-Fi ou fibra e o que muda em cada um.",
      "pratica": "você escolhe cabo para o PC de jogo ou de trabalho e Wi-Fi para o celular, sabendo o motivo.",
-     "gancho": "Para o PC de trabalho, vale mais usar cabo ou Wi-Fi? Por quê?"
+     "gancho": "Para o PC de trabalho, vale mais usar cabo ou Wi-Fi? Por quê?",
+     "curiosidades": [
+      "O Wi-Fi nasceu de um padrão chamado 802.11, lançado em 1997. O nome «Wi-Fi» veio só depois, por marketing.",
+      "O Ethernet, o cabo de rede que conhecemos, foi criado na década de 1970 por Robert Metcalfe.",
+      "Na fibra óptica, os dados viajam como pulsos de luz dentro de fios finíssimos de vidro."
+     ]
     },
     {
      "lugar": "Porto da Internet",
@@ -1601,7 +1616,12 @@
      ],
      "sabe": "o que é a internet, quem dá acesso a ela e como cliente e servidor conversam.",
      "pratica": "ao abrir qualquer site, você sabe quem está pedindo, quem está respondendo e quem liga a sua casa ao resto da rede.",
-     "gancho": "Quando você abre um site, quem pede e quem responde?"
+     "gancho": "Quando você abre um site, quem pede e quem responde?",
+     "curiosidades": [
+      "A internet não pertence a ninguém. Ela é a união de milhares de redes de empresas, governos e universidades.",
+      "O criador da Web, Tim Berners-Lee, escreveu a proposta dela em 1989, quando trabalhava no CERN.",
+      "Internet e Web não são a mesma coisa: a Web é só um dos serviços que usam a internet, como o e-mail."
+     ]
     },
     {
      "lugar": "Rua dos Endereços",
@@ -2001,7 +2021,12 @@
      "chamado": "print",
      "sabe": "o que é um endereço IP, como ele muda entre casa e internet e quem o entrega.",
      "pratica": "ao olhar as configurações de rede do aparelho, você reconhece o IP e entende de onde ele veio.",
-     "gancho": "Como cada aparelho da sua casa ganha um endereço na rede?"
+     "gancho": "Como cada aparelho da sua casa ganha um endereço na rede?",
+     "curiosidades": [
+      "O IPv4 tem mais de 4 bilhões de endereços possíveis e mesmo assim acabou. Por isso criaram o IPv6.",
+      "O endereço IP da sua casa pode mudar de tempos em tempos, a menos que o provedor ofereça um fixo.",
+      "O endereço 127.0.0.1 é especial: ele sempre aponta para o próprio computador, como dizer «eu mesmo»."
+     ]
     },
     {
      "lugar": "Agenda de Nomes",
@@ -2385,7 +2410,12 @@
      "chamado": "dns",
      "sabe": "como um nome de site vira número e o que fazer quando ele não abre.",
      "pratica": "se um site não abre, você sabe testar se é o DNS, o site ou a sua internet antes de culpar o aparelho.",
-     "gancho": "Como o navegador sabe onde fica um site só pelo nome?"
+     "gancho": "Como o navegador sabe onde fica um site só pelo nome?",
+     "curiosidades": [
+      "Antes do DNS, os nomes dos computadores ficavam numa lista única, mantida à mão. Isso ficou impossível de manter.",
+      "O DNS foi criado em 1983 por Paul Mockapetris para trocar essa lista por um sistema espalhado pelo mundo.",
+      "O DNS funciona como uma agenda de contatos: você usa o nome e ele acha o número para você."
+     ]
     },
     {
      "lugar": "Correio de Pacotes",
@@ -2760,7 +2790,12 @@
      "chamado": "lenta",
      "sabe": "como os dados viajam em bits e pacotes e o que são banda e latência.",
      "pratica": "ao testar a velocidade da internet, você entende o que significam os números de Mb/s e de ping.",
-     "gancho": "O que significam Mb/s e ping no teste de velocidade da internet?"
+     "gancho": "O que significam Mb/s e ping no teste de velocidade da internet?",
+     "curiosidades": [
+      "Um «bit» é a menor informação do computador: só 0 ou 1. Tudo o que você vê online é montado com eles.",
+      "O ping mede o tempo de ida e volta de uma mensagem. Em jogos online, quanto menor, melhor.",
+      "Seus dados viajam em pacotes, como uma carta dividida em vários envelopes que se juntam no destino."
+     ]
     },
     {
      "lugar": "Central de Equipamentos",
@@ -3144,7 +3179,12 @@
      "chamado": "office",
      "sabe": "o papel do switch, do ponto de acesso e do repetidor no caminho da internet.",
      "pratica": "ao ampliar a rede de uma casa ou escritório, você escolhe o equipamento certo para cada necessidade.",
-     "gancho": "Que equipamento escolher para ampliar a rede de uma casa ou escritório?"
+     "gancho": "Que equipamento escolher para ampliar a rede de uma casa ou escritório?",
+     "curiosidades": [
+      "O switch aprende sozinho quais aparelhos estão em cada porta e manda os dados só para o destino certo.",
+      "As luzinhas piscando em um switch mostram que há dados passando pelo cabo naquela porta.",
+      "Repetidores existem desde os cabos antigos: eles refazem o sinal fraco para ele chegar mais longe."
+     ]
     },
     {
      "lugar": "Mapa das Redes",
@@ -3543,7 +3583,12 @@
      ],
      "sabe": "os tipos de rede por tamanho e a forma em estrela de ligar os aparelhos.",
      "pratica": "ao ouvir PAN, LAN, MAN ou WAN, você sabe de que tamanho de rede se está falando.",
-     "gancho": "PAN, LAN, MAN, WAN: de que tamanho de rede cada sigla fala?"
+     "gancho": "PAN, LAN, MAN, WAN: de que tamanho de rede cada sigla fala?",
+     "curiosidades": [
+      "A internet é uma «rede de redes»: uma WAN gigante que liga redes menores do mundo todo.",
+      "Cabos submarinos de fibra óptica levam a maior parte da internet entre os continentes, pelo fundo do mar.",
+      "Um Bluetooth do celular com o fone forma uma PAN, uma rede bem pequena, só ao seu redor."
+     ]
     },
     {
      "lugar": "Portão Seguro",
@@ -3933,7 +3978,12 @@
      ],
      "sabe": "como proteger a rede e a conversa com os sites com hábitos simples.",
      "pratica": "você protege a sua rede e os seus dados no dia a dia, em casa, no trabalho e em Wi-Fi público.",
-     "gancho": "Como proteger a sua rede e os seus dados no dia a dia?"
+     "gancho": "Como proteger a sua rede e os seus dados no dia a dia?",
+     "curiosidades": [
+      "O «s» no «https» vem de «seguro»: ele embaralha a conversa para que ninguém no caminho consiga ler.",
+      "O cadeado ao lado do endereço mostra que a conexão é protegida, mas não garante que o site seja confiável.",
+      "Wi-Fi público é prático, mas qualquer um pode estar na mesma rede. Evite digitar senhas nele."
+     ]
     }
    ]
   }
