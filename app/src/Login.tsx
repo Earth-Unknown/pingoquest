@@ -4,8 +4,10 @@ import { Pingo } from './Pingo'
 import { GoogleButton } from './GoogleButton'
 import { AuthError, type AuthErrorInfo } from './AuthError'
 import { classifyAuthError, errorCode, signInGoogle, signInGuest, type AuthStep } from './lib/auth'
-import { done, totalFases } from './lib/cursos'
-import { cursoAtivo, streakNow, gamesOf } from './lib/progress'
+import { trocarCurso } from './lib/progress'
+import { Vitrine, OndeParou } from './LoginVitrine'
+import { cursosComecados } from './lib/parou'
+import { patchSave } from './lib/save'
 import { buzz, reducedMotion, sfx } from './lib/sound'
 import type { Save } from './lib/store'
 
@@ -32,32 +34,13 @@ const SUPPORT_DEFAULT = {
   B: 'Entre com o Google para guardar seu progresso na nuvem e continuar em outro aparelho.',
 }
 
-/** Fala do Pingo para quem volta: cumprimenta pela hora e diz o que vem agora (tirado do progresso real) */
-function falaDoPingo(S: Save, dias: number): { titulo: string; sub: string } {
+/** Fala do Pingo para quem volta: cumprimenta pela hora e convida a continuar (sem falar de um curso específico) */
+function falaDoPingo(S: Save): { titulo: string; sub: string } {
   const h = new Date().getHours()
   const saud = h < 5 ? 'Oi, coruja' : h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite'
   const nome = S.nick ? ', ' + S.nick : ''
-  const cur = cursoAtivo(S)
-  const games = gamesOf(cur.id)
-  const feitas = (S.done || {}) as Record<string, boolean>
-  const paradas: any[] = cur.json.mundos?.[0]?.paradas || []
-  let prox = ''
-  outer: for (let g = 0; g < games.length; g++) {
-    for (let k = 0; k < 4; k++) {
-      if (k === 3 && !games[g].phases.length) continue
-      if (!feitas[g + '-' + k]) {
-        const lugar = paradas[g]?.lugar || 'a trilha'
-        prox = k < 3 ? `Lição ${k + 1}, “${games[g].names[k]}” (parada ${lugar})` : `Prova final (parada ${lugar})`
-        break outer
-      }
-    }
-  }
-  const algo = Object.keys(feitas).length > 0
   const titulo = saud === 'Oi, coruja' ? `Oi, coruja${nome}!` : `${saud}${nome}!`
-  if (!prox) return { titulo, sub: 'Você fechou todas as paradas de agora. Bora revisar e manter o brilho?' }
-  if (!algo) return { titulo, sub: `Já deixei tudo pronto! Sua primeira missão: ${prox}. Bora?` }
-  const brilho = dias > 1 ? ` Seu brilho está em ${dias} dias, não deixa apagar!` : ''
-  return { titulo, sub: `Estava te esperando! Sua próxima missão: ${prox}.${brilho}` }
+  return { titulo, sub: 'Que bom te ver de novo!' }
 }
 
 /** Texto que aparece como se o Pingo estivesse digitando (sem animar para quem pediu menos movimento) */
@@ -181,14 +164,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
     )
   }
 
-  const cur = cursoAtivo(S)
-  const days = streakNow(S)
-  const stats: [string, string][] = [
-    [done(S, cur.id).length + '/' + totalFases(cur.json), 'fases'],
-    ...(days > 0 ? [[String(days), 'dias de brilho'] as [string, string]] : []),
-    [String(S.gems ?? 0), 'chips'],
-  ]
-  const fala = variant === 'B' ? falaDoPingo(S, days) : null
+  const fala = variant === 'B' ? falaDoPingo(S) : null
   const support = busy === 'google' ? 'Termine o login na janelinha do Google.' : hint ?? SUPPORT_DEFAULT[variant]
 
   return (
@@ -203,14 +179,14 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
           </motion.h1>
           {!success && (
             <motion.p className="lg-sub" {...stagger(2)}>
-              {variant === 'A' ? 'Vou te ensinar Redes e Linux, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
+              {variant === 'A' ? 'Eu te ajudo a pensar, descobrir e aprender, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
             </motion.p>
           )}
-          {!success && variant === 'B' && (
-            <motion.div className="mini lg-mini" style={{ gridTemplateColumns: `repeat(${stats.length},1fr)` }} {...stagger(3)}>
-              {stats.map(([v, l]) => <div key={l}><b>{v}</b><span>{l}</span></div>)}
-            </motion.div>
-          )}
+          {!success && <motion.div {...stagger(3)} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            {variant === 'B' && cursosComecados(S).length > 0
+              ? <OndeParou S={S} onAbrir={id => { sfx('start'); patchSave(x => trocarCurso(x, id)); onContinueLocal() }} />
+              : <Vitrine />}
+          </motion.div>}
         </div>
         <span className="lg-sr" role="status">{success?.text}</span>
         <AnimatePresence>
