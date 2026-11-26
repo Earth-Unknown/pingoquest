@@ -2,7 +2,9 @@
 
 Status: plano (nenhum código de produção escrito). Substitui `docs/supabase-presentes.md` (o Supabase saiu do plano) e a seção "Depois" de `docs/hospedagem.md`.
 
-Convenções deste documento: `<GCP_PROJECT_ID>` é o placeholder do projeto Google Cloud. "Chips" é o nome na interface e na API; no código atual do app é `S.gems` (o doc antigo chama de cristais). "Energia" é `S.xp`.
+Estado atual (2026-11-25): o projeto Google Cloud "PingoQuest" já foi criado, mas na conta do amigo. Ainda falta: dar acesso de Owner à dona, ligar o faturamento (plano Blaze), adicionar o Firebase ao projeto e configurar a Google Auth Platform (ver seções 6 e 8 e o passo 0 da seção 11).
+
+Convenções deste documento: `<GCP_PROJECT_ID>` é o placeholder do ID do projeto (o nome de exibição é "PingoQuest"; o ID, que costuma ter um sufixo, aparece em Console > Configurações do projeto). "Chips" é o nome na interface e na API; no código atual do app é `S.gems` (o doc antigo chama de cristais). "Energia" é `S.xp`.
 
 ## 1. Visão geral
 
@@ -374,6 +376,21 @@ Decisão da dona: Google + convidado anônimo. Sem e-mail/senha.
 
 Consequência a registrar: alunos sem conta Google (por exemplo, menores de 13 anos sem Family Link) ficam como convidados para sempre, e o convidado perde tudo se limpar os dados do navegador (o uid anônimo vive no IndexedDB). Mitigação: lembrete de "Salvar progresso" logo após a primeira fase e antes de eventos; em B4 o social exige conta Google. Um "código de recuperação" para convidados fica como decisão pendente (R9).
 
+### Configuração do login Google (Google Auth Platform)
+
+A captura do console mostra "A plataforma de autenticação do Google ainda não está configurada". Isso precisa ser feito antes do B1, na ordem abaixo (a pessoa com papel de Owner no projeto, no começo o amigo).
+
+| Passo | Onde | O que fazer |
+|---|---|---|
+| 1 | Firebase Console | "Adicionar projeto" escolhendo o projeto existente PingoQuest (não criar outro). Exige o plano Blaze |
+| 2 | Firebase Console > Authentication > Método de login | Ativar "Google" e "Anônimo". O Firebase cria o cliente OAuth web sozinho |
+| 3 | Google Auth Platform > Branding | Nome do app "Pingo Quest", e-mail de suporte (da dona), logo, link da política de privacidade e dos termos (página em pt-BR; ver LGPD na seção 8), domínios autorizados: `<GCP_PROJECT_ID>.firebaseapp.com`, `<GCP_PROJECT_ID>.web.app` e, depois, o domínio próprio |
+| 4 | Google Auth Platform > Público-alvo | Tipo "Externo". Em "Teste" só entram usuários de teste cadastrados (limite de 100); para os alunos entrarem, mudar para "Em produção" |
+| 5 | Google Auth Platform > Acesso a dados | Só os escopos básicos (`openid`, `email`, `profile`), que não exigem verificação do Google. Não pedir mais nada (minimização, LGPD) |
+| 6 | Authentication > Configurações > Domínios autorizados | Incluir o domínio do Hosting e o de desenvolvimento (`localhost`) |
+
+Cuidado: o e-mail de suporte e o contato do app aparecem para os alunos e viram o ponto de contato da LGPD. Usar um e-mail da dona, não pessoal do amigo. Quem configura a tela de consentimento precisa de papel de Owner ou equivalente; se for o amigo, a dona deve acompanhar, pois depois será ela quem mantém.
+
 ### O que o convidado pode e não pode
 
 | Funcionalidade | Convidado | Conta Google |
@@ -609,7 +626,9 @@ Não há segredo em nenhuma etapa do plano: a API usa a identidade da service ac
 
 | Recomendação | Detalhe |
 |---|---|
-| Projeto dedicado | Um projeto só do Pingo Quest (`pingoquest-prod`). Se o amigo já tem outras coisas no projeto atual, criar um projeto novo ligado à mesma conta de faturamento. Evita misturar cobrança, papéis e dados de alunos com outros usos |
+| Projeto dedicado | O projeto "PingoQuest" já foi criado e é só do Pingo Quest. Não colocar outros sistemas do amigo nele: evita misturar cobrança, papéis e dados de alunos. Se ele foi criado dentro de uma pasta ou organização do amigo, conferir quem herda papéis dali |
+| Projeto na conta do amigo | Como o projeto foi criado na conta dele, o primeiro passo é ele abrir IAM > Conceder acesso e adicionar a dona como `roles/owner` (pelo e-mail Google dela). Sem isso, ela não consegue criar WIF, configurar Firebase nem apagar nada. Em seguida, ele liga o plano Blaze, que exige a conta de faturamento dele |
+| Propriedade a longo prazo | O projeto pertence a quem o criou e paga. Se a amizade ou o acordo mudar, a dona não tem controle sobre os dados dos alunos nem sobre a cobrança. Alternativa a combinar: a dona cria o projeto na conta dela e o amigo só paga via conta de faturamento compartilhada (a dona fica como Owner do projeto e o amigo como administrador do faturamento). Registro como decisão pendente R1 |
 | Identidades individuais | Nada de duas pessoas no mesmo login Google. Cada um entra com a própria conta, com verificação em duas etapas (passkey ou app autenticador). Isso permite trilha de auditoria e revogação |
 | Dois Owners | O amigo (dono do faturamento) e a dona como `roles/owner`, para não haver ponto único de falha. Owner é de uso raro (criar WIF, dar papéis, apagar) |
 | Rotina do dia a dia | A dona opera com papéis menores: Firebase Admin, Cloud Run Admin, Logs Viewer, Billing Viewer. Evitar o papel básico Editor |
@@ -656,7 +675,8 @@ Pipeline de CI: lint, typecheck, unit, integration (com Java para os emuladores)
 
 | # | Tipo | Item | Impacto | Recomendação |
 |---|---|---|---|---|
-| R1 | Decisão | ID do projeto GCP e se já existe Firestore/Hosting nele | Localização do banco é permanente | Conferir antes do B0; se o banco já existir em outra região, ou aceitar ou criar projeto novo |
+| R1 | Decisão | O projeto "PingoQuest" está na conta do amigo; falta o ID, o acesso de Owner da dona e conferir se já existe Firestore/Hosting nele | Controle dos dados dos alunos e da cobrança fica com o dono da conta; a localização do banco é permanente | Passo 0 da seção 11. Combinar por escrito quem é dono do projeto no longo prazo (ver seção 8). Se o banco já existir em outra região, aceitar ou criar projeto novo |
+| R21 | Decisão | Google Auth Platform sem configuração; público em "Teste" limita a 100 usuários | Alunos não conseguem entrar com Google | Seguir a tabela da seção 6 e publicar em "Em produção" antes de abrir para os alunos; precisa de página de privacidade |
 | R2 | Decisão | Jogo antigo `/jogo-antigo/` | Grava no mesmo `pingoquest-v3` e paga recompensas localmente: divergiria do servidor | Remover do `_site` no deploy do B1 e aposentar `src/jogo.html`, `build-site.sh` e seus testes depois de portar as regras (item da seção 9) |
 | R3 | Risco | Cliente mente sobre acertos/erros (o conteúdo, com as respostas, vai no bundle JS) | Casual: protegemos contra editar `localStorage` e relógio. Determinado: dá para forjar | Aceito. Mitigações: ledger idempotente, limites por dia, `elapsedMs` plausível, teto no import. Correção por servidor (servir a pergunta e corrigir no servidor) fica para depois, só se virar problema |
 | R3b | Risco | Questões são identificadas pelo próprio texto (`q`) | Editar o texto de uma pergunta zera `miss`/`used` | Fora do escopo; sugerir ids estáveis no conteúdo quando houver revisão de conteúdo |
@@ -684,7 +704,8 @@ Refinamento sugerido das fases: acrescentar um B0 de fundação (sem ele nada se
 
 | # | Fase | Passo | Agente | Entrega |
 |---|---|---|---|---|
-| 1 | B0 | Projeto GCP dedicado, IAM, faturamento, orçamento, APIs, Firestore (região), Artifact Registry | `devops` | Projeto pronto e documentado; papéis da seção 8 |
+| 0 | B0 | Feito: projeto "PingoQuest" criado (na conta do amigo). A fazer pelo amigo: adicionar a dona como Owner, ligar o Blaze, anotar o ID do projeto | dona + amigo (com apoio do `devops`) | ID do projeto, dois Owners, faturamento ligado |
+| 1 | B0 | IAM da seção 8, orçamento e alertas, APIs, Firebase no projeto existente, Auth (Google + anônimo), Google Auth Platform (seção 6), Firestore (região), Artifact Registry | `devops` | Projeto pronto e documentado; papéis da seção 8 |
 | 2 | B0 | WIF + service accounts + workflow de deploy + `rewrite` no `firebase.json` | `devops` | `GET /api/v1/health` via Hosting |
 | 3 | B0 | Esqueleto da API (Fastify, env Zod, health, time, container) e smoke test de `Authorization` | `dev-fullstack` | R18 resolvido |
 | 4 | B0 | Revisão da arquitetura e dos contratos antes de codar mais | `architect` + `code-reviewer` | Aprovação |
