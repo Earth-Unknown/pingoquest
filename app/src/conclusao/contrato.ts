@@ -33,6 +33,7 @@ export type ConclusaoProps = {
   sabe?: string
   pratica?: string
   proxima?: string
+  aprendi?: [string, string][]
   xp: number             // energia ganha (já aplicada)
   chips: number          // chips ganhos (já aplicados)
   acertos?: number       // precisão 0 a 100 (opcional, discreta)
