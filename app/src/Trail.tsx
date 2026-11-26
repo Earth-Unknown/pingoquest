@@ -24,7 +24,7 @@ function nodeArt(curso:string,gi:number,k:number){
 /** última etapa "atual" vista (curso:parada-fase): se mudou depois de uma lição, o Pingo caminha até a nova */
 let lastCur:string|null=null
 /** Texto de conclusão da lição: o que se aprendeu, a aplicação real e o que vem a seguir (vem do conteúdo do curso) */
-function resumoDe(par:any[],games:any[],g:number,k:number){
+export function resumoDe(par:any[],games:any[],g:number,k:number){
   const p=par[g]||{},f=k<3?p.fases?.[k]:null,src=f?.sabe?f:p
   const nomes=games[g]?.names||[]
   const proxima=k<3?nomes[k+1]:(games[g+1]?.title||'')
