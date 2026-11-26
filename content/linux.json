@@ -405,7 +405,12 @@
      "chamado": "lx_acesso",
      "sabe": "o que é o Linux, por que ele é livre e o que são distribuições.",
      "pratica": "você entende do que falam os times de TI quando citam Linux, Ubuntu ou Debian, e consegue acompanhar a escolha do sistema de um servidor.",
-     "gancho": "Linux, Ubuntu, Debian: o que esses nomes significam na TI?"
+     "gancho": "Linux, Ubuntu, Debian: o que esses nomes significam na TI?",
+     "curiosidades": [
+      "Sabia que o Linux nasceu em 1991, quando o estudante finlandês Linus Torvalds começou um sistema como hobby?",
+      "Sabia que o Unix, que inspirou o Linux, nasceu nos Bell Labs, por volta de 1969, com Ken Thompson e Dennis Ritchie?",
+      "Sabia que o Tux, o pinguim do Linux, foi desenhado por Larry Ewing em 1996? Linus Torvalds gosta de pinguins."
+     ]
     },
     {
      "lugar": "Painel de Comandos",
@@ -795,7 +800,12 @@
      "chamado": "lx_comandos",
      "sabe": "o que são terminal, shell, comando e prompt e como ler cada um.",
      "pratica": "você abre o terminal de um servidor sem receio, lê o prompt para saber quem e onde você está e entende a estrutura de um comando.",
-     "gancho": "O que aparece no terminal de um servidor e como ler cada parte?"
+     "gancho": "O que aparece no terminal de um servidor e como ler cada parte?",
+     "curiosidades": [
+      "Sabia que GNU é uma sigla recursiva? Significa \"GNU's Not Unix\": o nome se explica usando ele mesmo.",
+      "Sabia que o projeto GNU foi lançado por Richard Stallman em 1983 e fez muitos dos comandos que você usa?",
+      "Sabia que o comando tty vem de \"teletype\"? Os primeiros terminais eram teletipos que imprimiam no papel."
+     ]
     },
     {
      "lugar": "Mapa de Pastas",
@@ -1176,7 +1186,12 @@
      "chamado": "lx_pastas",
      "sabe": "como as pastas se organizam e como se mover com caminhos absolutos, relativos e atalhos.",
      "pratica": "num servidor, você se orienta pelas pastas e chega a qualquer arquivo usando cd, pwd e caminhos corretos.",
-     "gancho": "Como se mover pelas pastas de um servidor sem se perder?"
+     "gancho": "Como se mover pelas pastas de um servidor sem se perder?",
+     "curiosidades": [
+      "Sabia que no Unix quase tudo é arquivo? Até dispositivos, como o disco, aparecem como arquivos dentro de /dev.",
+      "Sabia que no começo do Unix a pasta /usr guardava as pastas dos usuários? Hoje ela guarda programas.",
+      "Sabia que pwd significa \"print working directory\"? Em português: mostrar a pasta em que você está."
+     ]
     },
     {
      "lugar": "Oficina de Arquivos",
@@ -1557,7 +1572,12 @@
      "chamado": "lx_arquivos",
      "sabe": "como criar, copiar, mover e apagar arquivos e pastas com cuidado.",
      "pratica": "você organiza arquivos de um servidor e faz cópias de segurança antes de mexer, sabendo que o rm não tem volta.",
-     "gancho": "Como copiar ou mover arquivos sem perder nada por engano?"
+     "gancho": "Como copiar ou mover arquivos sem perder nada por engano?",
+     "curiosidades": [
+      "Sabia que touch vem de \"tocar\" no arquivo? Ele atualiza a data do arquivo e cria um vazio se não existir.",
+      "Sabia que cp vem de \"copy\", mv de \"move\" e rm de \"remove\"? Nomes curtos para digitar menos.",
+      "Sabia que o rm não tem lixeira? Apagou pelo terminal, o arquivo se foi. Confira antes de dar Enter!"
+     ]
     },
     {
      "lugar": "Sala de Leitura",
@@ -1860,7 +1880,12 @@
      "chamado": "lx_logs",
      "sabe": "como ler arquivos e procurar texto neles com cat, head, tail e grep.",
      "pratica": "ao investigar uma falha, você lê o fim de um log e filtra só as linhas que importam.",
-     "gancho": "Como achar uma linha de erro num arquivo com milhares de linhas?"
+     "gancho": "Como achar uma linha de erro num arquivo com milhares de linhas?",
+     "curiosidades": [
+      "Sabia que cat vem de \"concatenate\", juntar? Ele foi feito para unir arquivos, e acabou virando leitor.",
+      "Sabia que o less ganhou o nome de uma brincadeira com o more? \"Less is more\", ou seja, menos é mais.",
+      "Sabia que existe o tac? É o cat ao contrário: mostra as linhas do arquivo de trás para frente."
+     ]
     },
     {
      "lugar": "Esteira de Dados",
@@ -2138,7 +2163,12 @@
      "chamado": "lx_esteira",
      "sabe": "como redirecionar a saída para arquivos e ligar comandos com o pipe.",
      "pratica": "você monta consultas rápidas, como contar erros de um log, e guarda o resultado num arquivo para um relatório.",
-     "gancho": "Como contar os erros de um log e guardar o resultado num arquivo?"
+     "gancho": "Como contar os erros de um log e guardar o resultado num arquivo?",
+     "curiosidades": [
+      "Sabia que a ideia do pipe veio de Douglas McIlroy, dos Bell Labs? Ken Thompson o implementou em 1973.",
+      "Sabia que a filosofia Unix é fazer programas pequenos, que fazem uma coisa bem e se combinam por pipes?",
+      "Sabia que /dev/null é um \"buraco negro\"? Tudo o que você manda para lá é descartado."
+     ]
     },
     {
      "lugar": "Portaria",
@@ -2416,7 +2446,12 @@
      "chamado": "lx_portaria",
      "sabe": "como ler e mudar as permissões de arquivos com «ls -l» e «chmod».",
      "pratica": "você descobre por que um arquivo não abre ou um script não roda e corrige a permissão com segurança.",
-     "gancho": "Por que um arquivo não abre ou um script não roda?"
+     "gancho": "Por que um arquivo não abre ou um script não roda?",
+     "curiosidades": [
+      "Sabia que o Unix já nasceu multiusuário, para várias pessoas dividirem o mesmo computador com segurança?",
+      "Sabia que r, w e x valem 4, 2 e 1? Por isso chmod 755 soma as permissões de cada grupo.",
+      "Sabia que chmod significa \"change mode\" e chown, \"change owner\"? Mudar permissão e mudar dono."
+     ]
     },
     {
      "lugar": "Sala do Administrador",
@@ -2694,7 +2729,12 @@
      "chamado": "lx_admin",
      "sabe": "como saber quem você é no sistema e usar o sudo para tarefas de administrador.",
      "pratica": "você faz tarefas de administração com sudo só quando precisa, sem trabalhar como root o tempo todo.",
-     "gancho": "Quando vale usar sudo e quando é melhor evitar?"
+     "gancho": "Quando vale usar sudo e quando é melhor evitar?",
+     "curiosidades": [
+      "Sabia que sudo vem de \"superuser do\"? Ou seja, \"execute como superusuário\".",
+      "Sabia que o root é o usuário com poder total e seu número de usuário (UID) é sempre 0?",
+      "Sabia que quando você digita a senha no sudo nada aparece na tela? É proposital, para sua segurança."
+     ]
     },
     {
      "lugar": "Sala de Máquinas",
@@ -2972,7 +3012,12 @@
      "chamado": "lx_maquinas",
      "sabe": "como ver e encerrar processos e como o apt instala pacotes.",
      "pratica": "você resolve um programa travado encerrando o processo e coloca novos programas num servidor Debian ou Ubuntu.",
-     "gancho": "O que fazer com um programa travado num servidor?"
+     "gancho": "O que fazer com um programa travado num servidor?",
+     "curiosidades": [
+      "Sabia que todo processo tem um número, o PID? O primeiro processo do sistema costuma ter o PID 1.",
+      "Sabia que \"daemon\" é o nome de um processo que roda em segundo plano? Serviços como sshd levam o d no fim.",
+      "Sabia que existe processo zumbi? É o que já terminou, mas ainda aparece na lista de processos."
+     ]
     },
     {
      "lugar": "Loja de Programas",
@@ -3254,7 +3299,12 @@
      "chamado": "lx_loja",
      "sabe": "como buscar, instalar, remover e atualizar programas com o apt.",
      "pratica": "você mantém um servidor com os programas certos e atualizados, usando os repositórios oficiais.",
-     "gancho": "Como instalar e atualizar programas num servidor Debian ou Ubuntu?"
+     "gancho": "Como instalar e atualizar programas num servidor Debian ou Ubuntu?",
+     "curiosidades": [
+      "Sabia que o Debian foi criado em 1993 por Ian Murdock? O nome junta o de sua namorada, Debra, e o dele.",
+      "Sabia que \"Ubuntu\" é uma palavra africana que lembra a ideia de humanidade para com os outros?",
+      "Sabia que o Android usa o kernel Linux? Há Linux no seu celular, mesmo sem você abrir um terminal."
+     ]
     },
     {
      "lugar": "Torre de Rede",
@@ -3541,7 +3591,12 @@
      "chamado": "lx_torre",
      "sabe": "como ver o endereço da máquina e testar a conexão com «ip a», «ping» e «curl».",
      "pratica": "diante de um problema de conexão, você descobre se a falha está na máquina, na rede ou no serviço.",
-     "gancho": "Se a conexão falha, o problema está na máquina, na rede ou no serviço?"
+     "gancho": "Se a conexão falha, o problema está na máquina, na rede ou no serviço?",
+     "curiosidades": [
+      "Sabia que o ping foi criado em 1983 por Mike Muuss? O nome vem do som do sonar de submarinos.",
+      "Sabia que localhost é o endereço 127.0.0.1? Quer dizer \"este mesmo computador\".",
+      "Sabia que curl significa \"client URL\"? Ele é um cliente para buscar e enviar dados por endereços web."
+     ]
     },
     {
      "lugar": "Oficina de Scripts",
@@ -3823,7 +3878,12 @@
      "chamado": "lx_script",
      "sabe": "como criar e rodar um script simples e usar variáveis nele.",
      "pratica": "você transforma uma sequência de comandos repetida num script e a executa com um só comando.",
-     "gancho": "Dá para transformar comandos repetidos em um só comando?"
+     "gancho": "Dá para transformar comandos repetidos em um só comando?",
+     "curiosidades": [
+      "Sabia que o Bash é um trocadilho? \"Bourne-Again Shell\" soa como \"born again\", renascido.",
+      "Sabia que a primeira linha #! do script se chama shebang? Vem de \"hash\" (#) e \"bang\" (!).",
+      "Sabia que o \"Hello, World!\" virou tradição com o livro de C de Kernighan e Ritchie? Já fez o seu?"
+     ]
     },
     {
      "lugar": "Relógio de Tarefas",
@@ -4105,7 +4165,12 @@
      "chamado": "lx_agenda",
      "sabe": "como agendar tarefas automáticas com o cron e conferir a agenda com «crontab».",
      "pratica": "você deixa cópias de segurança e limpezas rodando sozinhas no horário certo, sem precisar lembrar.",
-     "gancho": "Como fazer uma cópia de segurança rodar sozinha todo dia?"
+     "gancho": "Como fazer uma cópia de segurança rodar sozinha todo dia?",
+     "curiosidades": [
+      "Sabia que cron é o serviço que acorda a cada minuto e vê se há alguma tarefa agendada para agora?",
+      "Sabia que o nome cron costuma ser ligado a Chronos, o deus grego do tempo?",
+      "Sabia que a agenda do cron tem cinco campos? Minuto, hora, dia do mês, mês e dia da semana."
+     ]
     },
     {
      "lugar": "Caçador de Arquivos",
@@ -4387,7 +4452,12 @@
      "chamado": "lx_busca",
      "sabe": "como achar arquivos com «find» e medir o espaço em disco com «df» e «du».",
      "pratica": "você encontra arquivos perdidos e descobre o que está enchendo o disco antes que o servidor pare de gravar.",
-     "gancho": "O que está enchendo o disco do servidor e como achar arquivos perdidos?"
+     "gancho": "O que está enchendo o disco do servidor e como achar arquivos perdidos?",
+     "curiosidades": [
+      "Sabia que grep vem do comando g/re/p do editor ed? Quer dizer \"buscar por expressão regular e imprimir\".",
+      "Sabia que awk leva as iniciais dos seus criadores: Aho, Weinberger e Kernighan?",
+      "Sabia que df vem de \"disk free\" e du de \"disk usage\"? Um mostra o espaço livre, o outro o que está em uso."
+     ]
     },
     {
      "lugar": "Portal Remoto",
@@ -4665,7 +4735,12 @@
      "chamado": "lx_remoto",
      "sabe": "como entrar em um servidor com o ssh, usar chaves e copiar arquivos com o scp.",
      "pratica": "você administra servidores à distância, de forma segura, e envia arquivos para eles sem sair do terminal.",
-     "gancho": "Como entrar num servidor distante e enviar arquivos para ele?"
+     "gancho": "Como entrar num servidor distante e enviar arquivos para ele?",
+     "curiosidades": [
+      "Sabia que o SSH foi criado em 1995 por Tatu Ylönen, um finlandês, depois de um roubo de senhas na rede?",
+      "Sabia que o SSH substituiu o telnet, que mandava até a senha em texto puro, sem criptografia?",
+      "Sabia que o SSH usa por padrão a porta 22? Por isso muita gente muda essa porta nos servidores."
+     ]
     }
    ]
   }
