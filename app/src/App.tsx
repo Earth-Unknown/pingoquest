@@ -69,19 +69,16 @@ function Game({skipWelcome}:{skipWelcome:boolean}){
 }
 
 function Gate(){
-  const {status}=useAuth()
-  const [hold,setHold]=useState(false) // segura o Login durante o login e a tela de sucesso
-  const [local,setLocal]=useState(false) // quem já jogava entra sem esperar a rede
+  const {status,isAnonymous}=useAuth()
+  const [entrou,setEntrou]=useState(false) // a tela de login aparece sempre que o app abre; só sai ao continuar ou entrar
   const [skipWelcome,setSkipWelcome]=useState(false)
-  if(status==='in'&&local)setLocal(false)
-  const onDone=useCallback((dest:LoginDest)=>{setSkipWelcome(dest==='trail');setHold(false)},[])
-  const onContinueLocal=useCallback(()=>{setSkipWelcome(true);setLocal(true);ensureGuestInBackground()},[])
-  const showLogin=!local&&(status!=='in'||hold)
+  const onDone=useCallback((dest:LoginDest)=>{setSkipWelcome(dest==='trail');setEntrou(true)},[])
+  const onContinueLocal=useCallback(()=>{setSkipWelcome(true);setEntrou(true);ensureGuestInBackground()},[])
   return <MotionConfig reducedMotion="user">
     <FxLayer/>
     <PingoPoke/>
     <ToastLayer/>
-    {showLogin?<Login S={load()} booting={status==='booting'} onBusy={setHold} onContinueLocal={onContinueLocal} onDone={onDone}/>:<Game skipWelcome={skipWelcome}/>}
+    {!entrou?<Login S={load()} booting={status==='booting'} signedIn={status==='in'&&!isAnonymous} onBusy={()=>{}} onContinueLocal={onContinueLocal} onDone={onDone}/>:<Game skipWelcome={skipWelcome}/>}
   </MotionConfig>
 }
 
