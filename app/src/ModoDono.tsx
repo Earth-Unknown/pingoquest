@@ -47,8 +47,10 @@ export function ModoDono({ S, aberto, onFechar }: { S: any; aberto: boolean; onF
   const item = SLOTS.find(s => s.id === 'cabeca')?.itens.find(i => i.id === 'laco')
   const props = () => {
     const r = resumoDe(par, games, parada, k)
-    const learn = (games[parada]?.phases[k] || []).filter(q => q.t === 'learn').flatMap(q => (q.touch || []) as [string, string][])
     const boss = k === 3
+    const termos = (qs: typeof games[number]['phases'][number]) => qs.filter(q => q.t === 'learn').flatMap(q => (q.touch || []) as [string, string][])
+    // igual ao jogo de verdade: na prova final, uma lição por cartão + todos os termos da parada
+    const learn = boss ? [...(r.recap || []), ...termos((games[parada]?.phases || []).flat())] : termos(games[parada]?.phases[k] || [])
     return {
       S, invencao: ESTACAO_PINGO, indice: k, repeticao: rep,
       titulo: rep ? 'Estação conferida!' : r.sabe ? (boss ? 'Agora você domina!' : 'Agora você sabe!') : 'Mais uma descoberta!',
