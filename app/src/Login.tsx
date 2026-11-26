@@ -4,8 +4,7 @@ import { Pingo } from './Pingo'
 import { GoogleButton } from './GoogleButton'
 import { AuthError, type AuthErrorInfo } from './AuthError'
 import { classifyAuthError, errorCode, signInGoogle, signInGuest, type AuthStep } from './lib/auth'
-import { done, totalFases } from './lib/cursos'
-import { cursoAtivo, streakNow, gamesOf } from './lib/progress'
+import { streakNow } from './lib/progress'
 import { buzz, reducedMotion, sfx } from './lib/sound'
 import type { Save } from './lib/store'
 
@@ -32,32 +31,56 @@ const SUPPORT_DEFAULT = {
   B: 'Entre com o Google para guardar seu progresso na nuvem e continuar em outro aparelho.',
 }
 
-/** Fala do Pingo para quem volta: cumprimenta pela hora e diz o que vem agora (tirado do progresso real) */
+/** Fala do Pingo para quem volta: cumprimenta pela hora e convida a continuar (sem falar de um curso específico) */
 function falaDoPingo(S: Save, dias: number): { titulo: string; sub: string } {
   const h = new Date().getHours()
   const saud = h < 5 ? 'Oi, coruja' : h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite'
   const nome = S.nick ? ', ' + S.nick : ''
-  const cur = cursoAtivo(S)
-  const games = gamesOf(cur.id)
-  const feitas = (S.done || {}) as Record<string, boolean>
-  const paradas: any[] = cur.json.mundos?.[0]?.paradas || []
-  let prox = ''
-  outer: for (let g = 0; g < games.length; g++) {
-    for (let k = 0; k < 4; k++) {
-      if (k === 3 && !games[g].phases.length) continue
-      if (!feitas[g + '-' + k]) {
-        const lugar = paradas[g]?.lugar || 'a trilha'
-        prox = k < 3 ? `Lição ${k + 1}, “${games[g].names[k]}” (parada ${lugar})` : `Prova final (parada ${lugar})`
-        break outer
-      }
-    }
-  }
-  const algo = Object.keys(feitas).length > 0
   const titulo = saud === 'Oi, coruja' ? `Oi, coruja${nome}!` : `${saud}${nome}!`
-  if (!prox) return { titulo, sub: 'Você fechou todas as paradas de agora. Bora revisar e manter o brilho?' }
-  if (!algo) return { titulo, sub: `Já deixei tudo pronto! Sua primeira missão: ${prox}. Bora?` }
-  const brilho = dias > 1 ? ` Seu brilho está em ${dias} dias, não deixa apagar!` : ''
-  return { titulo, sub: `Estava te esperando! Sua próxima missão: ${prox}.${brilho}` }
+  const brilho = dias > 1 ? ` Seu brilho está em ${dias} dias: não deixa apagar!` : ''
+  return { titulo, sub: `Estava te esperando! Guardei o seu lugar. Bora continuar de onde você parou?${brilho}` }
+}
+
+/** O que o Pingo ensina, em geral: frases que se revezam (fixas para quem pediu menos movimento) */
+const PITCH = [
+  'Aqui você treina o raciocínio lógico, um desafio de cada vez.',
+  'Aprender fica leve quando vira descoberta.',
+  'Eu te mostro como as coisas funcionam por trás da tela.',
+  'Errar faz parte: cada tentativa deixa você mais esperto.',
+]
+const HABILIDADES = ['Lógica', 'Resolver problemas', 'Curiosidade', 'Tecnologia']
+
+function Pitch() {
+  const [i, setI] = useState(0)
+  useEffect(() => {
+    if (reducedMotion()) return
+    const t = setInterval(() => setI(x => (x + 1) % PITCH.length), 3400)
+    return () => clearInterval(t)
+  }, [])
+  return (
+    <div className="lg-pitch" aria-live="off" style={{ minHeight: 48, display: 'grid', placeItems: 'center' }}>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.p key={i} className="lg-sub" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ margin: 0 }}>
+          {PITCH[i]}
+        </motion.p>
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function Habilidades() {
+  const parado = reducedMotion()
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, maxWidth: 320 }} aria-label="O que você vai treinar">
+      {HABILIDADES.map((h, k) => (
+        <motion.span key={h} initial={{ opacity: 0, scale: 0.8 }} animate={parado ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1, y: [0, -4, 0] }}
+          transition={parado ? { duration: 0.2 } : { opacity: { delay: 0.5 + k * 0.12 }, scale: { delay: 0.5 + k * 0.12, type: 'spring', stiffness: 300, damping: 18 }, y: { delay: 1 + k * 0.3, duration: 2.6, repeat: Infinity, ease: 'easeInOut' } }}
+          style={{ padding: '5px 12px', borderRadius: 99, fontSize: 13, fontWeight: 800, border: '2px solid rgba(255,255,255,.22)', background: 'rgba(255,255,255,.08)', color: 'inherit' }}>
+          {h}
+        </motion.span>
+      ))}
+    </div>
+  )
 }
 
 /** Texto que aparece como se o Pingo estivesse digitando (sem animar para quem pediu menos movimento) */
@@ -181,13 +204,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
     )
   }
 
-  const cur = cursoAtivo(S)
   const days = streakNow(S)
-  const stats: [string, string][] = [
-    [done(S, cur.id).length + '/' + totalFases(cur.json), 'fases'],
-    ...(days > 0 ? [[String(days), 'dias de brilho'] as [string, string]] : []),
-    [String(S.gems ?? 0), 'chips'],
-  ]
   const fala = variant === 'B' ? falaDoPingo(S, days) : null
   const support = busy === 'google' ? 'Termine o login na janelinha do Google.' : hint ?? SUPPORT_DEFAULT[variant]
 
@@ -203,14 +220,11 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
           </motion.h1>
           {!success && (
             <motion.p className="lg-sub" {...stagger(2)}>
-              {variant === 'A' ? 'Vou te ensinar Redes e Linux, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
+              {variant === 'A' ? 'Eu vou te ensinar a pensar, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
             </motion.p>
           )}
-          {!success && variant === 'B' && (
-            <motion.div className="mini lg-mini" style={{ gridTemplateColumns: `repeat(${stats.length},1fr)` }} {...stagger(3)}>
-              {stats.map(([v, l]) => <div key={l}><b>{v}</b><span>{l}</span></div>)}
-            </motion.div>
-          )}
+          {!success && <motion.div {...stagger(3)}><Pitch /></motion.div>}
+          {!success && <motion.div {...stagger(4)}><Habilidades /></motion.div>}
         </div>
         <span className="lg-sr" role="status">{success?.text}</span>
         <AnimatePresence>
