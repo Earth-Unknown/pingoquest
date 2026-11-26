@@ -1,4 +1,19 @@
 {
-  "indexes": [],
-  "fieldOverrides": []
+  "indexes": [
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "isAnonymous", "order": "ASCENDING" },
+        { "fieldPath": "lastSeenAt", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    { "collectionGroup": "data", "fieldPath": "miss", "indexes": [] },
+    { "collectionGroup": "data", "fieldPath": "courses", "indexes": [] },
+    { "collectionGroup": "data", "fieldPath": "ev", "indexes": [] },
+    { "collectionGroup": "data", "fieldPath": "hist", "indexes": [] },
+    { "collectionGroup": "data", "fieldPath": "ledger", "indexes": [] }
+  ]
 }

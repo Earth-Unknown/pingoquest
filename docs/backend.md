@@ -161,11 +161,11 @@ Serve para validar o rewrite do Hosting, a região, o deploy por WIF e as variá
 
 | Método e rota | Entrada | Saída | Erros específicos |
 |---|---|---|---|
-| `POST /me/bootstrap` (idempotente) | nada | `{ account:{uid,isAnonymous,nick,code}, rev, importPending:boolean, serverDay }`. Cria `users/{uid}` e o estado vazio se não existir | |
-| `GET /me/state` | | `{ rev, state, serverDay }` | |
-| `PATCH /me/state` | `{ baseRev, changes }` (só campos do cliente, ver seção 5) | `{ rev, state }` já mesclado | `422 field_not_allowed`, `413` |
-| `POST /me/import` (uma vez por conta) | `{ legacy: <objeto pingoquest-v3> }` | `{ state, report:{accepted,clamped,dropped[]} }` | `409 already_imported`, `422 invalid_legacy_save` |
-| `POST /me/link-complete` | nada (lê o token: provedor agora é `google.com`) | `{ account }` marca `isAnonymous=false` | `409 not_linked` |
+| `POST /me/bootstrap` (idempotente) | nada | `{ account:{uid,isAnonymous}, rev, importPending:boolean, serverDay }`. Cria `users/{uid}`, `data/progress` e `data/game` vazios se não existirem (apelido e código públicos só no B4) | |
+| `GET /me/state` | | `{ rev, state:{progress,game}, serverDay }` (schema `getStateResponseSchema` em `api/contracts/progress.ts`) | |
+| `PATCH /me/state` | `{ baseRev, changes:{progress?,game?} }`: valores absolutos só dos campos tocados; campo ausente = não tocou; `miss[q]: 0` remove a pergunta. Schema `patchStateRequestSchema` | `{ rev, state:{progress,game} }` sempre o estado completo já mesclado | `422 invalid_input` (campo desconhecido, `changes` vazio, limite de chaves), `413` |
+| `POST /me/import` (uma vez por conta) | `{ legacy: <objeto pingoquest-v3> }` | `{ rev, state, report:{accepted[],clamped[],dropped[]} }` | `409 already_imported`, `422 invalid_legacy_save` (raiz que não é objeto, ou mapa com chaves acima do limite) |
+| `POST /me/link-complete` | nada (lê o token: provedor agora é `google.com`) | `{ account }` marca `isAnonymous=false`. Se `users/{uid}` não existir, faz o mesmo que o `bootstrap` (cria os documentos) já como não anônimo | `409 not_linked` (token ainda sem provedor Google) |
 | `GET /me/summary` | | `{ phasesDone, chips, energy, items, lastSeenAt }` (resumo para a tela de conflito) | |
 | `POST /me/merge-intent` | nada (chamado como convidado, antes do login Google) | `{ intentId, expiresAt }` (10 min, uso único) | |
 | `POST /me/adopt` | `{ intentId }` (chamado já como conta Google) | `{ account }`; copia o progresso do convidado por cima da conta e apaga o convidado | `404 intent_not_found`, `409 intent_used`, `422 intent_expired`, `403 account_required` |
@@ -232,13 +232,69 @@ Mudanças em relação ao "Modo dono" de hoje: "Avançar 1 dia" deixa de mexer n
 
 Banco: Firestore Native, localização `southamerica-east1` (a localização é permanente; checar se já existe um banco `(default)` no projeto antes de criar). Campos em `camelCase` (convenção do Firestore/JS; o `snake_case` da regra de banco vale para SQL). Ativar proteção contra exclusão do banco e backup agendado.
 
+### Modelo do B1 (identity + progress), fechado sobre o save real
+
+Base: `app/src/lib/*.ts` e `content/*.json` (o desenho anterior foi feito antes de ler o código). Schemas e limites em `api/contracts/progress.ts` (fonte única); o que está abaixo é o mapa.
+
+O B1 é só persistência por conta e sincronização entre aparelhos. Não há integridade de economia: o cliente continua pagando recompensa localmente (`patchSave`) e o servidor apenas guarda e mescla. Anti-fraude (recompensa, data, saldo) começa no B2/B3.
+
+| Documento | Campos (tipos) | Dono e escrita |
+|---|---|---|
+| `users/{uid}` | `isAnonymous` bool, `createdAt` timestamp, `lastSeenAt` timestamp, `importedAt?` timestamp, `schema` 1 | API. `lastSeenAt` é atualizado no `bootstrap` e no `PATCH`/import só se o valor guardado tiver mais de 1 h (evita escrita extra). Sem apelido, código, e-mail ou foto |
+| `users/{uid}/data/progress` | `rev` int, `schema` 1, `updatedAt`, `curso` string (curso ativo), `plan` 0\|3\|5\|7, `hearts` 0..99, `nick` string até 14 (provisório, sem unicidade; vira `users.nick` no B4), `av` map slot para id, `total` e `ok` int, `onb` bool, `onbC` map curso para true, `picked` bool, `level` ''\|'zero'\|'alguma', `duel` {w,l,d}, `miss` map texto da pergunta para contagem (global, não por curso), `courses` map curso para `{know: map conceito para {ok,bad,seen 0\|1,at?}, xch: map grupo para {w,t}, xseen: texto[] até 60}` | Cliente, permanente (o servidor só mescla) |
+| `users/{uid}/data/game` | `schema` 1, `updatedAt`, `gems`, `xp`, `streak`, `best`, `last` (data ou ''), `perfectN`, `lupa`, `hist` set de datas, `wk` {k,xp}\|null, `week` {k,n,claimed,days[0..6]}\|null, `day` (12 campos, ver contrato)\|null, `conq` set, `badges` data[], `inv` {items[], coll set}, `ev` map evento para {steps map etapa para {day,c}, used[] até 80, pieces, fresh, status?}, `ledger` set de chaves (`ev:<evento>:<etapa>`, `ev:<evento>:prize`), `courses` map curso para `{done: set "g-f", bosses, casos: map id para {n,best 0..3}}` | Cliente, provisório (mescla por máximo/união). Do servidor a partir do B2/B3 |
+
+Conjuntos (`set`) são `map<string,true>`. A chave `gems ?? 50` do cliente vira o valor inicial de `game.gems` (50) criado pelo `bootstrap`; o `ledger/starter` real nasce no B2.
+
+Diferenças em relação ao plano anterior:
+
+| Mudança | Por quê |
+|---|---|
+| `miss` sai de dentro do curso e fica global em `progress` | No cliente `miss` não está em `COURSE_KEYS`: é um mapa único cujas chaves (texto da pergunta) vêm dos dois cursos |
+| `know` é por conceito (`rede.def`, 64 conceitos nos dois cursos), com `seen` 0\|1 e `at` | É o formato real (`S.know[cid]`); o plano falava de `seen` como OU, o que continua valendo |
+| `done` é `map "g-f" -> true`, não data | É o que o app grava; a data da conclusão não existe no save |
+| `xseen` é lista de textos de pergunta (máx. 60 por curso), `xch` é por grupo `{w,t}` | Formato real do "Desafio do Pingo" |
+| `game` existe já no B1 e guarda `gems`, `xp`, `ledger`, `ev`, `inv`, `day` etc. | Sem isso o "salvar progresso" não salvaria fase concluída nem saldo, que hoje só vivem no cliente |
+| Sem `users/{uid}/ledger` e sem `data/wallet` no B1 | O `ledger` do save é um mapa de chaves de dedupe (cabe em `game.ledger`); o ledger de lançamentos e a carteira nascem no B2/B3 com uma migração única de `game.gems/xp` para o lançamento `import` |
+| `onb`, `onbC`, `picked`, `level`, `duel`, `nick`, `av`, `hearts`, `plan`, `total`, `ok` entram em `progress` | Estão no save e afetam a experiência em outro aparelho (por exemplo, repetir o onboarding, que paga 20 chips) |
+| `account` do `bootstrap` é `{uid,isAnonymous}` | Apelido e código públicos só existem a partir do B4 |
+| Descartados no import: `fr`, `gifts`, `code`, `maxDay`, `devStart` | De mentira ou do relógio do aparelho |
+
+Campo `rev`: inteiro em `data/progress`, começa em 1 no `bootstrap`. Toda escrita que muda o estado (PATCH, import, `adopt`, e no B2 as rotas de recompensa, com `FieldValue.increment(1)` sem leitura) avança `rev` em +1 na mesma transação.
+
+Fica para o B2/B3: ledger de lançamentos, carteira, `events/{eventId}` (sai de `game.ev`; fazer antes de passar de 10 eventos por aluno), `week`/`streak`/`avatar` espelhados em `users` e `nick`/`code`/`nickLower` (B4), `mergeIntents` (B1c), `giftQuota`, `gifts`, `friends`, `adminAudit`.
+
+#### Tamanho no pior caso (limite do documento: 1 MiB)
+
+Calculado com as regras de tamanho do Firestore (nome do campo + valor + 32 bytes do documento), com o catálogo real: 458 perguntas únicas (237 redes, 221 linux, inclui bate-bola), maior pergunta com 115 bytes, 64 conceitos, 25 paradas, 20 casos, 2 eventos.
+
+| Documento | Pior caso real | Observação |
+|---|---|---|
+| `data/progress` | cerca de 36,5 KB | `miss` com as 458 perguntas ocupa cerca de 25 KB; `know` e `xseen` somam o resto |
+| `data/game` | cerca de 18,5 KB | `ev` (2 eventos com 80 `used` cheios) 9 KB; `hist` 400 dias 4,8 KB; `badges` 3 anos 1,7 KB |
+| Limite adversarial do contrato | cerca de 740 KB | `miss` 600 chaves de 160 caracteres a 3 bytes/char: 293 KB; `ev` 10 eventos x 80 `used`: 385 KB; `xseen`: 58 KB. Fica abaixo de 1 MiB. Na prática o servidor também descarta chaves que não estão no catálogo, então o limite real é o catálogo |
+
+`LIMITS.miss` (600) deve subir junto com o catálogo (hoje 458). O `hist` é cortado pelo servidor nos últimos 400 dias ao gravar. O corpo do PATCH continua limitado a 256 KB. Escrever sempre o documento inteiro (`set` dentro da transação), nunca `update` com caminho de campo dinâmico: as chaves de `miss` são texto de pergunta e podem ter ponto, barra e aspas. O contrato rejeita chaves vazias ou no formato reservado `__x__`.
+
+#### Índices e TTL (B1)
+
+| Item | Decisão |
+|---|---|
+| Composto | `users(isAnonymous ASC, lastSeenAt ASC)`: a limpeza diária de convidados inativos consulta `isAnonymous == true` e `lastSeenAt < corte`. É o único índice composto do B1 |
+| Exceções de indexação | Grupo de coleções `data`: `miss`, `courses`, `ev`, `hist`, `ledger` sem índice. Esses documentos só são lidos por caminho; as chaves são dado do aluno (texto de pergunta) e não devem ocupar o limite de entradas de índice por documento nem aumentar custo de escrita. A subcoleção `data` é a mesma que receberá `wallet` no B3 |
+| Limpeza de "convidado vazio" | O job lê `data/game` dos candidatos (inativos entre 7 e 90 dias) e confere se há alguma fase em `courses.*.done`. São poucas leituras por dia; não vale guardar um contador em `users` agora |
+| TTL | Nenhum no B1. `mergeIntents.expiresAt` (B1c) e `giftQuota.expiresAt` (B4) usam política de TTL do Firestore, criada por `gcloud firestore fields ttls update expiresAt --collection-group=<nome>` (documentar no PR do B1c) |
+| Validação | O emulador não valida `firestore.indexes.json`; a primeira validação real é o `firebase deploy --only firestore:indexes` pelo `devops`. Se a exceção de campo de mapa for recusada, remover só os `fieldOverrides` (os índices simples automáticos continuam dentro do limite) |
+
 ### Coleções
+
+Visão completa (B1 acima; o resto vem nas fases seguintes). Para `users/{uid}`, `data/progress` e `data/game`, a tabela do B1 manda.
 
 | Caminho | Quem escreve | Campos principais | Observações |
 |---|---|---|---|
-| `users/{uid}` | API | `isAnonymous`, `nick`, `nickLower`, `code`, `avatar` (slots equipados, espelho público), `week:{k,xp}`, `streak`, `bestStreak`, `lastDay`, `createdAt`, `lastSeenAt`, `importedAt`, `testDayOffset?`, `isTester?`, `schema:1` | O que amigos enxergam (apelido, avatar, xp da semana, sequência) vem daqui. Sem e-mail, sem foto (o e-mail fica só no Auth) |
-| `users/{uid}/data/progress` | API (B1: via `PATCH /me/state`) | `courses:{redes:{know,miss,xch,xseen}, linux:{...}}`, `activeCourse`, `plan`, `hearts` | Estado do aluno que continua do cliente (seção 5) |
-| `users/{uid}/data/game` | API | `courses:{<id>:{done:{"gi-fi":"AAAA-MM-DD"}, bosses, casos}}`, `conq`, `inv:{items[],coll{}}`, `day`, `hist`, `perfectN`, `badges`, `lupa` | Autoridade do servidor a partir do B2 (no B1 recebe merge do cliente) |
+| `users/{uid}` | API | B1: ver acima. B4 acrescenta: `nick`, `nickLower`, `code`, `avatar` (slots equipados, espelho público), `week:{k,xp}`, `streak`, `bestStreak`, `lastDay`; B5: `testDayOffset?`, `isTester?` | O que amigos enxergam (apelido, avatar, xp da semana, sequência) vem daqui. Sem e-mail, sem foto (o e-mail fica só no Auth) |
+| `users/{uid}/data/progress` | API (via `PATCH /me/state`, import, `adopt`) | Ver tabela do B1 | Estado do aluno que continua do cliente (seção 5) |
+| `users/{uid}/data/game` | API | Ver tabela do B1 | Autoridade do servidor a partir do B2 (no B1 recebe merge do cliente) |
 | `users/{uid}/data/wallet` | API | `chips`, `energy`, `updatedAt` | Invariante: saldo = soma do ledger. Atualizado na mesma transação da entrada do ledger |
 | `users/{uid}/ledger/{entryId}` | API (só `create`) | `kind` (`reward`/`spend`/`gift_out`/`gift_in`/`import`/`starter`/`admin`), `source`, `ref`, `delta:{chips,energy}`, `balanceAfter`, `serverDay`, `at`, `attemptId`, `result` (resposta original, para repetir idempotente) | `entryId` é a chave de dedupe: `ev:rede-conectada:s1`, `ev:rede-conectada:prize`, `phase:redes:0-1:first`, `starter`, ou `attempt:<uuid>` para o repetível. `create` falha se já existe, e isso é a trava contra pagamento duplicado. Mantém o formato de chave do `S.ledger` atual |
 | `users/{uid}/events/{eventId}` | API | `steps:{s1:{day,correct,at}}`, `pieces`, `status`, `prizeAt`, `used[]` | Substitui `S.ev` |
@@ -285,8 +341,9 @@ O Admin SDK ignora as regras, então a API continua funcionando. O teste de regr
 
 | Dado (chave do `S` atual) | Dono | A partir de | Regra |
 |---|---|---|---|
-| `know`, `miss`, `xch`, `xseen` | Cliente, sincronizado | B1 | Merge pelo servidor (tabela abaixo) |
-| `curso`/`cursos`, `plan`, `hearts`, `nick` (até B4), `av` equipado | Cliente, sincronizado | B1 | Última escrita vence (ordem de chegada no servidor). `av` só é aceito se os itens são do aluno |
+| `know`, `miss`, `xch`, `xseen` | Cliente, sincronizado | B1 | Merge pelo servidor (tabela abaixo). `miss` é global; `know`, `xch` e `xseen` são por curso. Vão em `data/progress` |
+| `curso`/`cursos`, `plan`, `hearts`, `nick` (até B4), `av` equipado, `onb`, `onbC`, `picked`, `level`, `duel` | Cliente, sincronizado | B1 | Última escrita vence (ordem de chegada no servidor). `av` só é validado no formato no B1; a regra "itens do aluno" entra no B2. Vão em `data/progress`; no save legado o curso ativo vem achatado e os demais em `cursos[id]`, e o servidor normaliza para `courses[id]` (o achatado vence a cópia antiga em `cursos[ativo]`) |
+| Todo o resto do save (ver as linhas "Servidor" abaixo) | Cliente, provisório | B1 | No B1 ainda é o cliente que paga recompensa; o servidor só guarda e mescla em `data/game`. Os campos saem de `changes` quando o B2/B3 os assumir |
 | `total`, `ok` (estatísticas) | Cliente, sincronizado | B1 | Máximo |
 | tema, som, preferências visuais | Só cliente, não sobe | sempre | Ficam no aparelho (`pingoquest-theme` etc.) |
 | `done`, `bosses`, `casos`, `perfectN` | Servidor | B2 | Só mudam por `/rewards/*` e `/events/*` |
@@ -310,8 +367,25 @@ Roda no servidor (`progress/domain/merge.ts`, função pura, testável por propr
 | `streak`/`last` | Fica o par de maior `last`; `best` = máximo |
 | `day` | Se mesmo `d`: máximo por contador e OU em `claimed`; senão o mais novo |
 | `ev[id].steps` | União; `pieces` recalculado a partir das etapas |
-| `miss[q]` | Última escrita vence (o contador pode diminuir ao corrigir, então máximo estaria errado) |
+| `miss[q]` | Última escrita vence por chave tocada (o contador pode diminuir ao corrigir, então máximo estaria errado); chave ausente = não tocou, valor 0 remove |
+| `ev[id].used` | União, últimos 80 |
 | resto (`plan`, `curso`, `av`, `nick`, `hearts`) | Última escrita vence |
+
+#### Decisões de contrato do B1 (PATCH e import)
+
+Fechadas com o `qa-engineer` (pontos [DEFINIR] do `docs/b1-test-plan.md`). Regra geral: a opção mais simples que mantém a convergência.
+
+| # | Ponto | Decisão |
+|---|---|---|
+| 1 | `baseRev` desatualizado no PATCH | Não rejeita (sem 409). O servidor aplica o merge convergente sobre o estado atual e devolve o estado completo e o `rev` novo; o cliente reconcilia pela resposta. `baseRev` serve só para log e diagnóstico |
+| 2 | `miss` ausente no corpo | PATCH parcial: campo ou chave ausente = não tocou. Remoção explícita por valor `0` (`miss[q]: 0`); o estado guardado nunca contém 0. `null` não é aceito. Vale igual para qualquer mapa de `changes` |
+| 3 | `ev[id].used` no merge | União dos textos (existentes primeiro, novos depois, sem repetir), mantendo os últimos 80. É só uma heurística de "não repetir logo em seguida", então a ordem exata não precisa ser comutativa |
+| 4 | Campo com tipo errado no import | O campo é descartado e listado em `report.dropped`; o import continua. Entradas inválidas dentro de um mapa somem; números fora da faixa são cortados no limite e listados em `report.clamped`. Raiz que não é objeto, ou mapa com mais chaves que o limite, falha com `422 invalid_legacy_save` |
+| 5 | `link-complete` sem `users/{uid}` | Cria os documentos como o `bootstrap` (upsert) já com `isAnonymous=false`. Idempotente. `409 not_linked` só se o token ainda não tem o provedor Google |
+| 6 | `rev` em PATCH repetido ou `changes` vazio | `rev` só avança se o estado mesclado for diferente do guardado. PATCH repetido ou sem efeito: 200, sem escrita, mesmo `rev`, estado completo. `changes` vazio é rejeitado pelo schema (`422 invalid_input`) |
+| 7 | Tamanho máximo de `miss` | 600 chaves de até 160 caracteres por schema (catálogo atual: 458 perguntas). Acima disso: `422 invalid_input` no PATCH e `invalid_legacy_save` no import (o `413` fica só para corpo acima de 256 KB). O servidor descarta chaves que não existem no catálogo |
+
+Também no B1: o `av` do PATCH é validado só no formato (ids de texto curto); a regra "item é do aluno" entra no B2, quando o servidor passa a ser dono de `inv`. No B1 o `inv` é do cliente, então checar `av` contra ele não protegeria nada. O import do B1 não recalcula `inv` nem corta `gems`/`xp` por plausibilidade (passos 3 a 5 da tabela de import ficam para o B2); aplica só os tetos do schema (`gems` e `xp` até 500 mil) e valida `done`/`casos`/`know`/`miss` contra o catálogo.
 
 Limite conhecido do B1: `gems`/`xp` por máximo ignoram gastos feitos em outro aparelho. É aceitável só porque o B1 é curto e porque o B2/B3 remove esses campos do cliente. Por isso o B2 e o B3 devem sair em sequência (ver seção 11).
 
