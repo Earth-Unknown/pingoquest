@@ -43,3 +43,26 @@ export function icon(slot:string,it:Item){
     return '<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="9" width="30" height="22" rx="10" fill="#2a1668"/><ellipse cx="14" cy="20" rx="4" ry="5.5" fill="'+e+'"/><ellipse cx="26" cy="20" rx="4" ry="5.5" fill="'+e+'"/><circle cx="12.6" cy="17.8" r="1.4" fill="#fff"/><circle cx="24.6" cy="17.8" r="1.4" fill="#fff"/></svg>'}
   const d=AVD[slot]?.[it.id];return d?svg(d.vb,d.s):''
 }
+
+/** Adereços que o aluno ainda não tem e que não são de evento (os de prêmio de evento ficam fora do sorteio) */
+export function candidatosBrinde(S:any,excluir:string[]=[]){
+  return SLOTS.flatMap(sl=>sl.itens.filter(it=>!it.free&&!it.ev&&!has(S,sl.id,it)&&!excluir.includes(key(sl.id,it.id))).map(it=>({slot:sl.id,it})))
+}
+/** 3 opções de adereço, de encaixes diferentes quando der; a "semente" (índice da parada) deixa a escolha estável */
+export function opcoesBrinde(S:any,seed:number,excluir:string[]=[],n=3):{slot:string;id:string;nome:string;icone:string}[]{
+  const c=candidatosBrinde(S,excluir),out:typeof c=[],usados=new Set<string>()
+  for(let pass=0;pass<2&&out.length<n;pass++){
+    for(let i=0;i<c.length&&out.length<n;i++){
+      const x=c[(i*7+seed*3)%c.length]
+      if(out.includes(x))continue
+      if(pass===0&&usados.has(x.slot))continue
+      usados.add(x.slot);out.push(x)
+    }
+  }
+  return out.map(x=>({slot:x.slot,id:x.it.id,nome:x.it.nome,icone:icon(x.slot,x.it)}))
+}
+/** Entrega o adereço escolhido (e ele passa a existir no inventário) */
+export function concederBrinde(S:any,slot:string,id:string){
+  S.inv=S.inv||{items:[],coll:{}};S.inv.items=S.inv.items||[]
+  const k=key(slot,id);if(!S.inv.items.includes(k))S.inv.items.push(k)
+}
