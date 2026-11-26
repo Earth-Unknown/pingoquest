@@ -36,7 +36,7 @@ flowchart LR
     AC["App Check<br/>reCAPTCHA Enterprise"]
   end
   subgraph "Google Cloud (southamerica-east1)"
-    RUN["Cloud Run: pingoquest-api<br/>Fastify + hexagonal"]
+    RUN["Cloud Run: api<br/>Fastify + hexagonal"]
     JOB["Cloud Run Job: housekeeping<br/>limpeza de anônimos"]
     FS[("Firestore<br/>regras: tudo negado ao cliente")]
     SCH["Cloud Scheduler"]
@@ -541,53 +541,87 @@ Pontos: usuário não root, escuta em `0.0.0.0:$PORT`, trata `SIGTERM` (fechar o
 | Conta | Usada por | Papéis |
 |---|---|---|
 | `pingoquest-api@pingoquest.iam.gserviceaccount.com` | Runtime do Cloud Run (serviço e job) | `roles/datastore.user` (Firestore); `roles/firebaseauth.admin` (apagar/listar usuários, setar claims de admin; sem papel menor equivalente); `roles/logging.logWriter`. Verificar ID token e App Check não pede papel extra |
-| `pingoquest-deployer@pingoquest.iam.gserviceaccount.com` | GitHub Actions (via WIF) | `roles/run.developer` (deploy do serviço e do job); `roles/artifactregistry.writer` só no repositório de imagens; `roles/iam.serviceAccountUser` só sobre `pingoquest-api@` (para implantar com ela); `roles/firebasehosting.admin`; `roles/firebaserules.admin` e `roles/datastore.indexAdmin` (publicar regras e índices); `roles/serviceusage.serviceUsageConsumer` |
+| `pingoquest-deployer@pingoquest.iam.gserviceaccount.com` | GitHub Actions (via WIF) | `roles/run.developer` (projeto; deploy do serviço e do job); `roles/artifactregistry.writer` só no repositório `api`; `roles/iam.serviceAccountUser` só sobre `pingoquest-api@` (actAs para implantar com ela); `roles/firebasehosting.admin`; `roles/serviceusage.serviceUsageConsumer`. No B1 somam-se `roles/firebaserules.admin` e `roles/datastore.indexAdmin` (regras e índices) |
 | `pingoquest-scheduler@pingoquest.iam.gserviceaccount.com` | Cloud Scheduler | `roles/run.invoker` apenas sobre o Job `housekeeping` |
 
 Build da imagem no próprio GitHub Actions (docker build + push para o Artifact Registry), sem Cloud Build, o que evita papéis amplos. Nenhuma chave JSON existe em nenhum lugar.
 
 ### Deploy via GitHub Actions com Workload Identity Federation
 
-Configuração uma vez (feita pelo `devops` com um Owner):
+Configuração feita no B0 (pelo `devops`, com a dona como Owner). Nada aqui é segredo.
 
-| Item | Valor |
+| Item | Valor criado |
 |---|---|
-| Pool | `github` |
-| Provider OIDC | issuer `https://token.actions.githubusercontent.com`, mapeando `assertion.repository` |
-| Condição do provider | `assertion.repository == '<OWNER>/<REPO>'` (e, para produção, restringir à `refs/heads/main` ou ao environment `production`) |
-| Binding | `roles/iam.workloadIdentityUser` do principal do repo na conta `pingoquest-deployer@` |
+| Pool | `github` (global) |
+| Provider OIDC | `github-actions`, issuer `https://token.actions.githubusercontent.com`; mapeia `sub`, `repository`, `repository_id` e `ref` |
+| Condição do provider | `assertion.repository_id == '1468181420' && assertion.repository == 'Earth-Unknown/pingoquest' && assertion.ref == 'refs/heads/main'`. O repositório é público, então a condição é a única barreira: o id numérico impede que um repositório recriado com o mesmo nome herde o acesso. Consequência: só execuções na `main` autenticam (PR e outras branches não fazem deploy) |
+| Binding | `roles/iam.workloadIdentityUser` do `principalSet://iam.googleapis.com/projects/218901026072/locations/global/workloadIdentityPools/github/attribute.repository/Earth-Unknown/pingoquest` na conta `pingoquest-deployer@` |
 
-Esboço do workflow (`.github/workflows/deploy.yml`, convive ou substitui o `pages.yml` quando o Hosting virar o destino oficial):
+Workflows em `.github/workflows/` (o `pages.yml` continua publicando no GitHub Pages até o Hosting virar o destino oficial):
 
-```yaml
-permissions:
-  contents: read
-  id-token: write          # necessário para o OIDC
-jobs:
-  api:
-    steps:
-      - uses: actions/checkout@v4
-      - uses: google-github-actions/auth@v2
-        with:
-          workload_identity_provider: projects/<PROJECT_NUMBER>/locations/global/workloadIdentityPools/github/providers/<PROVIDER>
-          service_account: pingoquest-deployer@pingoquest.iam.gserviceaccount.com
-      - run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev
-      - run: docker build -f api/Dockerfile -t $IMAGE . && docker push $IMAGE
-      - run: gcloud run deploy pingoquest-api --image $IMAGE --region southamerica-east1 --service-account pingoquest-api@pingoquest.iam.gserviceaccount.com ...
-  hosting:
-    needs: api               # API primeiro: o app novo nunca chama rota que ainda não existe
-    steps:
-      - run: sh tools/montar-site.sh
-      - run: npx firebase-tools deploy --only hosting,firestore:rules,firestore:indexes --project pingoquest
-```
+| Arquivo | Gatilho | O que faz |
+|---|---|---|
+| `deploy-api.yml` | push na `main` com mudança em `api/**` ou `content/**`; `workflow_dispatch` | Job `test` (typecheck, lint, `npm test` em `api/`); job `deploy`: login por WIF, `docker build -f api/Dockerfile .`, push para `southamerica-east1-docker.pkg.dev/pingoquest/api/api:<sha>`, `gcloud run deploy api` com os parâmetros acima e smoke test de `/api/v1/health` direto no Cloud Run |
+| `deploy-hosting.yml` | push na `main` com mudança no site; fim bem-sucedido do `deploy-api.yml` (API primeiro); `workflow_dispatch` | `tools/montar-site.sh` e `firebase deploy --only hosting` (mesma autenticação por WIF) |
 
-Rewrite a acrescentar em `firebase.json` no B0:
+Decisão: o workflow não passa `--allow-unauthenticated`. Esse flag chama `setIamPolicy`, que o `run.developer` não tem (e dar `run.admin` ao deployer seria mais amplo que o necessário). O invoker público (`allUsers`) é concedido uma vez, no primeiro deploy manual feito por um Owner, e persiste entre revisões. Se o serviço for apagado e recriado, repetir o primeiro deploy.
+
+Regras e índices do Firestore (`firebaserules.admin`, `datastore.indexAdmin`) entram no `deploy-hosting.yml` e na conta do deployer no B1, quando existirem `firestore.rules` e `firestore.indexes.json`.
+
+Rewrite em `firebase.json` (já aplicado; o serviço chama-se `api`, não `pingoquest-api`):
 
 ```json
 "rewrites": [
-  { "source": "/api/**", "run": { "serviceId": "pingoquest-api", "region": "southamerica-east1" } }
+  { "source": "/api/**", "run": { "serviceId": "api", "region": "southamerica-east1" } }
 ]
 ```
+
+#### Recursos criados no B0 (2026-11-25)
+
+| Tipo | Nome | Detalhe |
+|---|---|---|
+| Artifact Registry (Docker) | `southamerica-east1-docker.pkg.dev/pingoquest/api` | Limpeza: mantém as 5 versões mais recentes e apaga o que tem mais de 7 dias |
+| Service account | `pingoquest-api@pingoquest.iam.gserviceaccount.com` | Runtime: `datastore.user`, `firebaseauth.admin`, `logging.logWriter` |
+| Service account | `pingoquest-deployer@pingoquest.iam.gserviceaccount.com` | Deploy: papéis da tabela acima |
+| WIF pool e provider | `github` / `github-actions` | Ver tabela acima |
+| Budget | `pingoquest-mensal` (R$ 50/mês, alertas em 50%, 90%, 100% real e 100% previsto) | Criado na conta de faturamento `010C54-33CD57-FF57C2`; confirmar destinatários no Console |
+
+#### Variáveis do GitHub (Settings > Secrets and variables > Actions > Variables)
+
+| Nome | Valor |
+|---|---|
+| `GCP_PROJECT_ID` | `pingoquest` |
+| `GCP_PROJECT_NUMBER` | `218901026072` |
+| `WIF_PROVIDER` | `projects/218901026072/locations/global/workloadIdentityPools/github/providers/github-actions` |
+| `DEPLOYER_SA` | `pingoquest-deployer@pingoquest.iam.gserviceaccount.com` |
+
+`GCP_PROJECT_NUMBER` não é lida pelos workflows atuais (o `WIF_PROVIDER` já traz o número); fica registrada por ser parte do plano.
+
+#### Primeiro deploy e smoke test
+
+O primeiro deploy é manual, por um Owner, porque concede o invoker público. Da raiz do repositório, com o Dockerfile da API pronto:
+
+```sh
+gcloud --configuration=pingoquest auth configure-docker southamerica-east1-docker.pkg.dev
+IMAGE=southamerica-east1-docker.pkg.dev/pingoquest/api/api:primeiro
+docker build -f api/Dockerfile -t $IMAGE . && docker push $IMAGE
+gcloud --configuration=pingoquest run deploy api --image $IMAGE --region southamerica-east1 \
+  --service-account pingoquest-api@pingoquest.iam.gserviceaccount.com \
+  --allow-unauthenticated --ingress all --min-instances 0 --max-instances 3 \
+  --concurrency 80 --cpu 1 --memory 512Mi --timeout 30 \
+  --update-env-vars GCP_PROJECT_ID=pingoquest,APP_TIMEZONE=America/Sao_Paulo
+```
+
+Sem Docker local, use `gcloud --configuration=pingoquest run deploy api --source . ...` com os mesmos parâmetros (usa Cloud Build, que exige papéis extras para a conta de build) ou dispare o `deploy-api.yml` por `workflow_dispatch` e depois rode só `gcloud run services add-iam-policy-binding api --region southamerica-east1 --member=allUsers --role=roles/run.invoker`.
+
+Depois do primeiro deploy do serviço, publicar o Hosting (workflow `deploy-hosting.yml` por `workflow_dispatch`, ou `firebase deploy --only hosting --project pingoquest`) e testar pelo Hosting:
+
+```sh
+curl -i https://pingoquest.web.app/api/v1/health
+curl -i https://pingoquest.web.app/api/v1/whoami -H "Authorization: Bearer <ID token de um convidado>"
+```
+
+O segundo deve devolver o `uid` do token: é o que fecha o R18 (header `Authorization` atravessa o rewrite).
 
 Observação de CI: sem preview channels do Hosting por enquanto (um preview falaria com a API de produção). Um segundo projeto `-dev` vira recomendado quando chegar o B4.
 
@@ -705,8 +739,8 @@ Refinamento sugerido das fases: acrescentar um B0 de fundação (sem ele nada se
 | # | Fase | Passo | Agente | Entrega |
 |---|---|---|---|---|
 | 0 | B0 | Feito: projeto "PingoQuest" criado (na conta do amigo). A fazer pelo amigo: adicionar a dona como Owner, ligar o Blaze, anotar o ID do projeto | dona + amigo (com apoio do `devops`) | ID do projeto, dois Owners, faturamento ligado |
-| 1 | B0 | IAM da seção 8, orçamento e alertas, APIs, Firebase no projeto existente, Auth (Google + anônimo), Google Auth Platform (seção 6), Firestore (região), Artifact Registry | `devops` | Projeto pronto e documentado; papéis da seção 8 |
-| 2 | B0 | WIF + service accounts + workflow de deploy + `rewrite` no `firebase.json` | `devops` | `GET /api/v1/health` via Hosting |
+| 1 | B0 | Feito: APIs, Firebase, Auth (Google + anônimo), Firestore (`southamerica-east1`), Artifact Registry `api` (com limpeza), orçamento R$ 50/mês (alertas 50/90/100%). Pendente: IAM da seção 8 (papéis de operação da dona, Billing Viewer, lien, proteção contra exclusão do banco), Google Auth Platform em produção (seção 6) | `devops` | Projeto pronto e documentado; papéis da seção 8 |
+| 2 | B0 | Feito: service accounts `pingoquest-api` e `pingoquest-deployer`, WIF (pool `github`, provider `github-actions`), `deploy-api.yml`, `deploy-hosting.yml`, rewrite `/api/**` para o serviço `api`. Pendente: cadastrar as variáveis do GitHub (seção 7), primeiro deploy manual e smoke test | `devops` | `GET /api/v1/health` via Hosting |
 | 3 | B0 | Esqueleto da API (Fastify, env Zod, health, time, container) e smoke test de `Authorization` | `dev-fullstack` | R18 resolvido |
 | 4 | B0 | Revisão da arquitetura e dos contratos antes de codar mais | `architect` + `code-reviewer` | Aprovação |
 | 5 | B1 | Modelo Firestore, rules, índices, TTL, backup | `data-engineer` | `firestore.rules`, `firestore.indexes.json` |
