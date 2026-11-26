@@ -6,7 +6,7 @@ import { Pingo } from '../Pingo'
 import { enter } from '../Fx'
 import { HEART_ICON } from '../Hearts'
 import { patchSave } from '../lib/save'
-import { equip } from '../lib/avatar'
+import { equip, concederBrinde } from '../lib/avatar'
 import { sfx } from '../lib/sound'
 import { Invencao } from './Invencao'
 import type { FimParada, InvencaoDef, NovoItem } from './contrato'
@@ -23,13 +23,29 @@ const css = `.fp-ic{width:34px;height:34px;flex:none;display:inline-flex}.fp-ic 
 .fp-p svg{width:100%!important;height:auto;display:block}.fp-chip{background:var(--locked,#f1ecff);border-radius:99px;padding:3px 10px;font-size:13px;font-weight:800}`
 
 /** Linha "Novo para o Pingo" com botão de vestir (só visual, não muda nada do jogo) */
-export function NovoItemLinha({ n }: { n: NovoItem }) {
+export function NovoItemLinha({ n, simulado, rotulo = 'Novo para o seu robô' }: { n: NovoItem; simulado?: boolean; rotulo?: string }) {
   const [on, setOn] = useState(false)
   return <div className="fp-row" style={{ marginTop: 2 }}>
     <Html cls="fp-ic" h={n.icone} />
-    <span style={{ flex: 1 }}><small>Novo para o seu robô</small>{n.nome}</span>
+    <span style={{ flex: 1 }}><small>{rotulo}</small>{n.nome}</span>
     <button className="btn ghost" style={{ width: 'auto', padding: '6px 14px', minHeight: 0 }} disabled={on}
-      onClick={() => { patchSave(s => equip(s, n.slot, n.id)); setOn(true); sfx('ok') }}>{on ? 'Vestido' : 'Vestir'}</button>
+      onClick={() => { if (!simulado) patchSave(s => equip(s, n.slot, n.id)); setOn(true); sfx('ok') }}>{on ? 'Vestido' : 'Vestir'}</button>
+  </div>
+}
+
+/** Fim de parada: 3 adereços para o aluno escolher 1 (ou nenhum). Em modo simulado (modo dono) não grava nada. */
+function EscolhaAdereco({ opcoes, simulado }: { opcoes: NovoItem[]; simulado?: boolean }) {
+  const [pick, setPick] = useState<NovoItem | null>(null)
+  if (pick) return <NovoItemLinha n={pick} simulado={simulado} rotulo="Você escolheu" />
+  return <div style={{ background: 'var(--locked,#f1ecff)', borderRadius: 16, padding: '10px 12px', width: '100%', boxSizing: 'border-box' }}>
+    <b style={{ fontSize: 15 }}>Escolha um adereço para o seu robô</b>
+    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${opcoes.length},1fr)`, gap: 8, marginTop: 8 }}>
+      {opcoes.map(o => <button type="button" key={o.slot + o.id} aria-label={'Escolher ' + o.nome}
+        onClick={() => { if (!simulado) patchSave(s => concederBrinde(s, o.slot, o.id)); sfx('ok'); setPick(o) }}
+        style={{ border: '2px solid var(--line-deep,#e3dcff)', background: 'var(--surface,#fff)', borderRadius: 14, padding: '8px 4px', font: 'inherit', fontWeight: 800, fontSize: 12, color: 'var(--ink)', cursor: 'pointer' }}>
+        <Html cls="fp-ic" h={o.icone} /><br />{o.nome}</button>)}
+    </div>
+    <small style={{ color: 'var(--muted)', fontWeight: 700 }}>Toque em um. Se preferir nenhum, é só continuar.</small>
   </div>
 }
 
@@ -47,7 +63,8 @@ export function FimParadaTela({ S, invencao, fim, novos, onContinuar }: { S: any
           <span className="fp-ic" style={{ filter: `hue-rotate(${matiz(fim.idx)}deg)` }}><Invencao invencao={invencao} acesos={invencao.modulos.length} /></span>
           <span><small>Guardada na sua Oficina</small>Estação Pingo · {fim.lugar}</span>
         </div>
-        {novos?.map(n => <NovoItemLinha key={n.slot + n.id} n={n} />)}
+        {novos?.map(n => <NovoItemLinha key={n.slot + n.id} n={n} simulado={fim.simulado} />)}
+        {fim.escolha && fim.escolha.length > 0 && <EscolhaAdereco opcoes={fim.escolha} simulado={fim.simulado} />}
         {fim.vidasCheias && <div className="fp-row"><Html cls="fp-ic" h={HEART_ICON} /><span><small>Recarregadas</small>Vidas cheias</span></div>}
       </motion.div>
 

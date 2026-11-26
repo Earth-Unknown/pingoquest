@@ -5,7 +5,7 @@ import { CenaConclusao } from './conclusao/CenaConclusao'
 import { ESTACAO_PINGO } from './conclusao/contrato'
 import { gamesOf } from './lib/progress'
 import { CURSOS } from './lib/cursos'
-import { SLOTS, icon as avIcon } from './lib/avatar'
+import { SLOTS, icon as avIcon, opcoesBrinde } from './lib/avatar'
 import { resumoDe } from './Trail'
 import { isDono, entrarDono, sairDono } from './lib/dono'
 
@@ -58,7 +58,7 @@ export function ModoDono({ S, aberto, onFechar }: { S: any; aberto: boolean; onF
       xp: boss ? 25 : 10, chips: rep ? 0 : boss ? 30 : 15, acertos: 100,
       sabe: r.sabe, pratica: r.pratica, proxima: r.proxima, aprendi: learn,
       novos: !rep && novo && item ? [{ slot: 'cabeca', id: 'laco', nome: item.nome, icone: avIcon('cabeca', item) }] : undefined,
-      fim: boss && !rep && r.fim ? { ...r.fim, vidasCheias: novo } : undefined,
+      fim: boss && !rep && r.fim ? { ...r.fim, vidasCheias: novo, simulado: true, escolha: novo ? opcoesBrinde(S, parada) : undefined } : undefined,
       onContinuar: () => setVer(false),
     }
   }
