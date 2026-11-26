@@ -20,7 +20,7 @@ export const matiz = (idx: number) => (idx * 47) % 360
 const css = `.fp-ic{width:34px;height:34px;flex:none;display:inline-flex}.fp-ic svg{width:100%;height:100%}
 .fp-row{display:flex;align-items:center;gap:12px;text-align:left;font-weight:800;font-size:15px;background:var(--locked,#f1ecff);border-radius:16px;padding:8px 12px;width:100%;box-sizing:border-box}
 .fp-row small{display:block;color:var(--muted);font-weight:700;font-size:13px}
-.fp-p svg{width:56px!important;height:auto;display:block}.fp-chip{background:var(--locked,#f1ecff);border-radius:99px;padding:3px 10px;font-size:13px;font-weight:800}`
+.fp-p svg{width:100%!important;height:auto;display:block}.fp-chip{background:var(--locked,#f1ecff);border-radius:99px;padding:3px 10px;font-size:13px;font-weight:800}`
 
 /** Linha "Novo para o Pingo" com botão de vestir (só visual, não muda nada do jogo) */
 export function NovoItemLinha({ n }: { n: NovoItem }) {
@@ -36,12 +36,13 @@ export function NovoItemLinha({ n }: { n: NovoItem }) {
 export function FimParadaTela({ S, invencao, fim, novos, onContinuar }: { S: any; invencao: InvencaoDef; fim: FimParada; novos?: NovoItem[]; onContinuar: () => void }) {
   const fade = (d: number) => ({ initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.3, delay: d, ease: 'easeOut' as const } })
   const px = fim.prox
+  const placa = (idx: number) => '<svg viewBox="0 0 40 40" aria-hidden="true">' + (A.PLACE_IC[idx] || A.PLACE_IC[0]) + '</svg>'
   return <div id="lesson" ref={enter}><style>{css}</style><div className="lw">
     <div className="lbody lscroll"><div className="center" style={{ gap: 10 }}>
-      <motion.h1 {...fade(0)} style={{ margin: 0, fontSize: 26 }}>Parada concluída!</motion.h1>
+      <motion.h1 {...fade(0)} style={{ margin: 0, fontSize: 26 }}>Parada {fim.idx + 1} concluída!</motion.h1>
       <motion.p {...fade(0.05)} style={{ margin: 0 }}>{fim.lugar}: {fim.titulo}</motion.p>
 
-      <motion.div {...fade(0.15)} style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+      <motion.div {...fade(0.15)} style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '100%' }}>
         <div className="fp-row">
           <span className="fp-ic" style={{ filter: `hue-rotate(${matiz(fim.idx)}deg)` }}><Invencao invencao={invencao} acesos={invencao.modulos.length} /></span>
           <span><small>Guardada na sua Oficina</small>Estação Pingo · {fim.lugar}</span>
@@ -50,22 +51,37 @@ export function FimParadaTela({ S, invencao, fim, novos, onContinuar }: { S: any
         {fim.vidasCheias && <div className="fp-row"><Html cls="fp-ic" h={HEART_ICON} /><span><small>Recarregadas</small>Vidas cheias</span></div>}
       </motion.div>
 
-      {px && <motion.div {...fade(0.4)} style={{ width: '100%', borderRadius: 20, padding: '12px 14px', boxSizing: 'border-box', textAlign: 'left',
-        background: 'linear-gradient(160deg,var(--locked,#f1ecff),var(--surface,#fff))', border: '2px solid var(--line-deep,#e3dcff)' }}>
-        <small style={{ color: 'var(--muted)', fontWeight: 800 }}>PRÓXIMA PARADA</small>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '6px 0' }}>
-          <div style={{ position: 'relative', width: 64, height: 64, flex: 'none', borderRadius: 18, background: 'var(--primary)', padding: 8, boxSizing: 'border-box' }}>
-            <motion.span style={{ display: 'block', width: 48, height: 48 }} initial={{ y: 6, scale: 0.9 }} animate={{ y: 0, scale: 1 }} transition={{ duration: 0.5, delay: 0.5 }}>
-              <Html h={'<svg viewBox="0 0 40 40" aria-hidden="true">' + (A.PLACE_IC[px.idx] || A.PLACE_IC[0]) + '</svg>'} /></motion.span>
+      {px ? <motion.div {...fade(0.6)} style={{ width: '100%', marginTop: 6, textAlign: 'center' }}>
+        <b style={{ fontSize: 18 }}>Você avançou para a Parada {px.idx + 1}!</b>
+        {/* caminho: parada que acabou (check) → Pingo andando → próxima parada (cadeado abre) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 0, margin: '14px 4px 6px' }}>
+          <div style={{ width: 64, textAlign: 'center', flex: 'none', whiteSpace: 'nowrap' }}>
+            <div style={{ width: 48, height: 48, borderRadius: 16, background: '#3fbf5f', margin: '0 auto', display: 'grid', placeItems: 'center' }}>
+              <Html cls="fp-ic" h={'<span style="color:#fff;display:contents">' + A.IC.check + '</span>'} /></div>
+            <small style={{ fontWeight: 800 }}>Parada {fim.idx + 1}</small></div>
+          <div style={{ flex: 1, position: 'relative', height: 48 }}>
+            <div style={{ position: 'absolute', left: 4, right: 4, top: 22, height: 6, borderRadius: 3, background: 'var(--line-deep,#e3dcff)' }} />
+            <motion.div style={{ position: 'absolute', left: 4, top: 22, height: 6, borderRadius: 3, background: 'var(--cyan,#18ddfb)' }} initial={{ width: 0 }} animate={{ width: 'calc(100% - 8px)' }} transition={{ duration: 1.3, delay: 0.8, ease: 'easeInOut' }} />
+            <motion.div className="fp-p" style={{ position: 'absolute', top: -2, width: 44 }} initial={{ left: '0%' }} animate={{ left: 'calc(100% - 44px)' }} transition={{ duration: 1.3, delay: 0.8, ease: 'easeInOut' }}>
+              <Pingo S={S} mood="walk" /></motion.div>
           </div>
-          <div style={{ flex: 1 }}><b style={{ fontSize: 18 }}>{px.lugar}</b><br /><span style={{ color: 'var(--muted)', fontWeight: 700 }}>{px.titulo}</span></div>
-          <div className="fp-p" style={{ width: 56, flex: 'none' }}><Pingo S={S} mood="wave" /></div>
+          <div style={{ width: 64, textAlign: 'center', flex: 'none', position: 'relative', whiteSpace: 'nowrap' }}>
+            <div style={{ width: 48, height: 48, borderRadius: 16, background: 'var(--primary)', margin: '0 auto', padding: 8, boxSizing: 'border-box', position: 'relative' }}>
+              <Html h={placa(px.idx)} />
+              <motion.span aria-hidden initial={{ opacity: 1, scale: 1 }} animate={{ opacity: 0, scale: 1.4 }} transition={{ duration: 0.4, delay: 2.1 }}
+                style={{ position: 'absolute', inset: 0, borderRadius: 16, background: '#8b7fb0', display: 'grid', placeItems: 'center', color: '#fff', fontSize: 22 }}>🔒</motion.span>
+            </div>
+            <small style={{ fontWeight: 800 }}>Parada {px.idx + 1}</small></div>
         </div>
-        {px.gancho && <p style={{ margin: '4px 0 8px', fontWeight: 800, fontSize: 16, color: 'var(--ink)' }}>{px.gancho}</p>}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{px.topicos.map(t => <span className="fp-chip" key={t}>{t}</span>)}</div>
-      </motion.div>}
-      {!px && <motion.p {...fade(0.4)} style={{ margin: 0 }}>Mais paradas chegam em breve. Você já fechou todas as de agora!</motion.p>}
+        <motion.div {...fade(2.2)} style={{ borderRadius: 18, padding: '10px 14px', textAlign: 'left', boxSizing: 'border-box', background: 'var(--locked,#f1ecff)', border: '2px solid var(--line-deep,#e3dcff)' }}>
+          <b style={{ fontSize: 17 }}>{px.lugar}</b> <span style={{ color: 'var(--muted)', fontWeight: 700 }}>· {px.titulo}</span>
+          {px.gancho && <p style={{ margin: '6px 0 8px', fontWeight: 800, fontSize: 16, color: 'var(--ink)' }}>{px.gancho}</p>}
+          <small style={{ color: 'var(--muted)', fontWeight: 800 }}>NESSA PARADA VOCÊ VAI VER</small>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }}>{px.topicos.map(t => <span className="fp-chip" key={t}>{t}</span>)}</div>
+        </motion.div>
+      </motion.div>
+      : <motion.p {...fade(0.4)} style={{ margin: 0 }}>Mais paradas chegam em breve. Você já fechou todas as de agora!</motion.p>}
     </div></div>
-    <div className="lfoot"><button className="btn" onClick={onContinuar}>{px ? 'Vamos lá!' : 'Continuar'}</button></div>
+    <div className="lfoot"><button className="btn" onClick={onContinuar}>{px ? 'Ir para a Parada ' + (px.idx + 1) : 'Continuar'}</button></div>
   </div></div>
 }
