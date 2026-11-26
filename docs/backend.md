@@ -2,9 +2,9 @@
 
 Status: plano (nenhum código de produção escrito). Substitui `docs/supabase-presentes.md` (o Supabase saiu do plano) e a seção "Depois" de `docs/hospedagem.md`.
 
-Estado atual (2026-11-25): o projeto Google Cloud "PingoQuest" já foi criado, mas na conta do amigo. Ainda falta: dar acesso de Owner à dona, ligar o faturamento (plano Blaze), adicionar o Firebase ao projeto e configurar a Google Auth Platform (ver seções 6 e 8 e o passo 0 da seção 11).
+Estado atual (2026-11-25): projeto Google Cloud `pingoquest` (conta de faturamento do amigo, dona e amigo como Owner). Firebase adicionado, 8 APIs ativadas, Firestore `(default)` criado em `southamerica-east1` (modo nativo). Falta: alerta de orçamento, ativar os logins Google e Anônimo, configurar a Google Auth Platform e registrar o app Web (ver seções 6 e 8 e o passo 0 da seção 11). Um projeto Firebase duplicado criado por engano (`pingoquest-cd780`) foi apagado.
 
-Convenções deste documento: `<GCP_PROJECT_ID>` é o placeholder do ID do projeto (o nome de exibição é "PingoQuest"; o ID, que costuma ter um sufixo, aparece em Console > Configurações do projeto). "Chips" é o nome na interface e na API; no código atual do app é `S.gems` (o doc antigo chama de cristais). "Energia" é `S.xp`.
+Convenções deste documento: `pingoquest` é o placeholder do ID do projeto (o nome de exibição é "PingoQuest"; o ID, que costuma ter um sufixo, aparece em Console > Configurações do projeto). "Chips" é o nome na interface e na API; no código atual do app é `S.gems` (o doc antigo chama de cristais). "Energia" é `S.xp`.
 
 ## 1. Visão geral
 
@@ -384,7 +384,7 @@ A captura do console mostra "A plataforma de autenticação do Google ainda não
 |---|---|---|
 | 1 | Firebase Console | "Adicionar projeto" escolhendo o projeto existente PingoQuest (não criar outro). Exige o plano Blaze |
 | 2 | Firebase Console > Authentication > Método de login | Ativar "Google" e "Anônimo". O Firebase cria o cliente OAuth web sozinho |
-| 3 | Google Auth Platform > Branding | Nome do app "Pingo Quest", e-mail de suporte (da dona), logo, link da política de privacidade e dos termos (página em pt-BR; ver LGPD na seção 8), domínios autorizados: `<GCP_PROJECT_ID>.firebaseapp.com`, `<GCP_PROJECT_ID>.web.app` e, depois, o domínio próprio |
+| 3 | Google Auth Platform > Branding | Nome do app "Pingo Quest", e-mail de suporte (da dona), logo, link da política de privacidade e dos termos (página em pt-BR; ver LGPD na seção 8), domínios autorizados: `pingoquest.firebaseapp.com`, `pingoquest.web.app` e, depois, o domínio próprio |
 | 4 | Google Auth Platform > Público-alvo | Tipo "Externo". Em "Teste" só entram usuários de teste cadastrados (limite de 100); para os alunos entrarem, mudar para "Em produção" |
 | 5 | Google Auth Platform > Acesso a dados | Só os escopos básicos (`openid`, `email`, `profile`), que não exigem verificação do Google. Não pedir mais nada (minimização, LGPD) |
 | 6 | Authentication > Configurações > Domínios autorizados | Incluir o domínio do Hosting e o de desenvolvimento (`localhost`) |
@@ -540,9 +540,9 @@ Pontos: usuário não root, escuta em `0.0.0.0:$PORT`, trata `SIGTERM` (fechar o
 
 | Conta | Usada por | Papéis |
 |---|---|---|
-| `pingoquest-api@<GCP_PROJECT_ID>.iam.gserviceaccount.com` | Runtime do Cloud Run (serviço e job) | `roles/datastore.user` (Firestore); `roles/firebaseauth.admin` (apagar/listar usuários, setar claims de admin; sem papel menor equivalente); `roles/logging.logWriter`. Verificar ID token e App Check não pede papel extra |
-| `pingoquest-deployer@<GCP_PROJECT_ID>.iam.gserviceaccount.com` | GitHub Actions (via WIF) | `roles/run.developer` (deploy do serviço e do job); `roles/artifactregistry.writer` só no repositório de imagens; `roles/iam.serviceAccountUser` só sobre `pingoquest-api@` (para implantar com ela); `roles/firebasehosting.admin`; `roles/firebaserules.admin` e `roles/datastore.indexAdmin` (publicar regras e índices); `roles/serviceusage.serviceUsageConsumer` |
-| `pingoquest-scheduler@<GCP_PROJECT_ID>.iam.gserviceaccount.com` | Cloud Scheduler | `roles/run.invoker` apenas sobre o Job `housekeeping` |
+| `pingoquest-api@pingoquest.iam.gserviceaccount.com` | Runtime do Cloud Run (serviço e job) | `roles/datastore.user` (Firestore); `roles/firebaseauth.admin` (apagar/listar usuários, setar claims de admin; sem papel menor equivalente); `roles/logging.logWriter`. Verificar ID token e App Check não pede papel extra |
+| `pingoquest-deployer@pingoquest.iam.gserviceaccount.com` | GitHub Actions (via WIF) | `roles/run.developer` (deploy do serviço e do job); `roles/artifactregistry.writer` só no repositório de imagens; `roles/iam.serviceAccountUser` só sobre `pingoquest-api@` (para implantar com ela); `roles/firebasehosting.admin`; `roles/firebaserules.admin` e `roles/datastore.indexAdmin` (publicar regras e índices); `roles/serviceusage.serviceUsageConsumer` |
+| `pingoquest-scheduler@pingoquest.iam.gserviceaccount.com` | Cloud Scheduler | `roles/run.invoker` apenas sobre o Job `housekeeping` |
 
 Build da imagem no próprio GitHub Actions (docker build + push para o Artifact Registry), sem Cloud Build, o que evita papéis amplos. Nenhuma chave JSON existe em nenhum lugar.
 
@@ -570,15 +570,15 @@ jobs:
       - uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: projects/<PROJECT_NUMBER>/locations/global/workloadIdentityPools/github/providers/<PROVIDER>
-          service_account: pingoquest-deployer@<GCP_PROJECT_ID>.iam.gserviceaccount.com
+          service_account: pingoquest-deployer@pingoquest.iam.gserviceaccount.com
       - run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev
       - run: docker build -f api/Dockerfile -t $IMAGE . && docker push $IMAGE
-      - run: gcloud run deploy pingoquest-api --image $IMAGE --region southamerica-east1 --service-account pingoquest-api@<GCP_PROJECT_ID>.iam.gserviceaccount.com ...
+      - run: gcloud run deploy pingoquest-api --image $IMAGE --region southamerica-east1 --service-account pingoquest-api@pingoquest.iam.gserviceaccount.com ...
   hosting:
     needs: api               # API primeiro: o app novo nunca chama rota que ainda não existe
     steps:
       - run: sh tools/montar-site.sh
-      - run: npx firebase-tools deploy --only hosting,firestore:rules,firestore:indexes --project <GCP_PROJECT_ID>
+      - run: npx firebase-tools deploy --only hosting,firestore:rules,firestore:indexes --project pingoquest
 ```
 
 Rewrite a acrescentar em `firebase.json` no B0:
@@ -675,7 +675,7 @@ Pipeline de CI: lint, typecheck, unit, integration (com Java para os emuladores)
 
 | # | Tipo | Item | Impacto | Recomendação |
 |---|---|---|---|---|
-| R1 | Decisão | O projeto "PingoQuest" está na conta do amigo; falta o ID, o acesso de Owner da dona e conferir se já existe Firestore/Hosting nele | Controle dos dados dos alunos e da cobrança fica com o dono da conta; a localização do banco é permanente | Passo 0 da seção 11. Combinar por escrito quem é dono do projeto no longo prazo (ver seção 8). Se o banco já existir em outra região, aceitar ou criar projeto novo |
+| R1 | Decisão | Projeto `pingoquest` na conta de faturamento do amigo; dona já é Owner e o Firestore foi criado em `southamerica-east1` (resolvido) | Controle dos dados dos alunos e da cobrança fica com o dono da conta; a localização do banco é permanente | Passo 0 da seção 11. Combinar por escrito quem é dono do projeto no longo prazo (ver seção 8). Se o banco já existir em outra região, aceitar ou criar projeto novo |
 | R21 | Decisão | Google Auth Platform sem configuração; público em "Teste" limita a 100 usuários | Alunos não conseguem entrar com Google | Seguir a tabela da seção 6 e publicar em "Em produção" antes de abrir para os alunos; precisa de página de privacidade |
 | R2 | Decisão | Jogo antigo `/jogo-antigo/` | Grava no mesmo `pingoquest-v3` e paga recompensas localmente: divergiria do servidor | Remover do `_site` no deploy do B1 e aposentar `src/jogo.html`, `build-site.sh` e seus testes depois de portar as regras (item da seção 9) |
 | R3 | Risco | Cliente mente sobre acertos/erros (o conteúdo, com as respostas, vai no bundle JS) | Casual: protegemos contra editar `localStorage` e relógio. Determinado: dá para forjar | Aceito. Mitigações: ledger idempotente, limites por dia, `elapsedMs` plausível, teto no import. Correção por servidor (servir a pergunta e corrigir no servidor) fica para depois, só se virar problema |
