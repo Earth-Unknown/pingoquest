@@ -1,0 +1,15 @@
+**/node_modules
+**/dist
+**/.env
+**/*-debug.log
+.git
+.github
+.claude
+_site
+app
+docs
+icons
+src
+tests
+tools
+api/test
