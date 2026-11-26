@@ -5,7 +5,7 @@ import { GoogleButton } from './GoogleButton'
 import { AuthError, type AuthErrorInfo } from './AuthError'
 import { classifyAuthError, errorCode, signInGoogle, signInGuest, type AuthStep } from './lib/auth'
 import { done, totalFases } from './lib/cursos'
-import { cursoAtivo, streakNow } from './lib/progress'
+import { cursoAtivo, streakNow, gamesOf } from './lib/progress'
 import { buzz, reducedMotion, sfx } from './lib/sound'
 import type { Save } from './lib/store'
 
@@ -29,7 +29,46 @@ const SUCCESS_REDUCED_MS = 500
 
 const SUPPORT_DEFAULT = {
   A: 'Com Google, seu progresso fica guardado e você libera amigos e presentes. Como convidado, você joga já e salva depois.',
-  B: 'Entrando com Google, seu progresso vai junto e fica salvo na nuvem.',
+  B: 'Entre com o Google para guardar seu progresso na nuvem e jogar em outro aparelho.',
+}
+
+/** Fala do Pingo para quem volta: cumprimenta pela hora e diz o que vem agora (tirado do progresso real) */
+function falaDoPingo(S: Save, dias: number): { titulo: string; sub: string } {
+  const h = new Date().getHours()
+  const saud = h < 5 ? 'Oi, coruja' : h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite'
+  const nome = S.nick ? ', ' + S.nick : ''
+  const cur = cursoAtivo(S)
+  const games = gamesOf(cur.id)
+  const feitas = (S.done || {}) as Record<string, boolean>
+  const paradas: any[] = cur.json.mundos?.[0]?.paradas || []
+  let prox = ''
+  outer: for (let g = 0; g < games.length; g++) {
+    for (let k = 0; k < 4; k++) {
+      if (k === 3 && !games[g].phases.length) continue
+      if (!feitas[g + '-' + k]) {
+        const lugar = paradas[g]?.lugar || 'a trilha'
+        prox = k < 3 ? `Lição ${k + 1}, “${games[g].names[k]}” (parada ${lugar})` : `Prova final (parada ${lugar})`
+        break outer
+      }
+    }
+  }
+  const algo = Object.keys(feitas).length > 0
+  const titulo = saud === 'Oi, coruja' ? `Oi, coruja${nome}!` : `${saud}${nome}!`
+  if (!prox) return { titulo, sub: 'Você fechou todas as paradas de agora. Bora revisar e manter o brilho?' }
+  if (!algo) return { titulo, sub: `Já deixei tudo pronto! Sua primeira missão: ${prox}. Bora?` }
+  const brilho = dias > 1 ? ` Seu brilho está em ${dias} dias, não deixa apagar!` : ''
+  return { titulo, sub: `Estava te esperando! Sua próxima missão: ${prox}.${brilho}` }
+}
+
+/** Texto que aparece como se o Pingo estivesse digitando (sem animar para quem pediu menos movimento) */
+function Digita({ texto }: { texto: string }) {
+  const [n, setN] = useState(reducedMotion() ? texto.length : 0)
+  useEffect(() => {
+    if (reducedMotion()) return
+    const t = setInterval(() => setN(x => (x >= texto.length ? (clearInterval(t), x) : x + 2)), 22)
+    return () => clearInterval(t)
+  }, [texto])
+  return <span aria-label={texto}><span aria-hidden="true">{texto.slice(0, n)}</span></span>
 }
 
 export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }: Props) {
@@ -41,6 +80,8 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
   const [sad, setSad] = useState(false)
   const [slow, setSlow] = useState(false)
   const [showSkel, setShowSkel] = useState(false)
+  const [acena, setAcena] = useState(hasLocal)
+  useEffect(() => { if (!acena) return; const t = setTimeout(() => setAcena(false), 2200); return () => clearTimeout(t) }, [acena])
   const [success, setSuccess] = useState<{ text: string; dest: LoginDest } | null>(null)
   const heading = useRef<HTMLHeadingElement>(null)
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
@@ -110,7 +151,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
     }
   }
 
-  const mood = success ? 'cheer' : busy || booting ? 'think' : sad ? 'sad' : 'happy'
+  const mood = success ? 'cheer' : busy || booting ? 'think' : sad ? 'sad' : acena ? 'wave' : 'happy'
   const stage = (
     <div className={'lg-stage' + (busy || booting ? ' busy' : '') + (sad ? ' sad' : '')}>
       <Pingo S={S} mood={mood} cls="lg-pingo" />
@@ -147,6 +188,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
     ...(days > 0 ? [[String(days), 'dias de brilho'] as [string, string]] : []),
     [String(S.gems ?? 0), 'chips'],
   ]
+  const fala = variant === 'B' ? falaDoPingo(S, days) : null
   const support = busy === 'google' ? 'Termine o login na janelinha do Google.' : hint ?? SUPPORT_DEFAULT[variant]
 
   return (
@@ -157,11 +199,11 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
           {variant === 'A' && !success && <p className="lg-word">PINGO QUEST</p>}
           {stage}
           <motion.h1 ref={heading} tabIndex={-1} {...stagger(1)}>
-            {success ? success.text : variant === 'A' ? 'Oi! Eu sou o Pingo.' : 'Seu progresso está aqui!'}
+            {success ? success.text : variant === 'A' ? 'Oi! Eu sou o Pingo.' : fala?.titulo}
           </motion.h1>
           {!success && (
             <motion.p className="lg-sub" {...stagger(2)}>
-              {variant === 'A' ? 'Vou te ensinar Redes e Linux, um passo de cada vez.' : 'Nada foi perdido. Tudo continua guardado neste aparelho.'}
+              {variant === 'A' ? 'Vou te ensinar Redes e Linux, um passo de cada vez.' : <Digita texto={fala?.sub || ''} />}
             </motion.p>
           )}
           {!success && variant === 'B' && (
@@ -182,7 +224,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
                 </>
               ) : (
                 <>
-                  <button type="button" className="btn" aria-disabled={busy ? true : undefined} onClick={() => { if (!busy) { sfx('start'); onContinueLocal() } }}>Continuar jogando</button>
+                  <button type="button" className="btn" aria-disabled={busy ? true : undefined} onClick={() => { if (!busy) { sfx('start'); onContinueLocal() } }}>Bora jogar!</button>
                   {!signedIn && <>
                     <p className="lg-or" aria-hidden="true">ou</p>
                     <GoogleButton label="Continuar com o Google" busy={busy === 'google'} onClick={() => run('google')} />
