@@ -1,5 +1,6 @@
 // Modo dono (React): pré-visualiza as cenas de conclusão sem precisar jogar as lições. Não grava progresso.
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { toast } from './Fx'
 import { CenaConclusao } from './conclusao/CenaConclusao'
 import { ESTACAO_PINGO } from './conclusao/contrato'
 import { gamesOf } from './lib/progress'
@@ -17,6 +18,14 @@ export function ModoDono({ S, aberto, onFechar }: { S: any; aberto: boolean; onF
   const [novo, setNovo] = useState(true)
   const [ver, setVer] = useState(false)
   const [rodada, setRodada] = useState(0)
+  const ancora = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (aberto && !on) {
+      ancora.current?.scrollIntoView({ block: 'center' })
+      toast('Modo dono: digite o código')
+      setTimeout(() => (document.getElementById('admcode') as HTMLInputElement | null)?.focus(), 400)
+    }
+  }, [aberto, on])
   const id = S.curso || 'redes'
   const cur = CURSOS.find(c => c.id === id) || CURSOS[0]
   const par: any[] = cur.json.mundos?.[0]?.paradas || []
@@ -24,7 +33,7 @@ export function ModoDono({ S, aberto, onFechar }: { S: any; aberto: boolean; onF
 
   if (!on) {
     if (!aberto) return null
-    return <><div className="sect" style={{ marginTop: 14 }}>Modo dono</div>
+    return <><div ref={ancora} className="sect" style={{ marginTop: 14 }}>Modo dono</div>
       <input id="admcode" type="password" autoComplete="off" placeholder="Código" aria-label="Código do modo dono"
         style={{ width: '100%', padding: 12, borderRadius: 12, border: '2px solid var(--line-deep)', font: 'inherit', marginBottom: 8, boxSizing: 'border-box' }} />
       <button className="btn ghost" style={{ marginBottom: 10 }} onClick={async () => {
