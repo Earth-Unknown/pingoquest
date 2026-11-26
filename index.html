@@ -6188,9 +6188,9 @@
          "pergunta": "O que é uma rede de computadores?",
          "certa": "Aparelhos ligados entre si para trocar informações",
          "erradas": [
-          "Um programa que limpa o computador",
-          "Um tipo de cabo de energia",
-          "Uma senha para entrar no celular"
+          "Um programa que organiza os arquivos do computador",
+          "Um tipo de cabo que leva energia aos aparelhos",
+          "Uma senha compartilhada entre os aparelhos da casa"
          ],
          "explicacao": "Rede é isso: aparelhos conversando.",
          "conceito": "rede.def",
@@ -6209,9 +6209,9 @@
          "pergunta": "Qual destas situações mostra uma rede funcionando?",
          "certa": "Seu celular enviando uma foto para a TV da sala",
          "erradas": [
-          "Um computador desligado na gaveta",
-          "Uma calculadora comum",
-          "Um livro de redes na estante"
+          "Um computador desligado guardado na gaveta",
+          "Uma calculadora comum fazendo uma conta sozinha",
+          "Um livro sobre redes aberto na estante da sala"
          ],
          "explicacao": "Celular e TV trocando informação: isso é rede.",
          "conceito": "rede.def",
@@ -6240,14 +6240,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual par forma uma rede, mesmo sem internet?",
-         "certa": "Celular e TV trocando uma foto",
+         "pergunta": "Em casa, o celular, a TV e o notebook estão no mesmo roteador. Quantas redes isso forma?",
+         "certa": "Uma só, com três aparelhos",
          "erradas": [
-          "Dois livros na mesa",
-          "Uma lâmpada e uma tomada",
-          "Um mouse sem pilha"
+          "Três redes, uma para cada aparelho",
+          "Quatro, contando também o roteador",
+          "Duas, porque só um é celular"
          ],
-         "explicacao": "Dois aparelhos trocando informação já formam uma rede.",
+         "explicacao": "O que forma a rede é a ligação entre os aparelhos, não a quantidade deles. Todos conversando pelo mesmo roteador são uma rede só.",
          "conceito": "rede.def",
          "dificuldade": 2
         }
@@ -6299,9 +6299,9 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Uma rede permite que vários aparelhos usem a mesma internet.",
-         "resposta": true,
-         "explicacao": "Isso mesmo: o roteador reparte a internet entre os aparelhos.",
+         "pergunta": "Para vários aparelhos usarem a mesma impressora, cada um precisa ter uma impressora própria.",
+         "resposta": false,
+         "explicacao": "Uma só impressora pode ser compartilhada pela rede: todos os aparelhos mandam o trabalho para ela.",
          "conceito": "rede.uso",
          "dificuldade": 1
         },
@@ -6328,6 +6328,10 @@
           {
            "texto": "Luz da sala",
            "categoria": "Não dá"
+          },
+          {
+           "texto": "Carregador do vizinho",
+           "categoria": "Não dá"
           }
          ],
          "explicacao": "Em rede compartilhamos informação e recursos, não a energia da casa.",
@@ -6349,14 +6353,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Para quê serve compartilhar a internet em uma rede?",
-         "certa": "Para vários aparelhos usarem a mesma conexão",
+         "pergunta": "A TV abre vídeos e a impressora imprime pelo Wi-Fi. O que as duas coisas têm em comum?",
+         "certa": "Usam recursos compartilhados pela rede",
          "erradas": [
-          "Para o celular não precisar de bateria",
-          "Para deixar a casa mais fria",
-          "Para trocar a senha do banco"
+          "Precisam estar ligadas na mesma tomada de energia",
+          "Só funcionam se a casa tiver internet por fibra",
+          "Precisam ser da mesma marca para conversar"
          ],
-         "explicacao": "A rede reparte a internet entre os aparelhos.",
+         "explicacao": "Tanto a internet quanto a impressora são recursos que a rede reparte entre os aparelhos.",
          "conceito": "rede.uso",
          "dificuldade": 2
         }
@@ -6408,9 +6412,9 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Um celular conectado ao Wi-Fi da casa é um host da rede.",
-         "resposta": true,
-         "explicacao": "Sim, é um aparelho conectado à rede.",
+         "pergunta": "Só computador e celular podem ser hosts; uma TV ou uma lâmpada inteligente não contam.",
+         "resposta": false,
+         "explicacao": "Host é todo aparelho ligado à rede, tenha tela ou não. TV, videogame e lâmpada inteligente também são hosts.",
          "conceito": "rede.host",
          "dificuldade": 1
         },
@@ -6436,6 +6440,10 @@
           },
           {
            "texto": "Panela elétrica sem conexão",
+           "categoria": "Não é host"
+          },
+          {
+           "texto": "Mouse com fio, sem conexão à rede",
            "categoria": "Não é host"
           }
          ],
@@ -6466,16 +6474,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é o nome do aparelho ligado à rede, como o seu celular?",
-         "certa": "Host",
+         "pergunta": "Em casa há: notebook, TV conectada, geladeira comum e lâmpada inteligente no Wi-Fi. Quantos hosts a rede tem?",
+         "certa": "Três: notebook, TV e lâmpada",
          "erradas": [
-          "Cabo",
-          "Provedor",
-          "Sinal"
+          "Quatro, contando a geladeira",
+          "Dois, só os que têm tela",
+          "Um, só o notebook"
          ],
-         "explicacao": "Host é qualquer aparelho conectado.",
+         "explicacao": "Host é todo aparelho conectado à rede, tenha tela ou não. A geladeira comum não está conectada, então não conta.",
          "conceito": "rede.host",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -6516,6 +6524,19 @@
        ],
        "explicacao": "Compartilhar a impressora na rede é um uso clássico.",
        "conceito": "rede.uso"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O notebook da sala imprime na impressora do quarto, mas o celular do mesmo roteador não encontra a impressora. O que é mais provável?",
+       "certa": "O celular está em outra rede, não na mesma da impressora",
+       "erradas": [
+        "Celulares não podem usar impressoras",
+        "A impressora só funciona com cabo",
+        "O roteador está sem internet"
+       ],
+       "explicacao": "Para compartilhar um recurso, os aparelhos precisam estar na mesma rede. Aparelhos em redes diferentes não se enxergam.",
+       "conceito": "rede.uso",
+       "dificuldade": 3
       }
      ]
     },
@@ -6568,7 +6589,7 @@
           "Provedor",
           "Navegador"
          ],
-         "explicacao": "LAN é a rede local.",
+         "explicacao": "LAN significa Local Area Network: uma rede que fica num lugar só, como a sua casa, a escola ou o escritório.",
          "conceito": "lan",
          "dificuldade": 1
         },
@@ -6616,6 +6637,10 @@
           {
            "texto": "A internet inteira",
            "categoria": "Não é LAN"
+          },
+          {
+           "texto": "Rede que liga vários países",
+           "categoria": "Não é LAN"
           }
          ],
          "explicacao": "A LAN é pequena e fica em um lugar. A internet é gigante.",
@@ -6624,16 +6649,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Onde uma rede local (LAN) costuma existir?",
-         "certa": "Em uma casa, escola ou escritório",
+         "pergunta": "Seu amigo diz: «fiquei sem internet, então minha rede local também parou». Ele está certo?",
+         "certa": "Não, a LAN continua entre os aparelhos",
          "erradas": [
-          "No mundo inteiro ao mesmo tempo",
-          "Dentro do cabo de energia",
-          "Só em satélites"
+          "Sim, sem internet não existe rede alguma",
+          "Sim, a LAN depende do provedor para funcionar",
+          "Não, mas só se tudo estiver ligado por cabo"
          ],
-         "explicacao": "A LAN fica em um lugar.",
+         "explicacao": "A LAN é a rede do lugar: celular, TV e impressora continuam conversando sem internet. O que cai é a saída para fora.",
          "conceito": "lan",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -6677,15 +6702,15 @@
           "Caixa de som",
           "Carregador"
          ],
-         "explicacao": "O roteador faz esse papel.",
+         "explicacao": "O roteador recebe a internet e a reparte entre os aparelhos. Também espalha o Wi-Fi e tem portas para cabos.",
          "conceito": "equip.roteador",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Se o roteador desliga, os aparelhos perdem o Wi-Fi da casa.",
-         "resposta": true,
-         "explicacao": "Sim, o roteador é quem cria o sinal.",
+         "pergunta": "O roteador e o provedor de internet são a mesma coisa.",
+         "resposta": false,
+         "explicacao": "O provedor é a empresa que entrega a internet. O roteador é o aparelho, na sua casa, que reparte essa internet.",
          "conceito": "equip.roteador",
          "dificuldade": 1
         },
@@ -6725,16 +6750,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Quem cria o sinal Wi-Fi da sua casa na maioria dos casos?",
-         "certa": "O roteador",
+         "pergunta": "O Wi-Fi da sala some, mas o PC ligado por cabo no roteador continua navegando. O que isso indica?",
+         "certa": "Só a parte sem fio do roteador falhou",
          "erradas": [
-          "O teclado",
-          "O monitor",
-          "O carregador"
+          "O roteador está totalmente desligado",
+          "A internet caiu na rua inteira",
+          "O PC está criando um Wi-Fi próprio"
          ],
-         "explicacao": "O roteador espalha o Wi-Fi.",
+         "explicacao": "O cabo e o Wi-Fi saem do mesmo roteador, mas são caminhos diferentes. Se o cabo funciona, a internet e o roteador estão bem.",
          "conceito": "equip.roteador",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -6826,16 +6851,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que o modem faz?",
-         "certa": "Recebe a internet que vem do provedor",
+         "pergunta": "Você troca o roteador por um novo, mas esquece de ligar o modem. O que acontece?",
+         "certa": "O Wi-Fi aparece, mas sem internet",
          "erradas": [
-          "Imprime documentos",
-          "Toca música",
-          "Mostra vídeos"
+          "A internet chega direto ao celular",
+          "O roteador novo liga o modem sozinho",
+          "Nada muda, o modem não faz diferença"
          ],
-         "explicacao": "Ele faz a ligação com o provedor.",
+         "explicacao": "O roteador cria o Wi-Fi, mas é o modem que recebe a internet do provedor. Sem ele, a rede da casa existe e a saída para fora não.",
          "conceito": "equip.modem",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -6876,6 +6901,19 @@
        ],
        "explicacao": "O cabo precisa estar na porta certa do roteador.",
        "conceito": "equip.roteador"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você ligou um PC por cabo e outro por Wi-Fi no mesmo roteador, e os dois se enxergam. Por quê?",
+       "certa": "Os dois estão na mesma LAN",
+       "erradas": [
+        "Cabo e Wi-Fi formam redes separadas",
+        "O PC por cabo vira um segundo roteador",
+        "O modem junta os dois"
+       ],
+       "explicacao": "Não importa se o aparelho entra por cabo ou por Wi-Fi: o roteador junta todos na mesma rede local.",
+       "conceito": "lan",
+       "dificuldade": 3
       }
      ]
     },
@@ -6949,41 +6987,49 @@
           "USB-C",
           "Cabo de antena"
          ],
-         "explicacao": "UTP é o cabo de rede mais usado.",
+         "explicacao": "UTP quer dizer par trançado sem blindagem: os fios são trançados para reduzir a interferência. É o cabo que você vê ligado em roteadores e PCs.",
          "conceito": "meio.transmissao",
          "dificuldade": 2
         },
         {
-         "tipo": "ligar",
-         "pergunta": "Ligue a situação ao melhor meio",
-         "pares": [
+         "tipo": "classificar",
+         "pergunta": "Para cada situação, qual meio faz mais sentido?",
+         "categorias": [
+          "Cabo",
+          "Wi-Fi"
+         ],
+         "itens": [
           {
-           "esquerda": "Computador de mesa fixo",
-           "direita": "Cabo"
+           "texto": "Computador de mesa fixo",
+           "categoria": "Cabo"
           },
           {
-           "esquerda": "Celular na sala",
-           "direita": "Wi-Fi"
+           "texto": "Celular andando pela casa",
+           "categoria": "Wi-Fi"
           },
           {
-           "esquerda": "Videogame que não sai do lugar",
-           "direita": "Cabo"
+           "texto": "Videogame que não sai do lugar",
+           "categoria": "Cabo"
+          },
+          {
+           "texto": "Notebook no sofá",
+           "categoria": "Wi-Fi"
           }
          ],
-         "explicacao": "Cabo para o que fica parado, Wi-Fi para o que se move.",
+         "explicacao": "Cabo para o que fica parado (mais estável), Wi-Fi para o que se move (mais prático).",
          "conceito": "meio.transmissao",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual opção costuma ser mais estável: cabo ou Wi-Fi?",
-         "certa": "O cabo",
+         "pergunta": "Seu primo joga online no PC de mesa e reclama que trava. O que você sugere?",
+         "certa": "Ligar o PC no roteador com um cabo",
          "erradas": [
-          "O Wi-Fi sempre",
-          "Os dois sempre iguais",
-          "Nenhum funciona"
+          "Trocar o nome da rede Wi-Fi da casa",
+          "Mudar a senha do Wi-Fi para uma mais curta",
+          "Comprar um mouse sem fio mais caro"
          ],
-         "explicacao": "O cabo sofre menos interferência.",
+         "explicacao": "O cabo não sofre com paredes nem com interferência, então a conexão fica mais estável.",
          "conceito": "meio.transmissao",
          "dificuldade": 2
         }
@@ -7023,23 +7069,23 @@
         {
          "tipo": "escolha",
          "pergunta": "O que costuma deixar o Wi-Fi fraco?",
-         "certa": "Distância e paredes grossas",
+         "certa": "Estar longe e com paredes no caminho",
          "erradas": [
-          "Escolher uma cor diferente",
-          "Abrir mais abas",
-          "Ligar a luz"
+          "Ter muitos aplicativos instalados",
+          "Usar o celular com a tela clara",
+          "O nome escolhido para a rede"
          ],
-         "explicacao": "O sinal perde força no caminho.",
+         "explicacao": "O sinal perde força a cada metro e a cada parede que atravessa.",
          "conceito": "meio.wifi",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Quanto mais longe do roteador, mais fraco costuma ficar o Wi-Fi.",
-         "resposta": true,
-         "explicacao": "Sim, o sinal enfraquece com a distância.",
+         "pergunta": "O Wi-Fi atravessa paredes de concreto sem perder força nenhuma.",
+         "resposta": false,
+         "explicacao": "Paredes grossas enfraquecem o sinal. Por isso o Wi-Fi fica fraco no quarto do fundo.",
          "conceito": "meio.wifi",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -7085,14 +7131,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual destes atrapalha o sinal do Wi-Fi?",
-         "certa": "Paredes grossas",
+         "pergunta": "Para o Wi-Fi chegar bem na casa toda, onde é melhor colocar o roteador?",
+         "certa": "No meio da casa, em lugar alto",
          "erradas": [
-          "Um copo d'água",
-          "Um quadro de foto",
-          "Uma planta pequena"
+          "Dentro de um armário fechado",
+          "No canto da casa, rente ao chão",
+          "Atrás da TV, junto da parede"
          ],
-         "explicacao": "Paredes grossas enfraquecem o sinal.",
+         "explicacao": "No centro e no alto o sinal tem menos paredes para atravessar. Armário, cantos e atrás de aparelhos enfraquecem o sinal.",
          "conceito": "meio.wifi",
          "dificuldade": 2
         }
@@ -7138,7 +7184,7 @@
           "Com ondas de som",
           "Com papel"
          ],
-         "explicacao": "A fibra transmite luz.",
+         "explicacao": "A fibra é um fio finíssimo de vidro: os dados viajam como pulsos de luz, e por isso ela é tão rápida.",
          "conceito": "meio.fibra",
          "dificuldade": 1
         },
@@ -7146,7 +7192,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "A fibra óptica é um meio de transmissão muito rápido.",
          "resposta": true,
-         "explicacao": "Sim, é um dos mais rápidos.",
+         "explicacao": "A luz viaja muito rápido dentro do fio de vidro, por isso a fibra leva muitos dados por segundo.",
          "conceito": "meio.fibra",
          "dificuldade": 1
         },
@@ -7185,15 +7231,31 @@
          "dificuldade": 1
         },
         {
-         "tipo": "escolha",
-         "pergunta": "Qual meio de transmissão usa luz?",
-         "certa": "Fibra óptica",
-         "erradas": [
-          "Cabo UTP",
-          "Wi-Fi",
-          "Bluetooth"
+         "tipo": "classificar",
+         "pergunta": "Fibra óptica ou cabo UTP?",
+         "categorias": [
+          "Fibra",
+          "Cabo UTP"
          ],
-         "explicacao": "A fibra leva os dados em pulsos de luz.",
+         "itens": [
+          {
+           "texto": "Leva os dados em pulsos de luz",
+           "categoria": "Fibra"
+          },
+          {
+           "texto": "Usa fios de cobre trançados",
+           "categoria": "Cabo UTP"
+          },
+          {
+           "texto": "Muito usada para chegar do provedor até a casa",
+           "categoria": "Fibra"
+          },
+          {
+           "texto": "Liga o PC ao roteador dentro de casa",
+           "categoria": "Cabo UTP"
+          }
+         ],
+         "explicacao": "A fibra usa luz e costuma vir de fora até a sua casa. O UTP usa cobre e faz as ligações curtas dentro dela.",
          "conceito": "meio.fibra",
          "dificuldade": 2
         }
@@ -7236,6 +7298,19 @@
        ],
        "explicacao": "Distância e obstáculos reduzem o sinal.",
        "conceito": "meio.wifi"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O jogo trava só quando você joga no sofá, longe do roteador. O que testar primeiro, antes de trocar de plano?",
+       "certa": "Aproximar do roteador ou ligar por cabo",
+       "erradas": [
+        "Aumentar a velocidade do plano",
+        "Trocar a senha do Wi-Fi",
+        "Reiniciar o modem do vizinho"
+       ],
+       "explicacao": "Se o problema aparece só em um lugar, a causa costuma ser o sinal (distância e paredes), não o plano contratado.",
+       "conceito": "meio.wifi",
+       "dificuldade": 3
       }
      ],
      "chamado": "wifi"
@@ -7285,11 +7360,11 @@
          "pergunta": "O que é a internet?",
          "certa": "Uma rede gigante que liga muitas redes",
          "erradas": [
-          "Um site famoso",
-          "Um cabo único mundial",
-          "Um programa do celular"
+          "Um site famoso que todo mundo acessa",
+          "Um cabo único que dá a volta no mundo",
+          "Um programa que vem instalado no celular"
          ],
-         "explicacao": "A internet é uma rede de redes.",
+         "explicacao": "A internet não é uma coisa só: é a união de milhões de redes menores, como a da sua casa e a de empresas.",
          "conceito": "internet",
          "dificuldade": 1
         },
@@ -7297,7 +7372,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "A rede da sua casa pode se conectar à internet.",
          "resposta": true,
-         "explicacao": "É isso que o roteador faz.",
+         "explicacao": "O roteador é a porta de saída da sua rede para a internet. Sem ele, a casa ficaria isolada.",
          "conceito": "internet",
          "dificuldade": 1
         },
@@ -7345,14 +7420,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Como podemos descrever a internet?",
-         "certa": "Uma rede de redes, que liga muitas redes do mundo",
+         "pergunta": "Seu celular abre um site hospedado em outro país. Por onde a informação provavelmente passa?",
+         "certa": "Por várias redes ligadas entre si",
          "erradas": [
-          "Um site",
-          "Um programa de celular",
-          "Um cabo único"
+          "Só pela rede da sua casa",
+          "Por uma rede única, de uma empresa só",
+          "Por rede alguma: o celular fala direto com o site"
          ],
-         "explicacao": "A internet interliga milhões de redes.",
+         "explicacao": "A internet é uma rede de redes: a informação atravessa várias redes menores até chegar ao destino.",
          "conceito": "internet",
          "dificuldade": 2
         }
@@ -7404,11 +7479,11 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O plano contratado define a velocidade máxima da internet.",
-         "resposta": true,
-         "explicacao": "Sim, plano maior costuma significar velocidade maior.",
+         "pergunta": "Contratar um plano de internet maior faz o Wi-Fi chegar mais longe dentro de casa.",
+         "resposta": false,
+         "explicacao": "O plano muda a velocidade que chega à casa, não o alcance do sinal. O alcance depende do roteador, da distância e das paredes.",
          "conceito": "isp",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -7446,16 +7521,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Quem fornece o acesso à internet?",
-         "certa": "O provedor",
+         "pergunta": "A internet caiu só na sua casa; a do vizinho funciona. Qual é o primeiro passo mais razoável?",
+         "certa": "Reiniciar o modem e o roteador",
          "erradas": [
-          "O celular",
-          "O roteador sozinho",
-          "A TV"
+          "Esperar o provedor consertar a rua toda",
+          "Trocar de celular para testar",
+          "Contratar um plano de internet maior"
          ],
-         "explicacao": "O provedor (ISP) faz essa ligação.",
+         "explicacao": "Se o vizinho tem internet, o provedor está funcionando e o problema está nos seus equipamentos. Reiniciar o modem e o roteador resolve muitos casos.",
          "conceito": "isp",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -7505,9 +7580,9 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O servidor é o computador que guarda o site e responde aos pedidos.",
-         "resposta": true,
-         "explicacao": "É assim mesmo.",
+         "pergunta": "Quando você abre um site, quem pede a página é o servidor.",
+         "resposta": false,
+         "explicacao": "Quem pede é o cliente, o seu aparelho. O servidor guarda o site e responde ao pedido.",
          "conceito": "cliente.servidor",
          "dificuldade": 1
         },
@@ -7546,15 +7621,31 @@
          "dificuldade": 1
         },
         {
-         "tipo": "escolha",
-         "pergunta": "Quando você abre um site, quem pede a página?",
-         "certa": "O cliente (seu aparelho)",
-         "erradas": [
-          "O servidor",
-          "O cabo",
-          "O provedor"
+         "tipo": "classificar",
+         "pergunta": "Quem é o cliente e quem é o servidor?",
+         "categorias": [
+          "Cliente",
+          "Servidor"
          ],
-         "explicacao": "O cliente pede e o servidor responde.",
+         "itens": [
+          {
+           "texto": "Seu celular abrindo uma página",
+           "categoria": "Cliente"
+          },
+          {
+           "texto": "Computador que guarda o site",
+           "categoria": "Servidor"
+          },
+          {
+           "texto": "Notebook pedindo um vídeo",
+           "categoria": "Cliente"
+          },
+          {
+           "texto": "Máquina que responde com a página",
+           "categoria": "Servidor"
+          }
+         ],
+         "explicacao": "O cliente pede (é o seu aparelho). O servidor guarda e responde.",
          "conceito": "cliente.servidor",
          "dificuldade": 2
         }
@@ -7597,6 +7688,19 @@
        ],
        "explicacao": "Se falha para muita gente, o problema costuma ser do provedor.",
        "conceito": "isp"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você acessa o mesmo site pelo celular e pelo notebook, na mesma rede. Quem é o cliente e quem é o servidor?",
+       "certa": "Celular e notebook são clientes; o servidor está do outro lado",
+       "erradas": [
+        "O celular é cliente e o notebook é servidor",
+        "O roteador é o cliente de todos",
+        "O servidor é o cabo que liga os dois"
+       ],
+       "explicacao": "Quem pede a página é cliente. O servidor é o computador que guarda o site e responde, e fica fora da sua casa.",
+       "conceito": "cliente.servidor",
+       "dificuldade": 3
       }
      ]
     },
@@ -7645,11 +7749,11 @@
          "pergunta": "Para que serve o endereço IP?",
          "certa": "Identificar o aparelho na rede",
          "erradas": [
-          "Trocar a cor do Wi-Fi",
-          "Mudar o volume",
-          "Salvar fotos"
+          "Trocar a cor do sinal do Wi-Fi",
+          "Aumentar o volume dos aparelhos",
+          "Salvar as fotos do celular na nuvem"
          ],
-         "explicacao": "O IP diz para onde os dados devem ir.",
+         "explicacao": "Assim como a casa precisa de um endereço para a encomenda chegar, o aparelho precisa de um IP para os dados chegarem.",
          "conceito": "ip.v4",
          "dificuldade": 1
         },
@@ -7697,16 +7801,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O endereço IP identifica o quê?",
-         "certa": "O aparelho na rede",
+         "pergunta": "Dois aparelhos da casa pedem vídeos diferentes ao mesmo tempo. Como os dados sabem para qual ir?",
+         "certa": "Cada aparelho tem um IP diferente",
          "erradas": [
-          "A cor do cabo",
-          "O nome do provedor",
-          "O volume do som"
+          "Os dados vão para o aparelho mais rápido",
+          "O roteador escolhe pelo nome do vídeo",
+          "Os dados vão para os dois, misturados"
          ],
-         "explicacao": "O IP é o endereço do aparelho.",
+         "explicacao": "O IP é o endereço de cada aparelho na rede. Por isso os dados chegam só a quem pediu.",
          "conceito": "ip.v4",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -7801,22 +7905,22 @@
            "categoria": "Público"
           }
          ],
-         "explicacao": "192.168 e 10 são privados. Os outros são públicos.",
+         "explicacao": "192.168.x.x e 10.x.x.x são faixas reservadas para redes de casa. Os outros números são públicos e valem para a internet toda.",
          "conceito": "ip.privado",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Quem entrega o IP automaticamente quando você entra no Wi-Fi?",
-         "certa": "O DHCP",
+         "pergunta": "Duas casas diferentes têm um celular com o IP privado 192.168.0.10. Isso dá problema?",
+         "certa": "Não, cada um só vale na sua casa",
          "erradas": [
-          "O teclado",
-          "O monitor",
-          "O cabo de rede"
+          "Sim, a internet vai misturar os dois",
+          "Sim, só um dos dois consegue navegar",
+          "Não, mas só se os provedores forem iguais"
          ],
-         "explicacao": "DHCP entrega IP sozinho.",
+         "explicacao": "IPs privados se repetem em milhões de casas. Para a internet, cada casa aparece com o IP público do seu roteador.",
          "conceito": "ip.privado",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -7866,11 +7970,11 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O endereço MAC é o número de série da placa de rede e vem de fábrica.",
-         "resposta": true,
-         "explicacao": "É isso. O IP é que pode mudar.",
+         "pergunta": "O endereço MAC do seu celular muda toda vez que ele entra em uma rede diferente.",
+         "resposta": false,
+         "explicacao": "Como o MAC vem gravado de fábrica, ele acompanha a placa de rede para qualquer lugar. O IP depende de onde você se conecta.",
          "conceito": "ip.mac.dhcp",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -7907,15 +8011,31 @@
          "dificuldade": 1
         },
         {
-         "tipo": "escolha",
-         "pergunta": "O que o endereço MAC é?",
-         "certa": "O número de série da placa de rede",
-         "erradas": [
-          "O nome do Wi-Fi",
-          "A senha do roteador",
-          "O endereço do site"
+         "tipo": "classificar",
+         "pergunta": "O que muda e o que fica igual quando você troca de rede?",
+         "categorias": [
+          "Muda",
+          "Fica igual"
          ],
-         "explicacao": "O MAC vem de fábrica.",
+         "itens": [
+          {
+           "texto": "O IP do aparelho",
+           "categoria": "Muda"
+          },
+          {
+           "texto": "O endereço MAC",
+           "categoria": "Fica igual"
+          },
+          {
+           "texto": "O IP entregue pelo DHCP",
+           "categoria": "Muda"
+          },
+          {
+           "texto": "O número de série da placa de rede",
+           "categoria": "Fica igual"
+          }
+         ],
+         "explicacao": "O IP é entregue pela rede em que você entra, então muda. O MAC vem de fábrica e acompanha o aparelho.",
          "conceito": "ip.mac.dhcp",
          "dificuldade": 2
         }
@@ -7958,6 +8078,19 @@
        ],
        "explicacao": "IP privado só vale na rede local.",
        "conceito": "ip.privado"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Um técnico entrega o IP 192.168.0.40 para um novo aparelho. Esse número já era de outro aparelho da rede. O que costuma acontecer?",
+       "certa": "Conflito: os dois podem ficar sem rede",
+       "erradas": [
+        "Nada, o roteador dá outro nome a um deles",
+        "Os dois ficam mais rápidos",
+        "Só o mais novo perde o MAC"
+       ],
+       "explicacao": "O IP é o endereço do aparelho e precisa ser único na rede. Por isso o DHCP controla quem recebe qual número.",
+       "conceito": "ip.v4",
+       "dificuldade": 3
       }
      ],
      "chamado": "print"
@@ -8012,7 +8145,7 @@
           "Apaga vírus",
           "Muda a senha do roteador"
          ],
-         "explicacao": "O DNS descobre o IP do nome que você digitou.",
+         "explicacao": "É o DNS que descobre o IP do nome digitado. Sem ele, você teria que decorar números para cada site.",
          "conceito": "dns",
          "dificuldade": 1
         },
@@ -8020,7 +8153,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "Você digita o nome do site, e por trás o computador usa o IP.",
          "resposta": true,
-         "explicacao": "É isso mesmo.",
+         "explicacao": "O nome é para você. Por trás, o computador só entende o IP, e o DNS faz a ponte entre os dois.",
          "conceito": "dns",
          "dificuldade": 1
         },
@@ -8060,14 +8193,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é o trabalho do DNS na internet?",
-         "certa": "Descobre o número (IP) a partir do nome do site",
+         "pergunta": "O DNS responde 142.250.0.1 quando você pede google.com. O que isso mostra?",
+         "certa": "O número (IP) que corresponde ao nome",
          "erradas": [
-          "Aumenta a bateria",
-          "Limpa o histórico",
-          "Troca a senha"
+          "Que o Google mudou de nome hoje",
+          "Que o DNS guardou a sua senha",
+          "Que o site foi bloqueado para você"
          ],
-         "explicacao": "DNS traduz nome em número.",
+         "explicacao": "O DNS devolve o IP do nome digitado. É com esse número que o seu aparelho encontra o site.",
          "conceito": "dns",
          "dificuldade": 2
         }
@@ -8109,11 +8242,11 @@
          "pergunta": "Qual comparação descreve bem o DNS?",
          "certa": "A lista de contatos do celular",
          "erradas": [
-          "Uma lanterna",
-          "Um cabo de força",
-          "Uma foto"
+          "Um relógio que mostra a hora certa",
+          "Um carregador que enche a bateria",
+          "Um álbum de fotos da família"
          ],
-         "explicacao": "Nome para número, igual aos contatos.",
+         "explicacao": "Na agenda, você toca no nome e o celular acha o número. No DNS, você digita o nome do site e ele acha o IP.",
          "conceito": "dns.agenda",
          "dificuldade": 1
         },
@@ -8169,14 +8302,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é a comparação mais próxima do DNS?",
-         "certa": "Uma lista de contatos",
+         "pergunta": "Se o DNS é a lista de contatos, quem é o nome e quem é o número?",
+         "certa": "Nome é o site; número é o IP",
          "erradas": [
-          "Um carregador",
-          "Um fone",
-          "Uma lanterna"
+          "Nome é o IP; número é o site",
+          "Nome é o roteador; número é o Wi-Fi",
+          "Nome é o provedor; número é a senha"
          ],
-         "explicacao": "Nome leva ao número.",
+         "explicacao": "Na agenda você usa o nome e o celular acha o número. Na internet você usa o nome do site e o DNS acha o IP.",
          "conceito": "dns.agenda",
          "dificuldade": 2
         }
@@ -8218,9 +8351,9 @@
          "pergunta": "Só um site não abre e todos os outros abrem normalmente. O que isso sugere?",
          "certa": "Problema no site, não na sua internet",
          "erradas": [
-          "Seu roteador queimou",
-          "Seu celular está sem bateria",
-          "Você está sem provedor"
+          "O seu roteador queimou durante a noite",
+          "Seu celular está com a bateria fraca",
+          "Seu provedor cortou só a sua conta"
          ],
          "explicacao": "Se os outros sites abrem, sua internet está boa.",
          "conceito": "dns.falha",
@@ -8270,14 +8403,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Só um site não abre, e os outros abrem. O que isso sugere?",
-         "certa": "O problema está nesse site",
+         "pergunta": "Nenhum site abre, nem os que sempre funcionam. Qual é o melhor primeiro passo?",
+         "certa": "Ver se o Wi-Fi e o modem estão ok",
          "erradas": [
-          "Sua internet caiu",
-          "O roteador queimou",
-          "O celular quebrou"
+          "Esperar o site voltar sozinho",
+          "Trocar o nome do site que você digita",
+          "Limpar o DNS de cada site"
          ],
-         "explicacao": "Se outros sites abrem, sua conexão está ok.",
+         "explicacao": "Quando nada abre, o problema costuma estar na sua conexão. Comece pelo Wi-Fi e pelo modem.",
          "conceito": "dns.falha",
          "dificuldade": 2
         }
@@ -8320,6 +8453,19 @@
        ],
        "explicacao": "Nome vira número, como na agenda.",
        "conceito": "dns.agenda"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você digitou o IP de um site e ele abriu; ao digitar o nome, deu erro. O que isso sugere?",
+       "certa": "O DNS falhou: o site está bem",
+       "erradas": [
+        "O cabo de rede está solto",
+        "O site foi apagado para sempre",
+        "O celular está sem bateria"
+       ],
+       "explicacao": "Se o IP funciona, a conexão e o site estão bem. O que falhou foi a tradução do nome em número, que é papel do DNS.",
+       "conceito": "dns.falha",
+       "dificuldade": 3
       }
      ],
      "chamado": "dns"
@@ -8369,11 +8515,11 @@
          "pergunta": "Como a informação viaja pela rede?",
          "certa": "Em forma de zeros e uns (bits)",
          "erradas": [
-          "Em forma de desenhos",
-          "Em forma de cores",
-          "Em forma de papel"
+          "Em forma de desenhos e figuras",
+          "Em forma de ondas de rádio puras",
+          "Em forma de papel que viaja"
          ],
-         "explicacao": "Tudo vira bits.",
+         "explicacao": "Texto, foto, vídeo e som viram sequências de zeros e uns. Computadores só sabem trabalhar com isso.",
          "conceito": "dados.bits",
          "dificuldade": 1
         },
@@ -8381,7 +8527,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "Uma foto enviada pela rede é transformada em bits.",
          "resposta": true,
-         "explicacao": "Sim, tudo vira zeros e uns.",
+         "explicacao": "Texto, foto e vídeo viram bits para poder viajar pelos cabos e pelo ar.",
          "conceito": "dados.bits",
          "dificuldade": 1
         },
@@ -8394,7 +8540,7 @@
           "O pacote",
           "O roteador"
          ],
-         "explicacao": "O bit é a menor unidade.",
+         "explicacao": "Um bit é um único zero ou um. Muitos bits juntos formam os dados, como letras formam palavras.",
          "conceito": "dados.bits",
          "dificuldade": 2
         },
@@ -8421,14 +8567,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Em que forma uma mensagem viaja pelo cabo?",
-         "certa": "Em bits, zeros e uns",
+         "pergunta": "Um vídeo tem muito mais bits que uma mensagem de texto. O que isso significa?",
+         "certa": "Ele leva mais dados para passar pela rede",
          "erradas": [
-          "Em papel",
-          "Em ondas de voz",
-          "Em desenhos"
+          "Ele é enviado por um cabo mais grosso",
+          "Ele precisa de um roteador diferente",
+          "Ele chega sem passar pelo roteador"
          ],
-         "explicacao": "Tudo vira bits.",
+         "explicacao": "Mais bits são mais dados. Por isso vídeo pesa mais e demora mais que texto.",
          "conceito": "dados.bits",
          "dificuldade": 2
         }
@@ -8470,11 +8616,11 @@
          "pergunta": "O que é um pacote de rede?",
          "certa": "Um pedacinho dos dados com endereço de destino",
          "erradas": [
-          "Um cabo embrulhado",
-          "Uma caixa de roteador",
-          "Um programa novo"
+          "Um cabo curto usado para ligar o roteador",
+          "Uma caixa onde o roteador fica guardado",
+          "Um programa novo que instala no computador"
          ],
-         "explicacao": "Dados viajam em pacotes.",
+         "explicacao": "Dados grandes são cortados em pacotes pequenos para viajar por caminhos livres e depois serem remontados no destino.",
          "conceito": "pacotes",
          "dificuldade": 1
         },
@@ -8491,9 +8637,9 @@
          "pergunta": "Um pacote chega fora de ordem. O que acontece no destino?",
          "certa": "Os pacotes são colocados na ordem certa",
          "erradas": [
-          "O vídeo é apagado",
-          "A internet desliga",
-          "O roteador muda de cor"
+          "O vídeo inteiro é apagado e recomeça",
+          "A internet desliga até chegar o último",
+          "O roteador muda de cor e reinicia"
          ],
          "explicacao": "Na chegada eles são reorganizados.",
          "conceito": "pacotes",
@@ -8522,14 +8668,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que é um pacote?",
-         "certa": "Um pedaço dos dados com endereço de destino",
+         "pergunta": "Por que cada pacote leva o endereço de destino?",
+         "certa": "Para saber para onde ir e ser remontado",
          "erradas": [
-          "Um cabo especial",
-          "Um aplicativo",
-          "Uma senha"
+          "Para ficar mais bonito na tela",
+          "Para o cabo gastar menos energia",
+          "Para o roteador esquecer o pacote"
          ],
-         "explicacao": "Os dados viajam em pacotes.",
+         "explicacao": "Sem endereço, o pacote se perde. Com ele, cada pedacinho chega ao destino e é montado de volta.",
          "conceito": "pacotes",
          "dificuldade": 2
         }
@@ -8571,19 +8717,19 @@
          "pergunta": "O que mede a banda da internet?",
          "certa": "A quantidade de dados que passa por segundo",
          "erradas": [
-          "A cor do roteador",
-          "O tamanho do cabo",
-          "O número de aparelhos"
+          "O tamanho do cabo que liga ao roteador",
+          "O número de aparelhos ligados ao mesmo tempo",
+          "A cor das luzes acesas no seu roteador"
          ],
-         "explicacao": "Banda é a velocidade.",
+         "explicacao": "Banda é a quantidade de dados por segundo, medida em Mb/s. Quanto maior, mais dados passam ao mesmo tempo.",
          "conceito": "banda.latencia",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Um ping alto significa mais atraso na conexão.",
-         "resposta": true,
-         "explicacao": "Ping baixo é melhor para jogos e chamadas.",
+         "pergunta": "Um ping alto é bom para jogar online, porque significa resposta rápida.",
+         "resposta": false,
+         "explicacao": "Ping alto é muito atraso. Para jogar e fazer chamadas, o melhor é o ping baixo.",
          "conceito": "banda.latencia",
          "dificuldade": 1
         },
@@ -8623,16 +8769,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que mede o ping?",
-         "certa": "O atraso (latência) da conexão",
+         "pergunta": "Sua banda é enorme, mas o jogo online ainda tem atraso. O que faltou?",
+         "certa": "Menos latência (ping mais baixo)",
          "erradas": [
-          "A cor do Wi-Fi",
-          "O tamanho do arquivo",
-          "A senha"
+          "Mais banda ainda, que sempre resolve",
+          "Um cabo mais grosso, apenas",
+          "Mais pacotes enviados de uma vez"
          ],
-         "explicacao": "Ping baixo significa pouco atraso.",
+         "explicacao": "Banda é quanto passa por segundo; latência é o tempo de ida e volta. Jogo online depende mais de latência baixa do que de banda.",
          "conceito": "banda.latencia",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -8673,6 +8819,19 @@
        ],
        "explicacao": "Os pacotes são remontados na ordem certa.",
        "conceito": "pacotes"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Dois amigos têm 100 Mb/s de banda. Um joga com ping de 15 ms e o outro com 150 ms. Quem vai sentir menos atraso?",
+       "certa": "O de 15 ms, porque a latência é menor",
+       "erradas": [
+        "O de 150 ms, porque o ping é maior",
+        "Os dois igual, pois a banda é a mesma",
+        "Nenhum, pois ping não mede atraso"
+       ],
+       "explicacao": "Banda igual não quer dizer atraso igual. Quem manda no atraso é a latência, que o ping mede.",
+       "conceito": "banda.latencia",
+       "dificuldade": 3
       }
      ],
      "chamado": "lenta"
@@ -8722,19 +8881,19 @@
          "pergunta": "Qual equipamento liga vários computadores por cabo na mesma rede?",
          "certa": "Switch",
          "erradas": [
-          "Mouse",
-          "Webcam",
-          "Pen drive"
+          "Modem do provedor",
+          "Repetidor de sinal",
+          "Placa de vídeo"
          ],
-         "explicacao": "O switch cria várias portas de rede.",
+         "explicacao": "O switch tem várias portas de rede e organiza a conversa entre os aparelhos ligados por cabo.",
          "conceito": "equip.switch",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O switch envia os dados apenas para o aparelho que precisa receber.",
-         "resposta": true,
-         "explicacao": "Ele é eficiente: não grita para todo mundo.",
+         "pergunta": "O switch envia cada dado para todos os aparelhos ao mesmo tempo, como um megafone.",
+         "resposta": false,
+         "explicacao": "O switch manda os dados só para o aparelho que precisa receber. Por isso a rede fica mais eficiente.",
          "conceito": "equip.switch",
          "dificuldade": 1
         },
@@ -8747,7 +8906,7 @@
           "Um relógio",
           "Um monitor extra"
          ],
-         "explicacao": "O switch dá portas para muitos aparelhos.",
+         "explicacao": "O switch dá portas para ligar muitos aparelhos por cabo na mesma rede, como uma extensão com inteligência.",
          "conceito": "equip.switch",
          "dificuldade": 2
         },
@@ -8768,20 +8927,20 @@
            "direita": "Recebe a internet do provedor"
           }
          ],
-         "explicacao": "Cada um tem seu papel.",
+         "explicacao": "O switch liga os aparelhos por cabo, o roteador leva a rede à internet e o modem recebe a internet do provedor.",
          "conceito": "equip.switch",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual equipamento liga vários aparelhos por cabo na mesma rede?",
-         "certa": "Switch",
+         "pergunta": "Qual é a diferença mais simples entre o switch e o roteador?",
+         "certa": "Switch liga aparelhos; roteador liga à internet",
          "erradas": [
-          "Mouse",
-          "Webcam",
-          "Teclado"
+          "O switch é só para Wi-Fi; o roteador, só para cabo",
+          "O switch cria a internet; o roteador a recebe",
+          "Os dois fazem exatamente a mesma coisa"
          ],
-         "explicacao": "O switch tem várias portas.",
+         "explicacao": "O switch liga os aparelhos entre si. O roteador liga a rede à internet e reparte o acesso.",
          "conceito": "equip.switch",
          "dificuldade": 2
         }
@@ -8883,16 +9042,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que o repetidor faz?",
-         "certa": "Repete o sinal Wi-Fi para ir mais longe",
+         "pergunta": "Já existe cabo de rede passando no quarto do fundo, mas o Wi-Fi ali é fraco. Qual é a melhor solução?",
+         "certa": "Um ponto de acesso ligado por cabo",
          "erradas": [
-          "Cria um site",
-          "Troca o IP",
-          "Aumenta a bateria"
+          "Um repetidor longe do roteador",
+          "Mais um modem na casa",
+          "Um switch no meio do caminho"
          ],
-         "explicacao": "Ele aumenta o alcance do sinal.",
+         "explicacao": "Como já há cabo, o ponto de acesso recebe a internet pelo fio e espalha um Wi-Fi forte. O repetidor só reaproveita um sinal que já está fraco.",
          "conceito": "equip.ap",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -8937,7 +9096,7 @@
           "Roteador, aparelhos, provedor, modem",
           "Modem, aparelhos, roteador, provedor"
          ],
-         "explicacao": "A internet vem do provedor até os aparelhos.",
+         "explicacao": "O caminho é uma fila: provedor, modem, roteador e aparelhos. Se um deles falha, tudo que vem depois para de funcionar.",
          "conceito": "rede.mapa",
          "dificuldade": 1
         },
@@ -8954,9 +9113,9 @@
          "pergunta": "O Wi-Fi aparece, mas nenhum site abre. Qual parte do caminho vale checar primeiro?",
          "certa": "O modem e a conexão com o provedor",
          "erradas": [
-          "O fone de ouvido",
-          "O teclado",
-          "A foto de perfil"
+          "Só o celular que está reclamando",
+          "O brilho da tela do notebook",
+          "O cabo de energia da TV"
          ],
          "explicacao": "O Wi-Fi pode existir mesmo sem internet chegando.",
          "conceito": "rede.mapa",
@@ -8985,14 +9144,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Por onde a internet passa até chegar ao seu celular?",
-         "certa": "Provedor, modem, roteador, aparelhos",
+         "pergunta": "Só o celular da sua irmã está sem internet; os outros aparelhos funcionam. Onde está o problema?",
+         "certa": "No celular dela, não na rede da casa",
          "erradas": [
-          "Aparelhos, roteador, modem, provedor",
-          "Roteador, provedor, aparelhos, modem",
-          "Modem, aparelhos, provedor, roteador"
+          "No modem da casa",
+          "No provedor da rua",
+          "No roteador, que desligou"
          ],
-         "explicacao": "Vem do provedor até os aparelhos.",
+         "explicacao": "Se os outros aparelhos navegam, provedor, modem e roteador estão bem. Falha só em um aparelho, o problema é daquele aparelho.",
          "conceito": "rede.mapa",
          "dificuldade": 2
         }
@@ -9035,6 +9194,19 @@
        ],
        "explicacao": "O ponto de acesso por cabo é mais estável que o repetidor.",
        "conceito": "equip.ap"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Em casa, o Wi-Fi existe mas nenhum aparelho navega, e o modem está com a luz de internet apagada. Onde está a falha?",
+       "certa": "Entre o provedor e o modem",
+       "erradas": [
+        "No celular de quem reclamou",
+        "No switch da sala",
+        "No teclado do PC"
+       ],
+       "explicacao": "A luz de internet apagada no modem mostra que a internet não está chegando. O roteador pode até estar criando Wi-Fi, mas sem saída.",
+       "conceito": "rede.mapa",
+       "dificuldade": 3
       }
      ],
      "chamado": "office"
@@ -9084,11 +9256,11 @@
          "pergunta": "Celular conectado ao fone por Bluetooth forma qual tipo de rede?",
          "certa": "PAN (rede pessoal)",
          "erradas": [
-          "WAN",
-          "MAN",
-          "Internet"
+          "WAN (rede de longa distância)",
+          "MAN (rede de uma cidade)",
+          "Internet (rede do mundo todo)"
          ],
-         "explicacao": "É uma rede bem pequena, em volta de você.",
+         "explicacao": "PAN é a rede pessoal, de poucos metros em volta de você: celular com fone Bluetooth, relógio com celular.",
          "conceito": "rede.alcance",
          "dificuldade": 1
         },
@@ -9096,7 +9268,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "O Wi-Fi do apartamento é um exemplo de LAN.",
          "resposta": true,
-         "explicacao": "Sim, é uma rede local.",
+         "explicacao": "A LAN é a rede de um lugar só, como um apartamento, uma escola ou um escritório.",
          "conceito": "rede.alcance",
          "dificuldade": 1
         },
@@ -9106,8 +9278,8 @@
          "certa": "LAN",
          "erradas": [
           "PAN",
-          "Elas têm o mesmo tamanho",
-          "Nenhuma tem tamanho"
+          "Os dois têm o mesmo tamanho",
+          "Depende da marca do aparelho"
          ],
          "explicacao": "A LAN cobre um local inteiro. A PAN é bem menor.",
          "conceito": "rede.alcance",
@@ -9144,14 +9316,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "A rede entre celular e fone Bluetooth é uma...",
-         "certa": "PAN",
+         "pergunta": "O notebook usa o Wi-Fi do escritório e, ao mesmo tempo, um fone Bluetooth. Quantos tipos de rede ele usa?",
+         "certa": "Dois: uma PAN e uma LAN",
          "erradas": [
-          "WAN",
-          "MAN",
-          "Internet"
+          "Um só, a LAN",
+          "Dois, e os dois são LAN",
+          "Só a internet, e mais nada"
          ],
-         "explicacao": "É uma rede pessoal.",
+         "explicacao": "O fone Bluetooth forma uma rede pessoal (PAN) e o Wi-Fi do escritório forma uma rede local (LAN).",
          "conceito": "rede.alcance",
          "dificuldade": 2
         }
@@ -9204,11 +9376,11 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "A MAN cobre uma cidade.",
-         "resposta": true,
-         "explicacao": "É isso: Metropolitan Area Network.",
+         "pergunta": "A internet é a maior LAN do mundo.",
+         "resposta": false,
+         "explicacao": "LAN é a rede de um lugar só. A internet liga redes do mundo todo: ela é a maior WAN.",
          "conceito": "rede.man.wan",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -9250,14 +9422,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "A WAN cobre...",
-         "certa": "Grandes distâncias, como cidades ou países",
+         "pergunta": "Uma rede liga a prefeitura às escolas da mesma cidade. Qual é a melhor descrição?",
+         "certa": "MAN, uma rede de cidade",
          "erradas": [
-          "Uma mesa",
-          "Um bolso",
-          "Uma sala"
+          "PAN, uma rede pessoal",
+          "LAN, a rede de uma sala",
+          "WAN, que liga países"
          ],
-         "explicacao": "WAN é a rede de longa distância.",
+         "explicacao": "A MAN cobre uma cidade. A LAN é menor, de um lugar só, e a WAN cobre distâncias muito maiores.",
          "conceito": "rede.man.wan",
          "dificuldade": 2
         }
@@ -9300,10 +9472,10 @@
          "certa": "Todos a um aparelho central",
          "erradas": [
           "Um no outro, em fila",
-          "Sem nenhuma ligação",
+          "Cada um fica sozinho, sem ligação",
           "Só por Bluetooth"
          ],
-         "explicacao": "O centro liga todo mundo.",
+         "explicacao": "Na estrela, todos os aparelhos ligam num ponto central, como o switch ou o roteador.",
          "conceito": "rede.topologia",
          "dificuldade": 1
         },
@@ -9351,6 +9523,10 @@
           {
            "texto": "É comum em casas e escritórios",
            "categoria": "Verdade"
+          },
+          {
+           "texto": "Os aparelhos se ligam um no outro, em fila",
+           "categoria": "Mito"
           }
          ],
          "explicacao": "Na estrela, um cabo com problema só afeta um aparelho.",
@@ -9359,16 +9535,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Na rede em estrela, o que fica no centro?",
-         "certa": "Um aparelho central, como o roteador ou o switch",
+         "pergunta": "Em uma rede em estrela, o switch do centro queima. O que acontece?",
+         "certa": "Os aparelhos ligados a ele ficam sem rede",
          "erradas": [
-          "Um computador qualquer",
-          "Um cabo único",
-          "Nada"
+          "Só um aparelho perde a rede, os outros seguem",
+          "Nada acontece, eles passam a se ligar entre si",
+          "Só o Wi-Fi para, os cabos seguem funcionando"
          ],
-         "explicacao": "Todos ligam no centro.",
+         "explicacao": "Na estrela, um cabo ruim derruba só um aparelho, mas o aparelho central é o ponto frágil: se ele falha, quem depende dele perde a rede.",
          "conceito": "rede.topologia",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -9409,6 +9585,19 @@
        ],
        "explicacao": "WAN cobre grandes distâncias.",
        "conceito": "rede.man.wan"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Uma loja tem 3 filiais em cidades diferentes ligadas por uma rede. Dentro de cada filial, as máquinas formam o quê?",
+       "certa": "Uma LAN em cada filial",
+       "erradas": [
+        "Uma PAN em cada filial",
+        "Uma única LAN para as três",
+        "Uma MAN dentro de cada sala"
+       ],
+       "explicacao": "Cada filial tem a sua rede local (LAN). A rede que liga as filiais de cidades diferentes é uma WAN.",
+       "conceito": "rede.alcance",
+       "dificuldade": 3
       }
      ]
     },
@@ -9457,11 +9646,11 @@
          "pergunta": "Por que o Wi-Fi da casa deve ter senha?",
          "certa": "Para impedir que desconhecidos usem a sua rede",
          "erradas": [
-          "Para a internet ficar mais bonita",
-          "Para o roteador gastar menos",
-          "Para os sites abrirem mais rápido"
+          "Para deixar a internet mais bonita e leve",
+          "Para o roteador gastar menos energia elétrica",
+          "Para os sites abrirem mais rápido no celular"
          ],
-         "explicacao": "A senha protege a rede.",
+         "explicacao": "Sem senha, qualquer vizinho poderia usar a sua internet e até ver o que passa pela rede.",
          "conceito": "seg.senha",
          "dificuldade": 1
         },
@@ -9517,14 +9706,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é a senha de Wi-Fi mais forte?",
-         "certa": "Uma frase longa com números",
+         "pergunta": "Seu vizinho usa o nome do cachorro e o ano de nascimento como senha. O que você sugere?",
+         "certa": "Trocar por uma frase longa e esquisita",
          "erradas": [
-          "12345678",
-          "Seu nome",
-          "A data de aniversário"
+          "Manter, porque é fácil de lembrar",
+          "Só acrescentar um ponto no fim",
+          "Usar a data de aniversário no lugar"
          ],
-         "explicacao": "Longa e imprevisível é melhor.",
+         "explicacao": "Nomes e datas são os primeiros chutes de quem tenta invadir. Uma frase longa, com números, é difícil de adivinhar e ainda dá para lembrar.",
          "conceito": "seg.senha",
          "dificuldade": 2
         }
@@ -9566,11 +9755,11 @@
          "pergunta": "O que o cadeado no navegador indica?",
          "certa": "Que a conexão com o site é protegida",
          "erradas": [
-          "Que o site é de graça",
-          "Que o site é famoso",
-          "Que o site é rápido"
+          "Que o site é gratuito para todo mundo",
+          "Que o site é muito famoso na internet",
+          "Que o site abre mais rápido que os outros"
          ],
-         "explicacao": "O HTTPS protege a conversa.",
+         "explicacao": "HTTPS e o cadeado indicam que a conversa entre você e o site é protegida contra espiões.",
          "conceito": "seg.https",
          "dificuldade": 1
         },
@@ -9591,7 +9780,7 @@
           "banco.com.br sem cadeado",
           "um site com alerta de insegurança"
          ],
-         "explicacao": "HTTPS é a versão protegida.",
+         "explicacao": "O S de HTTPS significa seguro: a conversa com o site viaja protegida, ao contrário do http simples.",
          "conceito": "seg.https",
          "dificuldade": 2
         },
@@ -9618,16 +9807,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que o cadeado do site indica?",
-         "certa": "A conexão é protegida (HTTPS)",
+         "pergunta": "Um site tem cadeado, mas o link chegou numa mensagem prometendo um prêmio. O que fazer?",
+         "certa": "Desconfiar mesmo com cadeado",
          "erradas": [
-          "O site é gratuito",
-          "O site é novo",
-          "O site é lento"
+          "Confiar, porque o cadeado garante tudo",
+          "Digitar só uma senha antiga",
+          "Mandar o link aos amigos para testar"
          ],
-         "explicacao": "HTTPS protege a conversa.",
+         "explicacao": "O cadeado protege a conversa com o site, mas não prova que o site é honesto. Link de prêmio inesperado costuma ser golpe.",
          "conceito": "seg.https",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -9727,16 +9916,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é um bom hábito de segurança?",
-         "certa": "Manter o celular atualizado",
+         "pergunta": "Você precisa pagar uma conta no café. Qual é a escolha mais segura?",
+         "certa": "Usar o 4G ou 5G do celular",
          "erradas": [
-          "Clicar em links desconhecidos",
-          "Usar uma senha só",
-          "Aceitar qualquer convite"
+          "Entrar no Wi-Fi livre do café mesmo",
+          "Pedir ao atendente para digitar por você",
+          "Usar o mesmo login em outro celular"
          ],
-         "explicacao": "Atualizações corrigem falhas.",
+         "explicacao": "No Wi-Fi público, outras pessoas podem espionar o que passa pela rede. O 4G ou 5G do celular é uma conexão só sua.",
          "conceito": "seg.habitos",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -9777,6 +9966,19 @@
        ],
        "explicacao": "Sem proteção, evite dados sensíveis.",
        "conceito": "seg.https"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você recebe um aviso do banco por mensagem, com link e cadeado no site. A mensagem pede sua senha. O que fazer?",
+       "certa": "Não passar a senha; abrir o app ou o site do banco por conta própria",
+       "erradas": [
+        "Digitar a senha, porque tem cadeado",
+        "Responder com a senha e o número do cartão",
+        "Encaminhar a mensagem a um amigo"
+       ],
+       "explicacao": "Banco de verdade não pede senha por mensagem. Entre sempre digitando o endereço ou usando o aplicativo oficial.",
+       "conceito": "seg.habitos",
+       "dificuldade": 3
       }
      ]
     }
