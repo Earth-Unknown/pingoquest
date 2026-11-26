@@ -1,5 +1,9 @@
 # Pingo Quest
 
+> **Endereço oficial: https://pingoquest.web.app** (Firebase Hosting). É este o link para divulgar: tem o login com Google ou convidado e a API do app.
+>
+> O GitHub Pages (`earth-unknown.github.io/pingoquest`) continua no ar como **reserva**, com o mesmo jogo. O progresso de cada pessoa fica guardado no navegador, separado em cada endereço, então quem alterna entre os dois não vê o mesmo progresso. Ver `docs/hospedagem.md`.
+
 Jogo gamificado de estudo de Redes de Computadores, com o mascote Pingo (um robô roteador).
 Arquivo único (`index.html`, HTML/CSS/JS), pensado para celular. O progresso fica no `localStorage` (`pingoquest-v3`).
 

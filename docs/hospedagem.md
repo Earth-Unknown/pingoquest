@@ -1,5 +1,10 @@
 # Hospedagem do Pingo Quest (Firebase Hosting + Cloudflare)
 
+## Qual endereço divulgar
+- **Oficial: https://pingoquest.web.app** (Firebase Hosting). Tem o login (Google ou convidado) e a API em `/api/**`. Divulgue este.
+- **Reserva: https://earth-unknown.github.io/pingoquest** (GitHub Pages). Mesmo jogo, sem API. Não divulgue: o progresso fica no navegador de cada endereço e não passa de um para o outro.
+- Os dois são atualizados juntos a cada merge na `main` (ver "Publicação automática" abaixo).
+
 O site é estático (o app React compilado). Não precisa de servidor, então Firebase Hosting serve direto, sem Cloud Run.
 
 - `/` é o **app React** (pasta `app/`), a versão principal.
