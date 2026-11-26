@@ -114,7 +114,9 @@
          "conceito": "rede.def",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "o que é uma rede de computadores.",
+       "pratica": "o celular e a TV da sua casa só conversam porque estão na mesma rede do roteador."
       },
       {
        "nome": "Para que serve",
@@ -227,7 +229,9 @@
          "conceito": "rede.uso",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "para que serve uma rede.",
+       "pratica": "uma impressora na rede serve a vários aparelhos, em vez de ficar presa a um só computador."
       },
       {
        "nome": "Quem entra na rede",
@@ -348,7 +352,9 @@
          "conceito": "rede.host",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "o que é um host e quem pode ser um.",
+       "pratica": "ao ver a lista de aparelhos conectados no roteador, cada item ali é um host da sua rede."
       }
      ],
      "extras": [
@@ -401,7 +407,9 @@
        "conceito": "rede.uso",
        "dificuldade": 3
       }
-     ]
+     ],
+     "sabe": "o que é uma rede e por que ela existe.",
+     "pratica": "quando você divide a internet ou a impressora com a família, é uma rede de casa que faz isso funcionar."
     },
     {
      "lugar": "Casa do Pingo",
@@ -523,7 +531,9 @@
          "conceito": "lan",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "o que é uma rede local (LAN).",
+       "pratica": "no escritório, os computadores trocam arquivos pela LAN mesmo que a internet esteja fora do ar."
       },
       {
        "nome": "O roteador",
@@ -624,7 +634,9 @@
          "conceito": "equip.roteador",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "o que o roteador faz na sua casa.",
+       "pratica": "reiniciar o roteador faz sentido quando o Wi-Fi some, porque é ele que reparte a internet."
       },
       {
        "nome": "O modem",
@@ -725,7 +737,9 @@
          "conceito": "equip.modem",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "o que o modem faz e como ele se liga ao roteador.",
+       "pratica": "ao trocar de provedor, você entende por que um aparelho só pode fazer o papel de modem e roteador."
       }
      ],
      "extras": [
@@ -778,7 +792,9 @@
        "conceito": "lan",
        "dificuldade": 3
       }
-     ]
+     ],
+     "sabe": "como é a rede de uma casa e o papel do roteador e do modem.",
+     "pratica": "se a internet cair em casa, você sabe separar o que é do modem, o que é do roteador e o que é dos aparelhos."
     },
     {
      "lugar": "Posto de Cabos",
@@ -896,7 +912,9 @@
          "conceito": "meio.transmissao",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como o cabo de rede liga um aparelho ao roteador.",
+       "pratica": "para uma videochamada importante, ligar o notebook por cabo costuma dar uma conexão mais estável."
       },
       {
        "nome": "Wi-Fi",
@@ -1005,7 +1023,9 @@
          "conceito": "meio.wifi",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como o Wi-Fi funciona e por que o sinal enfraquece.",
+       "pratica": "se o sinal está fraco no quarto, aproximar-se do roteador ou tirar paredes do caminho ajuda."
       },
       {
        "nome": "Fibra óptica",
@@ -1122,7 +1142,9 @@
          "conceito": "meio.fibra",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "o que é a fibra óptica e por que ela é rápida.",
+       "pratica": "ao contratar internet, você entende por que uma oferta de fibra tende a ser mais veloz."
       }
      ],
      "extras": [
@@ -1176,7 +1198,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "wifi"
+     "chamado": "wifi",
+     "sabe": "quando usar cabo, Wi-Fi ou fibra e o que muda em cada um.",
+     "pratica": "você escolhe cabo para o PC de jogo ou de trabalho e Wi-Fi para o celular, sabendo o motivo."
     },
     {
      "lugar": "Porto da Internet",
@@ -1294,7 +1318,9 @@
          "conceito": "internet",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "por que a internet é chamada de rede de redes.",
+       "pratica": "a sua rede de casa é só uma entre milhões que, ligadas, formam a internet."
       },
       {
        "nome": "O provedor",
@@ -1395,7 +1421,9 @@
          "conceito": "isp",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "o que é um provedor de internet.",
+       "pratica": "quando a internet cai em toda a casa, o problema pode estar no provedor, e não no seu aparelho."
       },
       {
        "nome": "Quem pede e quem responde",
@@ -1512,7 +1540,9 @@
          "conceito": "cliente.servidor",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "quem pede e quem responde quando você abre um site.",
+       "pratica": "ao abrir um site, seu celular pede a página e um servidor em outro lugar responde."
       }
      ],
      "extras": [
@@ -1565,7 +1595,9 @@
        "conceito": "cliente.servidor",
        "dificuldade": 3
       }
-     ]
+     ],
+     "sabe": "o que é a internet, quem dá acesso a ela e como cliente e servidor conversam.",
+     "pratica": "ao abrir qualquer site, você sabe quem está pedindo, quem está respondendo e quem liga a sua casa ao resto da rede."
     },
     {
      "lugar": "Rua dos Endereços",
@@ -1675,7 +1707,9 @@
          "conceito": "ip.v4",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "o que é um endereço IP.",
+       "pratica": "para achar um aparelho na rede, como uma impressora, basta saber o IP dele."
       },
       {
        "nome": "IP de casa e IP de fora",
@@ -1785,7 +1819,9 @@
          "conceito": "ip.privado",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "a diferença entre IP privado e IP público.",
+       "pratica": "todos os aparelhos da sua casa saem para a internet com o mesmo IP público do provedor."
       },
       {
        "nome": "IP automático",
@@ -1902,7 +1938,9 @@
          "conceito": "ip.mac.dhcp",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "quem entrega o IP sozinho e o que é o MAC.",
+       "pratica": "ao entrar no Wi-Fi de um café, o roteador te dá um IP automático e você nem precisa configurar."
       }
      ],
      "extras": [
@@ -1956,7 +1994,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "print"
+     "chamado": "print",
+     "sabe": "o que é um endereço IP, como ele muda entre casa e internet e quem o entrega.",
+     "pratica": "ao olhar as configurações de rede do aparelho, você reconhece o IP e entende de onde ele veio."
     },
     {
      "lugar": "Agenda de Nomes",
@@ -2067,7 +2107,9 @@
          "conceito": "dns",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "por que os sites têm nome, mas os computadores usam números.",
+       "pratica": "digitar pingoquest.com funciona porque o DNS descobre o número por trás do nome."
       },
       {
        "nome": "A lista de contatos",
@@ -2176,7 +2218,9 @@
          "conceito": "dns.agenda",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "que o DNS funciona como a lista de contatos da internet.",
+       "pratica": "assim como você toca no nome do contato, você só digita o nome do site e o DNS acha o resto."
       },
       {
        "nome": "Quando o site não abre",
@@ -2277,7 +2321,9 @@
          "conceito": "dns.falha",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como pensar quando um site não abre.",
+       "pratica": "se só um site falha e os outros abrem, a sua internet está funcionando e o problema é outro."
       }
      ],
      "extras": [
@@ -2331,7 +2377,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "dns"
+     "chamado": "dns",
+     "sabe": "como um nome de site vira número e o que fazer quando ele não abre.",
+     "pratica": "se um site não abre, você sabe testar se é o DNS, o site ou a sua internet antes de culpar o aparelho."
     },
     {
      "lugar": "Correio de Pacotes",
@@ -2441,7 +2489,9 @@
          "conceito": "dados.bits",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "que tudo na rede vira bits, zeros e uns.",
+       "pratica": "uma foto enviada no celular chega ao destino porque virou bits no caminho."
       },
       {
        "nome": "Pacotes",
@@ -2542,7 +2592,9 @@
          "conceito": "pacotes",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como os dados são cortados em pacotes.",
+       "pratica": "se um vídeo carrega aos poucos, é porque ele chega em pacotes que são montados no destino."
       },
       {
        "nome": "Velocidade e atraso",
@@ -2643,7 +2695,9 @@
          "conceito": "banda.latencia",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "a diferença entre banda e latência.",
+       "pratica": "num jogo online, o ping alto causa atraso mesmo com uma internet de muitos Mb/s."
       }
      ],
      "extras": [
@@ -2697,7 +2751,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lenta"
+     "chamado": "lenta",
+     "sabe": "como os dados viajam em bits e pacotes e o que são banda e latência.",
+     "pratica": "ao testar a velocidade da internet, você entende o que significam os números de Mb/s e de ping."
     },
     {
      "lugar": "Central de Equipamentos",
@@ -2807,7 +2863,9 @@
          "conceito": "equip.switch",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "para que serve um switch.",
+       "pratica": "num escritório, um switch liga vários computadores por cabo na mesma rede."
       },
       {
        "nome": "Ponto de acesso e repetidor",
@@ -2916,7 +2974,9 @@
          "conceito": "equip.ap",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "a diferença entre ponto de acesso e repetidor.",
+       "pratica": "se o Wi-Fi não chega ao fundo da casa, um ponto de acesso ou um repetidor pode ajudar."
       },
       {
        "nome": "O mapa da rede",
@@ -3018,7 +3078,9 @@
          "conceito": "rede.mapa",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "a ordem do caminho da internet em casa.",
+       "pratica": "quando o Wi-Fi para, seguir a ordem provedor, modem, roteador ajuda a achar onde está a falha."
       }
      ],
      "extras": [
@@ -3072,7 +3134,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "office"
+     "chamado": "office",
+     "sabe": "o papel do switch, do ponto de acesso e do repetidor no caminho da internet.",
+     "pratica": "ao ampliar a rede de uma casa ou escritório, você escolhe o equipamento certo para cada necessidade."
     },
     {
      "lugar": "Mapa das Redes",
@@ -3190,7 +3254,9 @@
          "conceito": "rede.alcance",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "o que são PAN e LAN.",
+       "pratica": "o fone Bluetooth no celular forma uma PAN, e a sua casa forma uma LAN."
       },
       {
        "nome": "MAN e WAN",
@@ -3296,7 +3362,9 @@
          "conceito": "rede.man.wan",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "o que são MAN e WAN.",
+       "pratica": "uma empresa com filiais em várias cidades conecta suas unidades por uma WAN."
       },
       {
        "nome": "Como ligar a rede",
@@ -3409,7 +3477,9 @@
          "conceito": "rede.topologia",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "como funciona a rede em estrela.",
+       "pratica": "num escritório em estrela, se o cabo de um computador falha, só ele fica sem rede."
       }
      ],
      "extras": [
@@ -3462,7 +3532,9 @@
        "conceito": "rede.alcance",
        "dificuldade": 3
       }
-     ]
+     ],
+     "sabe": "os tipos de rede por tamanho e a forma em estrela de ligar os aparelhos.",
+     "pratica": "ao ouvir PAN, LAN, MAN ou WAN, você sabe de que tamanho de rede se está falando."
     },
     {
      "lugar": "Portão Seguro",
@@ -3580,7 +3652,9 @@
          "conceito": "seg.senha",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "por que o Wi-Fi precisa de uma senha longa.",
+       "pratica": "trocar a senha padrão do Wi-Fi impede que vizinhos usem a sua internet."
       },
       {
        "nome": "O cadeado do site",
@@ -3681,7 +3755,9 @@
          "conceito": "seg.https",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "o que o cadeado e o HTTPS significam num site.",
+       "pratica": "antes de digitar o cartão numa loja online, você confere se o endereço tem HTTPS e o cadeado."
       },
       {
        "nome": "Hábitos seguros",
@@ -3790,7 +3866,9 @@
          "conceito": "seg.habitos",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "quais hábitos deixam a rede mais segura.",
+       "pratica": "num aeroporto, você evita digitar senhas no Wi-Fi aberto e desconfia de links estranhos."
       }
      ],
      "extras": [
@@ -3843,7 +3921,9 @@
        "conceito": "seg.habitos",
        "dificuldade": 3
       }
-     ]
+     ],
+     "sabe": "como proteger a rede e a conversa com os sites com hábitos simples.",
+     "pratica": "você protege a sua rede e os seus dados no dia a dia, em casa, no trabalho e em Wi-Fi público."
     }
    ]
   }

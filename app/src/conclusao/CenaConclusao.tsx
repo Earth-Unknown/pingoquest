@@ -50,6 +50,7 @@ export function CenaConclusao(p: ConclusaoProps) {
   // origem da peça: ao lado do Pingo (acima da invenção), em px relativos ao encaixe
   const dx0 = dim.w * 0.5 + dim.w * 0.3 - (alvo.x / 100) * dim.w
   const dy0 = -dim.h * 0.28 - (alvo.y / 100) * dim.h
+  const lado = p.indice === 0 || p.indice >= 3
   const modulo = p.invencao.modulos[p.indice]?.nome ?? ''
   const humor = p.repeticao ? 'wink' : fase >= 3 ? 'cheer' : fase >= 1 ? 'wink' : 'think'
   const pulinho = (fase === 1 || (fase === 3 && !p.repeticao)) && !pulou
@@ -84,7 +85,7 @@ export function CenaConclusao(p: ConclusaoProps) {
 
         <motion.div aria-label={`Ganhou ${p.xp} de energia${p.chips > 0 ? ` e ${p.chips} chips` : ''}`} initial={false}
           animate={fase >= FINAL ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }} transition={suave(0, 0.3)}
-          style={{ position: 'absolute', left: (p.indice >= 3 ? alvo.x + 26 : alvo.x) + '%', top: (p.indice >= 3 ? alvo.y - 2 : Math.max(2, alvo.y - 20)) + '%', transform: p.indice >= 3 ? 'translate(-50%,-50%)' : 'translate(-50%,-50%)',
+          style={{ position: 'absolute', left: (lado ? alvo.x + 27 : alvo.x) + '%', top: (lado ? alvo.y - 2 : Math.max(2, alvo.y - 20)) + '%', transform: p.indice >= 3 ? 'translate(-50%,-50%)' : 'translate(-50%,-50%)',
             display: 'flex', gap: 6, pointerEvents: 'none', fontWeight: 900, fontSize: 13, whiteSpace: 'nowrap' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, color: '#ffb800', background: 'var(--surface,#fff)', borderRadius: 99, padding: '2px 8px 2px 5px', boxShadow: '0 1px 4px rgba(26,16,72,.18)' }}>
             <span className="cc-ic" style={{ width: 14, height: 14 }} dangerouslySetInnerHTML={{ __html: (art as any).IC.bolt }} />{p.xp}</span>
