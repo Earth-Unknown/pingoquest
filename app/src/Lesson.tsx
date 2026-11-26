@@ -9,6 +9,8 @@ import { sfx, buzz } from './lib/sound'
 import { collect } from './lib/collect'
 import { confetti, enter, riseIn, ResultTiles, motion } from './Fx'
 import { HeartsRow, HEART_ICON } from './Hearts'
+import { CenaConclusao } from './conclusao/CenaConclusao'
+import { ESTACAO_PINGO } from './conclusao/contrato'
 
 type Item=Q&{src:Q;opts?:{t:string;c:boolean}[];left?:{id:number;t:string}[];right?:{id:number;t:string}[];ci?:{id:number;t:string;c:number}[]}
 const prep=(q:Q):Item=>{
@@ -21,7 +23,7 @@ const prep=(q:Q):Item=>{
 
 /** conhecimento por assunto (usado para priorizar o que está frágil nos eventos) */
 const know=(s:any,q:Q,good:boolean)=>{if(!q.cid)return;s.know=s.know||{};const k=s.know[q.cid]||(s.know[q.cid]={ok:0,bad:0,seen:0,last:''});if(good)k.ok++;else k.bad++}
-export type Result={xp:number;gems:number;acc:number;perfect:boolean;hearts?:{from:number;gain:number}}
+export type Result={xp:number;gems:number;first?:boolean;acc:number;perfect:boolean;hearts?:{from:number;gain:number}}
 /** Vidas que o treino devolve (o limite é 5) */
 const PRACTICE_HEARTS=3
 export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];kind:'phase'|'boss'|'review'|'event'|'practice';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
@@ -94,7 +96,7 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
     }
     let first=false,xp=10,gems=0,hFrom=0,hGain=0
     const perfect=miss===0&&!free
-    sfx('win');confetti()
+    if(kind!=='phase'){sfx('win');confetti()}
     patchSave(s=>{
       const d=day(s)
       if(free){xp=kind==='practice'?5:8;if(kind==='practice'){hFrom=s.hearts??5;hGain=Math.max(0,Math.min(PRACTICE_HEARTS,5-hFrom));s.hearts=hFrom+hGain}}
@@ -108,7 +110,7 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
       d.xp+=xp;s.xp=(s.xp||0)+xp;s.gems=(s.gems??50)+gems
       wkAdd(s,xp);touchStreak(s);cqSync(s)
     })
-    setRes({xp,gems,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect,hearts:kind==='practice'?{from:hFrom,gain:hGain}:undefined})
+    setRes({xp,gems,first,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect,hearts:kind==='practice'?{from:hFrom,gain:hGain}:undefined})
   }
 
   const pct=Math.round(Math.min(right,base)/base*100)
@@ -149,6 +151,9 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
     <HeartsRow from={res.hearts.from} gain={res.hearts.gain}/>
     <ResultTiles tiles={[{c:'#ff4b6e',l:'Vidas',to:res.hearts.gain,prefix:'+',icon:HEART_ICON},{c:'#ffb800',l:'Energia',to:res.xp},{c:'#18b9e8',l:'Precisão',to:res.acc}]}/>
   </div></div><div className="lfoot"><button className="btn" onClick={()=>void collect(res.xp,res.gems,res.hearts?.gain).then(onClose)}>Voltar ao jogo</button></div></div></div>
+  if(res&&kind==='phase'&&!res.ev)return <CenaConclusao S={S} invencao={ESTACAO_PINGO} indice={Math.min(3,Math.max(0,parseInt(keyId.split('-')[1])||0))} repeticao={!res.first}
+    titulo={res.first?(res.perfect?'Mais uma descoberta, sem erros!':'Mais uma descoberta!'):'Estação conferida!'} subtitulo={res.first?'Uma peça de cada vez.':'Você já tinha essa peça. Bom reforço!'}
+    xp={res.xp} chips={res.gems} acertos={res.acc} onContinuar={onClose}/>
   if(res)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood="cheer"/><h1>{kind==='practice'?'Vida recuperada!':free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
     <p>{kind==='practice'?'+1 vida. Bom treino!':free?'Bom treino!':res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>
