@@ -6,3 +6,83 @@
 .pop p{font-size:13.5px;line-height:1.35;margin:0 0 8px;font-weight:600}
 .pop small{font-size:12px;margin:-3px 0 9px;font-weight:700}
 .popbtn{padding:10px 12px;font-size:13px;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.18)}
+
+/* Login (sempre roxo: os tokens escuros vêm de #login em legacy/jogo.css) */
+#login{position:fixed;inset:0;z-index:80;overflow-y:auto;display:grid;justify-items:center;color:var(--ink);font-family:var(--font);
+  background:radial-gradient(60% 40% at 50% 28%,color-mix(in srgb,var(--roxo) 55%,transparent),transparent 70%),linear-gradient(180deg,#1b0944,#12053a)}
+#login h1{margin:0;font-size:28px;line-height:1.15;font-weight:900;text-wrap:balance;outline:none}
+.lg-col{position:relative;z-index:1;width:100%;max-width:400px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;
+  padding:max(20px,env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px))}
+.lg-top{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding-block:16px;text-align:center}
+.lg-word{margin:0;color:var(--lilas);font-size:13px;font-weight:800;letter-spacing:.12em}
+.lg-sub{margin:0;color:var(--muted);font-size:16px;font-weight:700;text-wrap:pretty}
+.lg-mini{width:100%;max-width:320px;margin-top:6px}
+.lg-actions{display:flex;flex-direction:column;gap:12px}
+.lg-note{margin:0;text-align:center;color:var(--muted);font-size:14px;font-weight:700;text-wrap:pretty}
+.lg-or{margin:0;text-align:center;color:var(--muted);font-weight:800}
+.lg-legal{margin:0;text-align:center;color:var(--muted);font-size:13px;line-height:1.4;font-weight:600;text-wrap:balance}
+.lg-legal a{color:var(--lilas);font-weight:800}
+.lg-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.lg-stage{position:relative;width:176px;height:176px}
+.lg-pingo{width:176px;height:176px;animation:wbob 3.2s ease-in-out infinite}
+.lg-stage.busy .lg-pingo{animation:none}
+.lg-stage.sad{animation:lgnod .5s ease-in-out}
+.lg-sonar{position:absolute;left:68.75%;top:8.75%;width:0;height:0;pointer-events:none}
+.lg-sonar i{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border:3px solid var(--cyan);border-radius:50%;opacity:0;animation:lgsonar 3.2s ease-out infinite}
+.lg-stage.busy .lg-sonar i{animation-duration:1.2s}
+@keyframes lgsonar{0%{transform:scale(.4);opacity:.9}60%,100%{transform:scale(5);opacity:0}}
+@keyframes lgnod{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+
+.lg-bits{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.lg-bits i{position:absolute;display:block;border-radius:2px;opacity:.7;animation:lgdrift 9s ease-in-out infinite}
+.lg-bits i:nth-child(1){left:12%;top:16%;width:8px;height:8px;background:var(--ciano-neon)}
+.lg-bits i:nth-child(2){left:82%;top:22%;width:10px;height:10px;background:var(--amarelo);animation-duration:11s}
+.lg-bits i:nth-child(3){left:22%;top:44%;width:6px;height:6px;background:var(--rosa);animation-duration:7s}
+.lg-bits i:nth-child(4){left:90%;top:48%;width:7px;height:7px;background:var(--verde);animation-duration:10s}
+.lg-bits i:nth-child(5){left:8%;top:68%;width:9px;height:9px;background:var(--laranja);animation-duration:8s}
+.lg-bits i:nth-child(6){left:70%;top:72%;width:6px;height:6px;background:var(--lilas);animation-duration:9.5s}
+@keyframes lgdrift{50%{transform:translate(14px,-22px) rotate(90deg)}}
+
+/* botão do Google: segue as diretrizes de marca (fundo branco, G oficial, Roboto 500) */
+.lg-gbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:52px;padding:0 16px;border-radius:16px;
+  border:1px solid #747775;background:#fff;color:#1f1f1f;font:500 16px/1.2 Roboto,Arial,sans-serif;box-shadow:0 4px 0 #b8aedb;
+  transition:transform .08s,box-shadow .08s}
+.lg-gbtn:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.lg-gbtn:active:not([aria-disabled="true"]){transform:translateY(4px);box-shadow:0 0 0 #b8aedb}
+.lg-gbtn[aria-disabled="true"]:not([aria-busy="true"]){opacity:.5;cursor:not-allowed}
+.lg-g{flex:none;width:20px;height:20px}
+
+.lg-err{display:flex;gap:10px;align-items:flex-start;background:var(--bad-bg);color:var(--bad-ink);border:2px solid var(--bad);border-radius:14px;
+  padding:12px 14px;margin-bottom:2px;font-size:15px;font-weight:700;line-height:1.35}
+.lg-err p{margin:0}.lg-err small{display:block;margin-top:4px;font-size:12px}
+.lg-err svg{flex:none;width:22px;height:22px}
+
+.lg-skel{height:52px;margin-bottom:12px;border-radius:16px;animation:lgshim 1.4s linear infinite;background-size:300% 100%;
+  background-image:linear-gradient(90deg,var(--surface) 30%,color-mix(in srgb,var(--lilas) 22%,var(--surface)) 50%,var(--surface) 70%)}
+@keyframes lgshim{from{background-position:100% 0}to{background-position:0 0}}
+#login .btn{min-height:52px}
+#login a:focus-visible,#login .btn:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+
+@media (min-width:768px){
+  .lg-col{justify-content:center}
+  .lg-top{flex:none}
+  .lg-stage,.lg-pingo{width:200px;height:200px}
+  .lg-actions{margin-top:20px}
+}
+@media (max-height:560px) and (orientation:landscape){
+  .lg-col{max-width:720px;flex-direction:row;align-items:center;gap:24px}
+  .lg-top,.lg-actions{flex:1}
+  .lg-stage,.lg-pingo{width:96px;height:96px}
+}
+
+/* card "Salvar progresso" no Perfil */
+.lg-save-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.lg-save h2{margin:0 0 6px;font-size:20px;font-weight:900}
+.lg-save .note{margin:0}
+.lg-linked{display:flex;align-items:center;gap:10px}
+.lg-linked svg{flex:none;width:22px;height:22px}
+
+/* toast */
+.toast-wrap{position:fixed;left:0;right:0;bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:130;display:flex;justify-content:center;pointer-events:none;padding-inline:16px}
+.toast{margin:0;max-width:360px;background:var(--roxo-fundo);color:#fff;border:2px solid var(--cyan);border-radius:14px;padding:10px 14px;font-weight:800;font-size:15px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.35)}
