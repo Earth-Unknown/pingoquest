@@ -3,6 +3,7 @@ import art from './legacy/art.json'
 import { Pingo } from './Pingo'
 import type { EvRes } from './lib/events'
 import { sfx } from './lib/sound'
+import { collect } from './lib/collect'
 import { confetti, enter, popIn, ResultTiles, StarsAnim } from './Fx'
 import { pickFault, finishCase, countInspect, spend, hasLupa } from './lib/cases'
 import { shuffle } from './lib/curso'
@@ -30,7 +31,7 @@ function Result({S,p,res,again,term}:{S:any;p:CaseProps;res:Res;again?:()=>void;
     <button className="btn ghost cexp" onClick={()=>setExp(true)}>Ver explicação</button>
   </div></div><div className="lfoot"><div className="stack" style={{margin:0}}>
     {again&&<button className="btn ghost" onClick={again}>Jogar outro cenário</button>}
-    <button className="btn" onClick={p.onClose}>Continuar</button></div></div></div>
+    <button className="btn" onClick={()=>void collect(res.xp,res.gems).then(p.onClose)}>{res.xp>0?'Coletar energia':'Continuar'}</button></div></div></div>
     {exp&&<div id="modal" onClick={()=>setExp(false)}><div className="sheet tall" ref={popIn} role="dialog" aria-label="Explicação do caso" onClick={e=>e.stopPropagation()}>
       <h2 style={{margin:'0 0 8px'}}>Entenda o caso</h2>
       <p style={{margin:'0 0 8px'}}><b>{term?'Resumo':'Causa'}:</b> {res.what}.</p>

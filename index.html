@@ -56,15 +56,15 @@
           "Um aplicativo de mensagens",
           "Um modelo de computador"
          ],
-         "explicacao": "Linux é um sistema operacional, como Windows e macOS, mas livre.",
+         "explicacao": "O Linux é o sistema operacional que faz o computador funcionar. Ele é livre: o código é aberto a quem quiser estudar ou melhorar.",
          "conceito": "linux.def",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O Linux é um sistema operacional.",
-         "resposta": true,
-         "explicacao": "Ele controla o computador e liga os programas às peças.",
+         "pergunta": "O Linux só funciona em servidores: não existe em celulares nem em roteadores.",
+         "resposta": false,
+         "explicacao": "O Linux roda em servidores, em celulares Android, em roteadores e até em carros.",
          "conceito": "linux.def",
          "dificuldade": 1
         },
@@ -73,9 +73,9 @@
          "pergunta": "Qual é o papel de um sistema operacional?",
          "certa": "Fazer a ponte entre os programas e o hardware",
          "erradas": [
-          "Só guardar fotos",
-          "Dar internet sozinho",
-          "Esfriar o processador"
+          "Guardar todas as fotos e documentos do usuário",
+          "Dar acesso à internet sem precisar de rede",
+          "Esfriar o processador quando ele esquenta"
          ],
          "explicacao": "Sem ele, os programas não conseguem usar as peças.",
          "conceito": "linux.def",
@@ -104,14 +104,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual destes é o núcleo do Linux?",
-         "certa": "O kernel",
+         "pergunta": "Um celular Android, um servidor e um roteador rodam Linux. O que os três têm em comum?",
+         "certa": "O mesmo tipo de sistema operacional",
          "erradas": [
-          "O teclado",
-          "O monitor",
-          "O roteador"
+          "O mesmo fabricante de peças",
+          "O mesmo tamanho de tela",
+          "O mesmo tipo de conexão de rede"
          ],
-         "explicacao": "Kernel quer dizer núcleo.",
+         "explicacao": "O Linux está por trás de muita coisa. O que muda de um aparelho para outro é a versão e os programas.",
          "conceito": "linux.def",
          "dificuldade": 2
         }
@@ -153,9 +153,9 @@
          "pergunta": "O que significa o código do Linux ser aberto?",
          "certa": "Qualquer pessoa pode ler e estudar o código",
          "erradas": [
-          "Só a empresa dona pode ver",
-          "O código fica escondido",
-          "Ele só funciona sem internet"
+          "Só a empresa dona do sistema pode ver o código",
+          "O código fica escondido dentro de um cofre",
+          "Ele só funciona se o computador estiver sem internet"
          ],
          "explicacao": "Aberto quer dizer que o código pode ser visto por todos.",
          "conceito": "linux.livre",
@@ -174,9 +174,9 @@
          "pergunta": "Quem ajuda a melhorar o Linux?",
          "certa": "Uma comunidade de pessoas e empresas do mundo todo",
          "erradas": [
-          "Só uma única empresa",
-          "Apenas robôs",
-          "Ninguém, ele nunca muda"
+          "Uma única empresa, dona exclusiva do sistema",
+          "Robôs que reescrevem o código sozinhos",
+          "Ninguém: o código nunca muda depois de pronto"
          ],
          "explicacao": "É um trabalho em comunidade.",
          "conceito": "linux.livre",
@@ -205,6 +205,10 @@
           {
            "texto": "A comunidade revisa o código",
            "categoria": "Código aberto"
+          },
+          {
+           "texto": "Ninguém de fora pode propor mudanças",
+           "categoria": "Código fechado"
           }
          ],
          "explicacao": "No aberto todos veem; no fechado só a dona.",
@@ -213,16 +217,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que é o código-fonte?",
-         "certa": "As instruções escritas por quem programa",
+         "pergunta": "Uma empresa vende suporte para uma distribuição Linux livre. Isso é permitido?",
+         "certa": "Sim, livre não significa de graça para sempre",
          "erradas": [
-          "A senha do administrador",
-          "O cabo do servidor",
-          "A tela de login"
+          "Não, software livre nunca pode ser vendido",
+          "Não, só a comunidade pode cobrar por ele",
+          "Sim, mas só se o código ficar escondido"
          ],
-         "explicacao": "É a receita que vira o programa.",
+         "explicacao": "Livre fala de liberdade para usar, estudar e melhorar o código. Empresas ganham dinheiro com suporte, treinamento e serviços.",
          "conceito": "linux.livre",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -262,19 +266,19 @@
          "pergunta": "O que é uma distribuição Linux?",
          "certa": "O Linux junto com programas, formando um sistema pronto",
          "erradas": [
-          "Um cabo de rede",
-          "Um tipo de processador",
-          "Uma senha"
+          "Um modelo de processador feito para servidores Linux",
+          "Uma senha especial usada para instalar o Linux",
+          "Um cabo de rede usado para ligar servidores"
          ],
-         "explicacao": "Distro é o pacote completo.",
+         "explicacao": "Distro é o pacote completo: o núcleo Linux mais programas, visual e instalador. Ubuntu, Debian e Fedora são exemplos.",
          "conceito": "linux.distro",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Ubuntu e Debian são distribuições Linux.",
-         "resposta": true,
-         "explicacao": "Os dois são distros muito usadas.",
+         "pergunta": "Ubuntu é um sistema operacional diferente do Linux, sem nada em comum com ele.",
+         "resposta": false,
+         "explicacao": "O Ubuntu é uma distribuição: usa o núcleo Linux e junta programas, visual e instalador.",
          "conceito": "linux.distro",
          "dificuldade": 1
         },
@@ -313,15 +317,31 @@
          "dificuldade": 1
         },
         {
-         "tipo": "escolha",
-         "pergunta": "Você instalou o Ubuntu no computador. O que você instalou?",
-         "certa": "Uma distribuição Linux",
-         "erradas": [
-          "Um roteador",
-          "Um navegador",
-          "Um antivírus"
+         "tipo": "classificar",
+         "pergunta": "Kernel ou distribuição?",
+         "categorias": [
+          "Kernel",
+          "Distribuição"
          ],
-         "explicacao": "Ubuntu é uma distro.",
+         "itens": [
+          {
+           "texto": "Núcleo que conversa com o hardware",
+           "categoria": "Kernel"
+          },
+          {
+           "texto": "Kernel mais programas e instalador",
+           "categoria": "Distribuição"
+          },
+          {
+           "texto": "Ubuntu",
+           "categoria": "Distribuição"
+          },
+          {
+           "texto": "Parte que todas as distros compartilham",
+           "categoria": "Kernel"
+          }
+         ],
+         "explicacao": "O kernel é o núcleo comum a todas. A distribuição junta o kernel com programas, visual e instalador.",
          "conceito": "linux.distro",
          "dificuldade": 2
         }
@@ -361,6 +381,19 @@
        ],
        "explicacao": "O kernel Linux é a base de todas.",
        "conceito": "linux.distro",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Uma startup copia o código aberto de um programa, melhora e publica a versão nova. Isso é permitido pelo software livre?",
+       "certa": "Sim, respeitando a licença do programa",
+       "erradas": [
+        "Não, só a empresa original pode alterar o código",
+        "Não, copiar código aberto sempre é proibido",
+        "Sim, mas só com autorização de cada usuário"
+       ],
+       "explicacao": "Código aberto pode ser lido, copiado e melhorado, desde que se respeite a licença que o acompanha.",
+       "conceito": "linux.livre",
        "dificuldade": 3
       }
      ],
@@ -411,9 +444,9 @@
          "pergunta": "Para que serve o terminal?",
          "certa": "Para digitar comandos e o computador executar",
          "erradas": [
-          "Para esfriar o computador",
-          "Para desenhar imagens",
-          "Para trocar o papel de parede só"
+          "Para esfriar o computador quando ele esquenta",
+          "Para desenhar imagens e editar fotos no sistema",
+          "Para trocar o papel de parede da tela inicial"
          ],
          "explicacao": "Ele é a porta para falar com o sistema por texto.",
          "conceito": "linux.terminal",
@@ -421,9 +454,9 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O shell é o programa que entende os comandos digitados.",
-         "resposta": true,
-         "explicacao": "O bash é um shell muito usado.",
+         "pergunta": "O terminal é quem entende e executa os comandos; o shell é só a janela.",
+         "resposta": false,
+         "explicacao": "É o contrário: o terminal é a janela onde você digita, e o shell (como o bash) entende e executa o que foi digitado.",
          "conceito": "linux.terminal",
          "dificuldade": 1
         },
@@ -463,14 +496,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que o bash é?",
-         "certa": "Um shell",
+         "pergunta": "Você digita ls na janela preta. Quem entende a palavra ls e executa a ordem?",
+         "certa": "O shell",
          "erradas": [
-          "Um teclado",
-          "Uma distro",
-          "Um cabo"
+          "O teclado",
+          "O monitor",
+          "A janela do terminal"
          ],
-         "explicacao": "Bash é o shell mais comum no Linux.",
+         "explicacao": "A janela (terminal) só mostra e recebe o texto. O shell, como o bash, é quem interpreta o comando.",
          "conceito": "linux.terminal",
          "dificuldade": 2
         }
@@ -516,7 +549,7 @@
           "/home",
           "Nenhuma"
          ],
-         "explicacao": "Opções começam com traço.",
+         "explicacao": "As opções ajustam como o comando age e começam com traço. Em «ls -l», o -l pede a lista detalhada.",
          "conceito": "linux.comando",
          "dificuldade": 1
         },
@@ -524,7 +557,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "Em «ls -l /home», o argumento é /home.",
          "resposta": true,
-         "explicacao": "É o alvo do comando.",
+         "explicacao": "O argumento é o alvo do comando, aquilo em que ele age. Em «ls -l /home», o alvo é a pasta /home.",
          "conceito": "linux.comando",
          "dificuldade": 1
         },
@@ -537,13 +570,13 @@
           "pwd",
           "rm"
          ],
-         "explicacao": "ls vem de list, listar.",
+         "explicacao": "ls vem de list (listar): mostra o que há dentro da pasta. Já cd muda de pasta, pwd mostra onde você está e rm apaga.",
          "conceito": "linux.comando",
          "dificuldade": 2
         },
         {
          "tipo": "classificar",
-         "pergunta": "Nome, opção ou argumento? (em «ls -a /tmp»)",
+         "pergunta": "Nome, opção ou argumento? (em «ls -a /tmp» e «cat -n nota.txt»)",
          "categorias": [
           "Nome do comando",
           "Opção",
@@ -561,6 +594,18 @@
           {
            "texto": "/tmp",
            "categoria": "Argumento"
+          },
+          {
+           "texto": "cat",
+           "categoria": "Nome do comando"
+          },
+          {
+           "texto": "-n",
+           "categoria": "Opção"
+          },
+          {
+           "texto": "nota.txt",
+           "categoria": "Argumento"
           }
          ],
          "explicacao": "Nome, depois opções, depois o alvo.",
@@ -569,14 +614,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "No comando «cat nota.txt», o que é nota.txt?",
-         "certa": "O argumento",
+         "pergunta": "No comando «cp -r fotos backup», qual parte é a opção?",
+         "certa": "-r",
          "erradas": [
-          "A opção",
-          "O nome do comando",
-          "O shell"
+          "cp",
+          "fotos",
+          "backup"
          ],
-         "explicacao": "É o arquivo sobre o qual o comando age.",
+         "explicacao": "A opção começa com traço e muda o jeito de fazer. O nome é cp, e fotos e backup são os argumentos.",
          "conceito": "linux.comando",
          "dificuldade": 2
         }
@@ -673,9 +718,9 @@
          "pergunta": "Por que é bom prestar atenção ao # no prompt?",
          "certa": "Porque o administrador pode alterar tudo no sistema",
          "erradas": [
-          "Porque o # liga a internet",
-          "Porque o # apaga a tela",
-          "Porque indica que o computador está lento"
+          "Porque o # liga a internet quando aparece no prompt",
+          "Porque o # significa que o computador está lento",
+          "Porque o # apaga a tela se for digitado sem querer"
          ],
          "explicacao": "Quem é root tem poder total.",
          "conceito": "linux.prompt",
@@ -716,6 +761,19 @@
        "pergunta": "O prompt «root@servidor:/#» indica que você está como administrador.",
        "resposta": true,
        "explicacao": "root + # = administrador.",
+       "conceito": "linux.prompt",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O prompt mostra «root@servidor:/etc#». Onde você está e com quais poderes?",
+       "certa": "Em /etc, como administrador (root)",
+       "erradas": [
+        "Em /root, como usuário comum",
+        "Em /etc, como usuário comum",
+        "Em /servidor, como administrador"
+       ],
+       "explicacao": "Antes do @ vem o usuário (root), depois a máquina, depois a pasta (/etc). O # no fim indica administrador.",
        "conceito": "linux.prompt",
        "dificuldade": 3
       }
@@ -771,15 +829,15 @@
           "..",
           "C:"
          ],
-         "explicacao": "A raiz é só uma barra.",
+         "explicacao": "A raiz é o ponto de partida da árvore: de onde saem /home, /etc, /var e todas as outras pastas.",
          "conceito": "linux.arvore",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "No Linux existe uma única árvore de pastas, que começa na raiz.",
-         "resposta": true,
-         "explicacao": "Não há C: nem D: como no Windows.",
+         "pergunta": "No Linux, cada disco tem a sua própria letra, como C: e D:.",
+         "resposta": false,
+         "explicacao": "No Linux existe uma única árvore de pastas que começa na raiz (/). Discos extras aparecem como pastas dentro dela.",
          "conceito": "linux.arvore",
          "dificuldade": 1
         },
@@ -813,7 +871,7 @@
            "direita": "Arquivos temporários"
           }
          ],
-         "explicacao": "Cada pasta tem uma função.",
+         "explicacao": "Cada pasta tem uma função: /home guarda as pastas das pessoas, /etc as configurações e /tmp os arquivos temporários.",
          "conceito": "linux.arvore",
          "dificuldade": 1
         },
@@ -872,7 +930,7 @@
           "nota.txt",
           "../nota.txt"
          ],
-         "explicacao": "Começa com / = absoluto.",
+         "explicacao": "Caminho absoluto começa na raiz (/) e vale de qualquer lugar. Os outros partem da pasta em que você está.",
          "conceito": "linux.caminho",
          "dificuldade": 1
         },
@@ -928,16 +986,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Por que o caminho absoluto é seguro de usar?",
-         "certa": "Porque vale de qualquer pasta onde você esteja",
+         "pergunta": "Um script usa «nota.txt» e funciona na sua pasta, mas falha quando é rodado de outra pasta. O que ajuda?",
+         "certa": "Usar o caminho absoluto do arquivo",
          "erradas": [
-          "Porque é mais curto",
-          "Porque funciona só em servidores",
-          "Porque apaga o erro"
+          "Escrever o nome do arquivo em maiúsculas",
+          "Rodar o script sempre como administrador",
+          "Trocar o nome do arquivo para algo mais curto"
          ],
-         "explicacao": "Ele não depende de onde você está.",
+         "explicacao": "O caminho relativo depende de onde você está. O absoluto (como /home/aluno/nota.txt) vale de qualquer lugar.",
          "conceito": "linux.caminho",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -987,9 +1045,9 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O comando «cd ..» sobe uma pasta.",
-         "resposta": true,
-         "explicacao": ".. é a pasta de cima.",
+         "pergunta": "O comando «cd ~» leva você para a pasta de cima.",
+         "resposta": false,
+         "explicacao": "O ~ é a sua pasta pessoal. Quem sobe uma pasta é o «cd ..».",
          "conceito": "linux.atalhos",
          "dificuldade": 1
         },
@@ -1002,7 +1060,7 @@
           "cd ..",
           "cd ."
          ],
-         "explicacao": "~ é a sua casa.",
+         "explicacao": "O ~ é atalho para a sua pasta pessoal. Digitar «cd ~» leva você para casa de qualquer lugar.",
          "conceito": "linux.atalhos",
          "dificuldade": 2
         },
@@ -1023,7 +1081,7 @@
            "direita": "A pasta de cima"
           }
          ],
-         "explicacao": "Três atalhos, três lugares.",
+         "explicacao": "O ~ leva à sua pasta pessoal, o . é a pasta em que você está e o .. é a pasta de cima.",
          "conceito": "linux.atalhos",
          "dificuldade": 1
         },
@@ -1036,7 +1094,7 @@
           "/",
           "/home/aluno/docs/.."
          ],
-         "explicacao": "Subiu uma pasta.",
+         "explicacao": "O .. sobe uma pasta: de /home/aluno/docs para /home/aluno.",
          "conceito": "linux.atalhos",
          "dificuldade": 2
         }
@@ -1075,6 +1133,19 @@
        "pergunta": "Estando em /home/aluno, «cd ../..» leva até a raiz.",
        "resposta": true,
        "explicacao": "Dois níveis acima de /home/aluno é /.",
+       "conceito": "linux.atalhos",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você está em /home/aluno/docs e quer ir para /home/aluno/fotos usando caminho relativo. Qual comando serve?",
+       "certa": "cd ../fotos",
+       "erradas": [
+        "cd fotos",
+        "cd /fotos",
+        "cd ~/docs/fotos"
+       ],
+       "explicacao": "O .. sobe uma pasta (para /home/aluno) e fotos desce para a pasta irmã.",
        "conceito": "linux.atalhos",
        "dificuldade": 3
       }
@@ -1130,7 +1201,7 @@
           "cd",
           "cat"
          ],
-         "explicacao": "mkdir = make directory.",
+         "explicacao": "mkdir vem de make directory: criar diretório, que é outro nome para pasta.",
          "conceito": "linux.criar",
          "dificuldade": 1
         },
@@ -1151,7 +1222,7 @@
           "cd ideias.txt",
           "ls ideias.txt"
          ],
-         "explicacao": "touch cria o arquivo.",
+         "explicacao": "O touch cria um arquivo vazio com o nome que você der. O mkdir seria para criar uma pasta.",
          "conceito": "linux.criar",
          "dificuldade": 2
         },
@@ -1172,22 +1243,22 @@
            "direita": "Mostra o conteúdo da pasta"
           }
          ],
-         "explicacao": "Criar e conferir.",
+         "explicacao": "mkdir cria pasta, touch cria arquivo vazio e ls confere o resultado.",
          "conceito": "linux.criar",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Você criou uma pasta e quer conferir. Qual comando usa?",
-         "certa": "ls",
+         "pergunta": "Você digitou «touch Nota.txt» e depois «ls nota.txt», mas o arquivo não aparece. Por quê?",
+         "certa": "Maiúsculas e minúsculas contam no Linux",
          "erradas": [
-          "rm",
-          "mv",
-          "pwd"
+          "O touch só funciona dentro de pastas vazias",
+          "O ls esconde arquivos que acabaram de nascer",
+          "O arquivo foi enviado para a lixeira"
          ],
-         "explicacao": "ls mostra o que há na pasta atual.",
+         "explicacao": "Nota.txt e nota.txt são arquivos diferentes. O touch criou um, e o ls procurou o outro.",
          "conceito": "linux.criar",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -1231,7 +1302,7 @@
           "rm",
           "cat"
          ],
-         "explicacao": "cp = copy.",
+         "explicacao": "cp vem de copy: faz uma cópia e deixa o original onde estava.",
          "conceito": "linux.copiar",
          "dificuldade": 1
         },
@@ -1248,11 +1319,11 @@
          "pergunta": "Depois de «cp nota.txt copia.txt», quantos arquivos existem?",
          "certa": "Dois: nota.txt e copia.txt",
          "erradas": [
-          "Só copia.txt",
-          "Só nota.txt",
-          "Nenhum"
+          "Só copia.txt, pois o original some",
+          "Só nota.txt, pois a cópia não é gravada",
+          "Nenhum, o cp só prepara a cópia"
          ],
-         "explicacao": "A cópia mantém o original.",
+         "explicacao": "O cp deixa o original no lugar e cria a cópia. Por isso agora há dois arquivos.",
          "conceito": "linux.copiar",
          "dificuldade": 2
         },
@@ -1287,14 +1358,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual comando renomeia relatorio.txt para final.txt?",
-         "certa": "mv relatorio.txt final.txt",
+         "pergunta": "Você quer um backup de nota.txt antes de mexer, mantendo o original. Qual comando usa?",
+         "certa": "cp nota.txt nota-backup.txt",
          "erradas": [
-          "cp final.txt relatorio.txt",
-          "rm relatorio.txt",
-          "touch final.txt"
+          "mv nota.txt nota-backup.txt",
+          "rm nota.txt nota-backup.txt",
+          "touch nota.txt nota-backup.txt"
          ],
-         "explicacao": "mv com um novo nome renomeia.",
+         "explicacao": "O cp duplica e deixa o original. O mv tiraria nota.txt do lugar, o rm apagaria e o touch só criaria vazios.",
          "conceito": "linux.copiar",
          "dificuldade": 2
         }
@@ -1340,7 +1411,7 @@
           "cp",
           "mkdir"
          ],
-         "explicacao": "rm = remove.",
+         "explicacao": "rm vem de remove: apaga o arquivo para sempre, sem passar por lixeira.",
          "conceito": "linux.apagar",
          "dificuldade": 1
         },
@@ -1348,7 +1419,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "O que o rm apaga vai para a lixeira e pode ser restaurado.",
          "resposta": false,
-         "explicacao": "No terminal não há lixeira.",
+         "explicacao": "No terminal não existe lixeira: o que o rm apaga não volta. Por isso se confere antes.",
          "conceito": "linux.apagar",
          "dificuldade": 1
         },
@@ -1357,9 +1428,9 @@
          "pergunta": "Qual cuidado vale antes de usar rm?",
          "certa": "Conferir o nome com ls e ler o comando antes do Enter",
          "erradas": [
-          "Digitar bem rápido",
-          "Usar sempre como administrador",
-          "Apagar a pasta de cima"
+          "Digitar bem rápido para não dar tempo de errar",
+          "Usar sempre como administrador para ter permissão",
+          "Apagar a pasta de cima para limpar tudo de uma vez"
          ],
          "explicacao": "Prevenir é melhor que perder dados.",
          "conceito": "linux.apagar",
@@ -1367,7 +1438,7 @@
         },
         {
          "tipo": "ligar",
-         "pergunta": "Ligue cada comando ao que ele faz",
+         "pergunta": "Ligue cada forma de apagar ao que ela faz",
          "pares": [
           {
            "esquerda": "rm arquivo",
@@ -1382,20 +1453,20 @@
            "direita": "Confere o que existe antes de apagar"
           }
          ],
-         "explicacao": "Confira antes de apagar.",
+         "explicacao": "rm apaga arquivo, rm -r apaga pasta e tudo dentro, e ls ajuda a conferir antes de apagar.",
          "conceito": "linux.apagar",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual comando apaga a pasta «velhos» e tudo que há nela?",
-         "certa": "rm -r velhos",
+         "pergunta": "Antes de rodar «rm -r projetos», qual é o melhor hábito?",
+         "certa": "Rodar ls projetos para ver o que será apagado",
          "erradas": [
-          "rm velhos",
-          "mkdir velhos",
-          "cp velhos"
+          "Rodar o comando logo, com pressa de terminar",
+          "Dar permissão x a todos os arquivos antes",
+          "Trocar para o root antes de apagar"
          ],
-         "explicacao": "A opção -r é recursiva.",
+         "explicacao": "No terminal não existe lixeira. Conferir com ls antes evita apagar a pasta errada.",
          "conceito": "linux.apagar",
          "dificuldade": 2
         }
@@ -1435,6 +1506,19 @@
        ],
        "explicacao": "Apagou, acabou.",
        "conceito": "linux.apagar",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Depois de «mv nota.txt docs/», onde está o arquivo nota.txt?",
+       "certa": "Só em docs, sumiu do lugar antigo",
+       "erradas": [
+        "Nos dois lugares, o original e a cópia",
+        "Foi apagado do disco",
+        "Continua só na pasta atual"
+       ],
+       "explicacao": "O mv move: o arquivo muda de lugar e deixa de existir no antigo. Quem mantém o original é o cp.",
+       "conceito": "linux.copiar",
        "dificuldade": 3
       }
      ],
@@ -1489,15 +1573,15 @@
           "cd",
           "touch"
          ],
-         "explicacao": "cat exibe o arquivo.",
+         "explicacao": "cat mostra o arquivo inteiro na tela. Para arquivos longos, head e tail mostram só o começo ou o fim.",
          "conceito": "linux.ler",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O comando tail mostra as últimas linhas de um arquivo.",
-         "resposta": true,
-         "explicacao": "Muito útil para logs.",
+         "pergunta": "O comando cat mostra só a primeira linha do arquivo.",
+         "resposta": false,
+         "explicacao": "O cat mostra o arquivo inteiro. Para ver só o começo, use head.",
          "conceito": "linux.ler",
          "dificuldade": 1
         },
@@ -1536,17 +1620,33 @@
          "dificuldade": 1
         },
         {
-         "tipo": "escolha",
-         "pergunta": "Qual comando mostra as últimas linhas de um log?",
-         "certa": "tail log.txt",
-         "erradas": [
-          "head log.txt",
-          "mkdir log.txt",
-          "cd log.txt"
+         "tipo": "classificar",
+         "pergunta": "Começo ou fim do arquivo?",
+         "categorias": [
+          "Mostra o começo",
+          "Mostra o fim"
          ],
-         "explicacao": "tail mostra o fim do arquivo.",
+         "itens": [
+          {
+           "texto": "head log.txt",
+           "categoria": "Mostra o começo"
+          },
+          {
+           "texto": "tail log.txt",
+           "categoria": "Mostra o fim"
+          },
+          {
+           "texto": "head notas.txt",
+           "categoria": "Mostra o começo"
+          },
+          {
+           "texto": "tail erro.log",
+           "categoria": "Mostra o fim"
+          }
+         ],
+         "explicacao": "head mostra as primeiras linhas e tail mostra as últimas. Em logs, o tail é o mais usado.",
          "conceito": "linux.ler",
-         "dificuldade": 2
+         "dificuldade": 1
         }
        ]
       },
@@ -1586,11 +1686,11 @@
          "pergunta": "Para que serve o grep?",
          "certa": "Procurar um texto dentro de arquivos",
          "erradas": [
-          "Apagar arquivos",
-          "Mudar de pasta",
-          "Criar pastas"
+          "Apagar arquivos que ficaram velhos",
+          "Mudar de pasta sem digitar o nome",
+          "Criar pastas dentro de outras pastas"
          ],
-         "explicacao": "grep filtra linhas.",
+         "explicacao": "O grep procura um texto e mostra só as linhas que o contêm, o que ajuda muito em arquivos longos como logs.",
          "conceito": "linux.grep",
          "dificuldade": 1
         },
@@ -1598,7 +1698,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "«grep erro log.txt» mostra as linhas de log.txt que contêm a palavra erro.",
          "resposta": true,
-         "explicacao": "É exatamente isso.",
+         "explicacao": "O grep devolve apenas as linhas do arquivo que têm a palavra procurada.",
          "conceito": "linux.grep",
          "dificuldade": 1
         },
@@ -1611,13 +1711,13 @@
           "-l",
           "-x"
          ],
-         "explicacao": "-i = ignore case.",
+         "explicacao": "-i vem de ignore case: faz o grep tratar «Erro», «erro» e «ERRO» como a mesma palavra.",
          "conceito": "linux.grep",
          "dificuldade": 2
         },
         {
          "tipo": "classificar",
-         "pergunta": "Qual comando usar?",
+         "pergunta": "Qual comando resolve cada tarefa de leitura?",
          "categorias": [
           "grep",
           "wc -l",
@@ -1635,24 +1735,36 @@
           {
            "texto": "Ver o fim do arquivo",
            "categoria": "tail"
+          },
+          {
+           "texto": "Procurar a palavra erro dentro do log",
+           "categoria": "grep"
+          },
+          {
+           "texto": "Saber quantas linhas tem a lista",
+           "categoria": "wc -l"
+          },
+          {
+           "texto": "Espiar as últimas linhas do log",
+           "categoria": "tail"
           }
          ],
-         "explicacao": "Cada um com sua função.",
+         "explicacao": "grep acha linhas com uma palavra, wc -l conta quantas linhas há e tail mostra o fim do arquivo.",
          "conceito": "linux.grep",
          "dificuldade": 2
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual comando conta as linhas de log.txt?",
-         "certa": "wc -l log.txt",
+         "pergunta": "Você quer ver só as linhas com «falha» no log, sem se importar com maiúsculas. Qual comando serve?",
+         "certa": "grep -i falha log.txt",
          "erradas": [
-          "grep log.txt",
-          "cat -l log.txt",
-          "ls log.txt"
+          "cat -i falha log.txt",
+          "wc -l falha log.txt",
+          "tail -i falha log.txt"
          ],
-         "explicacao": "wc -l conta linhas.",
+         "explicacao": "O grep filtra as linhas e a opção -i ignora maiúsculas e minúsculas.",
          "conceito": "linux.grep",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -1691,6 +1803,19 @@
        "explicacao": "-i ignora a caixa.",
        "conceito": "linux.grep",
        "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Um arquivo tem 5 mil linhas. Você quer ver o começo e o fim sem abrir tudo. Quais comandos usa?",
+       "certa": "head e tail",
+       "erradas": [
+        "cat e rm",
+        "ls e pwd",
+        "cd e mv"
+       ],
+       "explicacao": "head mostra as primeiras linhas e tail as últimas: uma boa forma de espiar um arquivo grande.",
+       "conceito": "linux.ler",
+       "dificuldade": 2
       }
      ],
      "chamado": "lx_logs"
@@ -1740,21 +1865,21 @@
          "pergunta": "O que faz «ls > lista.txt»?",
          "certa": "Grava a lista de arquivos no arquivo lista.txt",
          "erradas": [
-          "Apaga lista.txt",
-          "Copia lista.txt",
-          "Cria uma pasta"
+          "Apaga o arquivo lista.txt da pasta atual",
+          "Copia o arquivo lista.txt para a pasta de cima",
+          "Cria uma pasta nova chamada lista.txt aqui"
          ],
-         "explicacao": "> redireciona a saída.",
+         "explicacao": "O > pega a saída do comando, que iria para a tela, e grava no arquivo. Aqui, a lista de arquivos vai para lista.txt.",
          "conceito": "linux.redir",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O símbolo >> acrescenta ao fim do arquivo sem apagar o que havia.",
-         "resposta": true,
-         "explicacao": "Boa para ir juntando anotações.",
+         "pergunta": "O símbolo > acrescenta ao fim do arquivo, sem apagar o que já havia.",
+         "resposta": false,
+         "explicacao": "O > substitui tudo o que havia. Quem acrescenta ao fim é o >>.",
          "conceito": "linux.redir",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -1765,7 +1890,7 @@
           "Vira uma pasta",
           "É duplicado"
          ],
-         "explicacao": "> sobrescreve.",
+         "explicacao": "O > escreve por cima: o conteúdo antigo é substituído pelo novo. Para guardar o antigo, use >>.",
          "conceito": "linux.redir",
          "dificuldade": 2
         },
@@ -1786,22 +1911,22 @@
            "direita": "Mostra um texto"
           }
          ],
-         "explicacao": "Cuidado com o > .",
+         "explicacao": "> substitui o arquivo com a saída, >> acrescenta ao fim e echo mostra um texto.",
          "conceito": "linux.redir",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual comando acrescenta a palavra «fim» ao final de nota.txt?",
-         "certa": "echo fim >> nota.txt",
+         "pergunta": "Você roda «echo oi > nota.txt» e depois «echo tchau > nota.txt». O que fica em nota.txt?",
+         "certa": "Só a palavra tchau",
          "erradas": [
-          "echo fim > nota.txt",
-          "cat fim nota.txt",
-          "rm nota.txt"
+          "As palavras oi e tchau",
+          "Só a palavra oi",
+          "O arquivo fica vazio"
          ],
-         "explicacao": ">> acrescenta.",
+         "explicacao": "O > substitui o conteúdo a cada vez. Para juntar as duas palavras, o segundo comando teria que usar >>.",
          "conceito": "linux.redir",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -1841,11 +1966,11 @@
          "pergunta": "Para que serve o pipe |?",
          "certa": "Ligar a saída de um comando à entrada do próximo",
          "erradas": [
-          "Apagar arquivos",
-          "Mudar de pasta",
-          "Desligar o computador"
+          "Apagar a saída de um comando depois de mostrar",
+          "Mudar de pasta no meio de um comando",
+          "Desligar o computador quando o comando acaba"
          ],
-         "explicacao": "Encadeia comandos.",
+         "explicacao": "O pipe encadeia comandos: o que um mostra vira o que o próximo recebe, como numa esteira.",
          "conceito": "linux.pipe",
          "dificuldade": 1
         },
@@ -1853,7 +1978,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "«ls | wc -l» conta quantos itens há na pasta.",
          "resposta": true,
-         "explicacao": "ls lista; wc -l conta.",
+         "explicacao": "O ls gera a lista de itens e o pipe a entrega ao wc -l, que conta as linhas, uma por item.",
          "conceito": "linux.pipe",
          "dificuldade": 1
         },
@@ -1862,9 +1987,9 @@
          "pergunta": "O que faz «cat log.txt | grep erro»?",
          "certa": "Mostra só as linhas de log.txt com a palavra erro",
          "erradas": [
-          "Apaga os erros",
-          "Cria a pasta erro",
-          "Copia o log"
+          "Apaga as linhas de log.txt que têm a palavra erro",
+          "Cria uma pasta chamada erro dentro do log.txt",
+          "Copia o log.txt inteiro para um arquivo novo"
          ],
          "explicacao": "O grep filtra a saída do cat.",
          "conceito": "linux.pipe",
@@ -1901,16 +2026,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual linha conta quantas linhas de log.txt têm «erro»?",
-         "certa": "grep erro log.txt | wc -l",
+         "pergunta": "Em «cat log.txt | grep erro | wc -l», o que o wc -l recebe?",
+         "certa": "As linhas que o grep deixou passar",
          "erradas": [
-          "grep erro | log.txt wc",
-          "wc -l > grep erro",
-          "rm erro log.txt"
+          "O arquivo log.txt inteiro, sem filtro",
+          "Só a palavra erro, sem as linhas",
+          "Nada: o wc -l lê o teclado"
          ],
-         "explicacao": "Filtrar e depois contar.",
+         "explicacao": "Cada pipe entrega a saída de um comando ao próximo. O wc -l conta só as linhas que passaram pelo filtro do grep.",
          "conceito": "linux.pipe",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -1947,6 +2072,19 @@
         "Uma senha"
        ],
        "explicacao": "Encadeia ferramentas pequenas.",
+       "conceito": "linux.pipe",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O que faz «ls | wc -l > total.txt»?",
+       "certa": "Grava em total.txt quantos itens há na pasta",
+       "erradas": [
+        "Apaga total.txt depois de contar",
+        "Conta as linhas de total.txt",
+        "Lista os itens que estão dentro de total.txt"
+       ],
+       "explicacao": "O ls lista, o pipe leva a lista ao wc -l, que conta, e o > grava o número no arquivo.",
        "conceito": "linux.pipe",
        "dificuldade": 3
       }
@@ -2002,7 +2140,7 @@
           "Executar",
           "Apagar a rede"
          ],
-         "explicacao": "w = write.",
+         "explicacao": "w vem de write: é a permissão de escrever, ou seja, alterar o conteúdo do arquivo.",
          "conceito": "linux.perm",
          "dificuldade": 1
         },
@@ -2023,7 +2161,7 @@
           "Nada",
           "Só ler"
          ],
-         "explicacao": "Os três primeiros: rw-.",
+         "explicacao": "Os três primeiros caracteres (rw-) são do dono: ele pode ler e escrever, mas não executar.",
          "conceito": "linux.perm",
          "dificuldade": 2
         },
@@ -2044,22 +2182,22 @@
            "direita": "Executar"
           }
          ],
-         "explicacao": "Três permissões básicas.",
+         "explicacao": "r é ler (read), w é escrever (write) e x é executar (execute).",
          "conceito": "linux.perm",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Em «-rw-r--r--», o que os outros usuários podem fazer?",
-         "certa": "Só ler",
+         "pergunta": "O arquivo tem as permissões -rwxr-x---. O que o grupo pode fazer?",
+         "certa": "Ler e executar, mas não escrever",
          "erradas": [
-          "Ler e escrever",
-          "Executar",
-          "Apagar"
+          "Ler, escrever e executar tudo",
+          "Apenas escrever no arquivo",
+          "Nada: só o dono pode usar o arquivo"
          ],
-         "explicacao": "Os últimos três: r--.",
+         "explicacao": "As três letras do meio são do grupo: r-x. Pode ler e executar, mas o w está ausente.",
          "conceito": "linux.perm",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -2103,34 +2241,34 @@
           "cp +x script.sh",
           "mkdir script.sh"
          ],
-         "explicacao": "+x adiciona executar.",
+         "explicacao": "chmod muda permissões e +x adiciona a de executar. Sem ela, o script não roda com ./script.sh.",
          "conceito": "linux.chmod",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Um script sem a permissão x não consegue ser executado com ./script.sh.",
-         "resposta": true,
-         "explicacao": "Aparece «Permissão negada».",
+         "pergunta": "Basta o arquivo terminar em .sh para ele rodar com ./script.sh.",
+         "resposta": false,
+         "explicacao": "O nome não dá poder nenhum: o arquivo precisa da permissão x (chmod +x) para ser executado.",
          "conceito": "linux.chmod",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
          "pergunta": "Você tentou ./script.sh e recebeu «Permissão negada». Qual é a causa provável?",
          "certa": "Faltava a permissão de executar",
          "erradas": [
-          "Faltava internet",
-          "O arquivo é uma pasta",
-          "O teclado quebrou"
+          "Faltava digitar o comando em maiúsculas",
+          "O script precisa ser escrito em outra pasta",
+          "Faltava instalar o bash no computador"
          ],
-         "explicacao": "Falta o x.",
+         "explicacao": "«Permissão negada» ao rodar um script quase sempre quer dizer que falta o x, a permissão de executar.",
          "conceito": "linux.chmod",
          "dificuldade": 2
         },
         {
          "tipo": "classificar",
-         "pergunta": "Qual comando faz o quê?",
+         "pergunta": "Dar ou tirar permissão?",
          "categorias": [
           "Dá permissão",
           "Tira permissão"
@@ -2153,7 +2291,7 @@
            "categoria": "Tira permissão"
           }
          ],
-         "explicacao": "+ dá e - tira.",
+         "explicacao": "O + dá a permissão e o - tira. As letras r, w e x dizem qual.",
          "conceito": "linux.chmod",
          "dificuldade": 2
         },
@@ -2166,7 +2304,7 @@
           "rm nota.txt",
           "touch nota.txt"
          ],
-         "explicacao": "-w tira a escrita.",
+         "explicacao": "O -w tira a permissão de escrever. Sem o w, ninguém consegue alterar o arquivo, só ler.",
          "conceito": "linux.chmod",
          "dificuldade": 2
         }
@@ -2205,6 +2343,19 @@
         "Mostra o script"
        ],
        "explicacao": "./ aponta para a pasta atual.",
+       "conceito": "linux.chmod",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Depois de «chmod -w nota.txt», o que acontece se você tentar «echo oi > nota.txt»?",
+       "certa": "Dá «Permissão negada», pois falta o w",
+       "erradas": [
+        "Grava normalmente",
+        "Apaga o arquivo",
+        "Dá erro de internet"
+       ],
+       "explicacao": "Sem a permissão de escrever, o Linux recusa alterar o arquivo.",
        "conceito": "linux.chmod",
        "dificuldade": 3
       }
@@ -2260,28 +2411,28 @@
           "ls",
           "cd"
          ],
-         "explicacao": "whoami = who am I.",
+         "explicacao": "whoami quer dizer «quem sou eu»: mostra o nome do usuário com que você está no terminal.",
          "conceito": "linux.user",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O usuário root é o administrador do sistema.",
-         "resposta": true,
-         "explicacao": "Pode alterar tudo.",
+         "pergunta": "O usuário root precisa digitar sudo antes de cada comando para mexer no sistema.",
+         "resposta": false,
+         "explicacao": "O root já tem poder total. O sudo existe para um usuário comum executar UM comando com esses poderes.",
          "conceito": "linux.user",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
          "pergunta": "Por que não é bom usar o root o tempo todo?",
          "certa": "Um erro pode danificar o sistema inteiro",
          "erradas": [
-          "Porque é mais lento",
-          "Porque desliga a tela",
-          "Porque não existe"
+          "Porque o root deixa tudo mais lento sempre",
+          "Porque o root desliga a tela sozinho",
+          "Porque o root não consegue abrir arquivos"
          ],
-         "explicacao": "Poder demais, risco maior.",
+         "explicacao": "O root pode alterar qualquer coisa, inclusive apagar o sistema por engano. Usar um usuário comum limita o estrago.",
          "conceito": "linux.user",
          "dificuldade": 2
         },
@@ -2302,20 +2453,20 @@
            "direita": "Mostra seu usuário"
           }
          ],
-         "explicacao": "Quem manda e quem é quem.",
+         "explicacao": "root é o administrador, grupo é um conjunto de usuários e whoami mostra quem você é.",
          "conceito": "linux.user",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que é um grupo de usuários?",
-         "certa": "Um conjunto de usuários com permissões em comum",
+         "pergunta": "Duas pessoas usam o mesmo servidor, cada uma com a sua pasta em /home. Por que uma não mexe nos arquivos da outra?",
+         "certa": "Cada usuário comum só mexe no que é seu",
          "erradas": [
-          "Um cabo",
-          "Uma pasta temporária",
-          "Um programa de e-mail"
+          "Porque o servidor só liga uma pessoa por vez",
+          "Porque as pastas ficam escondidas do teclado",
+          "Porque só o root consegue usar o /home"
          ],
-         "explicacao": "Facilita dar permissões a várias pessoas.",
+         "explicacao": "O Linux é multiusuário: cada pessoa tem o seu espaço, e quem quiser mexer no resto precisa de permissão ou de sudo.",
          "conceito": "linux.user",
          "dificuldade": 2
         }
@@ -2357,11 +2508,11 @@
          "pergunta": "Para que serve o sudo?",
          "certa": "Executar um comando com poderes de administrador",
          "erradas": [
-          "Desligar a internet",
-          "Criar um arquivo vazio",
-          "Listar pastas"
+          "Desligar a internet de todos os usuários da máquina",
+          "Criar um arquivo vazio na pasta em que você está",
+          "Listar o conteúdo das pastas de todos os usuários"
          ],
-         "explicacao": "Eleva só aquele comando.",
+         "explicacao": "O sudo eleva só aquele comando aos poderes de administrador, sem você virar root o tempo todo.",
          "conceito": "linux.sudo",
          "dificuldade": 1
         },
@@ -2369,7 +2520,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "Qualquer pessoa pode usar o sudo, mesmo sem autorização.",
          "resposta": false,
-         "explicacao": "Só quem foi autorizado.",
+         "explicacao": "Só usuários autorizados pelo administrador podem usar o sudo, e ele ainda pede a sua senha para confirmar.",
          "conceito": "linux.sudo",
          "dificuldade": 1
         },
@@ -2378,9 +2529,9 @@
          "pergunta": "Você tentou editar /etc e recebeu «Permissão negada». O que pode ser feito?",
          "certa": "Usar sudo, se você for autorizado",
          "erradas": [
-          "Reiniciar o teclado",
-          "Apagar o /etc",
-          "Trocar de pasta"
+          "Reiniciar o teclado e tentar de novo",
+          "Apagar a pasta /etc e criar outra",
+          "Trocar de pasta e repetir o comando"
          ],
          "explicacao": "Arquivos de sistema exigem admin.",
          "conceito": "linux.sudo",
@@ -2417,14 +2568,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é a vantagem do sudo sobre ficar como root?",
-         "certa": "Dá poder só no comando necessário",
+         "pergunta": "Você digitou «apt install htop» e viu «Permissão negada». O que faltou?",
+         "certa": "Usar sudo antes do comando",
          "erradas": [
-          "É mais lento",
-          "Esconde o prompt",
-          "Desliga o terminal"
+          "Digitar htop com maiúsculas",
+          "Reiniciar o terminal antes",
+          "Instalar primeiro o Linux"
          ],
-         "explicacao": "Menos risco.",
+         "explicacao": "Instalar programas muda o sistema, então exige poderes de administrador: sudo apt install htop.",
          "conceito": "linux.sudo",
          "dificuldade": 2
         }
@@ -2465,6 +2616,19 @@
        "explicacao": "id lista usuário e grupos.",
        "conceito": "linux.user",
        "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Um colega diz: «use sempre o root, é mais prático». Qual é o melhor argumento contra?",
+       "certa": "Um erro em modo root pode quebrar tudo",
+       "erradas": [
+        "Porque o root deixa o terminal mais lento",
+        "Porque o root não consegue instalar nada",
+        "Porque o sudo gasta menos energia"
+       ],
+       "explicacao": "O root tem poder total, então um erro de digitação pode danificar o sistema. O sudo dá esse poder só para um comando.",
+       "conceito": "linux.sudo",
+       "dificuldade": 2
       }
      ],
      "chamado": "lx_admin"
@@ -2518,7 +2682,7 @@
           "Uma pasta",
           "Um cabo"
          ],
-         "explicacao": "Rodando agora.",
+         "explicacao": "Um processo é um programa que está rodando agora. Cada um tem um número (PID) para você poder acompanhá-lo ou encerrá-lo.",
          "conceito": "linux.proc",
          "dificuldade": 1
         },
@@ -2526,7 +2690,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "Cada processo tem um número chamado PID.",
          "resposta": true,
-         "explicacao": "Serve para identificá-lo.",
+         "explicacao": "O PID é o número do processo. Com ele você diz ao kill qual programa encerrar.",
          "conceito": "linux.proc",
          "dificuldade": 1
         },
@@ -2539,13 +2703,13 @@
           "cd 4321",
           "cat 4321"
          ],
-         "explicacao": "kill + PID.",
+         "explicacao": "O kill recebe o PID do processo que deve ser encerrado, aqui o 4321.",
          "conceito": "linux.proc",
          "dificuldade": 2
         },
         {
          "tipo": "ligar",
-         "pergunta": "Ligue cada comando ao que faz",
+         "pergunta": "Ligue cada comando de processos ao que faz",
          "pares": [
           {
            "esquerda": "ps",
@@ -2560,7 +2724,7 @@
            "direita": "Encerra um processo"
           }
          ],
-         "explicacao": "Ver, acompanhar, encerrar.",
+         "explicacao": "ps lista os processos, top mostra o uso em tempo real e kill encerra um processo.",
          "conceito": "linux.proc",
          "dificuldade": 1
         },
@@ -2569,11 +2733,11 @@
          "pergunta": "Um programa travou. O que você faz no terminal?",
          "certa": "Acha o PID com ps e usa kill",
          "erradas": [
-          "Usa mkdir",
-          "Apaga o /home",
-          "Troca o cabo"
+          "Usa mkdir para criar um processo novo",
+          "Apaga a pasta /home para liberar memória",
+          "Troca o cabo de rede do computador"
          ],
-         "explicacao": "Localize e encerre.",
+         "explicacao": "Primeiro ps ou top mostram o PID do programa travado. Depois kill PID encerra só ele.",
          "conceito": "linux.proc",
          "dificuldade": 2
         }
@@ -2619,17 +2783,17 @@
           "ls htop",
           "cat htop"
          ],
-         "explicacao": "apt install instala.",
+         "explicacao": "O apt install baixa e instala o pacote. Como altera o sistema, precisa do sudo na frente.",
          "conceito": "linux.pacote",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "«sudo apt update» atualiza a lista de pacotes disponíveis.",
-         "resposta": true,
-         "explicacao": "Ele não instala nada ainda.",
+         "pergunta": "O comando «sudo apt update» já instala as versões novas dos programas.",
+         "resposta": false,
+         "explicacao": "O update só atualiza a lista de pacotes disponíveis. Quem instala as versões novas é o apt upgrade.",
          "conceito": "linux.pacote",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -2640,13 +2804,13 @@
           "Porque apaga a tela",
           "Porque usa o teclado"
          ],
-         "explicacao": "Mexe em pastas de sistema.",
+         "explicacao": "Instalar mexe em pastas do sistema, que só o administrador pode alterar. Por isso o sudo.",
          "conceito": "linux.pacote",
          "dificuldade": 2
         },
         {
          "tipo": "classificar",
-         "pergunta": "Qual comando faz o quê?",
+         "pergunta": "Atualizar a lista ou instalar?",
          "categorias": [
           "Atualiza a lista",
           "Instala um pacote"
@@ -2663,6 +2827,10 @@
           {
            "texto": "sudo apt install curl",
            "categoria": "Instala um pacote"
+          },
+          {
+           "texto": "Renovar a lista antes de instalar",
+           "categoria": "Atualiza a lista"
           }
          ],
          "explicacao": "update atualiza; install instala.",
@@ -2671,16 +2839,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Onde o apt busca os programas?",
-         "certa": "Em repositórios oficiais",
+         "pergunta": "Você rodou «sudo apt install nano» sem nunca ter feito o update. Qual é o risco?",
+         "certa": "A lista de pacotes pode estar desatualizada",
          "erradas": [
-          "Na lixeira",
-          "No teclado",
-          "No /tmp apenas"
+          "O nano será instalado duas vezes no sistema",
+          "O sudo vai apagar a pasta /home inteira",
+          "O terminal vai pedir o IP do servidor"
          ],
-         "explicacao": "Repositórios são as lojas.",
+         "explicacao": "O update renova a lista de onde o apt busca os programas. Sem ele, o apt pode procurar versões que já mudaram.",
          "conceito": "linux.pacote",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -2717,6 +2885,19 @@
         "Mudar de usuário"
        ],
        "explicacao": "Acompanha processos.",
+       "conceito": "linux.proc",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Um programa travou e você não sabe o PID dele. Qual é a sequência correta?",
+       "certa": "ps para achar o PID e kill para encerrar",
+       "erradas": [
+        "kill para achar e ps para encerrar",
+        "top para encerrar e rm para achar",
+        "rm para achar e kill para apagar"
+       ],
+       "explicacao": "Primeiro localize o processo e seu número com ps (ou top). Depois use kill com esse PID.",
        "conceito": "linux.proc",
        "dificuldade": 3
       }
@@ -2780,7 +2961,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "O apt também baixa as dependências do programa.",
          "resposta": true,
-         "explicacao": "Ele cuida disso sozinho.",
+         "explicacao": "Programas costumam precisar de outros pedaços (dependências). O apt baixa tudo sozinho, sem você procurar um por um.",
          "conceito": "linux.buscar",
          "dificuldade": 1
         },
@@ -2799,7 +2980,7 @@
         },
         {
          "tipo": "classificar",
-         "pergunta": "Qual comando faz o quê?",
+         "pergunta": "Procurar ou instalar?",
          "categorias": [
           "Procura",
           "Instala"
@@ -2816,6 +2997,10 @@
           {
            "texto": "sudo apt install htop",
            "categoria": "Instala"
+          },
+          {
+           "texto": "sudo apt install tree",
+           "categoria": "Instala"
           }
          ],
          "explicacao": "search procura; install instala.",
@@ -2827,9 +3012,9 @@
          "pergunta": "O apt search precisa de sudo?",
          "certa": "Não, só procurar não muda o sistema",
          "erradas": [
-          "Sim, sempre",
-          "Só para pacotes grandes",
-          "Só às terças"
+          "Sim, sempre, porque acessa a internet",
+          "Só quando o pacote for muito grande",
+          "Sim, porque o search grava arquivos"
          ],
          "explicacao": "Sudo é para mudar o sistema.",
          "conceito": "linux.buscar",
@@ -2877,7 +3062,7 @@
           "rm cowsay",
           "apt update cowsay"
          ],
-         "explicacao": "remove desinstala.",
+         "explicacao": "O remove desinstala o programa. O install faz o contrário e o update só atualiza a lista.",
          "conceito": "linux.remover",
          "dificuldade": 1
         },
@@ -2885,7 +3070,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "«sudo apt upgrade» atualiza os programas já instalados.",
          "resposta": true,
-         "explicacao": "Rode depois do update.",
+         "explicacao": "O upgrade atualiza os programas que já estão instalados. Rode o update antes, para a lista estar atual.",
          "conceito": "linux.remover",
          "dificuldade": 1
         },
@@ -2898,13 +3083,13 @@
           "cd arquivo.deb",
           "sudo apt remove arquivo.deb"
          ],
-         "explicacao": "dpkg -i instala um .deb.",
+         "explicacao": "O dpkg -i instala um arquivo .deb baixado à mão. O apt instala pelos repositórios.",
          "conceito": "linux.remover",
          "dificuldade": 2
         },
         {
          "tipo": "ligar",
-         "pergunta": "Ligue cada comando ao que faz",
+         "pergunta": "Ligue cada comando do apt ao que faz",
          "pares": [
           {
            "esquerda": "apt update",
@@ -2923,7 +3108,7 @@
            "direita": "Procura pacotes"
           }
          ],
-         "explicacao": "Cada um com sua tarefa.",
+         "explicacao": "update atualiza a lista, upgrade atualiza os programas, remove desinstala e search procura pacotes.",
          "conceito": "linux.remover",
          "dificuldade": 1
         },
@@ -2932,11 +3117,11 @@
          "pergunta": "Por que preferir o apt a instaladores de sites aleatórios?",
          "certa": "Vem de repositórios oficiais, mais seguro",
          "erradas": [
-          "É mais colorido",
-          "Usa menos teclas",
-          "Não precisa de internet"
+          "É mais colorido e mais bonito de usar",
+          "Usa menos teclas para instalar tudo",
+          "Funciona mesmo sem estar conectado à internet"
          ],
-         "explicacao": "Fonte confiável.",
+         "explicacao": "Os repositórios oficiais são conferidos pela distribuição. Instaladores aleatórios podem trazer programas perigosos.",
          "conceito": "linux.remover",
          "dificuldade": 2
         }
@@ -2977,6 +3162,19 @@
        "explicacao": "Lista primeiro, programas depois.",
        "conceito": "linux.remover",
        "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você quer saber se o pacote «ripgrep» existe antes de instalar. Qual comando não muda nada no sistema?",
+       "certa": "apt search ripgrep",
+       "erradas": [
+        "sudo apt install ripgrep",
+        "sudo apt remove ripgrep",
+        "sudo apt upgrade ripgrep"
+       ],
+       "explicacao": "O search só procura nos repositórios. Install, remove e upgrade mudam o que está instalado.",
+       "conceito": "linux.buscar",
+       "dificuldade": 2
       }
      ],
      "chamado": "lx_loja"
@@ -3030,7 +3228,7 @@
           "pwd",
           "whoami"
          ],
-         "explicacao": "ip a lista as interfaces.",
+         "explicacao": "ip a lista as interfaces de rede e os endereços IP de cada uma, inclusive o da própria máquina.",
          "conceito": "linux.ip",
          "dificuldade": 1
         },
@@ -3038,7 +3236,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "O endereço 127.0.0.1 é o da própria máquina.",
          "resposta": true,
-         "explicacao": "É o loopback.",
+         "explicacao": "127.0.0.1 é o endereço de loopback: a máquina falando consigo mesma, útil para testes.",
          "conceito": "linux.ip",
          "dificuldade": 1
         },
@@ -3051,7 +3249,7 @@
           "A senha",
           "A hora"
          ],
-         "explicacao": "Nome do computador.",
+         "explicacao": "hostname mostra o nome que identifica a máquina, o mesmo que aparece no prompt depois do @.",
          "conceito": "linux.ip",
          "dificuldade": 2
         },
@@ -3072,7 +3270,7 @@
            "direita": "A própria máquina"
           }
          ],
-         "explicacao": "Quem sou eu na rede.",
+         "explicacao": "ip a mostra seus IPs, hostname mostra o nome da máquina e 127.0.0.1 é o endereço dela mesma.",
          "conceito": "linux.ip",
          "dificuldade": 1
         },
@@ -3081,11 +3279,11 @@
          "pergunta": "Para que serve a interface lo?",
          "certa": "A máquina conversar consigo mesma",
          "erradas": [
-          "Dar Wi-Fi",
-          "Guardar fotos",
-          "Trocar de usuário"
+          "Entregar Wi-Fi para os outros aparelhos",
+          "Guardar as fotos e os documentos do usuário",
+          "Trocar de usuário sem pedir a senha"
          ],
-         "explicacao": "Loopback.",
+         "explicacao": "A interface lo (loopback) deixa a máquina conversar consigo mesma, sem usar a rede de verdade.",
          "conceito": "linux.ip",
          "dificuldade": 2
         }
@@ -3127,19 +3325,19 @@
          "pergunta": "Para que serve o ping?",
          "certa": "Testar se um destino responde",
          "erradas": [
-          "Apagar arquivos",
-          "Criar usuários",
-          "Mudar permissões"
+          "Apagar os arquivos de um destino remoto",
+          "Criar usuários em outro computador",
+          "Mudar as permissões do arquivo no destino"
          ],
-         "explicacao": "Pacotes de teste.",
+         "explicacao": "O ping envia pacotes de teste e espera a resposta: se ela vier, o destino está vivo.",
          "conceito": "linux.ping",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O curl pode buscar uma página da web pelo terminal.",
-         "resposta": true,
-         "explicacao": "Ele pede e mostra a resposta.",
+         "pergunta": "O ping mostra o conteúdo de uma página da web.",
+         "resposta": false,
+         "explicacao": "O ping só testa se o destino responde e quanto tempo leva. Quem busca a página é o curl.",
          "conceito": "linux.ping",
          "dificuldade": 1
         },
@@ -3148,17 +3346,17 @@
          "pergunta": "O ping funciona, mas o curl não traz a página. Qual é a pista?",
          "certa": "A rede está ok; o serviço pode estar com problema",
          "erradas": [
-          "O cabo quebrou",
-          "O Linux acabou",
-          "O teclado falhou"
+          "O cabo de rede quebrou no meio do caminho",
+          "O Linux travou e precisa ser reinstalado",
+          "O teclado falhou e o comando saiu errado"
          ],
-         "explicacao": "A rede respondeu.",
+         "explicacao": "Se o ping responde, a rede e a máquina estão vivas. O que falha deve ser o serviço (o site) naquele destino.",
          "conceito": "linux.ping",
          "dificuldade": 2
         },
         {
          "tipo": "classificar",
-         "pergunta": "Qual comando usar?",
+         "pergunta": "Qual comando de rede usar em cada caso?",
          "categorias": [
           "ping",
           "curl",
@@ -3176,9 +3374,21 @@
           {
            "texto": "Descobrir o meu IP",
            "categoria": "ip a"
+          },
+          {
+           "texto": "Testar se o servidor está vivo",
+           "categoria": "ping"
+          },
+          {
+           "texto": "Baixar o conteúdo de um site",
+           "categoria": "curl"
+          },
+          {
+           "texto": "Ver o endereço IP da máquina",
+           "categoria": "ip a"
           }
          ],
-         "explicacao": "Cada um com sua tarefa.",
+         "explicacao": "ping testa se o servidor responde, curl busca o conteúdo de uma página e ip a mostra o seu IP.",
          "conceito": "linux.ping",
          "dificuldade": 2
         },
@@ -3187,11 +3397,11 @@
          "pergunta": "O que significa o tempo em ms no ping?",
          "certa": "O tempo que a resposta levou",
          "erradas": [
-          "O tamanho do arquivo",
-          "A senha",
-          "O número de usuários"
+          "O tamanho do arquivo que foi enviado",
+          "A senha usada para acessar o servidor",
+          "O número de usuários conectados agora"
          ],
-         "explicacao": "Menos é melhor.",
+         "explicacao": "ms são milissegundos: o tempo que o pacote levou para ir e voltar. Quanto menor, mais rápida a conexão.",
          "conceito": "linux.ping",
          "dificuldade": 2
         }
@@ -3230,6 +3440,19 @@
         "chmod"
        ],
        "explicacao": "curl busca.",
+       "conceito": "linux.ping",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O ping para o servidor, que respondia em 20 ms, agora leva 900 ms. O que isso sugere?",
+       "certa": "A conexão com o servidor está lenta agora",
+       "erradas": [
+        "O servidor foi desligado de vez",
+        "O seu teclado parou de funcionar",
+        "O comando ping está quebrado"
+       ],
+       "explicacao": "Se há resposta, o servidor está vivo. O tempo muito maior mostra atraso na rede.",
        "conceito": "linux.ping",
        "dificuldade": 3
       }
@@ -3281,9 +3504,9 @@
          "pergunta": "O que é um script?",
          "certa": "Um arquivo de texto com comandos para executar em sequência",
          "erradas": [
-          "Um tipo de cabo",
-          "Uma senha do sistema",
-          "Uma pasta oculta"
+          "Um tipo de cabo que liga o computador ao servidor",
+          "Uma senha do sistema guardada num arquivo secreto",
+          "Uma pasta oculta onde o sistema guarda os programas todos"
          ],
          "explicacao": "Comandos guardados num arquivo.",
          "conceito": "linux.script",
@@ -3293,7 +3516,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "A linha #!/bin/bash no começo indica qual programa interpreta o script.",
          "resposta": true,
-         "explicacao": "É o «shebang».",
+         "explicacao": "A primeira linha, o «shebang», diz ao Linux qual programa vai interpretar o script, aqui o bash.",
          "conceito": "linux.script",
          "dificuldade": 1
         },
@@ -3306,7 +3529,7 @@
           "cat ola.sh",
           "cd ola.sh"
          ],
-         "explicacao": "O ./ diz «nesta pasta».",
+         "explicacao": "O ./ diz «nesta pasta». Sem ele, o shell procuraria ola.sh só nos lugares dos programas do sistema.",
          "conceito": "linux.script",
          "dificuldade": 1
         },
@@ -3325,7 +3548,7 @@
         },
         {
          "tipo": "ligar",
-         "pergunta": "Ligue cada item ao que faz",
+         "pergunta": "Ligue cada peça do script ao que faz",
          "pares": [
           {
            "esquerda": "#!/bin/bash",
@@ -3344,7 +3567,7 @@
            "direita": "Libera a execução"
           }
          ],
-         "explicacao": "Cada peça do script.",
+         "explicacao": "O shebang escolhe quem interpreta, > e >> escrevem no arquivo e chmod +x libera a execução.",
          "conceito": "linux.script",
          "dificuldade": 1
         }
@@ -3390,7 +3613,7 @@
           "echo $ nome",
           "print nome"
          ],
-         "explicacao": "O $ lê o valor.",
+         "explicacao": "Sem o $, o echo mostraria a palavra «nome». O $ manda o shell trocar a variável pelo valor guardado.",
          "conceito": "linux.var",
          "dificuldade": 1
         },
@@ -3407,11 +3630,11 @@
          "pergunta": "O que a variável $HOME guarda?",
          "certa": "O caminho da sua pasta pessoal",
          "erradas": [
-          "A hora atual",
-          "O nome da máquina",
-          "A sua senha"
+          "A hora e a data atuais do sistema",
+          "O nome da máquina e do domínio",
+          "A senha da sua conta de usuário"
          ],
-         "explicacao": "É o seu «lar».",
+         "explicacao": "$HOME guarda o caminho da sua pasta pessoal, a mesma a que o ~ leva.",
          "conceito": "linux.var",
          "dificuldade": 1
         },
@@ -3424,7 +3647,7 @@
           "$1",
           "Nada"
          ],
-         "explicacao": "$1 é o primeiro argumento.",
+         "explicacao": "Os argumentos digitados depois do script viram $1, $2... Aqui Ana é o primeiro, então $1 vale Ana.",
          "conceito": "linux.var",
          "dificuldade": 2
         },
@@ -3453,7 +3676,7 @@
            "categoria": "Comando"
           }
          ],
-         "explicacao": "Variáveis começam com $.",
+         "explicacao": "Variáveis começam com $ quando usadas. Comandos, como echo e chmod, fazem alguma coisa.",
          "conceito": "linux.var",
          "dificuldade": 1
         }
@@ -3493,6 +3716,19 @@
        ],
        "explicacao": ">> acrescenta.",
        "conceito": "linux.script",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Depois de nome=\"Ana\", o que mostra o comando echo \"Oi, $nome\"?",
+       "certa": "Oi, Ana",
+       "erradas": [
+        "Oi, nome",
+        "Oi, $nome",
+        "Oi, $Ana"
+       ],
+       "explicacao": "O $ faz o shell trocar o nome da variável pelo valor guardado nela.",
+       "conceito": "linux.var",
        "dificuldade": 3
       }
      ],
@@ -3547,7 +3783,7 @@
           "Rodar só em março",
           "Rodar 3 vezes por dia"
          ],
-         "explicacao": "Minuto 0, hora 3, todo dia.",
+         "explicacao": "Leia campo por campo: minuto 0, hora 3 e * (qualquer) para dia, mês e semana. Roda todo dia às 3h.",
          "conceito": "linux.cron",
          "dificuldade": 1
         },
@@ -3555,7 +3791,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "No cron, o * em um campo significa «qualquer valor».",
          "resposta": true,
-         "explicacao": "Vale para todos os valores.",
+         "explicacao": "O * é um coringa: no campo da hora, por exemplo, quer dizer «a cada hora».",
          "conceito": "linux.cron",
          "dificuldade": 1
         },
@@ -3593,7 +3829,7 @@
            "direita": "Todo dia 1º, à meia-noite"
           }
          ],
-         "explicacao": "Leia campo por campo.",
+         "explicacao": "Leia da esquerda para a direita: minuto, hora, dia do mês, mês e dia da semana.",
          "conceito": "linux.cron",
          "dificuldade": 1
         },
@@ -3602,11 +3838,11 @@
          "pergunta": "Qual é a ordem dos campos do cron?",
          "certa": "minuto, hora, dia do mês, mês, dia da semana",
          "erradas": [
-          "hora, minuto, ano, mês, dia",
-          "dia, mês, ano, hora, minuto",
-          "segundo, minuto, hora, dia, ano"
+          "hora, minuto, dia da semana, mês, dia do mês",
+          "dia do mês, mês, ano, hora, minuto, segundo",
+          "segundo, minuto, hora, dia do mês, mês e ano"
          ],
-         "explicacao": "Do menor para o maior.",
+         "explicacao": "A ordem vai do menor para o maior período: minuto, hora, dia do mês, mês e dia da semana.",
          "conceito": "linux.cron",
          "dificuldade": 2
         }
@@ -3652,7 +3888,7 @@
           "cron show",
           "ls cron"
          ],
-         "explicacao": "-l de list.",
+         "explicacao": "O -l vem de list: mostra as regras já instaladas na sua agenda.",
          "conceito": "linux.crontab",
          "dificuldade": 1
         },
@@ -3660,7 +3896,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "Escrever a regra num arquivo não basta: é preciso instalá-lo com crontab arquivo.",
          "resposta": true,
-         "explicacao": "Instalar ativa a agenda.",
+         "explicacao": "O arquivo é só um rascunho. O comando crontab arquivo o instala como a agenda do cron.",
          "conceito": "linux.crontab",
          "dificuldade": 1
         },
@@ -3686,7 +3922,7 @@
           "cp agenda.txt cron",
           "chmod +x agenda.txt"
          ],
-         "explicacao": "crontab + arquivo.",
+         "explicacao": "crontab seguido do arquivo instala as regras daquele arquivo como a sua agenda.",
          "conceito": "linux.crontab",
          "dificuldade": 1
         },
@@ -3709,9 +3945,13 @@
           {
            "texto": "crontab regras.txt",
            "categoria": "Instala a agenda"
+          },
+          {
+           "texto": "Conferir se a regra entrou na agenda",
+           "categoria": "Mostra a agenda"
           }
          ],
-         "explicacao": "Arquivo instala; -l mostra.",
+         "explicacao": "crontab arquivo instala as regras e crontab -l mostra as que já estão instaladas.",
          "conceito": "linux.crontab",
          "dificuldade": 2
         }
@@ -3751,6 +3991,19 @@
        ],
        "explicacao": "Minuto, hora, dia, mês, semana.",
        "conceito": "linux.cron",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Qual regra do cron roda um backup todo dia às 2h30?",
+       "certa": "30 2 * * *",
+       "erradas": [
+        "2 30 * * *",
+        "30 2 1 * *",
+        "0 2 30 * *"
+       ],
+       "explicacao": "Os campos são minuto, hora, dia do mês, mês e dia da semana. Minuto 30, hora 2, e * para todo o resto.",
+       "conceito": "linux.crontab",
        "dificuldade": 3
       }
      ],
@@ -3801,11 +4054,11 @@
          "pergunta": "Qual comando acha todos os arquivos .log dentro de /var?",
          "certa": "find /var -name \"*.log\"",
          "erradas": [
-          "ls /var *.log",
-          "grep /var .log",
-          "cat /var/*.log"
+          "ls /var -name \"*.log\"",
+          "grep /var -name \"*.log\" -r",
+          "cat /var -name \"*.log\""
          ],
-         "explicacao": "find + pasta + -name.",
+         "explicacao": "O find recebe a pasta onde procurar e o -name com o padrão do nome. O * vale por qualquer coisa.",
          "conceito": "linux.find",
          "dificuldade": 1
         },
@@ -3813,7 +4066,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "find . procura a partir da pasta onde você está.",
          "resposta": true,
-         "explicacao": "O ponto é a pasta atual.",
+         "explicacao": "O ponto é a pasta atual, então find . procura a partir de onde você está.",
          "conceito": "linux.find",
          "dificuldade": 1
         },
@@ -3822,11 +4075,11 @@
          "pergunta": "O que o * significa em \"*.log\"?",
          "certa": "Qualquer coisa antes do .log",
          "erradas": [
-          "Só números",
-          "Nada: é um erro",
-          "Só uma letra"
+          "Só números antes do .log",
+          "Nada: * é um erro de digitação",
+          "Só uma letra antes do .log"
          ],
-         "explicacao": "Curinga.",
+         "explicacao": "O * é um curinga: *.log casa com qualquer nome que termine em .log, como sistema.log.",
          "conceito": "linux.find",
          "dificuldade": 1
         },
@@ -3835,17 +4088,17 @@
          "pergunta": "Como contar quantos .log existem em /var?",
          "certa": "find /var -name \"*.log\" | wc -l",
          "erradas": [
-          "wc -l /var",
-          "find /var | cat",
-          "ls /var > wc"
+          "wc -l /var -name \"*.log\"",
+          "find /var -name \"*.log\" | cat",
+          "ls /var -name \"*.log\" > wc"
          ],
-         "explicacao": "Pipe liga o find ao wc.",
+         "explicacao": "O find lista um arquivo por linha. O pipe entrega a lista ao wc -l, que conta as linhas.",
          "conceito": "linux.find",
          "dificuldade": 2
         },
         {
          "tipo": "ligar",
-         "pergunta": "Ligue cada item ao que faz",
+         "pergunta": "Ligue cada trecho do find ao que faz",
          "pares": [
           {
            "esquerda": "find . -name notas.txt",
@@ -3864,7 +4117,7 @@
            "direita": "Conta os resultados"
           }
          ],
-         "explicacao": "Combine as peças.",
+         "explicacao": "O find . procura daqui, o / procura no sistema todo, o -name filtra pelo nome e o wc -l conta.",
          "conceito": "linux.find",
          "dificuldade": 1
         }
@@ -3910,7 +4163,7 @@
           "kill -h",
           "whoami -h"
          ],
-         "explicacao": "df = disk free.",
+         "explicacao": "df vem de disk free: mostra o espaço de cada disco. O -h deixa os valores legíveis.",
          "conceito": "linux.disco",
          "dificuldade": 1
         },
@@ -3918,7 +4171,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "O -h do df -h mostra valores em formato legível, como G e M.",
          "resposta": true,
-         "explicacao": "h de human.",
+         "explicacao": "h vem de human: troca números enormes por valores fáceis de ler, como 20G e 512M.",
          "conceito": "linux.disco",
          "dificuldade": 1
         },
@@ -3931,7 +4184,7 @@
           "cat pasta",
           "cd pasta"
          ],
-         "explicacao": "du = disk usage.",
+         "explicacao": "du vem de disk usage: mostra quanto espaço uma pasta ocupa.",
          "conceito": "linux.disco",
          "dificuldade": 1
         },
@@ -3940,11 +4193,11 @@
          "pergunta": "O disco está com 95% de uso. O que isso indica?",
          "certa": "Está quase cheio: hora de limpar",
          "erradas": [
-          "Está ótimo",
-          "Falta instalar o Linux",
-          "A internet caiu"
+          "Está ótimo: sobra muito espaço livre",
+          "Falta instalar o Linux no disco",
+          "A internet caiu e o disco ficou lento"
          ],
-         "explicacao": "Perto do limite.",
+         "explicacao": "Perto de 100%, o sistema pode parar de gravar logs e arquivos. É hora de apagar o que não precisa.",
          "conceito": "linux.disco",
          "dificuldade": 2
         },
@@ -3967,6 +4220,10 @@
           {
            "texto": "Qual disco está mais cheio?",
            "categoria": "df -h"
+          },
+          {
+           "texto": "Qual pasta está ocupando mais espaço?",
+           "categoria": "du -sh pasta"
           }
          ],
          "explicacao": "Disco inteiro: df. Pasta: du.",
@@ -4008,6 +4265,19 @@
         "Histórico"
        ],
        "explicacao": "Human.",
+       "conceito": "linux.disco",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O df -h mostra 100% de uso em /var. O que é sensato olhar primeiro?",
+       "certa": "Quais pastas ocupam mais espaço, com du -sh",
+       "erradas": [
+        "A senha do administrador",
+        "O IP da máquina, com ip a",
+        "A lista de usuários, com whoami"
+       ],
+       "explicacao": "O df mostra qual disco está cheio. O du -sh mostra quanto cada pasta ocupa, e aponta o que limpar.",
        "conceito": "linux.disco",
        "dificuldade": 3
       }
@@ -4063,15 +4333,15 @@
           "cd servidor.local",
           "curl admin servidor.local"
          ],
-         "explicacao": "ssh usuario@servidor.",
+         "explicacao": "O formato é usuario@servidor. O ssh usa isso para entrar no outro computador pela rede.",
          "conceito": "linux.ssh",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O ssh usa uma conexão criptografada, por isso é seguro para administrar servidores.",
-         "resposta": true,
-         "explicacao": "Os dados vão embaralhados.",
+         "pergunta": "No ssh, o que você digita viaja às claras e qualquer um na rede pode ler.",
+         "resposta": false,
+         "explicacao": "A conexão do ssh é criptografada: os dados viajam embaralhados, e por isso ele é seguro para administrar servidores.",
          "conceito": "linux.ssh",
          "dificuldade": 1
         },
@@ -4084,7 +4354,7 @@
           "443",
           "8080"
          ],
-         "explicacao": "22.",
+         "explicacao": "O ssh usa a porta 22 por padrão. A 80 e a 443 são de sites, e a 8080 costuma ser de testes.",
          "conceito": "linux.ssh",
          "dificuldade": 1
         },
@@ -4093,9 +4363,9 @@
          "pergunta": "O ssh respondeu «Permissão negada». Qual é a pista?",
          "certa": "O usuário não tem acesso a esse servidor",
          "erradas": [
-          "O cabo quebrou",
-          "O servidor foi desligado",
-          "O terminal travou"
+          "O cabo de rede quebrou no meio do caminho",
+          "O servidor foi desligado durante a conexão",
+          "O terminal travou antes de enviar o comando"
          ],
          "explicacao": "O servidor respondeu, mas recusou.",
          "conceito": "linux.ssh",
@@ -4103,7 +4373,7 @@
         },
         {
          "tipo": "ligar",
-         "pergunta": "Ligue cada item ao que faz",
+         "pergunta": "Ligue cada item do ssh ao que faz",
          "pares": [
           {
            "esquerda": "ssh",
@@ -4122,7 +4392,7 @@
            "direita": "Formato do destino"
           }
          ],
-         "explicacao": "Cada peça da conexão.",
+         "explicacao": "ssh entra no outro computador, ping testa se ele responde, a porta 22 é a padrão do ssh e o destino é usuario@servidor.",
          "conceito": "linux.ssh",
          "dificuldade": 1
         }
@@ -4168,7 +4438,7 @@
           "ssh new",
           "keygen ssh"
          ],
-         "explicacao": "keygen = gerador de chaves.",
+         "explicacao": "ssh-keygen gera o par de chaves: a pública e a privada.",
          "conceito": "linux.chaves",
          "dificuldade": 1
         },
@@ -4189,7 +4459,7 @@
           "ssh relatorio.txt",
           "mv admin@servidor.local relatorio.txt"
          ],
-         "explicacao": "scp arquivo destino.",
+         "explicacao": "O scp copia pela rede com o mesmo formato do ssh: scp arquivo usuario@servidor:/pasta/.",
          "conceito": "linux.chaves",
          "dificuldade": 2
         },
@@ -4202,13 +4472,13 @@
           "As duas",
           "Nenhuma: só a senha"
          ],
-         "explicacao": "A pública.",
+         "explicacao": "Só a chave pública vai para o servidor. A privada fica só com você.",
          "conceito": "linux.chaves",
          "dificuldade": 1
         },
         {
          "tipo": "ligar",
-         "pergunta": "Ligue cada item ao que faz",
+         "pergunta": "Ligue cada item das chaves ao que faz",
          "pares": [
           {
            "esquerda": "ssh-keygen",
@@ -4227,7 +4497,7 @@
            "direita": "Fica só com você"
           }
          ],
-         "explicacao": "Quem vai para onde.",
+         "explicacao": "ssh-keygen cria o par, scp copia pela rede, a chave pública vai para o servidor e a privada fica só com você.",
          "conceito": "linux.chaves",
          "dificuldade": 1
         }
@@ -4267,6 +4537,19 @@
        ],
        "explicacao": "Teste de rede.",
        "conceito": "linux.ssh",
+       "dificuldade": 3
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você copiou a sua chave privada para o servidor por engano. Qual é o problema?",
+       "certa": "Quem acessar o servidor pode se passar por você",
+       "erradas": [
+        "Nenhum, a privada é a que se envia",
+        "O servidor fica mais lento",
+        "O ssh apaga a chave pública"
+       ],
+       "explicacao": "A chave privada é a prova de que você é você. Só a pública vai para o servidor; a privada deve ficar só com você.",
+       "conceito": "linux.chaves",
        "dificuldade": 3
       }
      ],
@@ -6188,9 +6471,9 @@
          "pergunta": "O que é uma rede de computadores?",
          "certa": "Aparelhos ligados entre si para trocar informações",
          "erradas": [
-          "Um programa que limpa o computador",
-          "Um tipo de cabo de energia",
-          "Uma senha para entrar no celular"
+          "Um programa que organiza os arquivos do computador",
+          "Um tipo de cabo que leva energia aos aparelhos",
+          "Uma senha compartilhada entre os aparelhos da casa"
          ],
          "explicacao": "Rede é isso: aparelhos conversando.",
          "conceito": "rede.def",
@@ -6209,9 +6492,9 @@
          "pergunta": "Qual destas situações mostra uma rede funcionando?",
          "certa": "Seu celular enviando uma foto para a TV da sala",
          "erradas": [
-          "Um computador desligado na gaveta",
-          "Uma calculadora comum",
-          "Um livro de redes na estante"
+          "Um computador desligado guardado na gaveta",
+          "Uma calculadora comum fazendo uma conta sozinha",
+          "Um livro sobre redes aberto na estante da sala"
          ],
          "explicacao": "Celular e TV trocando informação: isso é rede.",
          "conceito": "rede.def",
@@ -6240,14 +6523,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual par forma uma rede, mesmo sem internet?",
-         "certa": "Celular e TV trocando uma foto",
+         "pergunta": "Em casa, o celular, a TV e o notebook estão no mesmo roteador. Quantas redes isso forma?",
+         "certa": "Uma só, com três aparelhos",
          "erradas": [
-          "Dois livros na mesa",
-          "Uma lâmpada e uma tomada",
-          "Um mouse sem pilha"
+          "Três redes, uma para cada aparelho",
+          "Quatro, contando também o roteador",
+          "Duas, porque só um é celular"
          ],
-         "explicacao": "Dois aparelhos trocando informação já formam uma rede.",
+         "explicacao": "O que forma a rede é a ligação entre os aparelhos, não a quantidade deles. Todos conversando pelo mesmo roteador são uma rede só.",
          "conceito": "rede.def",
          "dificuldade": 2
         }
@@ -6299,9 +6582,9 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Uma rede permite que vários aparelhos usem a mesma internet.",
-         "resposta": true,
-         "explicacao": "Isso mesmo: o roteador reparte a internet entre os aparelhos.",
+         "pergunta": "Para vários aparelhos usarem a mesma impressora, cada um precisa ter uma impressora própria.",
+         "resposta": false,
+         "explicacao": "Uma só impressora pode ser compartilhada pela rede: todos os aparelhos mandam o trabalho para ela.",
          "conceito": "rede.uso",
          "dificuldade": 1
         },
@@ -6328,6 +6611,10 @@
           {
            "texto": "Luz da sala",
            "categoria": "Não dá"
+          },
+          {
+           "texto": "Carregador do vizinho",
+           "categoria": "Não dá"
           }
          ],
          "explicacao": "Em rede compartilhamos informação e recursos, não a energia da casa.",
@@ -6349,14 +6636,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Para quê serve compartilhar a internet em uma rede?",
-         "certa": "Para vários aparelhos usarem a mesma conexão",
+         "pergunta": "A TV abre vídeos e a impressora imprime pelo Wi-Fi. O que as duas coisas têm em comum?",
+         "certa": "Usam recursos compartilhados pela rede",
          "erradas": [
-          "Para o celular não precisar de bateria",
-          "Para deixar a casa mais fria",
-          "Para trocar a senha do banco"
+          "Precisam estar ligadas na mesma tomada de energia",
+          "Só funcionam se a casa tiver internet por fibra",
+          "Precisam ser da mesma marca para conversar"
          ],
-         "explicacao": "A rede reparte a internet entre os aparelhos.",
+         "explicacao": "Tanto a internet quanto a impressora são recursos que a rede reparte entre os aparelhos.",
          "conceito": "rede.uso",
          "dificuldade": 2
         }
@@ -6408,9 +6695,9 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Um celular conectado ao Wi-Fi da casa é um host da rede.",
-         "resposta": true,
-         "explicacao": "Sim, é um aparelho conectado à rede.",
+         "pergunta": "Só computador e celular podem ser hosts; uma TV ou uma lâmpada inteligente não contam.",
+         "resposta": false,
+         "explicacao": "Host é todo aparelho ligado à rede, tenha tela ou não. TV, videogame e lâmpada inteligente também são hosts.",
          "conceito": "rede.host",
          "dificuldade": 1
         },
@@ -6436,6 +6723,10 @@
           },
           {
            "texto": "Panela elétrica sem conexão",
+           "categoria": "Não é host"
+          },
+          {
+           "texto": "Mouse com fio, sem conexão à rede",
            "categoria": "Não é host"
           }
          ],
@@ -6466,16 +6757,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é o nome do aparelho ligado à rede, como o seu celular?",
-         "certa": "Host",
+         "pergunta": "Em casa há: notebook, TV conectada, geladeira comum e lâmpada inteligente no Wi-Fi. Quantos hosts a rede tem?",
+         "certa": "Três: notebook, TV e lâmpada",
          "erradas": [
-          "Cabo",
-          "Provedor",
-          "Sinal"
+          "Quatro, contando a geladeira",
+          "Dois, só os que têm tela",
+          "Um, só o notebook"
          ],
-         "explicacao": "Host é qualquer aparelho conectado.",
+         "explicacao": "Host é todo aparelho conectado à rede, tenha tela ou não. A geladeira comum não está conectada, então não conta.",
          "conceito": "rede.host",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -6516,6 +6807,19 @@
        ],
        "explicacao": "Compartilhar a impressora na rede é um uso clássico.",
        "conceito": "rede.uso"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O notebook da sala imprime na impressora do quarto, mas o celular do mesmo roteador não encontra a impressora. O que é mais provável?",
+       "certa": "O celular está em outra rede, não na mesma da impressora",
+       "erradas": [
+        "Celulares não podem usar impressoras",
+        "A impressora só funciona com cabo",
+        "O roteador está sem internet"
+       ],
+       "explicacao": "Para compartilhar um recurso, os aparelhos precisam estar na mesma rede. Aparelhos em redes diferentes não se enxergam.",
+       "conceito": "rede.uso",
+       "dificuldade": 3
       }
      ]
     },
@@ -6568,7 +6872,7 @@
           "Provedor",
           "Navegador"
          ],
-         "explicacao": "LAN é a rede local.",
+         "explicacao": "LAN significa Local Area Network: uma rede que fica num lugar só, como a sua casa, a escola ou o escritório.",
          "conceito": "lan",
          "dificuldade": 1
         },
@@ -6616,6 +6920,10 @@
           {
            "texto": "A internet inteira",
            "categoria": "Não é LAN"
+          },
+          {
+           "texto": "Rede que liga vários países",
+           "categoria": "Não é LAN"
           }
          ],
          "explicacao": "A LAN é pequena e fica em um lugar. A internet é gigante.",
@@ -6624,16 +6932,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Onde uma rede local (LAN) costuma existir?",
-         "certa": "Em uma casa, escola ou escritório",
+         "pergunta": "Seu amigo diz: «fiquei sem internet, então minha rede local também parou». Ele está certo?",
+         "certa": "Não, a LAN continua entre os aparelhos",
          "erradas": [
-          "No mundo inteiro ao mesmo tempo",
-          "Dentro do cabo de energia",
-          "Só em satélites"
+          "Sim, sem internet não existe rede alguma",
+          "Sim, a LAN depende do provedor para funcionar",
+          "Não, mas só se tudo estiver ligado por cabo"
          ],
-         "explicacao": "A LAN fica em um lugar.",
+         "explicacao": "A LAN é a rede do lugar: celular, TV e impressora continuam conversando sem internet. O que cai é a saída para fora.",
          "conceito": "lan",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -6677,15 +6985,15 @@
           "Caixa de som",
           "Carregador"
          ],
-         "explicacao": "O roteador faz esse papel.",
+         "explicacao": "O roteador recebe a internet e a reparte entre os aparelhos. Também espalha o Wi-Fi e tem portas para cabos.",
          "conceito": "equip.roteador",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Se o roteador desliga, os aparelhos perdem o Wi-Fi da casa.",
-         "resposta": true,
-         "explicacao": "Sim, o roteador é quem cria o sinal.",
+         "pergunta": "O roteador e o provedor de internet são a mesma coisa.",
+         "resposta": false,
+         "explicacao": "O provedor é a empresa que entrega a internet. O roteador é o aparelho, na sua casa, que reparte essa internet.",
          "conceito": "equip.roteador",
          "dificuldade": 1
         },
@@ -6725,16 +7033,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Quem cria o sinal Wi-Fi da sua casa na maioria dos casos?",
-         "certa": "O roteador",
+         "pergunta": "O Wi-Fi da sala some, mas o PC ligado por cabo no roteador continua navegando. O que isso indica?",
+         "certa": "Só a parte sem fio do roteador falhou",
          "erradas": [
-          "O teclado",
-          "O monitor",
-          "O carregador"
+          "O roteador está totalmente desligado",
+          "A internet caiu na rua inteira",
+          "O PC está criando um Wi-Fi próprio"
          ],
-         "explicacao": "O roteador espalha o Wi-Fi.",
+         "explicacao": "O cabo e o Wi-Fi saem do mesmo roteador, mas são caminhos diferentes. Se o cabo funciona, a internet e o roteador estão bem.",
          "conceito": "equip.roteador",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -6826,16 +7134,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que o modem faz?",
-         "certa": "Recebe a internet que vem do provedor",
+         "pergunta": "Você troca o roteador por um novo, mas esquece de ligar o modem. O que acontece?",
+         "certa": "O Wi-Fi aparece, mas sem internet",
          "erradas": [
-          "Imprime documentos",
-          "Toca música",
-          "Mostra vídeos"
+          "A internet chega direto ao celular",
+          "O roteador novo liga o modem sozinho",
+          "Nada muda, o modem não faz diferença"
          ],
-         "explicacao": "Ele faz a ligação com o provedor.",
+         "explicacao": "O roteador cria o Wi-Fi, mas é o modem que recebe a internet do provedor. Sem ele, a rede da casa existe e a saída para fora não.",
          "conceito": "equip.modem",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -6876,6 +7184,19 @@
        ],
        "explicacao": "O cabo precisa estar na porta certa do roteador.",
        "conceito": "equip.roteador"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você ligou um PC por cabo e outro por Wi-Fi no mesmo roteador, e os dois se enxergam. Por quê?",
+       "certa": "Os dois estão na mesma LAN",
+       "erradas": [
+        "Cabo e Wi-Fi formam redes separadas",
+        "O PC por cabo vira um segundo roteador",
+        "O modem junta os dois"
+       ],
+       "explicacao": "Não importa se o aparelho entra por cabo ou por Wi-Fi: o roteador junta todos na mesma rede local.",
+       "conceito": "lan",
+       "dificuldade": 3
       }
      ]
     },
@@ -6949,41 +7270,49 @@
           "USB-C",
           "Cabo de antena"
          ],
-         "explicacao": "UTP é o cabo de rede mais usado.",
+         "explicacao": "UTP quer dizer par trançado sem blindagem: os fios são trançados para reduzir a interferência. É o cabo que você vê ligado em roteadores e PCs.",
          "conceito": "meio.transmissao",
          "dificuldade": 2
         },
         {
-         "tipo": "ligar",
-         "pergunta": "Ligue a situação ao melhor meio",
-         "pares": [
+         "tipo": "classificar",
+         "pergunta": "Para cada situação, qual meio faz mais sentido?",
+         "categorias": [
+          "Cabo",
+          "Wi-Fi"
+         ],
+         "itens": [
           {
-           "esquerda": "Computador de mesa fixo",
-           "direita": "Cabo"
+           "texto": "Computador de mesa fixo",
+           "categoria": "Cabo"
           },
           {
-           "esquerda": "Celular na sala",
-           "direita": "Wi-Fi"
+           "texto": "Celular andando pela casa",
+           "categoria": "Wi-Fi"
           },
           {
-           "esquerda": "Videogame que não sai do lugar",
-           "direita": "Cabo"
+           "texto": "Videogame que não sai do lugar",
+           "categoria": "Cabo"
+          },
+          {
+           "texto": "Notebook no sofá",
+           "categoria": "Wi-Fi"
           }
          ],
-         "explicacao": "Cabo para o que fica parado, Wi-Fi para o que se move.",
+         "explicacao": "Cabo para o que fica parado (mais estável), Wi-Fi para o que se move (mais prático).",
          "conceito": "meio.transmissao",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual opção costuma ser mais estável: cabo ou Wi-Fi?",
-         "certa": "O cabo",
+         "pergunta": "Seu primo joga online no PC de mesa e reclama que trava. O que você sugere?",
+         "certa": "Ligar o PC no roteador com um cabo",
          "erradas": [
-          "O Wi-Fi sempre",
-          "Os dois sempre iguais",
-          "Nenhum funciona"
+          "Trocar o nome da rede Wi-Fi da casa",
+          "Mudar a senha do Wi-Fi para uma mais curta",
+          "Comprar um mouse sem fio mais caro"
          ],
-         "explicacao": "O cabo sofre menos interferência.",
+         "explicacao": "O cabo não sofre com paredes nem com interferência, então a conexão fica mais estável.",
          "conceito": "meio.transmissao",
          "dificuldade": 2
         }
@@ -7023,23 +7352,23 @@
         {
          "tipo": "escolha",
          "pergunta": "O que costuma deixar o Wi-Fi fraco?",
-         "certa": "Distância e paredes grossas",
+         "certa": "Estar longe e com paredes no caminho",
          "erradas": [
-          "Escolher uma cor diferente",
-          "Abrir mais abas",
-          "Ligar a luz"
+          "Ter muitos aplicativos instalados",
+          "Usar o celular com a tela clara",
+          "O nome escolhido para a rede"
          ],
-         "explicacao": "O sinal perde força no caminho.",
+         "explicacao": "O sinal perde força a cada metro e a cada parede que atravessa.",
          "conceito": "meio.wifi",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Quanto mais longe do roteador, mais fraco costuma ficar o Wi-Fi.",
-         "resposta": true,
-         "explicacao": "Sim, o sinal enfraquece com a distância.",
+         "pergunta": "O Wi-Fi atravessa paredes de concreto sem perder força nenhuma.",
+         "resposta": false,
+         "explicacao": "Paredes grossas enfraquecem o sinal. Por isso o Wi-Fi fica fraco no quarto do fundo.",
          "conceito": "meio.wifi",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -7085,14 +7414,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual destes atrapalha o sinal do Wi-Fi?",
-         "certa": "Paredes grossas",
+         "pergunta": "Para o Wi-Fi chegar bem na casa toda, onde é melhor colocar o roteador?",
+         "certa": "No meio da casa, em lugar alto",
          "erradas": [
-          "Um copo d'água",
-          "Um quadro de foto",
-          "Uma planta pequena"
+          "Dentro de um armário fechado",
+          "No canto da casa, rente ao chão",
+          "Atrás da TV, junto da parede"
          ],
-         "explicacao": "Paredes grossas enfraquecem o sinal.",
+         "explicacao": "No centro e no alto o sinal tem menos paredes para atravessar. Armário, cantos e atrás de aparelhos enfraquecem o sinal.",
          "conceito": "meio.wifi",
          "dificuldade": 2
         }
@@ -7138,7 +7467,7 @@
           "Com ondas de som",
           "Com papel"
          ],
-         "explicacao": "A fibra transmite luz.",
+         "explicacao": "A fibra é um fio finíssimo de vidro: os dados viajam como pulsos de luz, e por isso ela é tão rápida.",
          "conceito": "meio.fibra",
          "dificuldade": 1
         },
@@ -7146,7 +7475,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "A fibra óptica é um meio de transmissão muito rápido.",
          "resposta": true,
-         "explicacao": "Sim, é um dos mais rápidos.",
+         "explicacao": "A luz viaja muito rápido dentro do fio de vidro, por isso a fibra leva muitos dados por segundo.",
          "conceito": "meio.fibra",
          "dificuldade": 1
         },
@@ -7185,15 +7514,31 @@
          "dificuldade": 1
         },
         {
-         "tipo": "escolha",
-         "pergunta": "Qual meio de transmissão usa luz?",
-         "certa": "Fibra óptica",
-         "erradas": [
-          "Cabo UTP",
-          "Wi-Fi",
-          "Bluetooth"
+         "tipo": "classificar",
+         "pergunta": "Fibra óptica ou cabo UTP?",
+         "categorias": [
+          "Fibra",
+          "Cabo UTP"
          ],
-         "explicacao": "A fibra leva os dados em pulsos de luz.",
+         "itens": [
+          {
+           "texto": "Leva os dados em pulsos de luz",
+           "categoria": "Fibra"
+          },
+          {
+           "texto": "Usa fios de cobre trançados",
+           "categoria": "Cabo UTP"
+          },
+          {
+           "texto": "Muito usada para chegar do provedor até a casa",
+           "categoria": "Fibra"
+          },
+          {
+           "texto": "Liga o PC ao roteador dentro de casa",
+           "categoria": "Cabo UTP"
+          }
+         ],
+         "explicacao": "A fibra usa luz e costuma vir de fora até a sua casa. O UTP usa cobre e faz as ligações curtas dentro dela.",
          "conceito": "meio.fibra",
          "dificuldade": 2
         }
@@ -7236,6 +7581,19 @@
        ],
        "explicacao": "Distância e obstáculos reduzem o sinal.",
        "conceito": "meio.wifi"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "O jogo trava só quando você joga no sofá, longe do roteador. O que testar primeiro, antes de trocar de plano?",
+       "certa": "Aproximar do roteador ou ligar por cabo",
+       "erradas": [
+        "Aumentar a velocidade do plano",
+        "Trocar a senha do Wi-Fi",
+        "Reiniciar o modem do vizinho"
+       ],
+       "explicacao": "Se o problema aparece só em um lugar, a causa costuma ser o sinal (distância e paredes), não o plano contratado.",
+       "conceito": "meio.wifi",
+       "dificuldade": 3
       }
      ],
      "chamado": "wifi"
@@ -7285,11 +7643,11 @@
          "pergunta": "O que é a internet?",
          "certa": "Uma rede gigante que liga muitas redes",
          "erradas": [
-          "Um site famoso",
-          "Um cabo único mundial",
-          "Um programa do celular"
+          "Um site famoso que todo mundo acessa",
+          "Um cabo único que dá a volta no mundo",
+          "Um programa que vem instalado no celular"
          ],
-         "explicacao": "A internet é uma rede de redes.",
+         "explicacao": "A internet não é uma coisa só: é a união de milhões de redes menores, como a da sua casa e a de empresas.",
          "conceito": "internet",
          "dificuldade": 1
         },
@@ -7297,7 +7655,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "A rede da sua casa pode se conectar à internet.",
          "resposta": true,
-         "explicacao": "É isso que o roteador faz.",
+         "explicacao": "O roteador é a porta de saída da sua rede para a internet. Sem ele, a casa ficaria isolada.",
          "conceito": "internet",
          "dificuldade": 1
         },
@@ -7345,14 +7703,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Como podemos descrever a internet?",
-         "certa": "Uma rede de redes, que liga muitas redes do mundo",
+         "pergunta": "Seu celular abre um site hospedado em outro país. Por onde a informação provavelmente passa?",
+         "certa": "Por várias redes ligadas entre si",
          "erradas": [
-          "Um site",
-          "Um programa de celular",
-          "Um cabo único"
+          "Só pela rede da sua casa",
+          "Por uma rede única, de uma empresa só",
+          "Por rede alguma: o celular fala direto com o site"
          ],
-         "explicacao": "A internet interliga milhões de redes.",
+         "explicacao": "A internet é uma rede de redes: a informação atravessa várias redes menores até chegar ao destino.",
          "conceito": "internet",
          "dificuldade": 2
         }
@@ -7404,11 +7762,11 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O plano contratado define a velocidade máxima da internet.",
-         "resposta": true,
-         "explicacao": "Sim, plano maior costuma significar velocidade maior.",
+         "pergunta": "Contratar um plano de internet maior faz o Wi-Fi chegar mais longe dentro de casa.",
+         "resposta": false,
+         "explicacao": "O plano muda a velocidade que chega à casa, não o alcance do sinal. O alcance depende do roteador, da distância e das paredes.",
          "conceito": "isp",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -7446,16 +7804,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Quem fornece o acesso à internet?",
-         "certa": "O provedor",
+         "pergunta": "A internet caiu só na sua casa; a do vizinho funciona. Qual é o primeiro passo mais razoável?",
+         "certa": "Reiniciar o modem e o roteador",
          "erradas": [
-          "O celular",
-          "O roteador sozinho",
-          "A TV"
+          "Esperar o provedor consertar a rua toda",
+          "Trocar de celular para testar",
+          "Contratar um plano de internet maior"
          ],
-         "explicacao": "O provedor (ISP) faz essa ligação.",
+         "explicacao": "Se o vizinho tem internet, o provedor está funcionando e o problema está nos seus equipamentos. Reiniciar o modem e o roteador resolve muitos casos.",
          "conceito": "isp",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -7505,9 +7863,9 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O servidor é o computador que guarda o site e responde aos pedidos.",
-         "resposta": true,
-         "explicacao": "É assim mesmo.",
+         "pergunta": "Quando você abre um site, quem pede a página é o servidor.",
+         "resposta": false,
+         "explicacao": "Quem pede é o cliente, o seu aparelho. O servidor guarda o site e responde ao pedido.",
          "conceito": "cliente.servidor",
          "dificuldade": 1
         },
@@ -7546,15 +7904,31 @@
          "dificuldade": 1
         },
         {
-         "tipo": "escolha",
-         "pergunta": "Quando você abre um site, quem pede a página?",
-         "certa": "O cliente (seu aparelho)",
-         "erradas": [
-          "O servidor",
-          "O cabo",
-          "O provedor"
+         "tipo": "classificar",
+         "pergunta": "Quem é o cliente e quem é o servidor?",
+         "categorias": [
+          "Cliente",
+          "Servidor"
          ],
-         "explicacao": "O cliente pede e o servidor responde.",
+         "itens": [
+          {
+           "texto": "Seu celular abrindo uma página",
+           "categoria": "Cliente"
+          },
+          {
+           "texto": "Computador que guarda o site",
+           "categoria": "Servidor"
+          },
+          {
+           "texto": "Notebook pedindo um vídeo",
+           "categoria": "Cliente"
+          },
+          {
+           "texto": "Máquina que responde com a página",
+           "categoria": "Servidor"
+          }
+         ],
+         "explicacao": "O cliente pede (é o seu aparelho). O servidor guarda e responde.",
          "conceito": "cliente.servidor",
          "dificuldade": 2
         }
@@ -7597,6 +7971,19 @@
        ],
        "explicacao": "Se falha para muita gente, o problema costuma ser do provedor.",
        "conceito": "isp"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você acessa o mesmo site pelo celular e pelo notebook, na mesma rede. Quem é o cliente e quem é o servidor?",
+       "certa": "Celular e notebook são clientes; o servidor está do outro lado",
+       "erradas": [
+        "O celular é cliente e o notebook é servidor",
+        "O roteador é o cliente de todos",
+        "O servidor é o cabo que liga os dois"
+       ],
+       "explicacao": "Quem pede a página é cliente. O servidor é o computador que guarda o site e responde, e fica fora da sua casa.",
+       "conceito": "cliente.servidor",
+       "dificuldade": 3
       }
      ]
     },
@@ -7645,11 +8032,11 @@
          "pergunta": "Para que serve o endereço IP?",
          "certa": "Identificar o aparelho na rede",
          "erradas": [
-          "Trocar a cor do Wi-Fi",
-          "Mudar o volume",
-          "Salvar fotos"
+          "Trocar a cor do sinal do Wi-Fi",
+          "Aumentar o volume dos aparelhos",
+          "Salvar as fotos do celular na nuvem"
          ],
-         "explicacao": "O IP diz para onde os dados devem ir.",
+         "explicacao": "Assim como a casa precisa de um endereço para a encomenda chegar, o aparelho precisa de um IP para os dados chegarem.",
          "conceito": "ip.v4",
          "dificuldade": 1
         },
@@ -7697,16 +8084,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O endereço IP identifica o quê?",
-         "certa": "O aparelho na rede",
+         "pergunta": "Dois aparelhos da casa pedem vídeos diferentes ao mesmo tempo. Como os dados sabem para qual ir?",
+         "certa": "Cada aparelho tem um IP diferente",
          "erradas": [
-          "A cor do cabo",
-          "O nome do provedor",
-          "O volume do som"
+          "Os dados vão para o aparelho mais rápido",
+          "O roteador escolhe pelo nome do vídeo",
+          "Os dados vão para os dois, misturados"
          ],
-         "explicacao": "O IP é o endereço do aparelho.",
+         "explicacao": "O IP é o endereço de cada aparelho na rede. Por isso os dados chegam só a quem pediu.",
          "conceito": "ip.v4",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -7801,22 +8188,22 @@
            "categoria": "Público"
           }
          ],
-         "explicacao": "192.168 e 10 são privados. Os outros são públicos.",
+         "explicacao": "192.168.x.x e 10.x.x.x são faixas reservadas para redes de casa. Os outros números são públicos e valem para a internet toda.",
          "conceito": "ip.privado",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Quem entrega o IP automaticamente quando você entra no Wi-Fi?",
-         "certa": "O DHCP",
+         "pergunta": "Duas casas diferentes têm um celular com o IP privado 192.168.0.10. Isso dá problema?",
+         "certa": "Não, cada um só vale na sua casa",
          "erradas": [
-          "O teclado",
-          "O monitor",
-          "O cabo de rede"
+          "Sim, a internet vai misturar os dois",
+          "Sim, só um dos dois consegue navegar",
+          "Não, mas só se os provedores forem iguais"
          ],
-         "explicacao": "DHCP entrega IP sozinho.",
+         "explicacao": "IPs privados se repetem em milhões de casas. Para a internet, cada casa aparece com o IP público do seu roteador.",
          "conceito": "ip.privado",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -7866,11 +8253,11 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O endereço MAC é o número de série da placa de rede e vem de fábrica.",
-         "resposta": true,
-         "explicacao": "É isso. O IP é que pode mudar.",
+         "pergunta": "O endereço MAC do seu celular muda toda vez que ele entra em uma rede diferente.",
+         "resposta": false,
+         "explicacao": "Como o MAC vem gravado de fábrica, ele acompanha a placa de rede para qualquer lugar. O IP depende de onde você se conecta.",
          "conceito": "ip.mac.dhcp",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -7907,15 +8294,31 @@
          "dificuldade": 1
         },
         {
-         "tipo": "escolha",
-         "pergunta": "O que o endereço MAC é?",
-         "certa": "O número de série da placa de rede",
-         "erradas": [
-          "O nome do Wi-Fi",
-          "A senha do roteador",
-          "O endereço do site"
+         "tipo": "classificar",
+         "pergunta": "O que muda e o que fica igual quando você troca de rede?",
+         "categorias": [
+          "Muda",
+          "Fica igual"
          ],
-         "explicacao": "O MAC vem de fábrica.",
+         "itens": [
+          {
+           "texto": "O IP do aparelho",
+           "categoria": "Muda"
+          },
+          {
+           "texto": "O endereço MAC",
+           "categoria": "Fica igual"
+          },
+          {
+           "texto": "O IP entregue pelo DHCP",
+           "categoria": "Muda"
+          },
+          {
+           "texto": "O número de série da placa de rede",
+           "categoria": "Fica igual"
+          }
+         ],
+         "explicacao": "O IP é entregue pela rede em que você entra, então muda. O MAC vem de fábrica e acompanha o aparelho.",
          "conceito": "ip.mac.dhcp",
          "dificuldade": 2
         }
@@ -7958,6 +8361,19 @@
        ],
        "explicacao": "IP privado só vale na rede local.",
        "conceito": "ip.privado"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Um técnico entrega o IP 192.168.0.40 para um novo aparelho. Esse número já era de outro aparelho da rede. O que costuma acontecer?",
+       "certa": "Conflito: os dois podem ficar sem rede",
+       "erradas": [
+        "Nada, o roteador dá outro nome a um deles",
+        "Os dois ficam mais rápidos",
+        "Só o mais novo perde o MAC"
+       ],
+       "explicacao": "O IP é o endereço do aparelho e precisa ser único na rede. Por isso o DHCP controla quem recebe qual número.",
+       "conceito": "ip.v4",
+       "dificuldade": 3
       }
      ],
      "chamado": "print"
@@ -8012,7 +8428,7 @@
           "Apaga vírus",
           "Muda a senha do roteador"
          ],
-         "explicacao": "O DNS descobre o IP do nome que você digitou.",
+         "explicacao": "É o DNS que descobre o IP do nome digitado. Sem ele, você teria que decorar números para cada site.",
          "conceito": "dns",
          "dificuldade": 1
         },
@@ -8020,7 +8436,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "Você digita o nome do site, e por trás o computador usa o IP.",
          "resposta": true,
-         "explicacao": "É isso mesmo.",
+         "explicacao": "O nome é para você. Por trás, o computador só entende o IP, e o DNS faz a ponte entre os dois.",
          "conceito": "dns",
          "dificuldade": 1
         },
@@ -8060,14 +8476,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é o trabalho do DNS na internet?",
-         "certa": "Descobre o número (IP) a partir do nome do site",
+         "pergunta": "O DNS responde 142.250.0.1 quando você pede google.com. O que isso mostra?",
+         "certa": "O número (IP) que corresponde ao nome",
          "erradas": [
-          "Aumenta a bateria",
-          "Limpa o histórico",
-          "Troca a senha"
+          "Que o Google mudou de nome hoje",
+          "Que o DNS guardou a sua senha",
+          "Que o site foi bloqueado para você"
          ],
-         "explicacao": "DNS traduz nome em número.",
+         "explicacao": "O DNS devolve o IP do nome digitado. É com esse número que o seu aparelho encontra o site.",
          "conceito": "dns",
          "dificuldade": 2
         }
@@ -8109,11 +8525,11 @@
          "pergunta": "Qual comparação descreve bem o DNS?",
          "certa": "A lista de contatos do celular",
          "erradas": [
-          "Uma lanterna",
-          "Um cabo de força",
-          "Uma foto"
+          "Um relógio que mostra a hora certa",
+          "Um carregador que enche a bateria",
+          "Um álbum de fotos da família"
          ],
-         "explicacao": "Nome para número, igual aos contatos.",
+         "explicacao": "Na agenda, você toca no nome e o celular acha o número. No DNS, você digita o nome do site e ele acha o IP.",
          "conceito": "dns.agenda",
          "dificuldade": 1
         },
@@ -8169,14 +8585,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é a comparação mais próxima do DNS?",
-         "certa": "Uma lista de contatos",
+         "pergunta": "Se o DNS é a lista de contatos, quem é o nome e quem é o número?",
+         "certa": "Nome é o site; número é o IP",
          "erradas": [
-          "Um carregador",
-          "Um fone",
-          "Uma lanterna"
+          "Nome é o IP; número é o site",
+          "Nome é o roteador; número é o Wi-Fi",
+          "Nome é o provedor; número é a senha"
          ],
-         "explicacao": "Nome leva ao número.",
+         "explicacao": "Na agenda você usa o nome e o celular acha o número. Na internet você usa o nome do site e o DNS acha o IP.",
          "conceito": "dns.agenda",
          "dificuldade": 2
         }
@@ -8218,9 +8634,9 @@
          "pergunta": "Só um site não abre e todos os outros abrem normalmente. O que isso sugere?",
          "certa": "Problema no site, não na sua internet",
          "erradas": [
-          "Seu roteador queimou",
-          "Seu celular está sem bateria",
-          "Você está sem provedor"
+          "O seu roteador queimou durante a noite",
+          "Seu celular está com a bateria fraca",
+          "Seu provedor cortou só a sua conta"
          ],
          "explicacao": "Se os outros sites abrem, sua internet está boa.",
          "conceito": "dns.falha",
@@ -8270,14 +8686,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Só um site não abre, e os outros abrem. O que isso sugere?",
-         "certa": "O problema está nesse site",
+         "pergunta": "Nenhum site abre, nem os que sempre funcionam. Qual é o melhor primeiro passo?",
+         "certa": "Ver se o Wi-Fi e o modem estão ok",
          "erradas": [
-          "Sua internet caiu",
-          "O roteador queimou",
-          "O celular quebrou"
+          "Esperar o site voltar sozinho",
+          "Trocar o nome do site que você digita",
+          "Limpar o DNS de cada site"
          ],
-         "explicacao": "Se outros sites abrem, sua conexão está ok.",
+         "explicacao": "Quando nada abre, o problema costuma estar na sua conexão. Comece pelo Wi-Fi e pelo modem.",
          "conceito": "dns.falha",
          "dificuldade": 2
         }
@@ -8320,6 +8736,19 @@
        ],
        "explicacao": "Nome vira número, como na agenda.",
        "conceito": "dns.agenda"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você digitou o IP de um site e ele abriu; ao digitar o nome, deu erro. O que isso sugere?",
+       "certa": "O DNS falhou: o site está bem",
+       "erradas": [
+        "O cabo de rede está solto",
+        "O site foi apagado para sempre",
+        "O celular está sem bateria"
+       ],
+       "explicacao": "Se o IP funciona, a conexão e o site estão bem. O que falhou foi a tradução do nome em número, que é papel do DNS.",
+       "conceito": "dns.falha",
+       "dificuldade": 3
       }
      ],
      "chamado": "dns"
@@ -8369,11 +8798,11 @@
          "pergunta": "Como a informação viaja pela rede?",
          "certa": "Em forma de zeros e uns (bits)",
          "erradas": [
-          "Em forma de desenhos",
-          "Em forma de cores",
-          "Em forma de papel"
+          "Em forma de desenhos e figuras",
+          "Em forma de ondas de rádio puras",
+          "Em forma de papel que viaja"
          ],
-         "explicacao": "Tudo vira bits.",
+         "explicacao": "Texto, foto, vídeo e som viram sequências de zeros e uns. Computadores só sabem trabalhar com isso.",
          "conceito": "dados.bits",
          "dificuldade": 1
         },
@@ -8381,7 +8810,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "Uma foto enviada pela rede é transformada em bits.",
          "resposta": true,
-         "explicacao": "Sim, tudo vira zeros e uns.",
+         "explicacao": "Texto, foto e vídeo viram bits para poder viajar pelos cabos e pelo ar.",
          "conceito": "dados.bits",
          "dificuldade": 1
         },
@@ -8394,7 +8823,7 @@
           "O pacote",
           "O roteador"
          ],
-         "explicacao": "O bit é a menor unidade.",
+         "explicacao": "Um bit é um único zero ou um. Muitos bits juntos formam os dados, como letras formam palavras.",
          "conceito": "dados.bits",
          "dificuldade": 2
         },
@@ -8421,14 +8850,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Em que forma uma mensagem viaja pelo cabo?",
-         "certa": "Em bits, zeros e uns",
+         "pergunta": "Um vídeo tem muito mais bits que uma mensagem de texto. O que isso significa?",
+         "certa": "Ele leva mais dados para passar pela rede",
          "erradas": [
-          "Em papel",
-          "Em ondas de voz",
-          "Em desenhos"
+          "Ele é enviado por um cabo mais grosso",
+          "Ele precisa de um roteador diferente",
+          "Ele chega sem passar pelo roteador"
          ],
-         "explicacao": "Tudo vira bits.",
+         "explicacao": "Mais bits são mais dados. Por isso vídeo pesa mais e demora mais que texto.",
          "conceito": "dados.bits",
          "dificuldade": 2
         }
@@ -8470,11 +8899,11 @@
          "pergunta": "O que é um pacote de rede?",
          "certa": "Um pedacinho dos dados com endereço de destino",
          "erradas": [
-          "Um cabo embrulhado",
-          "Uma caixa de roteador",
-          "Um programa novo"
+          "Um cabo curto usado para ligar o roteador",
+          "Uma caixa onde o roteador fica guardado",
+          "Um programa novo que instala no computador"
          ],
-         "explicacao": "Dados viajam em pacotes.",
+         "explicacao": "Dados grandes são cortados em pacotes pequenos para viajar por caminhos livres e depois serem remontados no destino.",
          "conceito": "pacotes",
          "dificuldade": 1
         },
@@ -8491,9 +8920,9 @@
          "pergunta": "Um pacote chega fora de ordem. O que acontece no destino?",
          "certa": "Os pacotes são colocados na ordem certa",
          "erradas": [
-          "O vídeo é apagado",
-          "A internet desliga",
-          "O roteador muda de cor"
+          "O vídeo inteiro é apagado e recomeça",
+          "A internet desliga até chegar o último",
+          "O roteador muda de cor e reinicia"
          ],
          "explicacao": "Na chegada eles são reorganizados.",
          "conceito": "pacotes",
@@ -8522,14 +8951,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que é um pacote?",
-         "certa": "Um pedaço dos dados com endereço de destino",
+         "pergunta": "Por que cada pacote leva o endereço de destino?",
+         "certa": "Para saber para onde ir e ser remontado",
          "erradas": [
-          "Um cabo especial",
-          "Um aplicativo",
-          "Uma senha"
+          "Para ficar mais bonito na tela",
+          "Para o cabo gastar menos energia",
+          "Para o roteador esquecer o pacote"
          ],
-         "explicacao": "Os dados viajam em pacotes.",
+         "explicacao": "Sem endereço, o pacote se perde. Com ele, cada pedacinho chega ao destino e é montado de volta.",
          "conceito": "pacotes",
          "dificuldade": 2
         }
@@ -8571,19 +9000,19 @@
          "pergunta": "O que mede a banda da internet?",
          "certa": "A quantidade de dados que passa por segundo",
          "erradas": [
-          "A cor do roteador",
-          "O tamanho do cabo",
-          "O número de aparelhos"
+          "O tamanho do cabo que liga ao roteador",
+          "O número de aparelhos ligados ao mesmo tempo",
+          "A cor das luzes acesas no seu roteador"
          ],
-         "explicacao": "Banda é a velocidade.",
+         "explicacao": "Banda é a quantidade de dados por segundo, medida em Mb/s. Quanto maior, mais dados passam ao mesmo tempo.",
          "conceito": "banda.latencia",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "Um ping alto significa mais atraso na conexão.",
-         "resposta": true,
-         "explicacao": "Ping baixo é melhor para jogos e chamadas.",
+         "pergunta": "Um ping alto é bom para jogar online, porque significa resposta rápida.",
+         "resposta": false,
+         "explicacao": "Ping alto é muito atraso. Para jogar e fazer chamadas, o melhor é o ping baixo.",
          "conceito": "banda.latencia",
          "dificuldade": 1
         },
@@ -8623,16 +9052,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que mede o ping?",
-         "certa": "O atraso (latência) da conexão",
+         "pergunta": "Sua banda é enorme, mas o jogo online ainda tem atraso. O que faltou?",
+         "certa": "Menos latência (ping mais baixo)",
          "erradas": [
-          "A cor do Wi-Fi",
-          "O tamanho do arquivo",
-          "A senha"
+          "Mais banda ainda, que sempre resolve",
+          "Um cabo mais grosso, apenas",
+          "Mais pacotes enviados de uma vez"
          ],
-         "explicacao": "Ping baixo significa pouco atraso.",
+         "explicacao": "Banda é quanto passa por segundo; latência é o tempo de ida e volta. Jogo online depende mais de latência baixa do que de banda.",
          "conceito": "banda.latencia",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -8673,6 +9102,19 @@
        ],
        "explicacao": "Os pacotes são remontados na ordem certa.",
        "conceito": "pacotes"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Dois amigos têm 100 Mb/s de banda. Um joga com ping de 15 ms e o outro com 150 ms. Quem vai sentir menos atraso?",
+       "certa": "O de 15 ms, porque a latência é menor",
+       "erradas": [
+        "O de 150 ms, porque o ping é maior",
+        "Os dois igual, pois a banda é a mesma",
+        "Nenhum, pois ping não mede atraso"
+       ],
+       "explicacao": "Banda igual não quer dizer atraso igual. Quem manda no atraso é a latência, que o ping mede.",
+       "conceito": "banda.latencia",
+       "dificuldade": 3
       }
      ],
      "chamado": "lenta"
@@ -8722,19 +9164,19 @@
          "pergunta": "Qual equipamento liga vários computadores por cabo na mesma rede?",
          "certa": "Switch",
          "erradas": [
-          "Mouse",
-          "Webcam",
-          "Pen drive"
+          "Modem do provedor",
+          "Repetidor de sinal",
+          "Placa de vídeo"
          ],
-         "explicacao": "O switch cria várias portas de rede.",
+         "explicacao": "O switch tem várias portas de rede e organiza a conversa entre os aparelhos ligados por cabo.",
          "conceito": "equip.switch",
          "dificuldade": 1
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "O switch envia os dados apenas para o aparelho que precisa receber.",
-         "resposta": true,
-         "explicacao": "Ele é eficiente: não grita para todo mundo.",
+         "pergunta": "O switch envia cada dado para todos os aparelhos ao mesmo tempo, como um megafone.",
+         "resposta": false,
+         "explicacao": "O switch manda os dados só para o aparelho que precisa receber. Por isso a rede fica mais eficiente.",
          "conceito": "equip.switch",
          "dificuldade": 1
         },
@@ -8747,7 +9189,7 @@
           "Um relógio",
           "Um monitor extra"
          ],
-         "explicacao": "O switch dá portas para muitos aparelhos.",
+         "explicacao": "O switch dá portas para ligar muitos aparelhos por cabo na mesma rede, como uma extensão com inteligência.",
          "conceito": "equip.switch",
          "dificuldade": 2
         },
@@ -8768,20 +9210,20 @@
            "direita": "Recebe a internet do provedor"
           }
          ],
-         "explicacao": "Cada um tem seu papel.",
+         "explicacao": "O switch liga os aparelhos por cabo, o roteador leva a rede à internet e o modem recebe a internet do provedor.",
          "conceito": "equip.switch",
          "dificuldade": 1
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual equipamento liga vários aparelhos por cabo na mesma rede?",
-         "certa": "Switch",
+         "pergunta": "Qual é a diferença mais simples entre o switch e o roteador?",
+         "certa": "Switch liga aparelhos; roteador liga à internet",
          "erradas": [
-          "Mouse",
-          "Webcam",
-          "Teclado"
+          "O switch é só para Wi-Fi; o roteador, só para cabo",
+          "O switch cria a internet; o roteador a recebe",
+          "Os dois fazem exatamente a mesma coisa"
          ],
-         "explicacao": "O switch tem várias portas.",
+         "explicacao": "O switch liga os aparelhos entre si. O roteador liga a rede à internet e reparte o acesso.",
          "conceito": "equip.switch",
          "dificuldade": 2
         }
@@ -8883,16 +9325,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que o repetidor faz?",
-         "certa": "Repete o sinal Wi-Fi para ir mais longe",
+         "pergunta": "Já existe cabo de rede passando no quarto do fundo, mas o Wi-Fi ali é fraco. Qual é a melhor solução?",
+         "certa": "Um ponto de acesso ligado por cabo",
          "erradas": [
-          "Cria um site",
-          "Troca o IP",
-          "Aumenta a bateria"
+          "Um repetidor longe do roteador",
+          "Mais um modem na casa",
+          "Um switch no meio do caminho"
          ],
-         "explicacao": "Ele aumenta o alcance do sinal.",
+         "explicacao": "Como já há cabo, o ponto de acesso recebe a internet pelo fio e espalha um Wi-Fi forte. O repetidor só reaproveita um sinal que já está fraco.",
          "conceito": "equip.ap",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -8937,7 +9379,7 @@
           "Roteador, aparelhos, provedor, modem",
           "Modem, aparelhos, roteador, provedor"
          ],
-         "explicacao": "A internet vem do provedor até os aparelhos.",
+         "explicacao": "O caminho é uma fila: provedor, modem, roteador e aparelhos. Se um deles falha, tudo que vem depois para de funcionar.",
          "conceito": "rede.mapa",
          "dificuldade": 1
         },
@@ -8954,9 +9396,9 @@
          "pergunta": "O Wi-Fi aparece, mas nenhum site abre. Qual parte do caminho vale checar primeiro?",
          "certa": "O modem e a conexão com o provedor",
          "erradas": [
-          "O fone de ouvido",
-          "O teclado",
-          "A foto de perfil"
+          "Só o celular que está reclamando",
+          "O brilho da tela do notebook",
+          "O cabo de energia da TV"
          ],
          "explicacao": "O Wi-Fi pode existir mesmo sem internet chegando.",
          "conceito": "rede.mapa",
@@ -8985,14 +9427,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Por onde a internet passa até chegar ao seu celular?",
-         "certa": "Provedor, modem, roteador, aparelhos",
+         "pergunta": "Só o celular da sua irmã está sem internet; os outros aparelhos funcionam. Onde está o problema?",
+         "certa": "No celular dela, não na rede da casa",
          "erradas": [
-          "Aparelhos, roteador, modem, provedor",
-          "Roteador, provedor, aparelhos, modem",
-          "Modem, aparelhos, provedor, roteador"
+          "No modem da casa",
+          "No provedor da rua",
+          "No roteador, que desligou"
          ],
-         "explicacao": "Vem do provedor até os aparelhos.",
+         "explicacao": "Se os outros aparelhos navegam, provedor, modem e roteador estão bem. Falha só em um aparelho, o problema é daquele aparelho.",
          "conceito": "rede.mapa",
          "dificuldade": 2
         }
@@ -9035,6 +9477,19 @@
        ],
        "explicacao": "O ponto de acesso por cabo é mais estável que o repetidor.",
        "conceito": "equip.ap"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Em casa, o Wi-Fi existe mas nenhum aparelho navega, e o modem está com a luz de internet apagada. Onde está a falha?",
+       "certa": "Entre o provedor e o modem",
+       "erradas": [
+        "No celular de quem reclamou",
+        "No switch da sala",
+        "No teclado do PC"
+       ],
+       "explicacao": "A luz de internet apagada no modem mostra que a internet não está chegando. O roteador pode até estar criando Wi-Fi, mas sem saída.",
+       "conceito": "rede.mapa",
+       "dificuldade": 3
       }
      ],
      "chamado": "office"
@@ -9084,11 +9539,11 @@
          "pergunta": "Celular conectado ao fone por Bluetooth forma qual tipo de rede?",
          "certa": "PAN (rede pessoal)",
          "erradas": [
-          "WAN",
-          "MAN",
-          "Internet"
+          "WAN (rede de longa distância)",
+          "MAN (rede de uma cidade)",
+          "Internet (rede do mundo todo)"
          ],
-         "explicacao": "É uma rede bem pequena, em volta de você.",
+         "explicacao": "PAN é a rede pessoal, de poucos metros em volta de você: celular com fone Bluetooth, relógio com celular.",
          "conceito": "rede.alcance",
          "dificuldade": 1
         },
@@ -9096,7 +9551,7 @@
          "tipo": "verdadeiro_falso",
          "pergunta": "O Wi-Fi do apartamento é um exemplo de LAN.",
          "resposta": true,
-         "explicacao": "Sim, é uma rede local.",
+         "explicacao": "A LAN é a rede de um lugar só, como um apartamento, uma escola ou um escritório.",
          "conceito": "rede.alcance",
          "dificuldade": 1
         },
@@ -9106,8 +9561,8 @@
          "certa": "LAN",
          "erradas": [
           "PAN",
-          "Elas têm o mesmo tamanho",
-          "Nenhuma tem tamanho"
+          "Os dois têm o mesmo tamanho",
+          "Depende da marca do aparelho"
          ],
          "explicacao": "A LAN cobre um local inteiro. A PAN é bem menor.",
          "conceito": "rede.alcance",
@@ -9144,14 +9599,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "A rede entre celular e fone Bluetooth é uma...",
-         "certa": "PAN",
+         "pergunta": "O notebook usa o Wi-Fi do escritório e, ao mesmo tempo, um fone Bluetooth. Quantos tipos de rede ele usa?",
+         "certa": "Dois: uma PAN e uma LAN",
          "erradas": [
-          "WAN",
-          "MAN",
-          "Internet"
+          "Um só, a LAN",
+          "Dois, e os dois são LAN",
+          "Só a internet, e mais nada"
          ],
-         "explicacao": "É uma rede pessoal.",
+         "explicacao": "O fone Bluetooth forma uma rede pessoal (PAN) e o Wi-Fi do escritório forma uma rede local (LAN).",
          "conceito": "rede.alcance",
          "dificuldade": 2
         }
@@ -9204,11 +9659,11 @@
         },
         {
          "tipo": "verdadeiro_falso",
-         "pergunta": "A MAN cobre uma cidade.",
-         "resposta": true,
-         "explicacao": "É isso: Metropolitan Area Network.",
+         "pergunta": "A internet é a maior LAN do mundo.",
+         "resposta": false,
+         "explicacao": "LAN é a rede de um lugar só. A internet liga redes do mundo todo: ela é a maior WAN.",
          "conceito": "rede.man.wan",
-         "dificuldade": 1
+         "dificuldade": 2
         },
         {
          "tipo": "escolha",
@@ -9250,14 +9705,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "A WAN cobre...",
-         "certa": "Grandes distâncias, como cidades ou países",
+         "pergunta": "Uma rede liga a prefeitura às escolas da mesma cidade. Qual é a melhor descrição?",
+         "certa": "MAN, uma rede de cidade",
          "erradas": [
-          "Uma mesa",
-          "Um bolso",
-          "Uma sala"
+          "PAN, uma rede pessoal",
+          "LAN, a rede de uma sala",
+          "WAN, que liga países"
          ],
-         "explicacao": "WAN é a rede de longa distância.",
+         "explicacao": "A MAN cobre uma cidade. A LAN é menor, de um lugar só, e a WAN cobre distâncias muito maiores.",
          "conceito": "rede.man.wan",
          "dificuldade": 2
         }
@@ -9300,10 +9755,10 @@
          "certa": "Todos a um aparelho central",
          "erradas": [
           "Um no outro, em fila",
-          "Sem nenhuma ligação",
+          "Cada um fica sozinho, sem ligação",
           "Só por Bluetooth"
          ],
-         "explicacao": "O centro liga todo mundo.",
+         "explicacao": "Na estrela, todos os aparelhos ligam num ponto central, como o switch ou o roteador.",
          "conceito": "rede.topologia",
          "dificuldade": 1
         },
@@ -9351,6 +9806,10 @@
           {
            "texto": "É comum em casas e escritórios",
            "categoria": "Verdade"
+          },
+          {
+           "texto": "Os aparelhos se ligam um no outro, em fila",
+           "categoria": "Mito"
           }
          ],
          "explicacao": "Na estrela, um cabo com problema só afeta um aparelho.",
@@ -9359,16 +9818,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Na rede em estrela, o que fica no centro?",
-         "certa": "Um aparelho central, como o roteador ou o switch",
+         "pergunta": "Em uma rede em estrela, o switch do centro queima. O que acontece?",
+         "certa": "Os aparelhos ligados a ele ficam sem rede",
          "erradas": [
-          "Um computador qualquer",
-          "Um cabo único",
-          "Nada"
+          "Só um aparelho perde a rede, os outros seguem",
+          "Nada acontece, eles passam a se ligar entre si",
+          "Só o Wi-Fi para, os cabos seguem funcionando"
          ],
-         "explicacao": "Todos ligam no centro.",
+         "explicacao": "Na estrela, um cabo ruim derruba só um aparelho, mas o aparelho central é o ponto frágil: se ele falha, quem depende dele perde a rede.",
          "conceito": "rede.topologia",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -9409,6 +9868,19 @@
        ],
        "explicacao": "WAN cobre grandes distâncias.",
        "conceito": "rede.man.wan"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Uma loja tem 3 filiais em cidades diferentes ligadas por uma rede. Dentro de cada filial, as máquinas formam o quê?",
+       "certa": "Uma LAN em cada filial",
+       "erradas": [
+        "Uma PAN em cada filial",
+        "Uma única LAN para as três",
+        "Uma MAN dentro de cada sala"
+       ],
+       "explicacao": "Cada filial tem a sua rede local (LAN). A rede que liga as filiais de cidades diferentes é uma WAN.",
+       "conceito": "rede.alcance",
+       "dificuldade": 3
       }
      ]
     },
@@ -9457,11 +9929,11 @@
          "pergunta": "Por que o Wi-Fi da casa deve ter senha?",
          "certa": "Para impedir que desconhecidos usem a sua rede",
          "erradas": [
-          "Para a internet ficar mais bonita",
-          "Para o roteador gastar menos",
-          "Para os sites abrirem mais rápido"
+          "Para deixar a internet mais bonita e leve",
+          "Para o roteador gastar menos energia elétrica",
+          "Para os sites abrirem mais rápido no celular"
          ],
-         "explicacao": "A senha protege a rede.",
+         "explicacao": "Sem senha, qualquer vizinho poderia usar a sua internet e até ver o que passa pela rede.",
          "conceito": "seg.senha",
          "dificuldade": 1
         },
@@ -9517,14 +9989,14 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é a senha de Wi-Fi mais forte?",
-         "certa": "Uma frase longa com números",
+         "pergunta": "Seu vizinho usa o nome do cachorro e o ano de nascimento como senha. O que você sugere?",
+         "certa": "Trocar por uma frase longa e esquisita",
          "erradas": [
-          "12345678",
-          "Seu nome",
-          "A data de aniversário"
+          "Manter, porque é fácil de lembrar",
+          "Só acrescentar um ponto no fim",
+          "Usar a data de aniversário no lugar"
          ],
-         "explicacao": "Longa e imprevisível é melhor.",
+         "explicacao": "Nomes e datas são os primeiros chutes de quem tenta invadir. Uma frase longa, com números, é difícil de adivinhar e ainda dá para lembrar.",
          "conceito": "seg.senha",
          "dificuldade": 2
         }
@@ -9566,11 +10038,11 @@
          "pergunta": "O que o cadeado no navegador indica?",
          "certa": "Que a conexão com o site é protegida",
          "erradas": [
-          "Que o site é de graça",
-          "Que o site é famoso",
-          "Que o site é rápido"
+          "Que o site é gratuito para todo mundo",
+          "Que o site é muito famoso na internet",
+          "Que o site abre mais rápido que os outros"
          ],
-         "explicacao": "O HTTPS protege a conversa.",
+         "explicacao": "HTTPS e o cadeado indicam que a conversa entre você e o site é protegida contra espiões.",
          "conceito": "seg.https",
          "dificuldade": 1
         },
@@ -9591,7 +10063,7 @@
           "banco.com.br sem cadeado",
           "um site com alerta de insegurança"
          ],
-         "explicacao": "HTTPS é a versão protegida.",
+         "explicacao": "O S de HTTPS significa seguro: a conversa com o site viaja protegida, ao contrário do http simples.",
          "conceito": "seg.https",
          "dificuldade": 2
         },
@@ -9618,16 +10090,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "O que o cadeado do site indica?",
-         "certa": "A conexão é protegida (HTTPS)",
+         "pergunta": "Um site tem cadeado, mas o link chegou numa mensagem prometendo um prêmio. O que fazer?",
+         "certa": "Desconfiar mesmo com cadeado",
          "erradas": [
-          "O site é gratuito",
-          "O site é novo",
-          "O site é lento"
+          "Confiar, porque o cadeado garante tudo",
+          "Digitar só uma senha antiga",
+          "Mandar o link aos amigos para testar"
          ],
-         "explicacao": "HTTPS protege a conversa.",
+         "explicacao": "O cadeado protege a conversa com o site, mas não prova que o site é honesto. Link de prêmio inesperado costuma ser golpe.",
          "conceito": "seg.https",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       },
@@ -9727,16 +10199,16 @@
         },
         {
          "tipo": "escolha",
-         "pergunta": "Qual é um bom hábito de segurança?",
-         "certa": "Manter o celular atualizado",
+         "pergunta": "Você precisa pagar uma conta no café. Qual é a escolha mais segura?",
+         "certa": "Usar o 4G ou 5G do celular",
          "erradas": [
-          "Clicar em links desconhecidos",
-          "Usar uma senha só",
-          "Aceitar qualquer convite"
+          "Entrar no Wi-Fi livre do café mesmo",
+          "Pedir ao atendente para digitar por você",
+          "Usar o mesmo login em outro celular"
          ],
-         "explicacao": "Atualizações corrigem falhas.",
+         "explicacao": "No Wi-Fi público, outras pessoas podem espionar o que passa pela rede. O 4G ou 5G do celular é uma conexão só sua.",
          "conceito": "seg.habitos",
-         "dificuldade": 2
+         "dificuldade": 3
         }
        ]
       }
@@ -9777,6 +10249,19 @@
        ],
        "explicacao": "Sem proteção, evite dados sensíveis.",
        "conceito": "seg.https"
+      },
+      {
+       "tipo": "escolha",
+       "pergunta": "Você recebe um aviso do banco por mensagem, com link e cadeado no site. A mensagem pede sua senha. O que fazer?",
+       "certa": "Não passar a senha; abrir o app ou o site do banco por conta própria",
+       "erradas": [
+        "Digitar a senha, porque tem cadeado",
+        "Responder com a senha e o número do cartão",
+        "Encaminhar a mensagem a um amigo"
+       ],
+       "explicacao": "Banco de verdade não pede senha por mensagem. Entre sempre digitando o endereço ou usando o aplicativo oficial.",
+       "conceito": "seg.habitos",
+       "dificuldade": 3
       }
      ]
     }
