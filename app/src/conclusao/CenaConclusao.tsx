@@ -15,7 +15,7 @@ const LINHA_NOVA: [number, number][] = [[500, 1], [1000, 2], [1550, 3], [1850, 4
 const LINHA_REP: [number, number][] = [[400, 3], [750, 4], [950, 5]]
 
 const css = `.cc-pingo svg{width:clamp(56px,10vh,80px)!important;display:block}
-.cc-cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;padding:2px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.cc-cards::-webkit-scrollbar{display:none}.cc-card{flex:0 0 84%;scroll-snap-align:center;border-radius:16px;padding:10px 14px;text-align:left;font-size:15px;line-height:1.4;box-sizing:border-box}.cc-ic{display:inline-flex;width:20px;height:20px}.cc-ic svg{width:100%;height:100%;display:block}`
+.cc-cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;padding:2px 8% 6px;box-sizing:border-box;scroll-padding:0 8%;touch-action:pan-x pan-y;scrollbar-width:none;-webkit-overflow-scrolling:touch}.cc-cards::-webkit-scrollbar{display:none}.cc-card{flex:0 0 84%;scroll-snap-align:center;border-radius:16px;padding:10px 14px;text-align:left;font-size:15px;line-height:1.4;box-sizing:border-box}.cc-ic{display:inline-flex;width:20px;height:20px}.cc-ic svg{width:100%;height:100%;display:block}`
 
 export function CenaConclusao(p: ConclusaoProps) {
   const [passo, setPasso] = useState<'cena' | 'fim'>('cena')
@@ -112,7 +112,7 @@ function Cena(p: ConclusaoProps) {
           {(p.aprendi || []).map(([t, d]) => <div className="cc-card" key={t} style={{ border: '2px solid var(--line-deep,#e3dcff)' }}>
             <b style={{ color: 'var(--primary)' }}>{t}</b><br />{d}</div>)}
         </div>}
-        {(p.aprendi?.length ?? 0) > 0 && <small style={{ color: 'var(--muted)', fontWeight: 700, marginTop: -4 }}>Deslize para ver o que você aprendeu →</small>}
+        {(p.aprendi?.length ?? 0) > 0 && <small style={{ color: 'var(--muted)', fontWeight: 700, marginTop: -4 }}>Deslize para o lado para ver o que você aprendeu →</small>}
         <div role="img" aria-label={`Estação Pingo: ${p.indice + 1} de ${p.invencao.modulos.length} módulos`} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--muted)', fontSize: 13, fontWeight: 800 }}>
           {p.invencao.modulos.map((m, i) => <i key={m.id} style={{ width: 8, height: 8, borderRadius: 4, background: i <= p.indice ? 'var(--primary)' : 'var(--line-deep)' }} />)}
           {!p.repeticao && modulo && <span style={{ marginLeft: 4 }}>{modulo} encaixada</span>}

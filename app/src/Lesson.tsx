@@ -28,7 +28,7 @@ export type Novo={slot:string;id:string;nome:string;icone:string}
 export type Result={xp:number;gems:number;first?:boolean;novos?:Novo[];cheias?:boolean;acc:number;perfect:boolean;hearts?:{from:number;gain:number}}
 /** Vidas que o treino devolve (o limite é 5) */
 const PRACTICE_HEARTS=3
-export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;resumo?:{sabe?:string;pratica?:string;proxima?:string;fim?:import('./conclusao/contrato').FimParada};qs:Q[];kind:'phase'|'boss'|'review'|'event'|'practice';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
+export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;resumo?:{sabe?:string;pratica?:string;proxima?:string;recap?:[string,string][];fim?:import('./conclusao/contrato').FimParada};qs:Q[];kind:'phase'|'boss'|'review'|'event'|'practice';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
   const [queue,setQueue]=useState<Item[]>(()=>qs.map(prep))
   const [i,setI]=useState(0)
   const [hearts,setHearts]=useState<number>(S.hearts??5)
@@ -166,7 +166,7 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
   </div></div><div className="lfoot"><button className="btn" onClick={()=>void collect(res.xp,res.gems,res.hearts?.gain).then(onClose)}>Voltar ao jogo</button></div></div></div>
   if(res&&(kind==='phase'||kind==='boss')&&!res.ev)return <CenaConclusao S={S} invencao={ESTACAO_PINGO} indice={Math.min(3,Math.max(0,parseInt(keyId.split('-')[1])||0))} repeticao={!res.first}
     titulo={!res.first?'Estação conferida!':resumo?.sabe?(kind==='boss'?'Agora você domina!':'Agora você sabe!'):kind==='boss'?'Estação Pingo completa!':'Mais uma descoberta!'} subtitulo={res.first?undefined:'Você já tinha essa peça. Bom reforço!'}
-    xp={res.xp} chips={res.gems} acertos={res.acc} sabe={resumo?.sabe} pratica={resumo?.pratica} proxima={resumo?.proxima} novos={res.novos} fim={kind==='boss'&&res.first&&resumo?.fim?{...resumo.fim,vidasCheias:!!res.cheias}:undefined} aprendi={qs.filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])} onContinuar={onClose}/>
+    xp={res.xp} chips={res.gems} acertos={res.acc} sabe={resumo?.sabe} pratica={resumo?.pratica} proxima={resumo?.proxima} novos={res.novos} fim={kind==='boss'&&res.first&&resumo?.fim?{...resumo.fim,vidasCheias:!!res.cheias}:undefined} aprendi={kind==='boss'?[...(resumo?.recap||[]),...gamesOf(S.curso||'redes')[parseInt(keyId)||0]?.phases.flat().filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])||[]]:qs.filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])} onContinuar={onClose}/>
   if(res)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood="cheer"/><h1>{kind==='practice'?'Vida recuperada!':free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
     <p>{kind==='practice'?'+1 vida. Bom treino!':free?'Bom treino!':res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>

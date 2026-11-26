@@ -31,7 +31,8 @@ export function resumoDe(par:any[],games:any[],g:number,k:number){
   const n=par[g+1]
   const fim=k===3?{idx:g,lugar:p.lugar||'',titulo:p.titulo||'',vidasCheias:false,
     prox:n?{idx:g+1,lugar:n.lugar||'',titulo:n.titulo||'',gancho:p.gancho as string|undefined,topicos:(n.fases||[]).map((f:any)=>f.nome).filter(Boolean).slice(0,3)}:undefined}:undefined
-  return {sabe:src?.sabe as string|undefined,pratica:src?.pratica as string|undefined,proxima:proxima||undefined,fim}
+  const recap:[string,string][]=k===3?(p.fases||[]).filter((f:any)=>f.sabe).map((f:any,i:number)=>['Lição '+(i+1)+' · '+f.nome,String(f.sabe).charAt(0).toUpperCase()+String(f.sabe).slice(1)] as [string,string]):[]
+  return {sabe:src?.sabe as string|undefined,pratica:src?.pratica as string|undefined,proxima:proxima||undefined,fim,recap}
 }
 
 export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpen:string|null;setEvOpen:(id:string|null)=>void}){
