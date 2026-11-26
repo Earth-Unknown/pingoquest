@@ -1359,7 +1359,7 @@ function pickExtras(g){
    Regras: 1 etapa nova por dia, dias não precisam ser seguidos, 6 perguntas por etapa só de conceitos já vistos,
    sem desafio extra de 5 acertos, recompensas registradas em S.ledger (nunca pagam duas vezes). */
 /* Modo dono: só quem digitar o código neste aparelho vê as ferramentas de teste (guardado só no navegador de quem entrou) */
-var ADM_HASH='263fc03b796c5d74b9e69622e57a4c1f1f5308d1ccc1f171c8d7a6ce80f8c5e4';
+var ADM_HASH='4d11a8a2cee44ffd1ceeefbfe851afb97726d432b2c456efd967804b9d1503d9';
 function isAdm(){try{return localStorage.getItem('pingoquest-adm')==='1'}catch(e){return false}}
 var DEVEV=false;
 try{if(isAdm()&&location.hash==='#evento-teste')localStorage.setItem('pingoquest-devev','1');if(isAdm()&&location.hash==='#sem-evento-teste')localStorage.removeItem('pingoquest-devev');DEVEV=isAdm()&&localStorage.getItem('pingoquest-devev')==='1'}catch(e){}
