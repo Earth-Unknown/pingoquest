@@ -1,0 +1,56 @@
+# Monta o site (_site) e publica no Firebase Hosting, com o rewrite /api/** para o Cloud Run.
+# Roda quando o site muda e também depois de cada deploy da API (API primeiro: o app novo nunca chama rota inexistente).
+# Pré-requisito: o serviço Cloud Run "api" já existe (o firebase deploy recusa rewrite para serviço inexistente).
+name: Deploy do Hosting
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "icons/**"
+      - "manifest.webmanifest"
+      - "index.html"
+      - "src/**"
+      - "build-site.sh"
+      - "tools/montar-site.sh"
+      - "firebase.json"
+      - ".github/workflows/deploy-hosting.yml"
+  workflow_run:
+    workflows: ["Deploy da API"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy-hosting
+  cancel-in-progress: false
+
+jobs:
+  hosting:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Montar o site
+        run: sh tools/montar-site.sh
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.DEPLOYER_SA }}
+
+      - name: Publicar no Firebase Hosting
+        run: npx --yes firebase-tools@15 deploy --only hosting --project "${{ vars.GCP_PROJECT_ID }}" --non-interactive

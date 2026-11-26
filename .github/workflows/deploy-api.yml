@@ -1,0 +1,91 @@
+# Testa, empacota e publica a API no Cloud Run (southamerica-east1) a cada push na main que mude api/ ou content/.
+# Autenticação por Workload Identity Federation (sem chave JSON). Variáveis em Settings > Variables (não são segredos).
+name: Deploy da API
+on:
+  push:
+    branches: [main]
+    paths:
+      - "api/**"
+      - "content/**"
+      - ".github/workflows/deploy-api.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy-api
+  cancel-in-progress: false
+
+env:
+  REGION: southamerica-east1
+  SERVICE: api
+  REPOSITORY: api
+  RUNTIME_SA: pingoquest-api@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.DEPLOYER_SA }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Login do Docker no Artifact Registry
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build e push da imagem (contexto = raiz do repositório)
+        run: |
+          IMAGE="${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+          docker build -f api/Dockerfile -t "$IMAGE" .
+          docker push "$IMAGE"
+
+      # --allow-unauthenticated não é usado aqui: o deployer tem run.developer (sem setIamPolicy).
+      # O invoker público (allUsers) é concedido uma vez no primeiro deploy manual e persiste entre revisões.
+      - name: Deploy no Cloud Run
+        run: |
+          gcloud run deploy "${{ env.SERVICE }}" \
+            --project "${{ vars.GCP_PROJECT_ID }}" \
+            --region "${{ env.REGION }}" \
+            --image "$IMAGE" \
+            --service-account "${{ env.RUNTIME_SA }}" \
+            --ingress all \
+            --min-instances 0 \
+            --max-instances 3 \
+            --concurrency 80 \
+            --cpu 1 \
+            --memory 512Mi \
+            --timeout 30 \
+            --update-env-vars "GCP_PROJECT_ID=${{ vars.GCP_PROJECT_ID }},APP_TIMEZONE=America/Sao_Paulo" \
+            --quiet
+
+      - name: Smoke test direto no Cloud Run
+        run: |
+          URL="$(gcloud run services describe "${{ env.SERVICE }}" --project "${{ vars.GCP_PROJECT_ID }}" --region "${{ env.REGION }}" --format='value(status.url)')"
+          curl --fail --silent --show-error --retry 5 --retry-delay 3 "$URL/api/v1/health"

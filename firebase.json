@@ -2,6 +2,9 @@
   "hosting": {
     "public": "_site",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "/api/**", "run": { "serviceId": "api", "region": "southamerica-east1" } }
+    ],
     "headers": [
       { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
       { "source": "/jogo-antigo/index.html", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },

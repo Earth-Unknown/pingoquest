@@ -1,0 +1,33 @@
+{
+  "name": "pingoquest-api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=.env src/main.ts",
+    "build": "esbuild src/main.ts --bundle --platform=node --format=esm --target=node22 --packages=external --sourcemap --outfile=dist/main.js",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "test": "vitest run --project unit --project integration",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-pingoquest \"vitest run --project rules\""
+  },
+  "dependencies": {
+    "fastify": "^5.12.8",
+    "firebase-admin": "^14.5.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "@types/node": "^22.20.7",
+    "esbuild": "^0.28.2",
+    "firebase": "^12.19.0",
+    "oxlint": "^1.95.0",
+    "tsx": "^4.23.15",
+    "typescript": "~7.0.2",
+    "vitest": "^5.1.2"
+  }
+}
