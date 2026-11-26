@@ -7,7 +7,8 @@ import { day, touchStreak, wkAdd, addMiss, fixMiss, cqSync, gamesOf } from './li
 import type { EvRes } from './lib/events'
 import { sfx, buzz } from './lib/sound'
 import { collect } from './lib/collect'
-import { confetti, enter, riseIn, ResultTiles } from './Fx'
+import { confetti, enter, riseIn, ResultTiles, motion } from './Fx'
+import { HeartsRow, HEART_ICON } from './Hearts'
 
 type Item=Q&{src:Q;opts?:{t:string;c:boolean}[];left?:{id:number;t:string}[];right?:{id:number;t:string}[];ci?:{id:number;t:string;c:number}[]}
 const prep=(q:Q):Item=>{
@@ -20,7 +21,9 @@ const prep=(q:Q):Item=>{
 
 /** conhecimento por assunto (usado para priorizar o que está frágil nos eventos) */
 const know=(s:any,q:Q,good:boolean)=>{if(!q.cid)return;s.know=s.know||{};const k=s.know[q.cid]||(s.know[q.cid]={ok:0,bad:0,seen:0,last:''});if(good)k.ok++;else k.bad++}
-export type Result={xp:number;gems:number;acc:number;perfect:boolean}
+export type Result={xp:number;gems:number;acc:number;perfect:boolean;hearts?:{from:number;gain:number}}
+/** Vidas que o treino devolve (o limite é 5) */
+const PRACTICE_HEARTS=3
 export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];kind:'phase'|'boss'|'review'|'event'|'practice';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
   const [queue,setQueue]=useState<Item[]>(()=>qs.map(prep))
   const [i,setI]=useState(0)
@@ -89,12 +92,12 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
       const r=onEvent(qb-miss,qb);sfx(r.pass?'win':'ok');if(r.pass)confetti()
       setRes({xp:r.xp,gems:r.got?.gems||0,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect:r.pass,ev:r});return
     }
-    let first=false,xp=10,gems=0
+    let first=false,xp=10,gems=0,hFrom=0,hGain=0
     const perfect=miss===0&&!free
     sfx('win');confetti()
     patchSave(s=>{
       const d=day(s)
-      if(free){xp=kind==='practice'?5:8;if(kind==='practice')s.hearts=Math.min(5,(s.hearts??5)+1)}
+      if(free){xp=kind==='practice'?5:8;if(kind==='practice'){hFrom=s.hearts??5;hGain=Math.max(0,Math.min(PRACTICE_HEARTS,5-hFrom));s.hearts=hFrom+hGain}}
       else{
         s.done=s.done||{};first=!s.done[keyId]
         if(kind==='boss'){gems=first?25:0;xp=25;if(first)s.bosses=(s.bosses||0)+1}else gems=first?10:0
@@ -105,7 +108,7 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
       d.xp+=xp;s.xp=(s.xp||0)+xp;s.gems=(s.gems??50)+gems
       wkAdd(s,xp);touchStreak(s);cqSync(s)
     })
-    setRes({xp,gems,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect})
+    setRes({xp,gems,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect,hearts:kind==='practice'?{from:hFrom,gain:hGain}:undefined})
   }
 
   const pct=Math.round(Math.min(right,base)/base*100)
@@ -132,13 +135,20 @@ export function Lesson({S,qs,kind,keyId,onClose,onEvent,onRetry}:{S:any;qs:Q[];k
         <div className="stack">
           <button className="btn" onClick={treinar}>Treinar e ganhar vida</button>
           <button className="btn blue" disabled={!can} onClick={recarregar}>Recarregar por 60 chips</button>
-          <p className="note">Você tem {gems} chips. No treino você não perde vidas: acerte 3 perguntas e ganhe 1.</p>
+          <p className="note">Você tem {gems} chips. No treino você não perde vidas: responda 3 perguntas e ganhe 3 vidas.</p>
           <button className="btn ghost" onClick={onClose}>Voltar para a trilha</button></div></div></div></div></div>
   }
   if(res?.ev)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood={res.ev.pass?'cheer':'happy'}/><h1>{res.ev.title}</h1><p>{res.ev.sub}</p>
     <ResultTiles tiles={[{c:'#ffb800',l:'Energia',to:res.xp},...(res.gems>0?[{c:'#18b9e8',l:'Chips',to:res.gems,prefix:'+'}]:[]),res.ev.got?{c:'#3fbf5f',l:'Peças',to:res.ev.got.pieces,prefix:'+'}:{c:'#18b9e8',l:'Acertos',to:res.ev.correct}]}/>
   </div></div><div className="lfoot">{!res.ev.pass&&onRetry&&<button className="btn xbtn" onClick={onRetry}>Tentar de novo</button>}<button className="btn" onClick={()=>void collect(res.xp,res.gems).then(onClose)}>{res.xp>0?'Coletar energia':'Continuar'}</button></div></div></div>
+  if(res?.hearts)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
+    <motion.div animate={{y:[0,-16,0,-10,0],rotate:[0,-4,4,-2,0]}} transition={{duration:1.1,delay:.5,repeat:2,repeatDelay:.6}}><Pingo S={S} mood="love"/></motion.div>
+    <motion.h1 initial={{scale:.6,opacity:0}} animate={{scale:1,opacity:1}} transition={{type:'spring',stiffness:300,damping:14,delay:.2}} style={{color:'#ff4b6e'}}>{res.hearts.gain>1?'Vidas recuperadas!':'Vida recuperada!'}</motion.h1>
+    <p>+{res.hearts.gain} {res.hearts.gain===1?'vida':'vidas'}. Você está de volta ao jogo!</p>
+    <HeartsRow from={res.hearts.from} gain={res.hearts.gain}/>
+    <ResultTiles tiles={[{c:'#ff4b6e',l:'Vidas',to:res.hearts.gain,prefix:'+',icon:HEART_ICON},{c:'#ffb800',l:'Energia',to:res.xp},{c:'#18b9e8',l:'Precisão',to:res.acc}]}/>
+  </div></div><div className="lfoot"><button className="btn" onClick={()=>void collect(res.xp,res.gems,res.hearts?.gain).then(onClose)}>Voltar ao jogo</button></div></div></div>
   if(res)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
     <Pingo S={S} mood="cheer"/><h1>{kind==='practice'?'Vida recuperada!':free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
     <p>{kind==='practice'?'+1 vida. Bom treino!':free?'Bom treino!':res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>

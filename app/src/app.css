@@ -86,3 +86,5 @@
 /* toast */
 .toast-wrap{position:fixed;left:0;right:0;bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:130;display:flex;justify-content:center;pointer-events:none;padding-inline:16px}
 .toast{margin:0;max-width:360px;background:var(--roxo-fundo);color:#fff;border:2px solid var(--cyan);border-radius:14px;padding:10px 14px;font-weight:800;font-size:15px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+/* pílula de vidas ao coletar */
+.cp.h{color:#ff4b6e;border-color:#ff4b6e}
