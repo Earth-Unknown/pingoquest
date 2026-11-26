@@ -6,6 +6,7 @@ import { AuthError, type AuthErrorInfo } from './AuthError'
 import { classifyAuthError, errorCode, signInGoogle, signInGuest, type AuthStep } from './lib/auth'
 import { trocarCurso } from './lib/progress'
 import { Vitrine, OndeParou } from './LoginVitrine'
+import { PingoResolvendo } from './LoginCena'
 import { cursosComecados } from './lib/parou'
 import { patchSave } from './lib/save'
 import { buzz, reducedMotion, sfx } from './lib/sound'
@@ -173,7 +174,7 @@ export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }:
       <div className="lg-col">
         <div className="lg-top">
           {variant === 'A' && !success && <p className="lg-word">PINGO QUEST</p>}
-          {stage}
+          {!busy && !sad && !success ? <PingoResolvendo S={S} /> : stage}
           <motion.h1 ref={heading} tabIndex={-1} {...stagger(1)}>
             {success ? success.text : variant === 'A' ? 'Oi! Eu sou o Pingo.' : fala?.titulo}
           </motion.h1>
