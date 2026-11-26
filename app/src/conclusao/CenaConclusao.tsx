@@ -7,6 +7,7 @@ import { sfx } from '../lib/sound'
 import art from '../legacy/art.json'
 import { Invencao, PecaSolta, ENCAIXES, PROPORCAO } from './Invencao'
 import type { ConclusaoProps } from './contrato'
+import { FimParadaTela, NovoItemLinha } from './FimParada'
 
 /* Fases: 0 observa · 1 peça surge · 2 peça voa · 3 encaixa (módulo acende) · 4 título · 5 recompensas (final) */
 const FINAL = 5
@@ -14,9 +15,15 @@ const LINHA_NOVA: [number, number][] = [[500, 1], [1000, 2], [1550, 3], [1850, 4
 const LINHA_REP: [number, number][] = [[400, 3], [750, 4], [950, 5]]
 
 const css = `.cc-pingo svg{width:clamp(56px,10vh,80px)!important;display:block}
-.cc-ic{display:inline-flex;width:20px;height:20px}.cc-ic svg{width:100%;height:100%;display:block}`
+.cc-cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;padding:2px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.cc-cards::-webkit-scrollbar{display:none}.cc-card{flex:0 0 84%;scroll-snap-align:center;border-radius:16px;padding:10px 14px;text-align:left;font-size:15px;line-height:1.4;box-sizing:border-box}.cc-ic{display:inline-flex;width:20px;height:20px}.cc-ic svg{width:100%;height:100%;display:block}`
 
 export function CenaConclusao(p: ConclusaoProps) {
+  const [passo, setPasso] = useState<'cena' | 'fim'>('cena')
+  if (passo === 'fim' && p.fim) return <FimParadaTela S={p.S} invencao={p.invencao} fim={p.fim} novos={p.novos} onContinuar={p.onContinuar} />
+  return <Cena {...p} onContinuar={p.fim ? () => setPasso('fim') : p.onContinuar} />
+}
+
+function Cena(p: ConclusaoProps) {
   const reduzido = !!useReducedMotion()
   const [fase, setFase] = useState(reduzido ? FINAL : 0)
   const [pulou, setPulou] = useState(false)
@@ -99,13 +106,19 @@ export function CenaConclusao(p: ConclusaoProps) {
         <h1 style={{ margin: 0, fontSize: 26 }}>{p.titulo}</h1>
         {p.sabe && !p.repeticao && <p style={{ margin: 0, fontSize: 17, fontWeight: 800, lineHeight: 1.35 }}>{p.sabe.charAt(0).toUpperCase() + p.sabe.slice(1)}</p>}
         {p.subtitulo && <p style={{ margin: 0 }}>{p.subtitulo}</p>}
-        {p.pratica && <div style={{ background: 'var(--locked,#f1ecff)', borderRadius: 16, padding: '10px 14px', textAlign: 'left', fontSize: 15, lineHeight: 1.4, width: '100%', boxSizing: 'border-box' }}>
-          <b style={{ color: 'var(--primary)' }}>Na prática: </b>{p.pratica}</div>}
+        {(p.pratica || (p.aprendi?.length ?? 0) > 0) && <div className="cc-cards" tabIndex={0} aria-label="O que você aprendeu: deslize para ver tudo">
+          {p.pratica && <div className="cc-card" style={{ background: 'var(--locked,#f1ecff)' }}>
+            <b style={{ color: 'var(--primary)' }}>Na prática: </b>{p.pratica}</div>}
+          {(p.aprendi || []).map(([t, d]) => <div className="cc-card" key={t} style={{ border: '2px solid var(--line-deep,#e3dcff)' }}>
+            <b style={{ color: 'var(--primary)' }}>{t}</b><br />{d}</div>)}
+        </div>}
+        {(p.aprendi?.length ?? 0) > 0 && <small style={{ color: 'var(--muted)', fontWeight: 700, marginTop: -4 }}>Deslize para ver o que você aprendeu →</small>}
         <div role="img" aria-label={`Estação Pingo: ${p.indice + 1} de ${p.invencao.modulos.length} módulos`} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--muted)', fontSize: 13, fontWeight: 800 }}>
           {p.invencao.modulos.map((m, i) => <i key={m.id} style={{ width: 8, height: 8, borderRadius: 4, background: i <= p.indice ? 'var(--primary)' : 'var(--line-deep)' }} />)}
           {!p.repeticao && modulo && <span style={{ marginLeft: 4 }}>{modulo} encaixada</span>}
         </div>
-        {p.proxima && <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--muted)' }}>A seguir: <span style={{ color: 'var(--ink)' }}>{p.proxima}</span></div>}
+        {fase >= FINAL && !p.fim && p.novos?.map(n => <NovoItemLinha key={n.slot + n.id} n={n} />)}
+        {p.proxima && !p.fim && <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--muted)' }}>A seguir: <span style={{ color: 'var(--ink)' }}>{p.proxima}</span></div>}
       </motion.div>
     </div></div>
     <div className="lfoot"><button className="btn" onClick={p.onContinuar}>Continuar</button></div>

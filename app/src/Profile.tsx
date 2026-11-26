@@ -15,6 +15,9 @@ import { useAuth } from './lib/use-auth'
 import { SaveProgressCard } from './SaveProgress'
 import { logOut } from './lib/auth'
 import { toast } from './Fx'
+import { Invencao } from './conclusao/Invencao'
+import { ESTACAO_PINGO } from './conclusao/contrato'
+import { matiz } from './conclusao/FimParada'
 
 const A:any=art
 const Html=({h,cls}:{h:string;cls?:string})=><span className={cls} style={cls?undefined:{display:'contents'}} dangerouslySetInnerHTML={{__html:h}}/>
@@ -75,6 +78,8 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
     <div className="avcap" aria-live="polite">{cap}</div>
     <p className="note" style={{margin:'8px 0 0'}}>Inventário: {nOwn} de {nAll} itens.</p>
 
+    <Oficina S={S}/>
+
     <div className="sect">Ajustes</div>
     <button className="btn ghost" style={{marginBottom:10}} onClick={toggleTheme}>Tema: {theme==='dark'?'escuro (roxo)':'claro'}</button>
     <button className="btn ghost" style={{marginBottom:10}} onClick={()=>{const v=!snd;setSound(v);setSnd(v);if(v)sfx('ok')}}>Sons do Pingo: {snd?'ligados':'desligados'}</button>
@@ -126,4 +131,21 @@ function Sumario({S,id,onClose}:{S:any;id:string;onClose:()=>void}){
         </div>}</div>})}
     <button className="btn" onClick={onClose}>Fechar</button>
   </div></div>
+}
+
+/** Prateleira de invenções: uma Estação Pingo por parada concluída (cada uma com sua cor) */
+function Oficina({S}:{S:any}){
+  const guard:string[]=S.ofi||[]
+  const itens=guard.flatMap(k=>{const [cid,g]=k.split(':'),c=CURSOS.find(x=>x.id===cid),pa=c?.json.mundos?.[0]?.paradas?.[+g]
+    return pa?[{k,idx:+g,lugar:pa.lugar as string,curso:c!.nome}]:[]})
+  const total=CURSOS.reduce((n,c)=>n+(c.json.mundos?.[0]?.paradas?.length||0),0)
+  return <>
+    <div className="sect">Oficina do Pingo</div>
+    {itens.length===0
+      ?<p className="note" style={{margin:0}}>Feche uma parada com a prova final e a Estação Pingo dessa parada fica guardada aqui.</p>
+      :<div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10}}>{itens.map(i=><div key={i.k} style={{background:'var(--locked,#f1ecff)',borderRadius:16,padding:'10px 8px',textAlign:'center'}}>
+        <div style={{width:'80%',margin:'0 auto',filter:`hue-rotate(${matiz(i.idx)}deg)`}}><Invencao invencao={ESTACAO_PINGO} acesos={ESTACAO_PINGO.modulos.length}/></div>
+        <b style={{fontSize:14}}>{i.lugar}</b><br/><small style={{color:'var(--muted)',fontWeight:700}}>{i.curso}</small></div>)}</div>}
+    <p className="note" style={{margin:'8px 0 0'}}>Invenções guardadas: {itens.length} de {total}.</p>
+  </>
 }

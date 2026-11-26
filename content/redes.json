@@ -409,7 +409,8 @@
       }
      ],
      "sabe": "o que é uma rede e por que ela existe.",
-     "pratica": "quando você divide a internet ou a impressora com a família, é uma rede de casa que faz isso funcionar."
+     "pratica": "quando você divide a internet ou a impressora com a família, é uma rede de casa que faz isso funcionar.",
+     "gancho": "Quando você divide a internet com a família, o que faz isso funcionar?"
     },
     {
      "lugar": "Casa do Pingo",
@@ -794,7 +795,8 @@
       }
      ],
      "sabe": "como é a rede de uma casa e o papel do roteador e do modem.",
-     "pratica": "se a internet cair em casa, você sabe separar o que é do modem, o que é do roteador e o que é dos aparelhos."
+     "pratica": "se a internet cair em casa, você sabe separar o que é do modem, o que é do roteador e o que é dos aparelhos.",
+     "gancho": "Você sabe qual caixinha da sua casa leva a internet até o celular?"
     },
     {
      "lugar": "Posto de Cabos",
@@ -1200,7 +1202,8 @@
      ],
      "chamado": "wifi",
      "sabe": "quando usar cabo, Wi-Fi ou fibra e o que muda em cada um.",
-     "pratica": "você escolhe cabo para o PC de jogo ou de trabalho e Wi-Fi para o celular, sabendo o motivo."
+     "pratica": "você escolhe cabo para o PC de jogo ou de trabalho e Wi-Fi para o celular, sabendo o motivo.",
+     "gancho": "Para o PC de trabalho, vale mais usar cabo ou Wi-Fi? Por quê?"
     },
     {
      "lugar": "Porto da Internet",
@@ -1597,7 +1600,8 @@
       }
      ],
      "sabe": "o que é a internet, quem dá acesso a ela e como cliente e servidor conversam.",
-     "pratica": "ao abrir qualquer site, você sabe quem está pedindo, quem está respondendo e quem liga a sua casa ao resto da rede."
+     "pratica": "ao abrir qualquer site, você sabe quem está pedindo, quem está respondendo e quem liga a sua casa ao resto da rede.",
+     "gancho": "Quando você abre um site, quem pede e quem responde?"
     },
     {
      "lugar": "Rua dos Endereços",
@@ -1996,7 +2000,8 @@
      ],
      "chamado": "print",
      "sabe": "o que é um endereço IP, como ele muda entre casa e internet e quem o entrega.",
-     "pratica": "ao olhar as configurações de rede do aparelho, você reconhece o IP e entende de onde ele veio."
+     "pratica": "ao olhar as configurações de rede do aparelho, você reconhece o IP e entende de onde ele veio.",
+     "gancho": "Como cada aparelho da sua casa ganha um endereço na rede?"
     },
     {
      "lugar": "Agenda de Nomes",
@@ -2379,7 +2384,8 @@
      ],
      "chamado": "dns",
      "sabe": "como um nome de site vira número e o que fazer quando ele não abre.",
-     "pratica": "se um site não abre, você sabe testar se é o DNS, o site ou a sua internet antes de culpar o aparelho."
+     "pratica": "se um site não abre, você sabe testar se é o DNS, o site ou a sua internet antes de culpar o aparelho.",
+     "gancho": "Como o navegador sabe onde fica um site só pelo nome?"
     },
     {
      "lugar": "Correio de Pacotes",
@@ -2753,7 +2759,8 @@
      ],
      "chamado": "lenta",
      "sabe": "como os dados viajam em bits e pacotes e o que são banda e latência.",
-     "pratica": "ao testar a velocidade da internet, você entende o que significam os números de Mb/s e de ping."
+     "pratica": "ao testar a velocidade da internet, você entende o que significam os números de Mb/s e de ping.",
+     "gancho": "O que significam Mb/s e ping no teste de velocidade da internet?"
     },
     {
      "lugar": "Central de Equipamentos",
@@ -3136,7 +3143,8 @@
      ],
      "chamado": "office",
      "sabe": "o papel do switch, do ponto de acesso e do repetidor no caminho da internet.",
-     "pratica": "ao ampliar a rede de uma casa ou escritório, você escolhe o equipamento certo para cada necessidade."
+     "pratica": "ao ampliar a rede de uma casa ou escritório, você escolhe o equipamento certo para cada necessidade.",
+     "gancho": "Que equipamento escolher para ampliar a rede de uma casa ou escritório?"
     },
     {
      "lugar": "Mapa das Redes",
@@ -3534,7 +3542,8 @@
       }
      ],
      "sabe": "os tipos de rede por tamanho e a forma em estrela de ligar os aparelhos.",
-     "pratica": "ao ouvir PAN, LAN, MAN ou WAN, você sabe de que tamanho de rede se está falando."
+     "pratica": "ao ouvir PAN, LAN, MAN ou WAN, você sabe de que tamanho de rede se está falando.",
+     "gancho": "PAN, LAN, MAN, WAN: de que tamanho de rede cada sigla fala?"
     },
     {
      "lugar": "Portão Seguro",
@@ -3923,7 +3932,8 @@
       }
      ],
      "sabe": "como proteger a rede e a conversa com os sites com hábitos simples.",
-     "pratica": "você protege a sua rede e os seus dados no dia a dia, em casa, no trabalho e em Wi-Fi público."
+     "pratica": "você protege a sua rede e os seus dados no dia a dia, em casa, no trabalho e em Wi-Fi público.",
+     "gancho": "Como proteger a sua rede e os seus dados no dia a dia?"
     }
    ]
   }

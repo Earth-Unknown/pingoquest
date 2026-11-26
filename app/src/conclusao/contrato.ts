@@ -33,8 +33,15 @@ export type ConclusaoProps = {
   sabe?: string
   pratica?: string
   proxima?: string
+  aprendi?: [string, string][]
+  novos?: NovoItem[]
+  fim?: FimParada
   xp: number             // energia ganha (já aplicada)
   chips: number          // chips ganhos (já aplicados)
   acertos?: number       // precisão 0 a 100 (opcional, discreta)
   onContinuar: () => void
 }
+
+export type NovoItem = { slot: string; id: string; nome: string; icone: string }
+export type ProximaParada = { idx: number; lugar: string; titulo: string; gancho?: string; topicos: string[] }
+export type FimParada = { idx: number; lugar: string; titulo: string; vidasCheias: boolean; prox?: ProximaParada }
