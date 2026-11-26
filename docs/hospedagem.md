@@ -15,6 +15,12 @@ O site é estático (o app React compilado). Não precisa de servidor, então Fi
 
 Nas próximas vezes: `sh tools/montar-site.sh && firebase deploy --only hosting`.
 
+## Publicação automática (a cada merge na main)
+Dois workflows publicam o mesmo site, para os dois endereços não ficarem diferentes:
+- `pages.yml` → GitHub Pages (earth-unknown.github.io/pingoquest), em qualquer push na `main`.
+- `deploy-hosting.yml` → Firebase Hosting (pingoquest.web.app), quando mudam `app/`, `src/`, `content/`, ícones, `index.html`, `firebase.json` ou depois de um deploy da API.
+Ambos usam `sh tools/montar-site.sh`. Para publicar na mão: `sh tools/montar-site.sh && firebase deploy --only hosting`.
+
 ## Domínio e Cloudflare
 - Firebase Console > Hosting > "Adicionar domínio personalizado" e siga os registros DNS.
 - No Cloudflare (DNS), deixe os registros do Firebase em "somente DNS" (nuvem cinza) até o certificado ser emitido; depois pode ligar o proxy (nuvem laranja).
