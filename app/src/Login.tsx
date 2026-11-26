@@ -13,6 +13,7 @@ export type LoginDest = 'welcome' | 'trail'
 type Props = {
   S: Save
   booting: boolean
+  signedIn?: boolean // já entrou com Google: não oferece o Google de novo
   onBusy: (busy: boolean) => void
   onContinueLocal: () => void
   onDone: (dest: LoginDest) => void
@@ -31,7 +32,7 @@ const SUPPORT_DEFAULT = {
   B: 'Entrando com Google, seu progresso vai junto e fica salvo na nuvem.',
 }
 
-export function Login({ S, booting, onBusy, onContinueLocal, onDone }: Props) {
+export function Login({ S, booting, signedIn, onBusy, onContinueLocal, onDone }: Props) {
   const [hasLocal] = useState(() => !!S.onb)
   const variant = hasLocal ? 'B' : 'A'
   const [busy, setBusy] = useState<'google' | 'guest' | null>(null)
@@ -182,8 +183,10 @@ export function Login({ S, booting, onBusy, onContinueLocal, onDone }: Props) {
               ) : (
                 <>
                   <button type="button" className="btn" aria-disabled={busy ? true : undefined} onClick={() => { if (!busy) { sfx('start'); onContinueLocal() } }}>Continuar jogando</button>
-                  <p className="lg-or" aria-hidden="true">ou</p>
-                  <GoogleButton label="Continuar com o Google" busy={busy === 'google'} onClick={() => run('google')} />
+                  {!signedIn && <>
+                    <p className="lg-or" aria-hidden="true">ou</p>
+                    <GoogleButton label="Continuar com o Google" busy={busy === 'google'} onClick={() => run('google')} />
+                  </>}
                 </>
               )}
               <p className="lg-note" role="status">{support}</p>
