@@ -114,7 +114,9 @@
          "conceito": "linux.def",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "o que é o Linux e para que serve um sistema operacional.",
+       "pratica": "quando alguém disser que o servidor da empresa roda Linux, você entende que é o sistema que liga os programas às peças da máquina."
       },
       {
        "nome": "Livre e aberto",
@@ -227,7 +229,9 @@
          "conceito": "linux.livre",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "por que o Linux é livre e o que significa ter o código aberto.",
+       "pratica": "ao escolher um sistema para um servidor, saber que o Linux é livre ajuda a entender por que tantas empresas o usam e vendem suporte em cima dele."
       },
       {
        "nome": "Distribuições",
@@ -344,7 +348,9 @@
          "conceito": "linux.distro",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "o que é uma distribuição e que Ubuntu, Debian e Fedora são exemplos.",
+       "pratica": "ao receber a tarefa «instale o servidor», você sabe que precisa escolher uma distribuição, e não apenas o Linux puro."
       }
      ],
      "extras": [
@@ -396,7 +402,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_acesso"
+     "chamado": "lx_acesso",
+     "sabe": "o que é o Linux, por que ele é livre e o que são distribuições.",
+     "pratica": "você entende do que falam os times de TI quando citam Linux, Ubuntu ou Debian, e consegue acompanhar a escolha do sistema de um servidor."
     },
     {
      "lugar": "Painel de Comandos",
@@ -506,7 +514,9 @@
          "conceito": "linux.terminal",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "a diferença entre terminal e shell e como mandar comandos escritos.",
+       "pratica": "em muitos servidores só existe a tela preta do terminal, e é nela que você digita os comandos para trabalhar."
       },
       {
        "nome": "Anatomia de um comando",
@@ -624,7 +634,9 @@
          "conceito": "linux.comando",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como ler as três partes de um comando: nome, opções e argumentos.",
+       "pratica": "ao ver um comando num manual ou num chamado, você separa nome, opção e argumento para entender o que ele vai fazer antes de rodar."
       },
       {
        "nome": "Ler o prompt",
@@ -725,7 +737,9 @@
          "conceito": "linux.prompt",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como ler o prompt e a diferença entre $ e #.",
+       "pratica": "antes de digitar qualquer coisa num servidor, o prompt diz quem você é e onde está; um # avisa que você está como administrador."
       }
      ],
      "extras": [
@@ -777,7 +791,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_comandos"
+     "chamado": "lx_comandos",
+     "sabe": "o que são terminal, shell, comando e prompt e como ler cada um.",
+     "pratica": "você abre o terminal de um servidor sem receio, lê o prompt para saber quem e onde você está e entende a estrutura de um comando."
     },
     {
      "lugar": "Mapa de Pastas",
@@ -887,7 +903,9 @@
          "conceito": "linux.arvore",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como as pastas do Linux se organizam numa árvore a partir da raiz.",
+       "pratica": "ao procurar uma configuração ou um log num servidor, saber que /etc guarda configurações e /var guarda logs economiza muito tempo."
       },
       {
        "nome": "Caminho absoluto e relativo",
@@ -996,7 +1014,9 @@
          "conceito": "linux.caminho",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "a diferença entre caminho absoluto e relativo.",
+       "pratica": "num script ou num comando de suporte, o caminho absoluto funciona de qualquer pasta e evita apontar para o arquivo errado."
       },
       {
        "nome": "Atalhos: ~, . e ..",
@@ -1097,7 +1117,9 @@
          "conceito": "linux.atalhos",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "o que são ~, . e .. e como usar cd e pwd para se mover.",
+       "pratica": "ao entrar num servidor pela primeira vez, pwd e cd são o que você usa para se localizar antes de mexer em qualquer arquivo."
       }
      ],
      "extras": [
@@ -1149,7 +1171,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_pastas"
+     "chamado": "lx_pastas",
+     "sabe": "como as pastas se organizam e como se mover com caminhos absolutos, relativos e atalhos.",
+     "pratica": "num servidor, você se orienta pelas pastas e chega a qualquer arquivo usando cd, pwd e caminhos corretos."
     },
     {
      "lugar": "Oficina de Arquivos",
@@ -1259,7 +1283,9 @@
          "conceito": "linux.criar",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "como criar pastas com «mkdir» e arquivos vazios com «touch».",
+       "pratica": "ao preparar um ambiente de trabalho, você monta a estrutura de pastas e arquivos em segundos, sem usar o mouse."
       },
       {
        "nome": "Copiar e mover",
@@ -1368,7 +1394,9 @@
          "conceito": "linux.copiar",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como copiar com «cp» e mover ou renomear com «mv».",
+       "pratica": "antes de mexer num arquivo de configuração, você tira uma cópia de segurança com cp e consegue voltar atrás se algo der errado."
       },
       {
        "nome": "Apagar com cuidado",
@@ -1469,7 +1497,9 @@
          "conceito": "linux.apagar",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "por que o «rm» não tem volta e como apagar com cuidado.",
+       "pratica": "ao limpar arquivos antigos de um servidor, você confere com ls o que vai sumir antes de apagar, porque não há lixeira para recuperar."
       }
      ],
      "extras": [
@@ -1521,7 +1551,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_arquivos"
+     "chamado": "lx_arquivos",
+     "sabe": "como criar, copiar, mover e apagar arquivos e pastas com cuidado.",
+     "pratica": "você organiza arquivos de um servidor e faz cópias de segurança antes de mexer, sabendo que o rm não tem volta."
     },
     {
      "lugar": "Sala de Leitura",
@@ -1647,7 +1679,9 @@
          "conceito": "linux.ler",
          "dificuldade": 1
         }
-       ]
+       ],
+       "sabe": "como ver um arquivo com «cat», «head» e «tail».",
+       "pratica": "ao investigar um problema num servidor, tail mostra as últimas linhas de um log, onde costuma estar o que aconteceu por último."
       },
       {
        "nome": "Procurar texto",
@@ -1765,7 +1799,9 @@
          "conceito": "linux.grep",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "como achar linhas com «grep» e contar linhas com «wc -l».",
+       "pratica": "num log enorme, o grep encontra só as linhas com a palavra erro, em vez de você ler o arquivo inteiro à mão."
       }
      ],
      "extras": [
@@ -1817,7 +1853,9 @@
        "dificuldade": 2
       }
      ],
-     "chamado": "lx_logs"
+     "chamado": "lx_logs",
+     "sabe": "como ler arquivos e procurar texto neles com cat, head, tail e grep.",
+     "pratica": "ao investigar uma falha, você lê o fim de um log e filtra só as linhas que importam."
     },
     {
      "lugar": "Esteira de Dados",
@@ -1927,7 +1965,9 @@
          "conceito": "linux.redir",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "como guardar a saída de um comando em arquivo com > e >>.",
+       "pratica": "para registrar o resultado de um comando num relatório, você usa > ou >> e guarda a saída em vez de copiar da tela."
       },
       {
        "nome": "O pipe",
@@ -2036,7 +2076,9 @@
          "conceito": "linux.pipe",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "como ligar comandos com o pipe para filtrar e contar resultados.",
+       "pratica": "para saber quantas vezes um erro apareceu num log, você encadeia cat, grep e wc -l numa linha só."
       }
      ],
      "extras": [
@@ -2088,7 +2130,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_esteira"
+     "chamado": "lx_esteira",
+     "sabe": "como redirecionar a saída para arquivos e ligar comandos com o pipe.",
+     "pratica": "você monta consultas rápidas, como contar erros de um log, e guarda o resultado num arquivo para um relatório."
     },
     {
      "lugar": "Portaria",
@@ -2198,7 +2242,9 @@
          "conceito": "linux.perm",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "como ler as letras r, w e x que aparecem em «ls -l».",
+       "pratica": "quando um arquivo não abre ou um programa não roda, olhar as permissões com ls -l mostra se o problema é falta de acesso."
       },
       {
        "nome": "Mudar com chmod",
@@ -2307,7 +2353,9 @@
          "conceito": "linux.chmod",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como mudar permissões com «chmod» e liberar um script para rodar.",
+       "pratica": "ao receber um script que não executa, «chmod +x» dá a permissão que faltava para você rodá-lo com ./."
       }
      ],
      "extras": [
@@ -2359,7 +2407,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_portaria"
+     "chamado": "lx_portaria",
+     "sabe": "como ler e mudar as permissões de arquivos com «ls -l» e «chmod».",
+     "pratica": "você descobre por que um arquivo não abre ou um script não roda e corrige a permissão com segurança."
     },
     {
      "lugar": "Sala do Administrador",
@@ -2469,7 +2519,9 @@
          "conceito": "linux.user",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "que o Linux tem vários usuários e como ver quem você é com «whoami» e «id».",
+       "pratica": "antes de executar algo importante num servidor, whoami confirma se você está como usuário comum ou como administrador."
       },
       {
        "nome": "O sudo",
@@ -2578,7 +2630,9 @@
          "conceito": "linux.sudo",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como usar «sudo» para rodar um comando como administrador.",
+       "pratica": "para instalar um programa ou mudar uma configuração do sistema, você usa sudo só naquele comando, em vez de ficar como root o tempo todo."
       }
      ],
      "extras": [
@@ -2630,7 +2684,9 @@
        "dificuldade": 2
       }
      ],
-     "chamado": "lx_admin"
+     "chamado": "lx_admin",
+     "sabe": "como saber quem você é no sistema e usar o sudo para tarefas de administrador.",
+     "pratica": "você faz tarefas de administração com sudo só quando precisa, sem trabalhar como root o tempo todo."
     },
     {
      "lugar": "Sala de Máquinas",
@@ -2740,7 +2796,9 @@
          "conceito": "linux.proc",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "o que é um processo e como listar e encerrar com «ps», «top» e «kill».",
+       "pratica": "quando um programa trava e deixa o servidor lento, você descobre o PID com ps ou top e encerra o processo com kill."
       },
       {
        "nome": "Pacotes",
@@ -2849,7 +2907,9 @@
          "conceito": "linux.pacote",
          "dificuldade": 3
         }
-       ]
+       ],
+       "sabe": "o que são pacotes e como o «apt» usa repositórios para instalar programas.",
+       "pratica": "para colocar um programa novo num servidor Ubuntu ou Debian, você atualiza a lista com apt update e instala o pacote pedido."
       }
      ],
      "extras": [
@@ -2901,7 +2961,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_maquinas"
+     "chamado": "lx_maquinas",
+     "sabe": "como ver e encerrar processos e como o apt instala pacotes.",
+     "pratica": "você resolve um programa travado encerrando o processo e coloca novos programas num servidor Debian ou Ubuntu."
     },
     {
      "lugar": "Loja de Programas",
@@ -3019,7 +3081,9 @@
          "conceito": "linux.buscar",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como procurar um pacote com «apt search» e instalar um ou vários com «apt install».",
+       "pratica": "quando falta uma ferramenta no servidor, você procura o nome com apt search e instala com apt install, e as dependências vêm juntas."
       },
       {
        "nome": "Remover e outras formas",
@@ -3124,7 +3188,9 @@
          "conceito": "linux.remover",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como remover e atualizar programas, e que o apt é o jeito mais seguro.",
+       "pratica": "ao manter um servidor em dia, você roda apt upgrade para atualizar e apt remove para tirar o que não usa mais."
       }
      ],
      "extras": [
@@ -3176,7 +3242,9 @@
        "dificuldade": 2
       }
      ],
-     "chamado": "lx_loja"
+     "chamado": "lx_loja",
+     "sabe": "como buscar, instalar, remover e atualizar programas com o apt.",
+     "pratica": "você mantém um servidor com os programas certos e atualizados, usando os repositórios oficiais."
     },
     {
      "lugar": "Torre de Rede",
@@ -3286,7 +3354,9 @@
          "conceito": "linux.ip",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como ver seus endereços IP com «ip a» e o nome da máquina com «hostname».",
+       "pratica": "ao configurar um acesso ao servidor, «ip a» mostra o endereço IP que você precisa informar para conectar nele."
       },
       {
        "nome": "Testar a conexão",
@@ -3404,7 +3474,9 @@
          "conceito": "linux.ping",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como testar a conexão com «ping» e buscar uma página com «curl».",
+       "pratica": "se um site ou serviço não responde, ping mostra se a máquina está no ar e curl mostra se o serviço está respondendo."
       }
      ],
      "extras": [
@@ -3456,7 +3528,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_torre"
+     "chamado": "lx_torre",
+     "sabe": "como ver o endereço da máquina e testar a conexão com «ip a», «ping» e «curl».",
+     "pratica": "diante de um problema de conexão, você descobre se a falha está na máquina, na rede ou no serviço."
     },
     {
      "lugar": "Oficina de Scripts",
@@ -3570,7 +3644,9 @@
          "conceito": "linux.script",
          "dificuldade": 1
         }
-       ]
+       ],
+       "sabe": "como criar um script, dar permissão com «chmod +x» e executá-lo com ./.",
+       "pratica": "tarefas que você repete todo dia, como copiar arquivos, podem virar um script que roda tudo com um só comando."
       },
       {
        "nome": "Variáveis",
@@ -3679,7 +3755,9 @@
          "conceito": "linux.var",
          "dificuldade": 1
         }
-       ]
+       ],
+       "sabe": "como guardar valores em variáveis e usar $USER, $HOME e $1.",
+       "pratica": "um script com variáveis serve para vários casos: você passa um nome na chamada e ele usa o valor no lugar certo."
       }
      ],
      "extras": [
@@ -3731,7 +3809,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_script"
+     "chamado": "lx_script",
+     "sabe": "como criar e rodar um script simples e usar variáveis nele.",
+     "pratica": "você transforma uma sequência de comandos repetida num script e a executa com um só comando."
     },
     {
      "lugar": "Relógio de Tarefas",
@@ -3845,7 +3925,9 @@
          "conceito": "linux.cron",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como ler as regras do cron, com os 5 campos de tempo.",
+       "pratica": "para garantir que uma cópia de segurança rode todo dia de madrugada, você escreve a regra com hora e dia no formato do cron."
       },
       {
        "nome": "Instalar a agenda",
@@ -3954,7 +4036,9 @@
          "conceito": "linux.crontab",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como instalar a agenda com «crontab» e conferir com «crontab -l».",
+       "pratica": "depois de escrever as regras, crontab as coloca para funcionar e crontab -l confirma o que ficou agendado, usando caminhos completos."
       }
      ],
      "extras": [
@@ -4006,7 +4090,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_agenda"
+     "chamado": "lx_agenda",
+     "sabe": "como agendar tarefas automáticas com o cron e conferir a agenda com «crontab».",
+     "pratica": "você deixa cópias de segurança e limpezas rodando sozinhas no horário certo, sem precisar lembrar."
     },
     {
      "lugar": "Caçador de Arquivos",
@@ -4120,7 +4206,9 @@
          "conceito": "linux.find",
          "dificuldade": 1
         }
-       ]
+       ],
+       "sabe": "como procurar arquivos pelo nome com «find» e o curinga *.",
+       "pratica": "para achar todos os arquivos .log de um servidor, find varre as pastas e entrega a lista completa em segundos."
       },
       {
        "nome": "Espaço em disco",
@@ -4229,7 +4317,9 @@
          "conceito": "linux.disco",
          "dificuldade": 2
         }
-       ]
+       ],
+       "sabe": "como ver o espaço dos discos com «df -h» e o tamanho de pastas com «du -sh».",
+       "pratica": "quando o servidor para de gravar logs, df -h mostra se o disco encheu e du -sh aponta qual pasta está ocupando o espaço."
       }
      ],
      "extras": [
@@ -4281,7 +4371,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_busca"
+     "chamado": "lx_busca",
+     "sabe": "como achar arquivos com «find» e medir o espaço em disco com «df» e «du».",
+     "pratica": "você encontra arquivos perdidos e descobre o que está enchendo o disco antes que o servidor pare de gravar."
     },
     {
      "lugar": "Portal Remoto",
@@ -4395,7 +4487,9 @@
          "conceito": "linux.ssh",
          "dificuldade": 1
         }
-       ]
+       ],
+       "sabe": "como entrar em outro computador com «ssh usuario@servidor».",
+       "pratica": "para administrar um servidor que fica em outro lugar, você entra nele pelo ssh e trabalha como se estivesse na frente da máquina."
       },
       {
        "nome": "Chaves e scp",
@@ -4500,7 +4594,9 @@
          "conceito": "linux.chaves",
          "dificuldade": 1
         }
-       ]
+       ],
+       "sabe": "como usar um par de chaves no ssh e copiar arquivos com «scp».",
+       "pratica": "para enviar um arquivo ao servidor, scp copia pela rede, e a chave pública evita digitar senha a cada conexão."
       }
      ],
      "extras": [
@@ -4552,7 +4648,9 @@
        "dificuldade": 3
       }
      ],
-     "chamado": "lx_remoto"
+     "chamado": "lx_remoto",
+     "sabe": "como entrar em um servidor com o ssh, usar chaves e copiar arquivos com o scp.",
+     "pratica": "você administra servidores à distância, de forma segura, e envia arquivos para eles sem sair do terminal."
     }
    ]
   }

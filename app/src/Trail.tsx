@@ -23,6 +23,14 @@ function nodeArt(curso:string,gi:number,k:number){
 
 /** última etapa "atual" vista (curso:parada-fase): se mudou depois de uma lição, o Pingo caminha até a nova */
 let lastCur:string|null=null
+/** Texto de conclusão da lição: o que se aprendeu, a aplicação real e o que vem a seguir (vem do conteúdo do curso) */
+function resumoDe(par:any[],games:any[],g:number,k:number){
+  const p=par[g]||{},f=k<3?p.fases?.[k]:null,src=f?.sabe?f:p
+  const nomes=games[g]?.names||[]
+  const proxima=k<3?nomes[k+1]:(games[g+1]?.title||'')
+  return {sabe:src?.sabe as string|undefined,pratica:src?.pratica as string|undefined,proxima:proxima||undefined}
+}
+
 export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpen:string|null;setEvOpen:(id:string|null)=>void}){
   const ativo=S.curso||'redes'
   const cur=CURSOS.find(c=>c.id===ativo)||CURSOS[0]
@@ -109,7 +117,7 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
     <EventFab S={S} json={cur.json} onOpen={setEvOpen}/>
     {evOpen&&<EventPage S={S} json={cur.json} id={evOpen} onClose={()=>setEvOpen(null)} refresh={refresh}/>}
     {kase&&<Case key={kase.id} S={S} def={(cur.json.casos||[]).find((c:any)=>c.id===kase.id)} kind="node" keyId={kase.g+'-3'} replay={!!done[kase.g+'-3']} onClose={()=>{setKase(null);refresh()}}/>}
-    {play&&<Lesson key={play.g+'-'+play.k} S={S} qs={lessonQs(games[play.g],play.k)} kind={play.k===3?'boss':'phase'} keyId={play.g+'-'+play.k} onClose={()=>{setPlay(null);refresh()}}/>}
+    {play&&<Lesson key={play.g+'-'+play.k} S={S} qs={lessonQs(games[play.g],play.k)} kind={play.k===3?'boss':'phase'} keyId={play.g+'-'+play.k} resumo={resumoDe(par,games,play.g,play.k)} onClose={()=>{setPlay(null);refresh()}}/>}
   </div>
 }
 
