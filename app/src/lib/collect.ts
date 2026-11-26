@@ -10,15 +10,18 @@ const pill=(cls:string,icon:string,from:number,label:string)=>{
   d.innerHTML=icon+'<b>'+from+'</b><small>'+label+'</small>';return d
 }
 /** Resolve quando a animação termina (ou na hora, se não há o que coletar ou o aparelho pede menos movimento) */
-export function collect(xp:number,gm:number):Promise<void>{
+export function collect(xp:number,gm:number,hearts=0):Promise<void>{
   const root=[...document.querySelectorAll<HTMLElement>('#lesson')].pop()
   if(!root||!xp||reducedMotion())return Promise.resolve()
   const S=load(),e0=(S.xp||0)-xp,g0=(S.gems??50)-gm
   const tiles=[...root.querySelectorAll<HTMLElement>('.res2 .rt')]
-  const eT=tiles[0],gT=tiles.find(t=>/chips/i.test(t.querySelector('small')?.textContent||''))
+  const lab=(t:HTMLElement)=>t.querySelector('small')?.textContent||''
+  const eT=tiles.find(t=>/energia/i.test(lab(t))),gT=tiles.find(t=>/chips/i.test(lab(t))),hT=tiles.find(t=>/vidas/i.test(lab(t)))
   const bar=document.createElement('div');bar.className='cpills'
+  const h1=S.hearts??5,hasH=hearts>0&&!!hT
+  const ph=hasH?pill('h','<span style="color:#ff4b6e;display:contents">'+A.IC.heart+'</span>',h1-hearts,'vidas'):null
   const pe=pill('e',A.IC.bolt,e0,'energia'),pg=gm>0?pill('g','<span style="color:#ff4fae;display:contents">'+A.IC.gem+'</span>',g0,'chips'):null
-  bar.appendChild(pe);if(pg)bar.appendChild(pg);root.appendChild(bar)
+  if(ph)bar.appendChild(ph);bar.appendChild(pe);if(pg)bar.appendChild(pg);root.appendChild(bar)
   root.querySelectorAll<HTMLButtonElement>('.lfoot .btn').forEach(b=>{b.disabled=true})
   return new Promise<void>(resolve=>{
     let landed=0,total=0,over=false
@@ -26,6 +29,7 @@ export function collect(xp:number,gm:number):Promise<void>{
     const jobs=[
       eT&&{tile:eT,ic:A.IC.bolt,pill:pe,b:pe.querySelector('b')!,from:e0,add:xp},
       gT&&pg&&gm>0&&{tile:gT,ic:'<span style="color:#ff4fae;display:contents">'+A.IC.gem+'</span>',pill:pg,b:pg.querySelector('b')!,from:g0,add:gm},
+      hT&&ph&&{tile:hT,ic:'<span style="color:#ff4b6e;display:contents">'+A.IC.heart+'</span>',pill:ph,b:ph.querySelector('b')!,from:h1-hearts,add:hearts},
     ].filter(Boolean) as {tile:HTMLElement;ic:string;pill:HTMLElement;b:Element;from:number;add:number}[]
     setTimeout(()=>{
       if(!jobs.length){finish();return}
