@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { load } from './lib/store'
 import { patchSave } from './lib/save'
 import { attentionAll as attention } from './lib/cases'
-import { streakNow, missKeys, cqSync, gamesOf } from './lib/progress'
+import { streakNow, missKeys, cqSync, gamesOf, precisaMigrar, migrarConteudo } from './lib/progress'
 import { sync as avSync } from './lib/avatar'
 import { pendingDuel } from './lib/duel'
 import { inviteFromHash } from './lib/friends'
@@ -37,6 +37,7 @@ function Game({skipWelcome}:{skipWelcome:boolean}){
   const [streak,setStreak]=useState(false)
   const refresh=()=>setV(x=>x+1)
   let S=load()
+  if(precisaMigrar(S))S=patchSave(s=>migrarConteudo(s))
   if(S.onb&&!S.onbC?._m)S=patchSave(s=>{s.onbC=s.onbC||{};s.onbC[s.curso||'redes']=true;s.onbC._m=1})
   const provas=gamesOf(S.curso||'redes').filter(g=>!g.caso).length
   const probe=JSON.parse(JSON.stringify(S))
