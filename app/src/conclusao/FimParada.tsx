@@ -52,16 +52,17 @@ function EscolhaAdereco({ opcoes, simulado }: { opcoes: NovoItem[]; simulado?: b
 export function FimParadaTela({ S, invencao, fim, novos, onContinuar }: { S: any; invencao: InvencaoDef; fim: FimParada; novos?: NovoItem[]; onContinuar: () => void }) {
   const fade = (d: number) => ({ initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.3, delay: d, ease: 'easeOut' as const } })
   const px = fim.prox
+  const u = fim.unidade || { n: 'Parada', o: 'a', concl: 'concluída' }
   const placa = (idx: number) => '<svg viewBox="0 0 40 40" aria-hidden="true">' + (A.PLACE_IC[idx] || A.PLACE_IC[0]) + '</svg>'
   return <div id="lesson" ref={enter}><style>{css}</style><div className="lw">
     <div className="lbody lscroll"><div className="center" style={{ gap: 10 }}>
-      <motion.h1 {...fade(0)} style={{ margin: 0, fontSize: 26 }}>Parada {fim.idx + 1} concluída!</motion.h1>
-      <motion.p {...fade(0.05)} style={{ margin: 0 }}>{fim.lugar}: {fim.titulo}</motion.p>
+      <motion.h1 {...fade(0)} style={{ margin: 0, fontSize: 26 }}>{u.n} {fim.idx + 1} {u.concl}!</motion.h1>
+      <motion.p {...fade(0.05)} style={{ margin: 0 }}>{fim.lugar && fim.lugar !== fim.titulo ? fim.lugar + ': ' + fim.titulo : fim.titulo}</motion.p>
 
       <motion.div {...fade(0.15)} style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '100%' }}>
         <div className="fp-row">
           <span className="fp-ic" style={{ filter: `hue-rotate(${matiz(fim.idx)}deg)` }}><Invencao invencao={invencao} acesos={invencao.modulos.length} /></span>
-          <span><small>Guardada na sua Oficina</small>Estação Pingo · {fim.lugar}</span>
+          <span><small>Guardada na sua Oficina</small>Estação Pingo · {fim.lugar || fim.titulo}</span>
         </div>
         {novos?.map(n => <NovoItemLinha key={n.slot + n.id} n={n} simulado={fim.simulado} />)}
         {fim.escolha && fim.escolha.length > 0 && <EscolhaAdereco opcoes={fim.escolha} simulado={fim.simulado} />}
@@ -69,13 +70,13 @@ export function FimParadaTela({ S, invencao, fim, novos, onContinuar }: { S: any
       </motion.div>
 
       {px ? <motion.div {...fade(0.6)} style={{ width: '100%', marginTop: 6, textAlign: 'center' }}>
-        <b style={{ fontSize: 18 }}>Você avançou para a Parada {px.idx + 1}!</b>
+        <b style={{ fontSize: 18 }}>Você avançou para {u.o} {u.n} {px.idx + 1}!</b>
         {/* caminho: parada que acabou (check) → Pingo andando → próxima parada (cadeado abre) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 0, margin: '14px 4px 6px' }}>
           <div style={{ width: 64, textAlign: 'center', flex: 'none', whiteSpace: 'nowrap' }}>
             <div style={{ width: 48, height: 48, borderRadius: 16, background: '#3fbf5f', margin: '0 auto', display: 'grid', placeItems: 'center' }}>
               <Html cls="fp-ic" h={'<span style="color:#fff;display:contents">' + A.IC.check + '</span>'} /></div>
-            <small style={{ fontWeight: 800 }}>Parada {fim.idx + 1}</small></div>
+            <small style={{ fontWeight: 800 }}>{u.n} {fim.idx + 1}</small></div>
           <div style={{ flex: 1, position: 'relative', height: 48 }}>
             <div style={{ position: 'absolute', left: 4, right: 4, top: 22, height: 6, borderRadius: 3, background: 'var(--line-deep,#e3dcff)' }} />
             <motion.div style={{ position: 'absolute', left: 4, top: 22, height: 6, borderRadius: 3, background: 'var(--cyan,#18ddfb)' }} initial={{ width: 0 }} animate={{ width: 'calc(100% - 8px)' }} transition={{ duration: 1.3, delay: 0.8, ease: 'easeInOut' }} />
@@ -88,7 +89,7 @@ export function FimParadaTela({ S, invencao, fim, novos, onContinuar }: { S: any
               <motion.span aria-hidden initial={{ opacity: 1, scale: 1 }} animate={{ opacity: 0, scale: 1.4 }} transition={{ duration: 0.4, delay: 2.1 }}
                 style={{ position: 'absolute', inset: 0, borderRadius: 16, background: '#8b7fb0', display: 'grid', placeItems: 'center', color: '#fff', fontSize: 22 }}>🔒</motion.span>
             </div>
-            <small style={{ fontWeight: 800 }}>Parada {px.idx + 1}</small></div>
+            <small style={{ fontWeight: 800 }}>{u.n} {px.idx + 1}</small></div>
         </div>
         <motion.div {...fade(2.2)} style={{ borderRadius: 18, padding: '10px 14px', textAlign: 'left', boxSizing: 'border-box', background: 'var(--locked,#f1ecff)', border: '2px solid var(--line-deep,#e3dcff)' }}>
           <b style={{ fontSize: 17 }}>{px.lugar}</b> <span style={{ color: 'var(--muted)', fontWeight: 700 }}>· {px.titulo}</span>
@@ -99,6 +100,6 @@ export function FimParadaTela({ S, invencao, fim, novos, onContinuar }: { S: any
       </motion.div>
       : <motion.p {...fade(0.4)} style={{ margin: 0 }}>Mais paradas chegam em breve. Você já fechou todas as de agora!</motion.p>}
     </div></div>
-    <div className="lfoot"><button className="btn" onClick={onContinuar}>{px ? 'Ir para a Parada ' + (px.idx + 1) : 'Continuar'}</button></div>
+    <div className="lfoot"><button className="btn" onClick={onContinuar}>{px ? 'Ir para ' + u.o + ' ' + u.n + ' ' + (px.idx + 1) : 'Continuar'}</button></div>
   </div></div>
 }

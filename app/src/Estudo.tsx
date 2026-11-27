@@ -5,6 +5,7 @@ import { Lesson } from './Lesson'
 import { Album } from './Album'
 import { missKeys, qIndex, gamesOf } from './lib/progress'
 import { shuffle, type Q } from './lib/curso'
+import { unidade } from './lib/cursos'
 
 type Jogo = { kind: 'review' | 'estudo'; qs: Q[] }
 
@@ -45,10 +46,10 @@ export function Estudo({ S, refresh }: { S: any; refresh: () => void }) {
       {capitulos.length > 0 && <button className="btn ghost" onClick={praticarTudo}>Praticar tudo que já vi</button>}
     </>}
 
-    <div className="sect">Praticar por capítulo</div>
+    <div className="sect">Praticar por {unidade(curso).n.toLowerCase()}</div>
     {capitulos.length === 0 ? <p className="note" style={{ margin: 0 }}>Os capítulos que você já começou aparecem aqui, cada um com um treino de 6 perguntas.</p>
       : <div style={{ display: 'grid', gap: 8 }}>{capitulos.map(c => <div key={c.gi} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--locked,#f1ecff)', borderRadius: 16, padding: '10px 12px' }}>
-        <span style={{ flex: 1, minWidth: 0 }}><small style={{ display: 'block', color: 'var(--muted)', fontWeight: 800 }}>Capítulo {c.gi + 1} · {c.ks.length} de 3 lições</small><b>{c.titulo}</b></span>
+        <span style={{ flex: 1, minWidth: 0 }}><small style={{ display: 'block', color: 'var(--muted)', fontWeight: 800 }}>{unidade(curso).n} {c.gi + 1} · {c.ks.length} de 3 lições</small><b>{c.titulo}</b></span>
         <button type="button" className="btn ghost" style={{ width: 'auto', padding: '6px 16px', minHeight: 0 }} onClick={() => setPlay({ kind: 'estudo', qs: perguntasDe(c.gi, c.ks) })}>Praticar</button></div>)}</div>}
 
     <div className="sect">Glossário</div>

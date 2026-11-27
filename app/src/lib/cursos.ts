@@ -13,3 +13,6 @@ export function done(S:any,id:string){
   return Object.keys(d||{})
 }
 export function pct(S:any,c:Curso){const t=totalFases(c.json);return t?Math.round(done(S,c.id).length/t*100):0}
+
+/** Vocabulário da unidade do curso: Redes é organizado em capítulos; os demais cursos em paradas */
+export const unidade=(id:string)=>id==='redes'?{n:'Capítulo',o:'o',concl:'concluído'}:{n:'Parada',o:'a',concl:'concluída'}
