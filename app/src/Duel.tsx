@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import art from './legacy/art.json'
 import { Pingo } from './Pingo'
 import { sfx, buzz } from './lib/sound'
-import { confetti, enter, motion } from './Fx'
+import { enter, motion } from './Fx'
+import { Cartoes } from './conclusao/ResultadoLeve'
 import { patchSave } from './lib/save'
 import { gamesOf, cursoAtivo } from './lib/progress'
 import { DU_LV, DU_N, duelQs, duelScore, botRun, b64e, pendingDuel, type DQ } from './lib/duel'
@@ -52,7 +53,7 @@ export function Duel({S,onClose}:{S:any;onClose:()=>void}){
   const finish=()=>{
     if(G?.opp?.r){const a=duelScore(me),b=duelScore(G.opp.r),res=a>b?'w':(a<b?'l':'d');patchSave(s=>{s.duel=s.duel||{w:0,l:0,d:0};s.duel[res]++})}
     setView('end')
-    if(G?.opp?.r&&duelScore(me)>duelScore(G.opp.r)){sfx('win');confetti()}else sfx('next')
+    if(G?.opp?.r&&duelScore(me)>duelScore(G.opp.r))sfx('plim1');else sfx('next')
   }
   const link=()=>G?location.href.split('#')[0]+'#duelo='+b64e({g:G.g,s:G.s,n:G.qs.length,l:G.lv,f:S.nick||'Um amigo',r:me}):''
   const share=()=>{
@@ -97,6 +98,7 @@ export function Duel({S,onClose}:{S:any;onClose:()=>void}){
   }
   // fim
   const a=duelScore(me),n=G.qs.length,o=G.opp
+  const reforcar=G.qs.flatMap((q,k)=>me[k]===0?[{t:q.q,x:'Resposta: '+(q.opts.find(o=>o.c)?.t||'')+(q.e?'. '+q.e:'')}]:[]).slice(0,6)
   const dots=(x:number[])=>x.map((v,k)=><i key={k} className={'dd '+(v?'ok':'bad')}/>)
   const rematch=()=>{setView('setup');setMode(G.mode);setTheme(G.g);setLv(G.lv)}
   if(o?.r){
@@ -105,6 +107,7 @@ export function Duel({S,onClose}:{S:any;onClose:()=>void}){
       <h1>{res==='w'?'Você venceu!':res==='l'?o.name+' venceu':'Empate!'}</h1>
       <div className="duvs"><div className="dus me"><small>Você</small><b>{a}</b></div><span>×</span><div className="dus"><small>{o.name}</small><b>{b}</b></div></div>
       <div className="dudots"><span>Você</span>{dots(me)}</div><div className="dudots"><span>{o.name}</span>{dots(o.r)}</div></div>
+      <Cartoes cartoes={reforcar} rotulo="Para reforçar"/>
       <button className="btn prim" onClick={rematch}>Revanche</button>
       {o.bot?<button className="btn ghost" style={{marginTop:10}} onClick={share}>Desafiar um amigo com estas perguntas</button>
       :<button className="btn ghost" style={{marginTop:10}} onClick={()=>{setView('setup');setMode('bot')}}>Novo duelo</button>}
@@ -112,6 +115,7 @@ export function Duel({S,onClose}:{S:any;onClose:()=>void}){
   }
   return shell('Resultado',<><div className="dures"><Pingo S={S} mood="cheer"/><h1>Você acertou {a} de {n}</h1>
     <p className="note">Agora mande o link para seu amigo jogar as mesmas perguntas. Quando ele terminar, o app mostra quem venceu.</p><div className="dudots"><span>Você</span>{dots(me)}</div></div>
+    <Cartoes cartoes={reforcar} rotulo="Para reforçar"/>
     <div className="frlink">{link()}</div><button className="btn prim" onClick={share}>Mandar desafio</button>
     <button className="btn ghost" style={{marginTop:10}} onClick={copy}>Copiar link</button>
     <button className="btn ghost" style={{marginTop:10}} onClick={close}>Sair</button>{msg&&<div className="frmsg">{msg}</div>}</>)
@@ -133,7 +137,7 @@ function Wheel({n,titles,onClose,onPick}:{n:number;titles:string[];onClose:()=>v
       gRef.current?.setAttribute('transform','rotate('+th.toFixed(2)+' 150 150)')
       const idx=Math.floor((((360-(th%360))%360))/seg);if(idx!==last.current){last.current=idx;sfx('tick');buzz(6)}
       if(x<1)requestAnimationFrame(frame)
-      else{setRes(fin);sfx('win');confetti();setTimeout(()=>{if(alive.current)onPick(fin)},1800)}
+      else{setRes(fin);sfx('plim1');setTimeout(()=>{if(alive.current)onPick(fin)},1800)}
     }
     requestAnimationFrame(frame)
   }

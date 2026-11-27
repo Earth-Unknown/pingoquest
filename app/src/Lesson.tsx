@@ -6,8 +6,7 @@ import { load } from './lib/store'
 import { day, touchStreak, wkAdd, addMiss, fixMiss, cqSync, gamesOf } from './lib/progress'
 import type { EvRes } from './lib/events'
 import { sfx, buzz } from './lib/sound'
-import { collect } from './lib/collect'
-import { confetti, enter, riseIn, ResultTiles } from './Fx'
+import { enter, riseIn } from './Fx'
 import { HeartsRow } from './Hearts'
 import { CenaConclusao } from './conclusao/CenaConclusao'
 import { ResultadoLeve } from './conclusao/ResultadoLeve'
@@ -94,7 +93,7 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
   const lnext=()=>{setRight(r=>r+1);const n=i+1;if(n>=queue.length){finish();return}setI(n);reset(queue[n])}
   const finish=()=>{
     if(kind==='event'&&onEvent){
-      const r=onEvent(qb-miss,qb);sfx(r.pass?'win':'ok');if(r.pass)confetti()
+      const r=onEvent(qb-miss,qb);sfx(r.pass?'plim1':'ok')
       setRes({xp:r.xp,gems:r.got?.gems||0,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect:r.pass,ev:r});return
     }
     let first=false,xp=10,gems=0,hFrom=0,hGain=0,cheias=false,novos:Novo[]=[],escolha:Novo[]=[]
@@ -160,11 +159,9 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
           <p className="note">Você tem {gems} chips. No treino você não perde vidas: responda 3 perguntas e ganhe 3 vidas.</p>
           <button className="btn ghost" onClick={onClose}>Voltar para a trilha</button></div></div></div></div></div>
   }
-  if(res?.ev)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
-    <Pingo S={S} mood={res.ev.pass?'cheer':'happy'}/><h1>{res.ev.title}</h1><p>{res.ev.sub}</p>
-    <ResultTiles tiles={[{c:'#ffb800',l:'Energia',to:res.xp},...(res.gems>0?[{c:'#18b9e8',l:'Chips',to:res.gems,prefix:'+'}]:[]),res.ev.got?{c:'#3fbf5f',l:'Peças',to:res.ev.got.pieces,prefix:'+'}:{c:'#18b9e8',l:'Acertos',to:res.ev.correct}]}/>
-  </div></div><div className="lfoot">{!res.ev.pass&&onRetry&&<button className="btn xbtn" onClick={onRetry}>Tentar de novo</button>}<button className="btn" onClick={()=>void collect(res.xp,res.gems).then(onClose)}>{res.xp>0?'Coletar energia':'Continuar'}</button></div></div></div>
   const reforco=()=>qs.filter(x=>x.t!=='learn'&&x.q&&x.e).slice(0,6).map(x=>({t:x.q||'',x:x.e||''}))
+  if(res?.ev)return <ResultadoLeve S={S} mood={res.ev.pass?'cheer':'happy'} titulo={res.ev.title} subtitulo={res.ev.sub} xp={res.xp} chips={res.gems} pecas={res.ev.got?.pieces||0}
+    cartoes={reforco()} secundario={!res.ev.pass&&onRetry?{texto:'Tentar de novo',onClick:onRetry}:undefined} onContinuar={onClose}/>
   if(res?.hearts)return <ResultadoLeve S={S} mood="love" cor="#ff4b6e" titulo={res.hearts.gain>1?'Vidas recuperadas!':'Vida recuperada!'}
     subtitulo={`+${res.hearts.gain} ${res.hearts.gain===1?'vida':'vidas'}. Você está de volta ao jogo!`}
     extra={<HeartsRow from={res.hearts.from} gain={res.hearts.gain}/>} xp={res.xp} cartoes={reforco()} botao="Voltar ao jogo" onContinuar={onClose}/>
