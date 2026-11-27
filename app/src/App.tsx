@@ -18,7 +18,7 @@ import { armClickSounds } from './lib/sound'
 import { Profile } from './Profile'
 import { Trail } from './Trail'
 import { Missions } from './Missions'
-import { Review } from './Review'
+import { Estudo } from './Estudo'
 import { Conquests } from './Conquests'
 import art from './legacy/art.json'
 import './legacy/jogo.css'
@@ -26,7 +26,7 @@ import './app.css'
 
 const A:any=art
 type Tab='path'|'missions'|'review'|'conq'|'profile'
-const TABS:[Tab,string][]=[['path','Trilha'],['missions','Missões'],['review','Revisar'],['conq','Conquistas'],['profile','Perfil']]
+const TABS:[Tab,string][]=[['path','Trilha'],['missions','Missões'],['review','Estudo'],['conq','Conquistas'],['profile','Perfil']]
 const Svg=({h}:{h:string})=><span style={{display:'contents'}} dangerouslySetInnerHTML={{__html:h}}/>
 
 function Game({skipWelcome}:{skipWelcome:boolean}){
@@ -55,7 +55,7 @@ function Game({skipWelcome}:{skipWelcome:boolean}){
     <motion.main className="wrap" id="main" key={tab+':'+v} initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:.22,ease:'easeOut'}}>
       {tab==='path'&&<Trail S={S} refresh={refresh} evOpen={evOpen} setEvOpen={setEvOpen}/>}
       {tab==='missions'&&<Missions S={S} refresh={refresh}/>}
-      {tab==='review'&&<Review S={S} refresh={refresh}/>}
+      {tab==='review'&&<Estudo S={S} refresh={refresh}/>}
       {tab==='conq'&&<Conquests S={S}/>}
       {tab==='profile'&&<Profile S={S} refresh={refresh} invite={load().onb?inviteFromHash():null}/>}
     </motion.main>

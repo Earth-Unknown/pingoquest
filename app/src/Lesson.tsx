@@ -28,7 +28,7 @@ export type Novo={slot:string;id:string;nome:string;icone:string}
 export type Result={xp:number;gems:number;first?:boolean;novos?:Novo[];escolha?:Novo[];cheias?:boolean;acc:number;perfect:boolean;hearts?:{from:number;gain:number}}
 /** Vidas que o treino devolve (o limite é 5) */
 const PRACTICE_HEARTS=3
-export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;resumo?:{sabe?:string;pratica?:string;proxima?:string;recap?:[string,string][];fim?:import('./conclusao/contrato').FimParada};qs:Q[];kind:'phase'|'boss'|'review'|'event'|'practice';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
+export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;resumo?:{sabe?:string;pratica?:string;proxima?:string;recap?:[string,string][];fim?:import('./conclusao/contrato').FimParada};qs:Q[];kind:'phase'|'boss'|'review'|'event'|'practice'|'estudo';keyId:string;onClose:()=>void;onEvent?:(correct:number,total:number)=>EvRes;onRetry?:()=>void}){
   const [queue,setQueue]=useState<Item[]>(()=>qs.map(prep))
   const [i,setI]=useState(0)
   const [hearts,setHearts]=useState<number>(S.hearts??5)
@@ -46,7 +46,7 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
   const qb=useMemo(()=>qs.filter(x=>x.t!=='learn').length,[qs])
   const q=queue[i]
   const run=useRef(0)
-  const free=kind==='review'||kind==='event'||kind==='practice'
+  const free=kind==='review'||kind==='event'||kind==='practice'||kind==='estudo'
 
   const reset=(it:Item)=>{setState('ask');setOk(false);setTouch(null);setMp({sel:null,done:[],flash:null,err:0})
     setSel(it.t==='cl'?it.ci!.map(()=>null):null)}
@@ -98,10 +98,10 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
     }
     let first=false,xp=10,gems=0,hFrom=0,hGain=0,cheias=false,novos:Novo[]=[],escolha:Novo[]=[]
     const perfect=miss===0&&!free
-    if(kind==='review'||kind==='practice')sfx('ok')
+    if(kind==='review'||kind==='practice'||kind==='estudo')sfx('ok')
     patchSave(s=>{
       const d=day(s)
-      if(free){xp=kind==='practice'?5:8;if(kind==='practice'){hFrom=s.hearts??5;hGain=Math.max(0,Math.min(PRACTICE_HEARTS,5-hFrom));s.hearts=hFrom+hGain}}
+      if(free){xp=kind==='practice'?5:kind==='estudo'?0:8;if(kind==='practice'){hFrom=s.hearts??5;hGain=Math.max(0,Math.min(PRACTICE_HEARTS,5-hFrom));s.hearts=hFrom+hGain}}
       else{
         s.done=s.done||{};first=!s.done[keyId]
         if(kind==='boss'){gems=first?25:0;xp=25;if(first)s.bosses=(s.bosses||0)+1}else gems=first?10:0
@@ -168,7 +168,7 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
   if(res&&(kind==='phase'||kind==='boss')&&!res.ev)return <CenaConclusao S={S} invencao={ESTACAO_PINGO} indice={Math.min(3,Math.max(0,parseInt(keyId.split('-')[1])||0))} repeticao={!res.first}
     titulo={!res.first?'Estação conferida!':resumo?.sabe?(kind==='boss'?'Agora você domina!':'Agora você sabe!'):kind==='boss'?'Estação Pingo completa!':'Mais uma descoberta!'} subtitulo={res.first?undefined:'Você já tinha essa peça. Bom reforço!'}
     xp={res.xp} chips={res.gems} acertos={res.acc} sabe={resumo?.sabe} pratica={resumo?.pratica} proxima={resumo?.proxima} novos={res.novos} fim={kind==='boss'&&res.first&&resumo?.fim?{...resumo.fim,vidasCheias:!!res.cheias,escolha:res.escolha}:undefined} aprendi={kind==='boss'?[...(resumo?.recap||[]),...gamesOf(S.curso||'redes')[parseInt(keyId)||0]?.phases.flat().filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])||[]]:qs.filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])} onContinuar={onClose}/>
-  if(res)return <ResultadoLeve S={S} titulo="Revisão concluída!" subtitulo={reforco().length?`Você reforçou ${reforco().length} ${reforco().length===1?'conceito':'conceitos'}.`:'Bom treino!'}
+  if(res)return <ResultadoLeve S={S} titulo={kind==='estudo'?'Prática concluída!':'Revisão concluída!'} subtitulo={reforco().length?`Você reforçou ${reforco().length} ${reforco().length===1?'conceito':'conceitos'}.`:'Bom treino!'}
     xp={res.xp} chips={res.gems} cartoes={reforco()} onContinuar={onClose}/>
 
   const asked=state==='ask'
