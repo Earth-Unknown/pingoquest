@@ -7,9 +7,10 @@ import { day, touchStreak, wkAdd, addMiss, fixMiss, cqSync, gamesOf } from './li
 import type { EvRes } from './lib/events'
 import { sfx, buzz } from './lib/sound'
 import { collect } from './lib/collect'
-import { confetti, enter, riseIn, ResultTiles, motion } from './Fx'
-import { HeartsRow, HEART_ICON } from './Hearts'
+import { confetti, enter, riseIn, ResultTiles } from './Fx'
+import { HeartsRow } from './Hearts'
 import { CenaConclusao } from './conclusao/CenaConclusao'
+import { ResultadoLeve } from './conclusao/ResultadoLeve'
 import { ESTACAO_PINGO } from './conclusao/contrato'
 import { sync as avSync, SLOTS, icon as avIcon, opcoesBrinde } from './lib/avatar'
 
@@ -98,7 +99,7 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
     }
     let first=false,xp=10,gems=0,hFrom=0,hGain=0,cheias=false,novos:Novo[]=[],escolha:Novo[]=[]
     const perfect=miss===0&&!free
-    if(kind!=='phase'&&kind!=='boss'){sfx('win');confetti()}
+    if(kind==='review'||kind==='practice')sfx('ok')
     patchSave(s=>{
       const d=day(s)
       if(free){xp=kind==='practice'?5:8;if(kind==='practice'){hFrom=s.hearts??5;hGain=Math.max(0,Math.min(PRACTICE_HEARTS,5-hFrom));s.hearts=hFrom+hGain}}
@@ -163,21 +164,15 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
     <Pingo S={S} mood={res.ev.pass?'cheer':'happy'}/><h1>{res.ev.title}</h1><p>{res.ev.sub}</p>
     <ResultTiles tiles={[{c:'#ffb800',l:'Energia',to:res.xp},...(res.gems>0?[{c:'#18b9e8',l:'Chips',to:res.gems,prefix:'+'}]:[]),res.ev.got?{c:'#3fbf5f',l:'Peças',to:res.ev.got.pieces,prefix:'+'}:{c:'#18b9e8',l:'Acertos',to:res.ev.correct}]}/>
   </div></div><div className="lfoot">{!res.ev.pass&&onRetry&&<button className="btn xbtn" onClick={onRetry}>Tentar de novo</button>}<button className="btn" onClick={()=>void collect(res.xp,res.gems).then(onClose)}>{res.xp>0?'Coletar energia':'Continuar'}</button></div></div></div>
-  if(res?.hearts)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
-    <motion.div animate={{y:[0,-16,0,-10,0],rotate:[0,-4,4,-2,0]}} transition={{duration:1.1,delay:.5,repeat:2,repeatDelay:.6}}><Pingo S={S} mood="love"/></motion.div>
-    <motion.h1 initial={{scale:.6,opacity:0}} animate={{scale:1,opacity:1}} transition={{type:'spring',stiffness:300,damping:14,delay:.2}} style={{color:'#ff4b6e'}}>{res.hearts.gain>1?'Vidas recuperadas!':'Vida recuperada!'}</motion.h1>
-    <p>+{res.hearts.gain} {res.hearts.gain===1?'vida':'vidas'}. Você está de volta ao jogo!</p>
-    <HeartsRow from={res.hearts.from} gain={res.hearts.gain}/>
-    <ResultTiles tiles={[{c:'#ff4b6e',l:'Vidas',to:res.hearts.gain,prefix:'+',icon:HEART_ICON},{c:'#ffb800',l:'Energia',to:res.xp},{c:'#18b9e8',l:'Precisão',to:res.acc}]}/>
-  </div></div><div className="lfoot"><button className="btn" onClick={()=>void collect(res.xp,res.gems,res.hearts?.gain).then(onClose)}>Voltar ao jogo</button></div></div></div>
+  const reforco=()=>qs.filter(x=>x.t!=='learn'&&x.q&&x.e).slice(0,6).map(x=>({t:x.q||'',x:x.e||''}))
+  if(res?.hearts)return <ResultadoLeve S={S} mood="love" cor="#ff4b6e" titulo={res.hearts.gain>1?'Vidas recuperadas!':'Vida recuperada!'}
+    subtitulo={`+${res.hearts.gain} ${res.hearts.gain===1?'vida':'vidas'}. Você está de volta ao jogo!`}
+    extra={<HeartsRow from={res.hearts.from} gain={res.hearts.gain}/>} xp={res.xp} cartoes={reforco()} botao="Voltar ao jogo" onContinuar={onClose}/>
   if(res&&(kind==='phase'||kind==='boss')&&!res.ev)return <CenaConclusao S={S} invencao={ESTACAO_PINGO} indice={Math.min(3,Math.max(0,parseInt(keyId.split('-')[1])||0))} repeticao={!res.first}
     titulo={!res.first?'Estação conferida!':resumo?.sabe?(kind==='boss'?'Agora você domina!':'Agora você sabe!'):kind==='boss'?'Estação Pingo completa!':'Mais uma descoberta!'} subtitulo={res.first?undefined:'Você já tinha essa peça. Bom reforço!'}
     xp={res.xp} chips={res.gems} acertos={res.acc} sabe={resumo?.sabe} pratica={resumo?.pratica} proxima={resumo?.proxima} novos={res.novos} fim={kind==='boss'&&res.first&&resumo?.fim?{...resumo.fim,vidasCheias:!!res.cheias,escolha:res.escolha}:undefined} aprendi={kind==='boss'?[...(resumo?.recap||[]),...gamesOf(S.curso||'redes')[parseInt(keyId)||0]?.phases.flat().filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])||[]]:qs.filter(q=>q.t==='learn').flatMap(q=>(q.touch||[]) as [string,string][])} onContinuar={onClose}/>
-  if(res)return <div id="lesson" ref={enter}><div className="lw"><div className="lbody lscroll"><div className="center">
-    <Pingo S={S} mood="cheer"/><h1>{kind==='practice'?'Vida recuperada!':free?'Revisão concluída!':res.perfect?'Lição perfeita!':kind==='boss'?'Prova final concluída!':'Fase concluída!'}</h1>
-    <p>{kind==='practice'?'+1 vida. Bom treino!':free?'Bom treino!':res.perfect?'Esse momento é seu!':'Errar também ensina.'}</p>
-    <ResultTiles tiles={[{c:'#ffb800',l:'Energia',to:res.xp},{c:'#18b9e8',l:'Precisão',to:res.acc},...(res.gems>0?[{c:'#ff4fae',l:'Chips',to:res.gems,prefix:'+'}]:[])]}/>
-  </div></div><div className="lfoot"><button className="btn" onClick={()=>void collect(res.xp,res.gems).then(onClose)}>{res.xp>0?'Coletar energia':'Continuar'}</button></div></div></div>
+  if(res)return <ResultadoLeve S={S} titulo="Revisão concluída!" subtitulo={reforco().length?`Você reforçou ${reforco().length} ${reforco().length===1?'conceito':'conceitos'}.`:'Bom treino!'}
+    xp={res.xp} chips={res.gems} cartoes={reforco()} onContinuar={onClose}/>
 
   const asked=state==='ask'
   const ready=q.t==='cl'?sel?.every((x:any)=>x!==null):sel!==null

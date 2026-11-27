@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { motion } from './Fx'
-import { confetti } from './Fx'
 import art from './legacy/art.json'
 import { sfx, buzz } from './lib/sound'
 
@@ -14,7 +13,7 @@ export function HeartsRow({from,gain,total=5}:{from:number;gain:number;total?:nu
   useEffect(()=>{
     const ts:ReturnType<typeof setTimeout>[]=[]
     for(let k=0;k<gain;k++)ts.push(setTimeout(()=>{setN(from+k+1);sfx((['plim0','plim1','plim2'] as const)[Math.min(k,2)]);buzz(12)},750+k*480))
-    ts.push(setTimeout(()=>{sfx('win');confetti(26,50,36)},750+gain*480))
+    ts.push(setTimeout(()=>sfx('ok'),750+gain*480))
     return()=>ts.forEach(clearTimeout)
   },[from,gain])
   return <div style={{margin:'6px 0 2px'}}>
