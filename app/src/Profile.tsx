@@ -7,7 +7,7 @@ import { patchSave } from './lib/save'
 import { FriendsCard, FriendsSheet } from './Friends'
 import { inviteFromHash } from './lib/friends'
 import { soundOn, setSound, sfx } from './lib/sound'
-import { KEY } from './lib/store'
+import { KEY, load } from './lib/store'
 import { avCfg } from './lib/pingo'
 import { SLOTS, has, equip, icon } from './lib/avatar'
 import { streakNow, trocarCurso, gamesOf } from './lib/progress'
@@ -32,6 +32,8 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
   const [sum,setSum]=useState<string|null>(null)
   const [info,setInfo]=useState<string|null>(null)
   const [friends,setFriends]=useState(!!invite)
+  const [roboAberto,setRoboAberto]=useState(false)
+  const [aba,setAba]=useState<'roupa'|'oficina'>('roupa')
   const [cap,setCap]=useState('Toque num item para vestir. Itens com cadeado mostram como ganhar.')
   const [sure,setSure]=useState(false)
   const {status,isAnonymous}=useAuth()
@@ -47,7 +49,9 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
   const stats:[string,string|number][]=[
     ['energia',S.xp||0],['dias',streakNow(S)],['chips',S.gems??0],
     ['fases',done(S,cur.id).length+'/'+totalFases(cur.json)],['provas',(S.bosses||0)+'/'+provas],['acertos',acc+'%']]
-  const cfg=avCfg(S)
+  const Sx=roboAberto?load():S // dentro do pop-up o robô muda na hora, sem fechar
+  const cfgx=avCfg(Sx),[,setTick]=useState(0)
+  const fecharRobo=()=>{setRoboAberto(false);refresh()}
   const act=(fn:(s:any)=>void)=>{patchSave(fn);refresh()}
   const toggleTheme=()=>{const t=theme==='dark'?'light':'dark';try{localStorage.setItem('pingoquest-theme',t)}catch{};document.documentElement.setAttribute('data-theme',t);setTheme(t)}
   const reset=()=>{if(!sure){setSure(true);return};try{localStorage.removeItem(KEY)}catch{};setSure(false);refresh()}
@@ -56,9 +60,10 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
     setLeaving(false)
     try{await logOut()}catch(e){console.error('sign out failed',e);toast('Não consegui sair agora. Tente de novo.')}
   }
-  let nOwn=0,nAll=0;SLOTS.forEach(sl=>sl.itens.forEach(it=>{nAll++;if(has(S,sl.id,it))nOwn++}))
+  let nOwn=0,nAll=0;SLOTS.forEach(sl=>sl.itens.forEach(it=>{nAll++;if(has(Sx,sl.id,it))nOwn++}))
   return <div className="screen">
-    <div className="ph"><Pingo S={S}/><div><h1 onClick={()=>{const n=taps+1;setTaps(n);if(n>=7){setPedeCodigo(true);setTaps(0)}}}>{S.nick||'Meu perfil'}</h1><p>{cur.nome}</p>
+    <div className="ph"><button type="button" className="robotap" onClick={()=>setRoboAberto(true)} aria-label="Abrir o meu robô: trocar roupinha e adereços" style={{background:'none',border:0,padding:0,cursor:'pointer',position:'relative',display:'block',flex:'none'}}><Pingo S={S}/>
+      <span style={{position:'absolute',left:'50%',bottom:-6,transform:'translateX(-50%)',background:'var(--primary)',color:'#fff',fontSize:11,fontWeight:900,borderRadius:99,padding:'3px 9px',whiteSpace:'nowrap',boxShadow:'0 2px 0 rgba(0,0,0,.18)'}}>Trocar roupinha</span></button><div><h1 onClick={()=>{const n=taps+1;setTaps(n);if(n>=7){setPedeCodigo(true);setTaps(0)}}}>{S.nick||'Meu perfil'}</h1><p>{cur.nome}</p>
       <button className="nickbtn" onClick={()=>setFriends(true)}>{S.nick?'Editar apelido':'Escolher apelido'}</button></div></div>
     <SaveProgressCard S={S}/>
     <div className="mini">{stats.map(([k,v])=><div key={k}><b>{v}</b><span>{k}</span></div>)}</div>
@@ -70,19 +75,6 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
     <button className="btn ghost sumbtn" onClick={()=>setSum(ativo)}><Html h={A.IC.map}/>Sumário: o que tem em {cur.nome}</button>
 
     <FriendsCard S={S} onOpen={()=>setFriends(true)}/>
-
-    <div className="sect">Meu robô</div>
-    <div className="avbox"><Pingo S={S} cls="avbig"/></div>
-    <p className="note" style={{margin:'0 0 6px',textAlign:'center'}}>Itens são só visuais: não mudam as perguntas nem dão vantagem.</p>
-    {SLOTS.map(sl=><div className="avrow" key={sl.id}><b>{sl.nome}</b><div className="avgrid">{sl.itens.map(it=>{
-      const own=has(S,sl.id,it),on=cfg[sl.id]===it.id
-      return own
-        ?<button key={it.id} className={'avchip avt'+(on?' on':'')} aria-pressed={on} aria-label={it.nome} title={it.nome} onClick={()=>{act(s=>equip(s,sl.id,it.id));setCap(it.nome)}}><Html h={icon(sl.id,it)}/></button>
-        :<button key={it.id} className="avchip avt lock" aria-label={it.nome+' (bloqueado)'} onClick={()=>setCap(it.nome+' · '+(it.req||''))}><Html h={icon(sl.id,it)}/><i className="avlk" dangerouslySetInnerHTML={{__html:A.IC.lock}}/></button>})}</div></div>)}
-    <div className="avcap" aria-live="polite">{cap}</div>
-    <p className="note" style={{margin:'8px 0 0'}}>Inventário: {nOwn} de {nAll} itens.</p>
-
-    <Oficina S={S}/>
 
     <Album S={S}/>
 
@@ -98,6 +90,22 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
       <button className="btn ghost" onClick={leave}>Sair mesmo assim</button></div>}
     <p className="note" style={{marginTop:12}}>O progresso fica salvo neste navegador. Algo não funcionou direito? O <a href="jogo-antigo/" style={{color:'var(--primary-deep)',fontWeight:800}}>jogo antigo</a> continua disponível e usa o mesmo progresso.</p>
 
+    {roboAberto&&<div id="modal" onClick={fecharRobo}><div className="sheet tall" ref={popIn} role="dialog" aria-label="Meu robô" onClick={e=>e.stopPropagation()}>
+      <div style={{display:'flex',gap:8,marginBottom:10}} role="tablist">
+        <button type="button" role="tab" aria-selected={aba==='roupa'} className={'btn '+(aba==='roupa'?'prim':'ghost')} style={{flex:1}} onClick={()=>setAba('roupa')}>Roupinhas</button>
+        <button type="button" role="tab" aria-selected={aba==='oficina'} className={'btn '+(aba==='oficina'?'prim':'ghost')} style={{flex:1}} onClick={()=>setAba('oficina')}>Oficina</button></div>
+      {aba==='roupa'?<>
+    <div className="avbox"><Pingo S={Sx} cls="avbig"/></div>
+    <p className="note" style={{margin:'0 0 6px',textAlign:'center'}}>Itens são só visuais: não mudam as perguntas nem dão vantagem.</p>
+    {SLOTS.map(sl=><div className="avrow" key={sl.id}><b>{sl.nome}</b><div className="avgrid">{sl.itens.map(it=>{
+      const own=has(Sx,sl.id,it),on=cfgx[sl.id]===it.id
+      return own
+        ?<button key={it.id} className={'avchip avt'+(on?' on':'')} aria-pressed={on} aria-label={it.nome} title={it.nome} onClick={()=>{patchSave(s=>equip(s,sl.id,it.id));setTick(t=>t+1);setCap(it.nome)}}><Html h={icon(sl.id,it)}/></button>
+        :<button key={it.id} className="avchip avt lock" aria-label={it.nome+' (bloqueado)'} onClick={()=>setCap(it.nome+' · '+(it.req||''))}><Html h={icon(sl.id,it)}/><i className="avlk" dangerouslySetInnerHTML={{__html:A.IC.lock}}/></button>})}</div></div>)}
+    <div className="avcap" aria-live="polite">{cap}</div>
+    <p className="note" style={{margin:'8px 0 0'}}>Inventário: {nOwn} de {nAll} itens.</p>
+      </>:<Oficina S={Sx}/>}
+      <button className="btn prim" style={{marginTop:16}} onClick={fecharRobo}>Pronto</button></div></div>}
     {sum&&<Sumario S={S} id={sum} onClose={()=>setSum(null)}/>}
     {info&&<CursoInfo S={S} id={info} onClose={()=>setInfo(null)} onPick={id=>{act(s=>trocarCurso(s,id));setInfo(null);window.scrollTo(0,0)}} onSum={id=>{setInfo(null);setSum(id)}}/>}
     {friends&&<FriendsSheet inviteCode={invite||inviteFromHash()} onClose={()=>{setFriends(false);refresh()}}/>}
