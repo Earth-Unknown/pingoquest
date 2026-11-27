@@ -62,8 +62,8 @@ export function Profile({S,refresh,invite}:{S:any;refresh:()=>void;invite?:strin
   }
   let nOwn=0,nAll=0;SLOTS.forEach(sl=>sl.itens.forEach(it=>{nAll++;if(has(Sx,sl.id,it))nOwn++}))
   return <div className="screen">
-    <div className="ph"><button type="button" className="robotap" onClick={()=>setRoboAberto(true)} aria-label="Abrir o meu robô: trocar roupinha e adereços" style={{background:'none',border:0,padding:0,cursor:'pointer',position:'relative',display:'block',flex:'none'}}><Pingo S={S}/>
-      <span style={{position:'absolute',left:'50%',bottom:-6,transform:'translateX(-50%)',background:'var(--primary)',color:'#fff',fontSize:11,fontWeight:900,borderRadius:99,padding:'3px 9px',whiteSpace:'nowrap',boxShadow:'0 2px 0 rgba(0,0,0,.18)'}}>Trocar roupinha</span></button><div><h1 onClick={()=>{const n=taps+1;setTaps(n);if(n>=7){setPedeCodigo(true);setTaps(0)}}}>{S.nick||'Meu perfil'}</h1><p>{cur.nome}</p>
+    <div className="ph"><button type="button" className="robotap" onClick={()=>setRoboAberto(true)} aria-label="Personalizar o Pingo: roupinhas, adereços e Oficina" style={{background:'none',border:0,padding:0,cursor:'pointer',position:'relative',display:'block',flex:'none'}}><Pingo S={S}/>
+      <span style={{position:'absolute',left:'50%',bottom:-6,transform:'translateX(-50%)',background:'var(--primary)',color:'#fff',fontSize:11,fontWeight:900,borderRadius:99,padding:'3px 9px',whiteSpace:'nowrap',boxShadow:'0 2px 0 rgba(0,0,0,.18)'}}>Personalizar o Pingo</span></button><div><h1 onClick={()=>{const n=taps+1;setTaps(n);if(n>=7){setPedeCodigo(true);setTaps(0)}}}>{S.nick||'Meu perfil'}</h1><p>{cur.nome}</p>
       <button className="nickbtn" onClick={()=>setFriends(true)}>{S.nick?'Editar apelido':'Escolher apelido'}</button></div></div>
     <SaveProgressCard S={S}/>
     <div className="mini">{stats.map(([k,v])=><div key={k}><b>{v}</b><span>{k}</span></div>)}</div>

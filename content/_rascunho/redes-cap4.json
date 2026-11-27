@@ -1,0 +1,581 @@
+{
+ "lugar": "Capítulo 4",
+ "titulo": "Equipamentos de rede",
+ "dicas": [
+  "A aparência do equipamento não mostra tudo: switch gerenciável, roteador e AP podem vir juntos na mesma caixa.",
+  "Hub repete sinais; switch aprende MACs e encaminha só para a porta do destino.",
+  "Gateway padrão e servidor DNS são funções diferentes, mesmo com o mesmo IP.",
+  "Conectado ao SSID só indica associação Wi-Fi, não acesso à internet nem a serviços internos.",
+  "NAT não substitui firewall, e balanceador não substitui arquitetura resiliente."
+ ],
+ "fases": [
+  {
+   "nome": "Da placa ao switch",
+   "conceitos": [
+    {
+     "id": "c4.acesso",
+     "nome": "NIC, hub, bridge e switch",
+     "antes": []
+    }
+   ],
+   "itens": [
+    {
+     "tipo": "aprender",
+     "titulo": "Do host ao switch",
+     "texto": "Para entrar na rede, o host (qualquer aparelho com IP) usa uma NIC, a interface de rede, associada a um endereço MAC. O hub só repete o sinal em todas as portas. O switch aprende os MACs de origem e encaminha cada quadro apenas para a porta do destino.",
+     "termos": [
+      {
+       "termo": "NIC",
+       "definicao": "Interface que liga o host ao meio físico ou sem fio; tem endereço MAC."
+      },
+      {
+       "termo": "Hub",
+       "definicao": "Repetidor de camada física: não lê MAC e repete o sinal às portas."
+      },
+      {
+       "termo": "Switch",
+       "definicao": "Aprende MACs de origem e encaminha quadros seletivamente."
+      }
+     ]
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "O que o switch Ethernet faz que o hub não faz?",
+     "certa": "Aprende MACs de origem e encaminha o quadro à porta do destino",
+     "erradas": [
+      "Roteia pacotes entre redes IP diferentes",
+      "Converte o sinal do provedor para a rede local",
+      "Aplica regras de bloqueio por porta TCP"
+     ],
+     "explicacao": "O hub apenas repete o sinal. O switch lê o MAC no quadro, guarda em qual porta cada MAC está e envia só para lá.",
+     "conceito": "c4.acesso",
+     "dificuldade": 1
+    },
+    {
+     "tipo": "verdadeiro_falso",
+     "pergunta": "A NIC é a interface que liga o host à rede e está associada a um endereço MAC.",
+     "resposta": true,
+     "explicacao": "A NIC conecta o host ao meio físico ou sem fio, e interfaces virtuais também podem ter MAC próprio.",
+     "conceito": "c4.acesso",
+     "dificuldade": 1
+    },
+    {
+     "tipo": "aprender",
+     "titulo": "Bridge e switch gerenciável",
+     "texto": "A bridge atua na camada de enlace (L2): aprende MACs e encaminha quadros. O switch Ethernet é, em essência, uma bridge multiporta. O gerenciável permite VLANs, STP e espelhamento de porta; alguns também roteiam IP (L3). O aspecto físico não revela essas funções.",
+     "termos": [
+      {
+       "termo": "Bridge",
+       "definicao": "Equipamento L2 que aprende MACs de origem e encaminha quadros."
+      },
+      {
+       "termo": "VLAN",
+       "definicao": "Segmentação lógica de uma rede de camada 2."
+      },
+      {
+       "termo": "STP",
+       "definicao": "Protocolo que controla loops em redes Ethernet com bridges."
+      },
+      {
+       "termo": "Switch L3",
+       "definicao": "Switch que, além de comutar quadros, também executa roteamento IP."
+      }
+     ]
+    },
+    {
+     "tipo": "ligar",
+     "pergunta": "Ligue cada equipamento à sua função",
+     "pares": [
+      {
+       "esquerda": "Hub",
+       "direita": "Repete sinais, sem ler MAC"
+      },
+      {
+       "esquerda": "Bridge",
+       "direita": "Aprende MACs e encaminha quadros"
+      },
+      {
+       "esquerda": "Switch gerenciável",
+       "direita": "Permite VLANs, STP e espelhamento"
+      },
+      {
+       "esquerda": "Switch L3",
+       "direita": "Também roteia pacotes IP"
+      }
+     ],
+     "explicacao": "Hub é camada física; bridge e switch comutam quadros em L2; o gerenciável acrescenta controle; o L3 soma roteamento.",
+     "conceito": "c4.acesso",
+     "dificuldade": 1
+    },
+    {
+     "tipo": "verdadeiro_falso",
+     "pergunta": "Um hub encaminha o quadro apenas para a porta onde está o destino, porque lê o MAC.",
+     "resposta": false,
+     "explicacao": "O hub é repetidor de camada física e não interpreta MAC: o sinal sai por todas as portas. Quem aprende MACs é a bridge ou o switch.",
+     "conceito": "c4.acesso",
+     "dificuldade": 2
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "Uma impressora cabeada é ligada a um switch numa rede com VLANs. O que define a qual domínio L2 ela pertence?",
+     "certa": "A configuração da porta do switch em que foi ligada",
+     "erradas": [
+      "O número de série da impressora",
+      "O nome (SSID) do Wi-Fi do prédio",
+      "O servidor DNS configurado nela"
+     ],
+     "explicacao": "Em redes com VLANs, é a configuração da porta do switch que coloca o aparelho num domínio L2 ou em outro.",
+     "conceito": "c4.acesso",
+     "dificuldade": 2
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "Dois switches parecem idênticos por fora, mas só um deixa criar VLANs. Qual conclusão é correta?",
+     "certa": "Só um é gerenciável: a aparência não mostra os recursos",
+     "erradas": [
+      "Só o que cria VLANs tem portas Gigabit",
+      "O outro é um hub, porque não segmenta",
+      "Os dois roteiam, e só o firmware difere"
+     ],
+     "explicacao": "A aparência física não informa todas as funções. Gerenciável ou não, só se sabe pelo modelo e pela configuração.",
+     "conceito": "c4.acesso",
+     "dificuldade": 3
+    }
+   ],
+   "sabe": "como NIC, hub, bridge e switch levam quadros dentro da rede local.",
+   "pratica": "antes de ligar um aparelho novo, você sabe que a porta do switch define a VLAN dele."
+  },
+  {
+   "nome": "Roteador, gateway e Wi-Fi",
+   "conceitos": [
+    {
+     "id": "c4.roteador",
+     "nome": "Roteador, gateway, modem e ONT",
+     "antes": [
+      "c4.acesso"
+     ]
+    },
+    {
+     "id": "c4.wifi",
+     "nome": "AP, SSID e controlador Wi-Fi",
+     "antes": [
+      "c4.acesso",
+      "c4.roteador"
+     ]
+    }
+   ],
+   "itens": [
+    {
+     "tipo": "aprender",
+     "titulo": "Roteador, gateway, modem e ONT",
+     "texto": "O roteador encaminha pacotes IP entre redes usando a tabela de rotas. O gateway padrão é o próximo salto para destinos sem rota mais específica; em redes simples, é a interface local do roteador. Modem (DSL, cabo) e ONT (fibra) adaptam o sinal do provedor.",
+     "termos": [
+      {
+       "termo": "Tabela de rotas",
+       "definicao": "Lista que o roteador consulta para escolher o próximo salto."
+      },
+      {
+       "termo": "Gateway padrão",
+       "definicao": "Próximo salto usado pelo host para destinos fora da sua rede."
+      },
+      {
+       "termo": "Modem",
+       "definicao": "Adapta sinais à tecnologia de acesso do provedor, como DSL ou cabo."
+      },
+      {
+       "termo": "ONT",
+       "definicao": "Termina o enlace óptico de uma rede PON no assinante."
+      }
+     ]
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "Qual equipamento decide o próximo salto com base no IP de destino?",
+     "certa": "O roteador, ou outro aparelho com função L3",
+     "erradas": [
+      "O switch L2",
+      "O hub",
+      "O ONT"
+     ],
+     "explicacao": "O encaminhamento por IP é função de camada 3. Switches L2 e hubs decidem por MAC ou apenas repetem o sinal.",
+     "conceito": "c4.roteador",
+     "dificuldade": 1
+    },
+    {
+     "tipo": "ligar",
+     "pergunta": "Ligue cada elemento à sua função",
+     "pares": [
+      {
+       "esquerda": "Roteador",
+       "direita": "Encaminha pacotes IP entre redes"
+      },
+      {
+       "esquerda": "Gateway padrão",
+       "direita": "Próximo salto para destinos sem rota específica"
+      },
+      {
+       "esquerda": "Modem",
+       "direita": "Adapta o sinal DSL ou cabo"
+      },
+      {
+       "esquerda": "ONT",
+       "direita": "Termina o enlace óptico no assinante"
+      }
+     ],
+     "explicacao": "São funções distintas que, em casa, costumam vir juntas numa única caixa fornecida pelo provedor.",
+     "conceito": "c4.roteador",
+     "dificuldade": 1
+    },
+    {
+     "tipo": "verdadeiro_falso",
+     "pergunta": "Todo roteamento exige NAT; sem ele, duas redes privadas não conseguem se comunicar.",
+     "resposta": false,
+     "explicacao": "NAT traduz endereços, mas não é requisito do roteamento. Redes privadas podem se comunicar por rotas, sem NAT.",
+     "conceito": "c4.roteador",
+     "dificuldade": 2
+    },
+    {
+     "tipo": "aprender",
+     "titulo": "AP, SSID e controlador",
+     "texto": "O AP (ponto de acesso) liga clientes 802.11 à rede cabeada, como uma bridge. O roteador Wi-Fi junta AP, roteamento e, em geral, DHCP, NAT e firewall. O SSID é o nome da rede; o BSSID identifica cada AP, normalmente pelo MAC. Vários APs podem anunciar o mesmo SSID.",
+     "termos": [
+      {
+       "termo": "SSID",
+       "definicao": "Nome anunciado da rede Wi-Fi."
+      },
+      {
+       "termo": "BSSID",
+       "definicao": "Identifica um AP específico, normalmente associado a um MAC."
+      },
+      {
+       "termo": "Controlador",
+       "definicao": "Gerencia vários APs: inventário, SSIDs, clientes e eventos."
+      },
+      {
+       "termo": "Mesh",
+       "definicao": "Sistema que pode usar enlace de retorno sem fio, com impacto variável na capacidade."
+      }
+     ]
+    },
+    {
+     "tipo": "classificar",
+     "pergunta": "Quem faz o quê? AP ou roteador Wi-Fi?",
+     "categorias": [
+      "AP",
+      "Roteador Wi-Fi"
+     ],
+     "itens": [
+      {
+       "texto": "Interliga clientes 802.11 à rede cabeada, como bridge",
+       "categoria": "AP"
+      },
+      {
+       "texto": "Combina AP, roteamento e, em geral, DHCP, NAT e firewall",
+       "categoria": "Roteador Wi-Fi"
+      },
+      {
+       "texto": "Pode atuar só como ponto de acesso, sem ser o gateway",
+       "categoria": "AP"
+      },
+      {
+       "texto": "Costuma entregar IP aos clientes e fazer NAT",
+       "categoria": "Roteador Wi-Fi"
+      }
+     ],
+     "explicacao": "O AP é a ponte entre Wi-Fi e cabo. O roteador Wi-Fi é um equipamento integrado, que soma outras funções.",
+     "conceito": "c4.wifi",
+     "dificuldade": 2
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "O computador acessa a impressora da LAN, mas não a internet. Qual hipótese faz sentido?",
+     "certa": "Falha fora da LAN: gateway, DNS, política ou enlace WAN",
+     "erradas": [
+      "A NIC do computador está desativada",
+      "O cabo entre o computador e o switch está rompido",
+      "O MAC da impressora está duplicado"
+     ],
+     "explicacao": "Se a LAN funciona, a NIC, o cabo e o switch estão cumprindo o papel. O que falta está no caminho para fora ou nos serviços de saída.",
+     "conceito": "c4.roteador",
+     "dificuldade": 2
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "O notebook no Wi-Fi de visitantes recebe IP, mas não imprime na VLAN interna. Qual a explicação mais provável?",
+     "certa": "Uma política impede o acesso da VLAN de visitantes à interna",
+     "erradas": [
+      "O DHCP do Wi-Fi está desligado",
+      "O SSID de visitantes não é 802.11",
+      "O notebook está sem NIC"
+     ],
+     "explicacao": "Receber IP prova que a associação e o DHCP funcionam. O bloqueio ao serviço interno costuma ser política entre VLANs.",
+     "conceito": "c4.wifi",
+     "dificuldade": 3
+    }
+   ],
+   "sabe": "como roteador, gateway, modem, ONT e AP se dividem entre casa, provedor e Wi-Fi.",
+   "pratica": "se o computador alcança a impressora mas não a internet, você olha gateway, DNS e WAN."
+  },
+  {
+   "nome": "Firewall, proxy e balanceador",
+   "conceitos": [
+    {
+     "id": "c4.borda",
+     "nome": "Firewall, proxy e balanceador",
+     "antes": [
+      "c4.roteador"
+     ]
+    }
+   ],
+   "itens": [
+    {
+     "tipo": "aprender",
+     "titulo": "Firewall e proxy",
+     "texto": "O firewall permite ou bloqueia tráfego por endereços, protocolo, portas e estado da conexão; o stateful guarda esse estado para tratar as respostas. O proxy intermedeia acessos: o direto age pelos clientes e o reverso recebe requisições em nome dos servidores. Nenhum é só um roteador.",
+     "termos": [
+      {
+       "termo": "Firewall stateful",
+       "definicao": "Firewall que guarda o estado das conexões."
+      },
+      {
+       "termo": "Proxy direto",
+       "definicao": "Intermedeia as requisições dos clientes."
+      },
+      {
+       "termo": "Proxy reverso",
+       "definicao": "Recebe requisições em nome dos servidores."
+      }
+     ]
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "Além das regras e dos atributos do tráfego, o que um firewall stateful considera?",
+     "certa": "O estado das conexões",
+     "erradas": [
+      "O conteúdo completo de toda aplicação",
+      "A qualidade do sinal no meio físico",
+      "O fabricante do equipamento de origem"
+     ],
+     "explicacao": "Guardar o estado permite tratar respostas de modo consistente. Nem todo firewall inspeciona o conteúdo das aplicações.",
+     "conceito": "c4.borda",
+     "dificuldade": 1
+    },
+    {
+     "tipo": "verdadeiro_falso",
+     "pergunta": "Um firewall stateful mantém informações das conexões para tratar as respostas de modo consistente.",
+     "resposta": true,
+     "explicacao": "Isso o diferencia de um filtro que olha cada pacote isolado, sem memória do que já passou.",
+     "conceito": "c4.borda",
+     "dificuldade": 1
+    },
+    {
+     "tipo": "aprender",
+     "titulo": "Balanceador de carga",
+     "texto": "O balanceador distribui requisições entre instâncias e usa health checks para tirar do rodízio as que não respondem. Pode atuar na camada 4 (TCP/UDP) ou 7 (HTTP). Ele não conserta uma dependência compartilhada fora do ar, como um banco de dados único.",
+     "termos": [
+      {
+       "termo": "Health check",
+       "definicao": "Verificação periódica que decide se uma instância pode receber tráfego."
+      },
+      {
+       "termo": "Camada 4 ou 7",
+       "definicao": "Balancear por TCP/UDP (L4) ou por conteúdo HTTP (L7)."
+      },
+      {
+       "termo": "Backend",
+       "definicao": "Instância de serviço que recebe as requisições distribuídas."
+      }
+     ]
+    },
+    {
+     "tipo": "classificar",
+     "pergunta": "Firewall, proxy ou balanceador?",
+     "categorias": [
+      "Firewall",
+      "Proxy",
+      "Balanceador"
+     ],
+     "itens": [
+      {
+       "texto": "Bloqueia tráfego por porta e protocolo",
+       "categoria": "Firewall"
+      },
+      {
+       "texto": "Mantém o estado das conexões para tratar respostas",
+       "categoria": "Firewall"
+      },
+      {
+       "texto": "Recebe requisições em nome dos servidores",
+       "categoria": "Proxy"
+      },
+      {
+       "texto": "Pode fazer autenticação e cache",
+       "categoria": "Proxy"
+      },
+      {
+       "texto": "Distribui requisições entre instâncias",
+       "categoria": "Balanceador"
+      },
+      {
+       "texto": "Usa health check para escolher quem recebe tráfego",
+       "categoria": "Balanceador"
+      }
+     ],
+     "explicacao": "Cada um resolve um problema: controlar conexões, intermediar acessos ou distribuir carga.",
+     "conceito": "c4.borda",
+     "dificuldade": 2
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "Um site responde via balanceador, mas um backend caiu. O que decide se ele ainda recebe tráfego?",
+     "certa": "O health check",
+     "erradas": [
+      "O gateway padrão do cliente",
+      "O cache ARP do balanceador",
+      "O tipo de cabo do backend"
+     ],
+     "explicacao": "O health check testa a instância; se falhar, o balanceador a tira do rodízio até ela voltar.",
+     "conceito": "c4.borda",
+     "dificuldade": 2
+    },
+    {
+     "tipo": "ligar",
+     "pergunta": "Ligue cada necessidade ao equipamento",
+     "pares": [
+      {
+       "esquerda": "Levar pacotes a outra rede por rota IP",
+       "direita": "Roteador"
+      },
+      {
+       "esquerda": "Controlar conexões por regras de porta",
+       "direita": "Firewall"
+      },
+      {
+       "esquerda": "Distribuir requisições entre servidores",
+       "direita": "Balanceador"
+      },
+      {
+       "esquerda": "Intermediar o acesso dos clientes à web",
+       "direita": "Proxy"
+      }
+     ],
+     "explicacao": "Cada função resolve um problema diferente, embora possam estar combinadas no mesmo aparelho.",
+     "conceito": "c4.borda",
+     "dificuldade": 2
+    },
+    {
+     "tipo": "escolha",
+     "pergunta": "Três servidores atrás de um balanceador dependem do mesmo banco de dados, que saiu do ar. O que acontece?",
+     "certa": "Todos falham; o balanceador não corrige isso",
+     "erradas": [
+      "O balanceador cria um banco reserva sozinho",
+      "O health check reinicia o banco de dados",
+      "Só um servidor falha e os outros seguem"
+     ],
+     "explicacao": "Balanceamento não substitui arquitetura resiliente: a dependência compartilhada derruba todos os backends.",
+     "conceito": "c4.borda",
+     "dificuldade": 3
+    }
+   ],
+   "sabe": "como firewall, proxy e balanceador controlam, intermediam e distribuem acessos.",
+   "pratica": "ao ver um site cair só em parte das visitas, você suspeita de uma instância fora do rodízio."
+  }
+ ],
+ "extras": [
+  {
+   "tipo": "escolha",
+   "pergunta": "No inventário do laboratório 04, o host tem IP, gateway e DNS iguais a 192.168.1.1. O que o mapa deve mostrar?",
+   "certa": "Três funções distintas no mesmo equipamento",
+   "erradas": [
+    "Que gateway e DNS são a mesma função",
+    "Que o DNS é opcional se houver gateway",
+    "Que o equipamento é obrigatoriamente um hub"
+   ],
+   "explicacao": "Gateway, DNS e DHCP são serviços diferentes, mesmo quando um aparelho só os oferece. O mapa separa funções físicas e lógicas.",
+   "conceito": "c4.roteador",
+   "dificuldade": 2
+  },
+  {
+   "tipo": "classificar",
+   "pergunta": "No mapa do inventário, o que é função física e o que é lógica?",
+   "categorias": [
+    "Física",
+    "Lógica"
+   ],
+   "itens": [
+    {
+     "texto": "Porta do switch onde o host está ligado",
+     "categoria": "Física"
+    },
+    {
+     "texto": "AP que atende o notebook",
+     "categoria": "Física"
+    },
+    {
+     "texto": "ONT no ponto de saída WAN",
+     "categoria": "Física"
+    },
+    {
+     "texto": "Rede ou VLAN do cliente",
+     "categoria": "Lógica"
+    },
+    {
+     "texto": "Função de gateway padrão",
+     "categoria": "Lógica"
+    },
+    {
+     "texto": "Serviço de DNS",
+     "categoria": "Lógica"
+    }
+   ],
+   "explicacao": "O mapa do laboratório mostra o caminho físico e as funções lógicas que passam por ele.",
+   "conceito": "c4.roteador",
+   "dificuldade": 2
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Se o servidor DNS configurado tem o mesmo IP do gateway, as duas funções são a mesma.",
+   "resposta": false,
+   "explicacao": "Gateway padrão e DNS são funções diferentes, mesmo com o mesmo endereço configurado.",
+   "conceito": "c4.roteador",
+   "dificuldade": 2
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "O notebook mostra Wi-Fi conectado, mas sem internet. Qual teste separa melhor a associação do acesso à internet?",
+   "certa": "Ver o IP recebido e testar o gateway e um destino externo",
+   "erradas": [
+    "Trocar o nome da rede Wi-Fi",
+    "Aumentar a potência de transmissão do AP",
+    "Substituir o cabo entre switch e roteador"
+   ],
+   "explicacao": "Conectado ao SSID significa só associação Wi-Fi. É preciso conferir IP, gateway e saída para ver onde a cadeia quebra.",
+   "conceito": "c4.wifi",
+   "dificuldade": 3
+  },
+  {
+   "tipo": "verdadeiro_falso",
+   "pergunta": "Um balanceador pode atuar na camada 4 (TCP/UDP) ou na camada 7 (HTTP).",
+   "resposta": true,
+   "explicacao": "No L4 decide por transporte; no L7 enxerga a requisição HTTP e decide com base nela.",
+   "conceito": "c4.borda",
+   "dificuldade": 2
+  },
+  {
+   "tipo": "escolha",
+   "pergunta": "Um repetidor Wi-Fi chega ao roteador por enlace de retorno sem fio. O que isso pode causar?",
+   "certa": "Queda na capacidade para os clientes, em grau variável",
+   "erradas": [
+    "O repetidor vira o gateway padrão da rede",
+    "O SSID deixa de poder ser repetido",
+    "O DHCP deixa de ser necessário"
+   ],
+   "explicacao": "Repetidores e sistemas mesh podem usar enlace de retorno sem fio, e o impacto na capacidade varia conforme o caso.",
+   "conceito": "c4.wifi",
+   "dificuldade": 3
+  }
+ ],
+ "sabe": "como cada equipamento se encaixa no caminho entre o host e a internet.",
+ "pratica": "computador acessa a impressora mas não a internet? Investigue gateway, DNS, política e enlace WAN.",
+ "gancho": "Como investigar uma falha seguindo uma ordem lógica, camada por camada?"
+}
