@@ -25,7 +25,7 @@ const css = `.fp-ic{width:34px;height:34px;flex:none;display:inline-flex}.fp-ic 
 /** Linha "Novo para o Pingo" com botão de vestir (só visual, não muda nada do jogo) */
 export function NovoItemLinha({ n, simulado, rotulo = 'Novo para o seu robô' }: { n: NovoItem; simulado?: boolean; rotulo?: string }) {
   const [on, setOn] = useState(false)
-  return <div className="fp-row" style={{ marginTop: 2 }}>
+  return <div className="fp-row" style={{ marginTop: 2 }}><style>{css}</style>
     <Html cls="fp-ic" h={n.icone} />
     <span style={{ flex: 1 }}><small>{rotulo}</small>{n.nome}</span>
     <button className="btn ghost" style={{ width: 'auto', padding: '6px 14px', minHeight: 0 }} disabled={on}

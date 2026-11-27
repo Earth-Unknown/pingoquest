@@ -115,13 +115,18 @@ export function Lesson({S,qs,kind,keyId,resumo,onClose,onEvent,onRetry}:{S:any;r
       }
       d.xp+=xp;s.xp=(s.xp||0)+xp;s.gems=(s.gems??50)+gems
       wkAdd(s,xp);touchStreak(s);cqSync(s)
-      if(!free){ // itens do robô que esta lição liberou (as metas já existiam; agora o aluno vê o prêmio na hora)
+      if(!free){ // itens do robô que as metas liberaram: guardados e revelados só no fim da parada (prova final)
         const antes=(s.inv?.items||[]).slice()
         avSync(s,gamesOf(s.curso||'redes').filter(g=>!g.caso).length)
-        novos=(s.inv?.items||[]).filter((k:string)=>!antes.includes(k)).flatMap((k:string)=>{
-          const [slot,id]=k.split(':'),it=SLOTS.find(x=>x.id===slot)?.itens.find(i=>i.id===id)
-          return it?[{slot,id,nome:it.nome,icone:avIcon(slot,it)}]:[]})
-        if(kind==='boss'&&first)escolha=opcoesBrinde(s,parseInt(keyId)||0) // fim de parada: o aluno escolhe 1 entre 3 adereços
+        const liberados=(s.inv?.items||[]).filter((k:string)=>!antes.includes(k))
+        s.novosPend=[...new Set([...(s.novosPend||[]),...liberados])]
+        if(kind==='boss'&&first){
+          novos=s.novosPend.flatMap((k:string)=>{
+            const [slot,id]=k.split(':'),it=SLOTS.find(x=>x.id===slot)?.itens.find(i=>i.id===id)
+            return it?[{slot,id,nome:it.nome,icone:avIcon(slot,it)}]:[]})
+          s.novosPend=[]
+          escolha=opcoesBrinde(s,parseInt(keyId)||0) // fim de parada: o aluno escolhe 1 entre 3 adereços
+        }
       }
     })
     setRes({xp,gems,first,novos,escolha,cheias,acc:qb?Math.round(qb/(qb+miss)*100):100,perfect,hearts:kind==='practice'?{from:hFrom,gain:hGain}:undefined})
