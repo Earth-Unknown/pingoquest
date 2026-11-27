@@ -44,4 +44,4 @@ export type ConclusaoProps = {
 
 export type NovoItem = { slot: string; id: string; nome: string; icone: string }
 export type ProximaParada = { idx: number; lugar: string; titulo: string; gancho?: string; topicos: string[] }
-export type FimParada = { escolha?: NovoItem[]; simulado?: boolean; idx: number; lugar: string; titulo: string; vidasCheias: boolean; prox?: ProximaParada }
+export type FimParada = { unidade?: { n: string; o: string; concl: string }; escolha?: NovoItem[]; simulado?: boolean; idx: number; lugar: string; titulo: string; vidasCheias: boolean; prox?: ProximaParada }

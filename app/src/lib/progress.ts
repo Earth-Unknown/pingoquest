@@ -117,3 +117,19 @@ export function trocarCurso(S:any,id:string){
   COURSE_KEYS.forEach(k=>{S[k]=nx[k]!==undefined?nx[k]:courseDef()[k]})
   S.curso=id
 }
+
+/** Versão do conteúdo de cada curso. Quando as paradas mudam (curso reescrito), o progresso daquele curso recomeça
+ *  (as marcações "parada-lição" passariam a apontar para outra coisa). Energia, chips, adereços e Oficina ficam. */
+const VERSAO_CONTEUDO:Record<string,number>={redes:2}
+const ZERA=()=>({done:{},know:{},xch:{},bosses:0,xseen:undefined as any})
+export function precisaMigrar(S:any){return Object.entries(VERSAO_CONTEUDO).some(([id,v])=>(S.cv?.[id]||1)<v)}
+export function migrarConteudo(S:any){
+  S.cv=S.cv||{}
+  for(const [id,v] of Object.entries(VERSAO_CONTEUDO)){
+    if((S.cv[id]||1)>=v)continue
+    const z=ZERA()
+    if((S.curso||'redes')===id){S.done=z.done;S.know=z.know;S.xch=z.xch;S.bosses=0;delete S.xseen}
+    else if(S.cursos?.[id]){S.cursos[id].done=z.done;S.cursos[id].know=z.know;S.cursos[id].xch=z.xch;S.cursos[id].bosses=0;delete S.cursos[id].xseen}
+    S.cv[id]=v
+  }
+}

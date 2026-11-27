@@ -4,7 +4,7 @@ import { toast } from './Fx'
 import { CenaConclusao } from './conclusao/CenaConclusao'
 import { ESTACAO_PINGO } from './conclusao/contrato'
 import { gamesOf } from './lib/progress'
-import { CURSOS } from './lib/cursos'
+import { CURSOS, unidade } from './lib/cursos'
 import { SLOTS, icon as avIcon, opcoesBrinde } from './lib/avatar'
 import { resumoDe } from './Trail'
 import { isDono, entrarDono, sairDono } from './lib/dono'
@@ -46,7 +46,7 @@ export function ModoDono({ S, aberto, onFechar }: { S: any; aberto: boolean; onF
 
   const item = SLOTS.find(s => s.id === 'cabeca')?.itens.find(i => i.id === 'laco')
   const props = () => {
-    const r = resumoDe(par, games, parada, k)
+    const r = resumoDe(par, games, parada, k, id)
     const boss = k === 3
     const termos = (qs: typeof games[number]['phases'][number]) => qs.filter(q => q.t === 'learn').flatMap(q => (q.touch || []) as [string, string][])
     // igual ao jogo de verdade: na prova final, uma lição por cartão + todos os termos da parada
@@ -69,7 +69,7 @@ export function ModoDono({ S, aberto, onFechar }: { S: any; aberto: boolean; onF
   return <><div className="sect" style={{ marginTop: 14 }}>Modo dono</div>
     <p className="note" style={{ margin: '0 0 8px' }}>Veja as cenas de conclusão sem jogar. Nada é gravado no seu progresso.</p>
     <select aria-label="Parada" style={sel} value={parada} onChange={e => setParada(+e.target.value)}>
-      {par.map((p, i) => <option key={i} value={i}>Parada {i + 1}: {p.lugar}</option>)}</select>
+      {par.map((p, i) => <option key={i} value={i}>{unidade(id).n} {i + 1}: {p.lugar || p.titulo}</option>)}</select>
     <select aria-label="Lição" style={sel} value={k} onChange={e => setK(+e.target.value)}>
       {[0, 1, 2, 3].map(i => <option key={i} value={i}>{i < 3 ? 'Lição ' + (i + 1) : 'Prova final (mostra o fim de parada)'}</option>)}</select>
     <label style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 6, fontWeight: 700 }}><input type="checkbox" checked={rep} onChange={e => setRep(e.target.checked)} />Já tinha feito (repetição)</label>

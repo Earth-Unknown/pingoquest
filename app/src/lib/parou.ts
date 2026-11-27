@@ -1,5 +1,5 @@
 // Onde a pessoa parou em cada curso (usado na tela de entrada para quem volta)
-import { CURSOS, done, pct } from './cursos'
+import { CURSOS, done, pct, unidade } from './cursos'
 
 export type Parou = { id: string; nome: string; area: string; pct: number; onde: string; ativo: boolean }
 
@@ -11,7 +11,7 @@ function proxima(S: any, id: string): string {
   const ps: any[] = c.json.mundos?.[0]?.paradas || []
   for (let g = 0; g < ps.length; g++) {
     for (let k = 0; k < 4; k++) {
-      if (!feitas.has(g + '-' + k)) return `Parada ${g + 1} · ${ps[g].lugar}, ${k < 3 ? 'lição ' + (k + 1) : 'prova final'}`
+      if (!feitas.has(g + '-' + k)) return `${unidade(id).n} ${g + 1} · ${ps[g].lugar || ps[g].titulo}, ${k < 3 ? 'lição ' + (k + 1) : 'prova final'}`
     }
   }
   return 'Curso concluído'

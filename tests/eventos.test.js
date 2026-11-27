@@ -16,7 +16,7 @@ T('2b pagina',await p.evaluate(()=>({aberta:!$('#evpage').hidden,titulo:document
 // 3) pouco conteudo visto: etapa bloqueada com explicacao
 T('3 poucas perguntas',await p.evaluate(()=>PK.evPick(PK.EVENTS[0])));
 // 4) conteudo visto suficiente
-await p.evaluate(()=>{['rede.def','rede.host','lan','internet','meio.transmissao','rede.alcance','cliente.servidor','banda.latencia'].forEach(c=>PK.markSeen([c]));evRender()});
+await p.evaluate(()=>{['c1.rede', 'c2.vlan', 'c3.diagnostico', 'c3.fibra', 'c3.paratrancado', 'c1.broadcast', 'c1.vazao', 'c1.latencia', 'c2.redundancia', 'c2.escopo'].forEach(c=>PK.markSeen([c]));evRender()});
 const pick=await p.evaluate(()=>{var qs=PK.evPick(PK.EVENTS[0]);var cid={};qs.forEach(q=>cid[q.cid]=(cid[q.cid]||0)+1);return{n:qs.length,maxPorConceito:Math.max(...Object.values(cid)),todosElegiveis:qs.every(q=>PK.CUR&&eligible(q.cid)),semExtras:qs.every(q=>!q.x),tipos:[...new Set(qs.map(q=>q.t))].length}});
 T('4 selecao',pick);
 // helper para responder

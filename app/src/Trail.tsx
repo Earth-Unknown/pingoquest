@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 're
 import art from './legacy/art.json'
 import { popIn } from './Fx'
 import { Pingo } from './Pingo'
-import { CURSOS } from './lib/cursos'
+import { unidade, CURSOS } from './lib/cursos'
 import { parseCurso, lessonQs } from './lib/curso'
 import { Lesson } from './Lesson'
 import { Case } from './Case'
@@ -24,12 +24,12 @@ function nodeArt(curso:string,gi:number,k:number){
 /** última etapa "atual" vista (curso:parada-fase): se mudou depois de uma lição, o Pingo caminha até a nova */
 let lastCur:string|null=null
 /** Texto de conclusão da lição: o que se aprendeu, a aplicação real e o que vem a seguir (vem do conteúdo do curso) */
-export function resumoDe(par:any[],games:any[],g:number,k:number){
+export function resumoDe(par:any[],games:any[],g:number,k:number,curso?:string){
   const p=par[g]||{},f=k<3?p.fases?.[k]:null,src=f?.sabe?f:p
   const nomes=games[g]?.names||[]
   const proxima=k<3?nomes[k+1]:(games[g+1]?.title||'')
   const n=par[g+1]
-  const fim=k===3?{idx:g,lugar:p.lugar||'',titulo:p.titulo||'',vidasCheias:false,
+  const fim=k===3?{idx:g,unidade:unidade(curso||'redes'),lugar:p.lugar||'',titulo:p.titulo||'',vidasCheias:false,
     prox:n?{idx:g+1,lugar:n.lugar||'',titulo:n.titulo||'',gancho:p.gancho as string|undefined,topicos:(n.fases||[]).map((f:any)=>f.nome).filter(Boolean).slice(0,3)}:undefined}:undefined
   const recap:[string,string][]=k===3?(p.fases||[]).filter((f:any)=>f.sabe).map((f:any,i:number)=>['Lição '+(i+1)+' · '+f.nome,String(f.sabe).charAt(0).toUpperCase()+String(f.sabe).slice(1)] as [string,string]):[]
   return {sabe:src?.sabe as string|undefined,pratica:src?.pratica as string|undefined,proxima:proxima||undefined,fim,recap}
@@ -87,11 +87,11 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
     <div className={'world w-'+ativo}>
       <div className="wstage"><Html h={ativo==='linux'?A.linuxScene:A.worldScene}/><div className="hping"><Pingo S={S} cls="wps"/></div></div>
       <span className={'cflag cf-'+ativo}><Html h={courseIcon(ativo)}/><b>{cur.nome}</b></span>
-      <div className="winfo"><small>MUNDO {mundo.numero}</small><b>{mundo.nome}</b><span>{mundo.subtitulo}</span><div className="wprog"><i style={{width:pct+'%'}}/></div></div>
+      <div className="winfo"><small>{ativo==='redes'?'MÓDULO':'MUNDO'} {mundo.numero}</small><b>{mundo.nome}</b><span>{mundo.subtitulo}</span><div className="wprog"><i style={{width:pct+'%'}}/></div></div>
     </div>
     {par.map((p,gi)=><section key={gi} className={'unit u'+(gi%5)}>
       <div className="uhead"><span className="lm"><Html h={placeIcon(gi)}/></span>
-        <div><div className="tag">Parada {gi+1}</div><h2>{p.lugar||p.titulo}</h2><div className="lsub">{p.titulo}</div></div>
+        <div><div className="tag">{unidade(ativo).n} {gi+1}</div><h2>{p.lugar||p.titulo}</h2>{p.lugar&&p.lugar!==p.titulo&&<div className="lsub">{p.titulo}</div>}</div>
         {(p.dicas||[]).length>0&&<button className="tipbtn" onClick={()=>setTips(gi)}>Dicas</button>}</div>
       <div className="nodes">{[0,1,2,3].map(k=>{
         const key=gi+'-'+k,d=!!done[key],un=isUn(gi,k),isCur=un&&!d&&!curFound
@@ -110,9 +110,9 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
         </React.Fragment>})}</div>
     </section>)}
     <section className="nextsec"><span className="nschip">A seguir</span>
-      <h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>{ativo==='linux'?'Em breve':'Mundo 2'}</h2>
+      <h2><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9zm-8-2a3 3 0 0 1 6 0v2H9z"/></svg>{ativo==='linux'?'Em breve':'Módulo 2'}</h2>
       <div className="nspingo"><Pingo S={S} mood="wink" cls="pingo-s"/></div>
-      <p>{ativo==='linux'?'Mais paradas de Linux chegam em breve. Termine todas as de agora para ficar pronto.':'Cidade IP: o próximo mundo chega em breve. Termine a Vila Roteador para ficar pronto.'}</p>
+      <p>{ativo==='linux'?'Mais paradas de Linux chegam em breve. Termine todas as de agora para ficar pronto.':'O Módulo 2 de Redes chega em breve. Termine o Módulo 1 para ficar pronto.'}</p>
       <button className="btn ghost" disabled>Em breve</button></section>
     {tips!==null&&<div id="modal" onClick={()=>setTips(null)}><div className="sheet" ref={popIn} role="dialog" aria-label="Dicas" onClick={e=>e.stopPropagation()}>
       <h2>Dicas: {par[tips].titulo}</h2><ul>{(par[tips].dicas||[]).map((d:string,i:number)=><li key={i}>{d}</li>)}</ul>
@@ -121,7 +121,7 @@ export function Trail({S,refresh,evOpen,setEvOpen}:{S:any;refresh:()=>void;evOpe
     <EventFab S={S} json={cur.json} onOpen={setEvOpen}/>
     {evOpen&&<EventPage S={S} json={cur.json} id={evOpen} onClose={()=>setEvOpen(null)} refresh={refresh}/>}
     {kase&&<Case key={kase.id} S={S} def={(cur.json.casos||[]).find((c:any)=>c.id===kase.id)} kind="node" keyId={kase.g+'-3'} replay={!!done[kase.g+'-3']} onClose={()=>{setKase(null);refresh()}}/>}
-    {play&&<Lesson key={play.g+'-'+play.k} S={S} qs={lessonQs(games[play.g],play.k)} kind={play.k===3?'boss':'phase'} keyId={play.g+'-'+play.k} resumo={resumoDe(par,games,play.g,play.k)} onClose={()=>{setPlay(null);refresh()}}/>}
+    {play&&<Lesson key={play.g+'-'+play.k} S={S} qs={lessonQs(games[play.g],play.k)} kind={play.k===3?'boss':'phase'} keyId={play.g+'-'+play.k} resumo={resumoDe(par,games,play.g,play.k,ativo)} onClose={()=>{setPlay(null);refresh()}}/>}
   </div>
 }
 
