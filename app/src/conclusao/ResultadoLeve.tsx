@@ -12,23 +12,30 @@ const css = `.rl-cards{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x 
 .rl-pill{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:3px 10px 3px 7px;font-weight:900;font-size:14px;background:var(--surface,#fff);box-shadow:0 1px 4px rgba(26,16,72,.18)}.rl-pill svg{width:16px;height:16px;display:block}`
 
 export type CartaoRevisao = { t: string; x: string }
-export function ResultadoLeve({ S, mood = 'cheer', titulo, subtitulo, cor, extra, xp, chips = 0, rotulo, cartoes, botao = 'Continuar', onContinuar }: {
-  S: any; mood?: string; titulo: string; subtitulo?: string; cor?: string; extra?: ReactNode; xp: number; chips?: number
-  rotulo?: string; cartoes: CartaoRevisao[]; botao?: string; onContinuar: () => void
+
+/** Fileira de cartões deslizáveis (usada também no duelo) */
+export function Cartoes({ cartoes, rotulo }: { cartoes: CartaoRevisao[]; rotulo?: string }) {
+  if (!cartoes.length) return null
+  return <><style>{css}</style>
+    <p style={{ margin: '4px 0 0', fontSize: 12, fontWeight: 800, letterSpacing: 0.8, textTransform: 'uppercase', color: 'var(--muted)' }}>{rotulo || 'O que você reforçou'}</p>
+    <div className="rl-cards" tabIndex={0} aria-label={(rotulo || 'O que você reforçou') + ': deslize para ver tudo'}>{cartoes.map((c, i) => <div className="rl-card" key={i}><b>{c.t}</b>{c.x}</div>)}</div>
+    {cartoes.length > 1 && <small style={{ color: 'var(--muted)', fontWeight: 700 }}>Deslize para o lado para ver tudo →</small>}
+  </>
+}
+export function ResultadoLeve({ S, mood = 'cheer', titulo, subtitulo, cor, extra, xp, chips = 0, pecas = 0, rotulo, cartoes, botao = 'Continuar', secundario, onContinuar }: {
+  S: any; mood?: string; titulo: string; subtitulo?: string; cor?: string; extra?: ReactNode; xp: number; chips?: number; pecas?: number
+  rotulo?: string; cartoes: CartaoRevisao[]; botao?: string; secundario?: { texto: string; onClick: () => void }; onContinuar: () => void
 }) {
   return <div id="lesson" ref={enter}><style>{css}</style><div className="lw"><div className="lbody lscroll"><div className="center" style={{ gap: 10 }}>
     <div className="rl-pingo"><Pingo S={S} mood={mood} /></div>
     <h1 style={{ margin: 0, fontSize: 26, color: cor }}>{titulo}</h1>
     {subtitulo && <p style={{ margin: 0 }}>{subtitulo}</p>}
     {extra}
-    {cartoes.length > 0 && <>
-      <p style={{ margin: '4px 0 0', fontSize: 12, fontWeight: 800, letterSpacing: 0.8, textTransform: 'uppercase', color: 'var(--muted)' }}>{rotulo || 'O que você reforçou'}</p>
-      <div className="rl-cards" tabIndex={0} aria-label="O que você reforçou: deslize para ver tudo">{cartoes.map((c, i) => <div className="rl-card" key={i}><b>{c.t}</b>{c.x}</div>)}</div>
-      {cartoes.length > 1 && <small style={{ color: 'var(--muted)', fontWeight: 700, marginTop: -4 }}>Deslize para o lado para ver tudo →</small>}
-    </>}
-    {(xp > 0 || chips > 0) && <div style={{ display: 'flex', gap: 8 }} aria-label="Você ganhou">
+    <Cartoes cartoes={cartoes} rotulo={rotulo} />
+    {(xp > 0 || chips > 0 || pecas > 0) && <div style={{ display: 'flex', gap: 8 }} aria-label="Você ganhou">
       {xp > 0 && <span className="rl-pill" style={{ color: '#ffb800' }} dangerouslySetInnerHTML={{ __html: A.IC.bolt + xp }} />}
       {chips > 0 && <span className="rl-pill" style={{ color: '#ff4fae' }} dangerouslySetInnerHTML={{ __html: A.IC.gem + chips }} />}
+      {pecas > 0 && <span className="rl-pill" style={{ color: '#3fbf5f' }} dangerouslySetInnerHTML={{ __html: A.IC.puzzle + '+' + pecas }} />}
     </div>}
-  </div></div><div className="lfoot"><button className="btn" onClick={onContinuar}>{botao}</button></div></div></div>
+  </div></div><div className="lfoot"><div className="stack" style={{ margin: 0 }}>{secundario && <button className="btn ghost" onClick={secundario.onClick}>{secundario.texto}</button>}<button className="btn" onClick={onContinuar}>{botao}</button></div></div></div></div>
 }
